@@ -1,14 +1,51 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
-	<h1>Hello World!!! {{actor.name}}</h1>
+<form class="monsterblock {{cssClass}} flexcol" autocomplete="off">
 	{{!-- Sheet Header --}}
     <header class="sheet-header">
-        {{!-- Header stuff goes here --}}
-        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+		<section id="identity">
+			<h1 class="charname">{{actor.name}}<!--input name="name" type="text" value="{{actor.name}}" placeholder="Name"/--></h1>
+			<p class="chartype">{{lookup config.actorSizes data.traits.size}}<span class="sep">&nbsp;</span>{{data.details.type}}<span class="sep">, </span>{{data.details.alignment}}</p>
+		</section>
+		<section id="attributes1">
+			<ul class="attributes">
+				<li class="attribute">
+					<h4 class="attribute-name box-title">{{ localize "DND5E.ArmorClass" }} </h4>
+					<span class="attr-value">{{data.attributes.ac.value}}</span>
+					<input name="data.attributes.ac.value" type="text" value="{{data.attributes.ac.value}}"
+                               data-dtype="Number" placeholder="10"/>
+				</li>
+				<li class="attribute health">
+					<h4 class="attribute-name box-title rollable">{{ localize "DND5E.Health" }} </h4>
+					<span class="attr-value">{{data.attributes.hp.value}}</span>
+					<input name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}"
+                               data-dtype="Number" placeholder="10"/>
+                    <span class="sep"> / </span>
+					<span class="attr-value">{{data.attributes.hp.max}}</span>
+                    <input name="data.attributes.hp.max" type="text" value="{{data.attributes.hp.max}}"
+                               data-dtype="Number" placeholder="10"/>
+					<span class="sep"> (</span>
+					<span class="attr-value">{{data.attributes.hp.formula}}</span>
+					<input name="data.attributes.hp.formula" class="hpformula" type="text" placeholder="{{ localize 'DND5E.HealthFormula' }}"
+                               value="{{data.attributes.hp.formula}}"/>
+					<span class="sep">)</span>
+				</li>
+				<li class="attribute">
+                    <h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }} </h4>
+					<span class="attr-value">{{data.attributes.speed.value}}</span>
+                    <input name="data.attributes.speed.value" type="text"
+						value="{{data.attributes.speed.value}}" placeholder="0"/>
+					<span class="sep">, </span>
+					<span class="attr-value">{{data.attributes.speed.special}}</span>
+                    <input type="text" class="speed" name="data.attributes.speed.special"
+                        value="{{data.attributes.speed.special}}" placeholder="{{ localize 'DND5E.SpeedSpecial' }}"/>
+                </li>
+			</ul>
+		</section>
+        <!--<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
         <div class="header-fields">
-            <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+            
             <div class="resources grid grid-2col">{{!-- resources here --}}</div>
             <div class="abilities grid grid-3col">{{!-- abilities here --}}</div>
-        </div>
+        </div>-->
     </header>
 
     {{!-- Sheet Tab Navigation --}}

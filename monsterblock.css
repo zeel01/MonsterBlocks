@@ -1,0 +1,61 @@
+.monsterblock {
+	--heading-color: #58170D;
+	--divider-color: rgba(140, 42, 42, 1);
+	--divider-color-end: rgba(140, 42, 42, 0);
+}
+
+.sheet-header {
+	display: block;
+}
+.sheet-header section::after {
+	display: inline-block;
+	width: 100%;
+	height: .3em;
+	content: "";
+	background: linear-gradient(to right, var(--divider-color), var(--divider-color-end));
+}
+
+.charname {
+	color: var(--heading-color);
+}
+.chartype {
+	font-style: italic;
+}
+
+.attributes {
+	list-style: none;
+	color: var(--heading-color);
+	padding: 0;
+}
+.attributes .attribute {
+	margin: 0;
+}
+.attribute-name {
+	display: inline;
+	font-weight: bold;
+}
+.attributes input {
+	display: none;
+	border: none;
+}
+.attributes .attr-value {
+	display: inline;
+}
+input[name="data.attributes.ac.value"] {
+	width: 2ch;
+}
+input[name="data.attributes.hp.value"] {
+	width: 4ch;
+}
+input[name="data.attributes.hp.max"] {
+	width: 4ch;
+}
+input[name="data.attributes.hp.formula"] {
+	width: 11ch;
+}
+input[name="data.attributes.speed.value"] {
+	width: 7ch;
+}
+input[name="data.attributes.speed.special"] {
+	width: 24ch;
+}
