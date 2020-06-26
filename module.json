@@ -1,8 +1,14 @@
 {
-  "name": "monsterblock",
-  "title": "Monster Block",
-  "description": "An NPC sheet designed to emulate standard 5e monster stat blocks as faithfully as possible.",
-  "author": "zeel",
-  "version": "0.1.0",
-  "minimumCoreVersion": "0.6.2"
+	"name": "monsterblock",
+	"title": "Monster Block",
+	"description": "An NPC sheet designed to emulate standard 5e monster stat blocks as faithfully as possible.",
+	"author": "zeel",
+	"version": "0.1.0",
+	"minimumCoreVersion": "0.6.2"
+	"scripts": [
+		"main.js"
+	],
+	"styles": [
+		"monsterblock.css"
+	]
 }
