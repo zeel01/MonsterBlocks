@@ -4,9 +4,10 @@
 	"description": "An NPC sheet designed to emulate standard 5e monster stat blocks as faithfully as possible.",
 	"author": "zeel",
 	"version": "0.1.0",
-	"minimumCoreVersion": "0.6.2"
+	"minimumCoreVersion": "0.6.2",
+	"compatibleCoreVersion": "0.6.4",
 	"scripts": [
-		"main.js"
+		"monsterblock.js"
 	],
 	"styles": [
 		"monsterblock.css"

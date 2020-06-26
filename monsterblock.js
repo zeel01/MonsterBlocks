@@ -16,3 +16,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		 //
 	 }
 }
+
+Hooks.on("init", () => {
+	console.log(`Monster Block | Initialized.`);
+});
+
+Actors.registerSheet("dnd5e", MonsterBlock5e, {
+    types: ["npc"],
+    makeDefault: false
+});
