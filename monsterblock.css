@@ -1,13 +1,27 @@
 .monsterblock {
+	width: 100%;
 	--heading-color: #58170D;
 	--divider-color: rgba(140, 42, 42, 1);
 	--divider-color-end: rgba(140, 42, 42, 0);
 }
 
-.sheet-header {
-	display: block;
+.monsterblock .window-content {
+    /*background:*/ 
 }
-.sheet-header section::after {
+
+.monsterblock nav.sheet-tabs {
+	flex-grow: 0;
+}
+
+.monsterblock .editable > * {
+	max-width: 400px;
+}
+
+.monsterblock .sheet-header {
+	display: block;
+	position: relative;
+}
+.monsterblock .sheet-header section::after {
 	display: inline-block;
 	width: 100%;
 	height: .3em;
@@ -15,47 +29,71 @@
 	background: linear-gradient(to right, var(--divider-color), var(--divider-color-end));
 }
 
-.charname {
+.monsterblock .charname {
 	color: var(--heading-color);
+	font-family: serif;
+	font-variant: small-caps;
+	font-weight: bold;
 }
-.chartype {
+.monsterblock .chartype {
 	font-style: italic;
+	margin: 0;
+}
+.monsterblock img.profile {
+	position: absolute;
+	height: auto;
+	width: 25%;
+	right: 0;
+	top: 0;
 }
 
-.attributes {
+.monsterblock .attributes, 
+.monsterblock .ability-scores {
 	list-style: none;
 	color: var(--heading-color);
 	padding: 0;
-}
-.attributes .attribute {
 	margin: 0;
 }
-.attribute-name {
+
+.monsterblock .ability-scores .ability {
+	text-align: center;
+}
+
+.monsterblock .attributes .attribute {
+	margin: 0;
+}
+.monsterblock .attribute-name {
 	display: inline;
 	font-weight: bold;
 }
-.attributes input {
+.monsterblock .ability-name {
+	display: block;
+	font-weight: bold;
+	margin: 0;
+	text-transform: uppercase;
+}
+.monsterblock input {
 	display: none;
 	border: none;
 }
-.attributes .attr-value {
+.monsterblock .attr-value {
 	display: inline;
 }
-input[name="data.attributes.ac.value"] {
+.monsterblock input[name="data.attributes.ac.value"] {
 	width: 2ch;
 }
-input[name="data.attributes.hp.value"] {
+.monsterblock input[name="data.attributes.hp.value"] {
 	width: 4ch;
 }
-input[name="data.attributes.hp.max"] {
+.monsterblock input[name="data.attributes.hp.max"] {
 	width: 4ch;
 }
-input[name="data.attributes.hp.formula"] {
+.monsterblock input[name="data.attributes.hp.formula"] {
 	width: 11ch;
 }
-input[name="data.attributes.speed.value"] {
+.monsterblock input[name="data.attributes.speed.value"] {
 	width: 7ch;
 }
-input[name="data.attributes.speed.special"] {
+.monsterblock input[name="data.attributes.speed.special"] {
 	width: 24ch;
 }

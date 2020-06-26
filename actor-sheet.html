@@ -1,11 +1,18 @@
-<form class="monsterblock {{cssClass}} flexcol" autocomplete="off">
+<form class="{{cssClass}} flexcol" autocomplete="off">
+	{{!-- Sheet Tab Navigation --}}
+	<nav class="sheet-tabs tabs" data-group="primary">
+		<a class="item" data-tab="description">Description</a>
+		<a class="item" data-tab="items">Items</a>
+	</nav>
+
 	{{!-- Sheet Header --}}
     <header class="sheet-header">
-		<section id="identity">
+		<section id="monster-identity">
 			<h1 class="charname">{{actor.name}}<!--input name="name" type="text" value="{{actor.name}}" placeholder="Name"/--></h1>
 			<p class="chartype">{{lookup config.actorSizes data.traits.size}}<span class="sep">&nbsp;</span>{{data.details.type}}<span class="sep">, </span>{{data.details.alignment}}</p>
+			<img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
 		</section>
-		<section id="attributes1">
+		<section id="monster-attributes1">
 			<ul class="attributes">
 				<li class="attribute">
 					<h4 class="attribute-name box-title">{{ localize "DND5E.ArmorClass" }} </h4>
@@ -40,6 +47,26 @@
                 </li>
 			</ul>
 		</section>
+		<section id="monster-abilities">
+			<ul class="ability-scores flexrow">
+            {{#each data.abilities as |ability id|}}
+                <li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
+                    <h4 class="ability-name box-title rollable">{{id}}</h4>
+					<span class="attr-value">{{ability.value}} </span>
+                    <input class="ability-score" name="data.abilities.{{id}}.value" type="text" value="{{ability.value}}" data-dtype="Number" placeholder="10"/>
+					<span class="ability-mod" title="Modifier">({{numberFormat ability.mod decimals=0 sign=true}})</span>
+					<input type="hidden" name="data.abilities.{{id}}.proficient" value="{{ability.proficient}}" data-dtype="Number"/>
+					<!--a class="proficiency-toggle ability-proficiency" title="{{ localize 'DND5E.Proficiency' }}">{{{ability.icon}}}</a-->
+					<!--span class="ability-save" title="Saving Throw">{{numberFormat ability.save decimals=0 sign=true}}</span-->
+                </li>
+            {{/each}}
+            </ul>
+		</section>
+		<section id="monster-attributes2">
+			 <ul>
+			
+			</ul>
+		</section>
         <!--<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
         <div class="header-fields">
             
@@ -47,16 +74,10 @@
             <div class="abilities grid grid-3col">{{!-- abilities here --}}</div>
         </div>-->
     </header>
-
-    {{!-- Sheet Tab Navigation --}}
-    <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="description">Description</a>
-        <a class="item" data-tab="items">Items</a>
-    </nav>
-
-    {{!-- Sheet Body --}}
-    <section class="sheet-body">
+	
+	{{!-- Sheet Body --}}
+	<section class="sheet-body">
 		{{!-- Tab content goes here --}}
-    </section>
+	</section>
 
 </form>
