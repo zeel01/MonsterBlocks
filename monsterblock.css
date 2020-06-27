@@ -49,9 +49,10 @@
 	margin: 0;
 }
 .monsterblock img.profile {
+	border: none;
 	position: absolute;
-	height: auto;
-	width: 25%;
+	height: 110px;
+	width: auto;
 	right: 0;
 	top: 0;
 }
@@ -96,12 +97,6 @@
 	display: none;
 	border: none;
 }
-.monsterblock .attr-value {
-	display: inline;
-}
-.monsterblock .attribute-label {
-	display: inline;
-}
 .monsterblock .inline-list {
 	font-size: 0;
 	display: inline;
@@ -112,7 +107,7 @@
 	font-size: 14px;
 }
 .monsterblock .inline-list li {
-	margin-right:;
+	display: inline;
 }
 .monsterblock .inline-list li:after {
 	font-size: 14px;

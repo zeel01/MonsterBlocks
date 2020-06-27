@@ -26,10 +26,27 @@ Hooks.on("init", () => {
 Hooks.on("renderActorSheet", ()=> {
 	let template = "modules/monsterblock/actor-sheet.html";
     delete _templateCache[template];
-    console.log(`Monster Block | removed "${template}" from _templateCache.`)
+    console.log(`Monster Block | removed "${template}" from _templateCache.`);
 })
 
 Actors.registerSheet("dnd5e", MonsterBlock5e, {
     types: ["npc"],
     makeDefault: false
+});
+
+Handlebars.registerHelper("hascontents", (obj)=> {
+	return Object.keys(obj).length > 0;
+});
+
+Handlebars.registerHelper("hasskills", (skills)=> {
+	for (let s in skills) {
+		if (skills[s].value) return true;
+	}
+	return false;
+});
+Handlebars.registerHelper("hassave", (saves)=> {
+	for (let s in saves) {
+		if (saves[s].proficient) return true;
+	}
+	return false;
 });

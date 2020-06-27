@@ -1,11 +1,4 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
-	{{!-- Sheet Tab Navigation --}}
-	<nav class="sheet-tabs tabs" data-group="primary">
-		<a class="item" data-tab="description">Description</a>
-		<a class="item" data-tab="items">Items</a>
-	</nav>
-
-	{{!-- Sheet Header --}}
     <header class="sheet-header">
 		<section id="monster-identity">
 			<h1 class="charname">{{actor.name}}<!--input name="name" type="text" value="{{actor.name}}" placeholder="Name"/--></h1>
@@ -64,8 +57,9 @@
 		</section>
 		<section id="monster-attributes2">
 			<ul class="attributes">
+				{{#if (hassave data.abilities)}}
 				<li class="monster-saves">
-					<h4 class="attribute-name">Saving Throws </h4>
+					<h4 class="attribute-name">{{localize "DND5E.SavingThrows"}}&nbsp;</h4>
 					<ul class="inline-list">
 					{{#each data.abilities as |ability id|}}
 					{{#if ability.proficient}}
@@ -78,6 +72,78 @@
 					{{/each}}
 					</ul>
 				</li>
+				{{/if}}
+				{{#if (hasskills data.skills)}}
+				<li class="monster-skills">
+					<h4 class="attribute-name">{{localize "DND5E.Skills"}}&nbsp;</h4>
+					<ul class="inline-list">
+					{{#each data.skills as |skill s|}}
+					{{#if skill.value}}
+						<li class="skill {{#if skill.value}}proficient{{/if}}" data-skill="{{s}}">
+							<span class="skill-name rollable">{{skill.label}}</span>
+							<span class="skill-mod">&nbsp;{{numberFormat skill.total decimals=0 sign=true}}</span>
+						</li>
+					{{/if}}
+					{{/each}}
+					</ul>
+				</li>
+				{{/if}}
+				{{#if (hascontents data.traits.dv.selected)}}
+				<li class="attribute">
+					<h4 class="attribute-name">{{localize "DND5E.DamVuln"}}&nbsp;</h4>
+					<ul class="traits-list inline-list">
+					{{#each data.traits.dv.selected as |v k|}}
+						<li class="tag {{k}}"><span class="trait-value">{{v}}</span></li>
+					{{/each}}
+					</ul>
+				</li>
+				{{/if}}
+				{{#if (hascontents data.traits.dr.selected)}}
+				<li class="attribute">
+					<h4 class="attribute-name">{{localize "DND5E.DamRes"}}&nbsp;</h4>
+					<ul class="traits-list inline-list">
+					{{#each data.traits.dr.selected as |v k|}}
+						<li class="tag {{k}}"><span class="trait-value">{{v}}</span></li>
+					{{/each}}
+					</ul>
+				</li>
+				{{/if}}
+				{{#if (hascontents data.traits.di.selected)}}
+				<li class="attribute">
+					<h4 class="attribute-name">{{localize "DND5E.DamImm"}}&nbsp;</h4>
+					<ul class="traits-list inline-list">
+					{{#each data.traits.di.selected as |v k|}}
+						<li class="tag {{k}}"><span class="trait-value">{{v}}</span></li>
+					{{/each}}
+					</ul>
+				</li>
+				{{/if}}
+				{{#if (hascontents data.traits.ci.selected)}}
+				<li class="attribute">
+					<h4 class="attribute-name">{{localize "DND5E.ConImm"}}&nbsp;</h4>
+					<ul class="traits-list inline-list">
+					{{#each data.traits.ci.selected as |v k|}}
+						<li class="tag {{k}}"><span class="trait-value">{{v}}</span></li>
+					{{/each}}
+					</ul>
+				</li>
+				{{/if}}
+				<li class="attribute">
+					<h4 class="attribute-name">{{localize "DND5E.Senses"}}&nbsp;</h4>
+					<span class="trait-value">{{data.traits.senses}}</span>
+				</li>
+				<li class="attribute">
+					<h4 class="attribute-name">{{localize "DND5E.Languages"}}&nbsp;</h4>
+					<ul class="traits-list inline-list">
+					{{#each data.traits.languages.selected as |v k|}}
+						<li class="tag {{k}}"><span class="trait-value">{{v}}</span></li>
+					{{/each}}
+					</ul>
+				</li>
+				<li class="attribute">
+					<h4 class="attribute-name">{{localize "DND5E.ChallengeRating"}}&nbsp;</h4>
+					<span class="trait-value">{{labels.cr}}</span><span>&nbsp;{{data.details.xp.value}} XP</span>
+				</li>
 			</ul>
 		</section>
         <!--<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
@@ -87,10 +153,8 @@
             <div class="abilities grid grid-3col">{{!-- abilities here --}}</div>
         </div>-->
     </header>
-	
-	{{!-- Sheet Body --}}
 	<section class="sheet-body">
-		{{!-- Tab content goes here --}}
+		
 	</section>
 
 </form>
