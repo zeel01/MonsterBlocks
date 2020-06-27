@@ -146,14 +146,37 @@
 				</li>
 			</ul>
 		</section>
-        <!--<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
-        <div class="header-fields">
-            
-            <div class="resources grid grid-2col">{{!-- resources here --}}</div>
-            <div class="abilities grid grid-3col">{{!-- abilities here --}}</div>
-        </div>-->
     </header>
-	<section class="sheet-body">
+	<section class="monster-features">
+		<ul>
+		{{#each (getfeatures features) as |item iid|}}
+			<li class="item" data-item-id="{{item._id}}">
+				<div class="feature-description inline-children">
+					<span class="feature-name">{{item.name}}</span>
+					<span class="description">{{{getchathtml item ../actor}}}</span>
+				</div>
+			</li>
+		{{/each}}
+		<ul>
+	</section>
+	<section class="monster-actions">
+		<ul>
+		{{#each (getattacks features) as |item iid|}}
+			<li class="item" data-item-id="{{item._id}}">
+				<div class="attack-description rollable inline-children">
+					<span class="attack-name item-name">{{item.name}}</span>
+					<span class="attack-type">{{localize (getattacktype item)}}</span>
+					<span class="attack-bonus">{{numberFormat (getattackbonus item ../data) decimals=0 sign=true}} to hit, </span>
+					<span>reach {{item.data.range.value}} {{item.data.range.units}}.</span><br>
+					<span class="hit-label">Hit:&nbsp;</span>
+					<span>{{! average damage }} ({{item.data.damage.parts.[0].[0]}}) {{item.data.damage.parts.[0].[1]}} damage.</span>
+					<span class="description">{{{getchathtml item ../actor}}}</span>
+				</div>
+			</li>
+		{{/each}}
+		<ul>
+	</section>
+	<section class="monster-legendary">
 		
 	</section>
 

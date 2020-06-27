@@ -139,3 +139,36 @@
 .monsterblock input[name="data.attributes.speed.special"] {
 	width: 24ch;
 }
+
+.monsterblock .attack-name {
+	font-weight: bold;
+	font-style: italic;
+}
+.monsterblock .attack-name:after {
+	content: '. ';
+}
+.monsterblock .feature-name {
+	font-weight: bold;
+	font-style: italic;
+}
+.monsterblock .feature-name:after {
+	content: '. ';
+}
+.monsterblock .attack-type {
+	font-style: italic;
+}
+.monsterblock .attack-type:after {
+	content: ': ';
+}
+.monsterblock .attack-bonus {
+}
+.monsterblock .attack-bonus:after {
+}
+.monsterblock .hit-label {
+	font-style: italic;
+}
+.monsterblock .inline-children p,
+.monsterblock .inline-children div {
+	display: inline;
+}
+	
