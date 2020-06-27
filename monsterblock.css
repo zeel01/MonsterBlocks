@@ -4,7 +4,13 @@
 	--divider-color: rgba(140, 42, 42, 1);
 	--divider-color-end: rgba(140, 42, 42, 0);
 }
+.monsterblock form {
+	font-size: 0px;
+}
 
+.monsterblock span, .monsterblock p {
+	font-size: 14px;
+}
 .monsterblock .window-content {
     /*background:*/ 
 }
@@ -22,14 +28,17 @@
 	position: relative;
 }
 .monsterblock .sheet-header section::after {
-	display: inline-block;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	display: block;
 	width: 100%;
-	height: .3em;
+	height: 4px;
 	content: "";
 	background: linear-gradient(to right, var(--divider-color), var(--divider-color-end));
 }
 
 .monsterblock .charname {
+	font-size: 28px;
 	color: var(--heading-color);
 	font-family: serif;
 	font-variant: small-caps;
@@ -54,6 +63,9 @@
 	padding: 0;
 	margin: 0;
 }
+.monsterblock .attributes {
+	font-size: 
+}
 
 .monsterblock .ability-scores .ability {
 	text-align: center;
@@ -63,20 +75,55 @@
 	margin: 0;
 }
 .monsterblock .attribute-name {
+	font-size: 14px;
 	display: inline;
 	font-weight: bold;
 }
 .monsterblock .ability-name {
+	font-size: 14px;
 	display: block;
 	font-weight: bold;
 	margin: 0;
 	text-transform: uppercase;
 }
+.monsterblock .monster-saves .ability-name {
+	display: inline;
+	font-weight: normal;
+	text-transform: capitalize;
+}
+
 .monsterblock input {
 	display: none;
 	border: none;
 }
 .monsterblock .attr-value {
+	display: inline;
+}
+.monsterblock .attribute-label {
+	display: inline;
+}
+.monsterblock .inline-list {
+	font-size: 0;
+	display: inline;
+	list-style: none;
+	padding: 0;
+}
+.monsterblock .inline-list span {
+	font-size: 14px;
+}
+.monsterblock .inline-list li {
+	margin-right:;
+}
+.monsterblock .inline-list li:after {
+	font-size: 14px;
+    content: ', ';
+}
+
+.monsterblock .inline-list li:last-of-type:after {
+    content: '';
+}
+
+.monsterblock .monster-saves .ability {
 	display: inline;
 }
 .monsterblock input[name="data.attributes.ac.value"] {

@@ -23,7 +23,11 @@ Hooks.on("init", () => {
 	console.log(`Monster Block | Initialized.`);
 });
 
-Hooks.on("renderActorSheet", ()=> { delete _templateCache["modules/monsterblock/actor-sheet.html"] })
+Hooks.on("renderActorSheet", ()=> {
+	let template = "modules/monsterblock/actor-sheet.html";
+    delete _templateCache[template];
+    console.log(`Monster Block | removed "${template}" from _templateCache.`)
+})
 
 Actors.registerSheet("dnd5e", MonsterBlock5e, {
     types: ["npc"],

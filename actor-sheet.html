@@ -25,11 +25,11 @@
 					<span class="attr-value">{{data.attributes.hp.value}}</span>
 					<input name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}"
                                data-dtype="Number" placeholder="10"/>
-                    <span class="sep"> / </span>
+                    <span class="sep">&nbsp;/&nbsp;</span>
 					<span class="attr-value">{{data.attributes.hp.max}}</span>
                     <input name="data.attributes.hp.max" type="text" value="{{data.attributes.hp.max}}"
                                data-dtype="Number" placeholder="10"/>
-					<span class="sep"> (</span>
+					<span class="sep">&nbsp;(</span>
 					<span class="attr-value">{{data.attributes.hp.formula}}</span>
 					<input name="data.attributes.hp.formula" class="hpformula" type="text" placeholder="{{ localize 'DND5E.HealthFormula' }}"
                                value="{{data.attributes.hp.formula}}"/>
@@ -63,8 +63,21 @@
             </ul>
 		</section>
 		<section id="monster-attributes2">
-			 <ul>
-			
+			<ul class="attributes">
+				<li class="monster-saves">
+					<h4 class="attribute-name">Saving Throws </h4>
+					<ul class="inline-list">
+					{{#each data.abilities as |ability id|}}
+					{{#if ability.proficient}}
+						<li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
+							<span class="ability-name rollable">{{id}}</span>
+							<span class="ability-save" title="Saving Throw">&nbsp;{{numberFormat ability.save decimals=0 sign=true}}</span>
+							<!--a class="proficiency-toggle ability-proficiency" title="{{ localize 'DND5E.Proficiency' }}">{{{ability.icon}}}</a-->
+						</li>
+					{{/if}}
+					{{/each}}
+					</ul>
+				</li>
 			</ul>
 		</section>
         <!--<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
