@@ -142,42 +142,43 @@
 				</li>
 				<li class="attribute">
 					<h4 class="attribute-name">{{localize "DND5E.ChallengeRating"}}&nbsp;</h4>
-					<span class="trait-value">{{labels.cr}}</span><span>&nbsp;{{data.details.xp.value}} XP</span>
+					<span class="trait-value">{{labels.cr}}</span><span>&nbsp;({{data.details.xp.value}} XP)</span>
 				</li>
 			</ul>
 		</section>
     </header>
-	<section class="monster-features">
-		<ul>
-		{{#each (getfeatures features) as |item iid|}}
-			<li class="item" data-item-id="{{item._id}}">
-				<div class="feature-description inline-children">
-					<span class="feature-name">{{item.name}}</span>
-					<span class="description">{{{getchathtml item ../actor}}}</span>
-				</div>
-			</li>
-		{{/each}}
-		<ul>
+	{{#each (getfeatures features) as |item iid|}}
+	<section class="item monster-feature" data-item-id="{{item._id}}">
+		<div class="feature-description inline-children">
+			<span class="feature-name">{{item.name}}</span>
+			<span class="description">{{{getchathtml item ../actor}}}</span>
+		</div>
 	</section>
-	<section class="monster-actions">
-		<ul>
-		{{#each (getattacks features) as |item iid|}}
-			<li class="item" data-item-id="{{item._id}}">
-				<div class="attack-description rollable inline-children">
-					<span class="attack-name item-name">{{item.name}}</span>
-					<span class="attack-type">{{localize (getattacktype item)}}</span>
-					<span class="attack-bonus">{{numberFormat (getattackbonus item ../data) decimals=0 sign=true}} to hit, </span>
-					<span>reach {{item.data.range.value}} {{item.data.range.units}}.</span><br>
-					<span class="hit-label">Hit:&nbsp;</span>
-					<span>{{! average damage }} ({{item.data.damage.parts.[0].[0]}}) {{item.data.damage.parts.[0].[1]}} damage.</span>
-					<span class="description">{{{getchathtml item ../actor}}}</span>
-				</div>
-			</li>
-		{{/each}}
-		<ul>
+	{{/each}}
+	<h2 class="section-header" >{{localize "DND5E.ActionPl"}}</h2>
+	{{#each (getattacks features) as |item iid|}}
+	<section class="item monster-action" data-item-id="{{item._id}}">
+		<div class="attack-description rollable inline-children">
+			<span class="attack-name item-name">{{item.name}}</span>
+			<span class="attack-type">{{localize (getattacktype item)}}</span>
+			<span class="attack-bonus">{{numberFormat (getattackbonus item ../data) decimals=0 sign=true}} to hit, </span>
+			<span>reach {{item.data.range.value}} {{item.data.range.units}}.</span><br>
+			<span class="hit-label">Hit:&nbsp;</span>
+			<span>{{! average damage }} ({{item.data.damage.parts.[0].[0]}}) {{item.data.damage.parts.[0].[1]}} damage.&nbsp;</span>
+			<span class="description">{{{getchathtml item ../actor}}}</span>
+		</div>
 	</section>
+	{{/each}}
+	{{#each (getactions features) as |item iid|}}
+	<section class="item monster-action" data-item-id="{{item._id}}">
+		<div class="feature-description inline-children">
+			<span class="feature-name">{{item.name}}</span>
+			<span class="description">{{{getchathtml item ../actor}}}</span>
+		</div>
+	</section>
+	{{/each}}
+	{{! Legendary Actions }}
 	<section class="monster-legendary">
 		
 	</section>
-
 </form>

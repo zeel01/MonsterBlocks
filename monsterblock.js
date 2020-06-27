@@ -8,7 +8,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return mergeObject(super.defaultOptions, {
 			classes: ["monsterblock", "sheet", "actor"],
 		//	template: "modules/monsterblock/actor-sheet.html",
-			width: 800,
+			width: 856,
 			height: 800,
 			tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
 		});

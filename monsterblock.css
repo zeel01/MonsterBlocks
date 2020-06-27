@@ -11,8 +11,11 @@
 .monsterblock span, .monsterblock p {
 	font-size: 14px;
 }
-.monsterblock .window-content {
-    /*background:*/ 
+.monsterblock .flexcol {
+    display: flex;
+    flex-flow: column wrap;
+    height: 100%;
+    align-items: flex-start;
 }
 
 .monsterblock nav.sheet-tabs {
@@ -20,7 +23,10 @@
 }
 
 .monsterblock .editable > * {
-	max-width: 400px;
+	width: 400px;
+	flex: 0;
+	margin-right: 40px;
+	/* max-width: 400px; */
 }
 
 .monsterblock .sheet-header {
@@ -140,6 +146,15 @@
 	width: 24ch;
 }
 
+.monsterblock .section-header {
+	margin-top: 14px;
+	font-size: 22px;
+	color: var(--heading-color);
+	font-variant: small-caps;
+}
+.monsterblock .item {
+	margin-top: 14px;
+}
 .monsterblock .attack-name {
 	font-weight: bold;
 	font-style: italic;
