@@ -147,16 +147,24 @@
 			</ul>
 		</section>
     </header>
-	{{#each (getfeatures features) as |item iid|}}
+	{{#*inline "featureBlock"}}
 	<section class="item monster-feature" data-item-id="{{item._id}}">
 		<div class="feature-description inline-children">
 			<span class="feature-name">{{item.name}}</span>
-			<span class="description">{{{getchathtml item ../actor}}}</span>
+			<span class="description">{{{getchathtml item actor}}}</span>
 		</div>
 	</section>
+	{{/inline}}
+	
+	{{#each (getfeatures features) as |item iid|}}
+		{{#if (notspecialaction item)}}{{> featureBlock item=item actor=../actor}}{{/if}}
 	{{/each}}
 	<h2 class="section-header" >{{localize "DND5E.ActionPl"}}</h2>
+	{{#if (getmultiattack features)}}
+		{{> featureBlock item=(getmultiattack features) actor=actor}}
+	{{/if}}
 	{{#each (getattacks features) as |item iid|}}
+	{{#if (notspecialaction item)}}
 	<section class="item monster-action" data-item-id="{{item._id}}">
 		<div class="attack-description rollable inline-children">
 			<span class="attack-name item-name">{{item.name}}</span>
@@ -168,17 +176,17 @@
 			<span class="description">{{{getchathtml item ../actor}}}</span>
 		</div>
 	</section>
+	{{/if}}
 	{{/each}}
 	{{#each (getactions features) as |item iid|}}
-	<section class="item monster-action" data-item-id="{{item._id}}">
-		<div class="feature-description inline-children">
-			<span class="feature-name">{{item.name}}</span>
-			<span class="description">{{{getchathtml item ../actor}}}</span>
-		</div>
-	</section>
+		{{#if (notspecialaction item)}}
+			{{> featureBlock item=item actor=../actor}}
+		{{/if}}
 	{{/each}}
 	{{! Legendary Actions }}
-	<section class="monster-legendary">
-		
-	</section>
+	<h2 class="section-header" >{{localize "DND5E.LegAct"}}</h2>
+	<p>The {{actor.name}} can take [3] legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {{actor.name}} regains spent legendary actions at the start of its turn.</p>
+	{{#each (getactions features) as |item iid|}}
+		{{#if (islegendary item)}}{{> featureBlock item=item actor=../actor}}{{/if}}
+	{{/each}}
 </form>

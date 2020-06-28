@@ -50,6 +50,47 @@ Handlebars.registerHelper("hassave", (saves)=> {
 	}
 	return false;
 });
+function isMultiAttack(item) {
+	let name = item.name.toLowerCase().replace(/\s+/g, '');
+	return [
+		"multiattack",
+		"extraattack",
+		"extraattacks",
+		"multiattacks",
+		"multipleattacks",
+		"manyattacks"
+	].includes(name);
+}
+function isLegendaryAction(item) {
+	console.log(item);
+	return item.data.activation.type === "legendary";
+}
+function isLairAction(item) {
+	console.log(item);
+	return item.data.activation.type === "lair";
+}
+Handlebars.registerHelper("haslegendary", (features)=> {
+	return false;
+});
+Handlebars.registerHelper("islegendary", (item)=> {
+	return isLegendaryAction(item);
+});
+Handlebars.registerHelper("getmultiattack", (features)=> {
+	for (let f in features) {
+		let items = features[f].items;
+		for (let i in items) {
+			if (isMultiAttack(items[i])) {
+				console.log(items[i]);
+				return items[i];
+			}
+		}
+	}
+	return false;
+});
+Handlebars.registerHelper("notspecialaction", (item)=> {
+	// Handlebars has no negation in conditions afik, so we have to create one.
+	return !(isMultiAttack(item) || isLegendaryAction(item) || isLairAction(item));
+});
 Handlebars.registerHelper("getattacks", (features)=> {
 	for (let f in features) {
 		if (features[f].label == "Attacks") return features[f].items;

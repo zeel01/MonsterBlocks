@@ -12,21 +12,12 @@
 	font-size: 14px;
 }
 .monsterblock .flexcol {
-    display: flex;
-    flex-flow: column wrap;
+    display: block;
     height: 100%;
-    align-items: flex-start;
-}
-
-.monsterblock nav.sheet-tabs {
-	flex-grow: 0;
-}
-
-.monsterblock .editable > * {
-	width: 400px;
-	flex: 0;
-	margin-right: 40px;
-	/* max-width: 400px; */
+    width: 400px;
+    column-width: 400px;
+    column-gap: 40px;
+    column-fill: auto;
 }
 
 .monsterblock .sheet-header {
@@ -182,8 +173,11 @@
 .monsterblock .hit-label {
 	font-style: italic;
 }
-.monsterblock .inline-children p,
-.monsterblock .inline-children div {
+.monsterblock .inline-children .description > p:first-of-type,
+.monsterblock .inline-children .description > div:first-of-type {
 	display: inline;
+}
+.monsterblock .description {
+	line-height: 18px;
 }
 	
