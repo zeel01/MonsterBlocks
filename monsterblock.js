@@ -29,6 +29,14 @@ Hooks.on("renderActorSheet", ()=> {
     console.log(`Monster Block | removed "${template}" from _templateCache.`);
 })
 
+Hooks.on("renderMonsterBlock5e", (monsterblock, html, data)=> {
+	console.log(`Monster Block |`, data);
+	
+	let popup = monsterblock._element[0];
+	let anchorPos = popup.querySelector("#endAnchor").offsetLeft;
+	popup.style.width = anchorPos + 408 + "px";
+});
+
 Actors.registerSheet("dnd5e", MonsterBlock5e, {
     types: ["npc"],
     makeDefault: false
@@ -62,11 +70,9 @@ function isMultiAttack(item) {
 	].includes(name);
 }
 function isLegendaryAction(item) {
-	console.log(item);
 	return item.data.activation.type === "legendary";
 }
 function isLairAction(item) {
-	console.log(item);
 	return item.data.activation.type === "lair";
 }
 Handlebars.registerHelper("haslegendary", (features)=> {
