@@ -8,7 +8,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return mergeObject(super.defaultOptions, {
 			classes: ["monsterblock", "sheet", "actor"],
 		//	template: "modules/monsterblock/actor-sheet.html",
-			width: 856,
+			width: 416,
 			height: 800,
 			tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
 		});
@@ -30,11 +30,24 @@ Hooks.on("renderActorSheet", ()=> {
 })
 
 Hooks.on("renderMonsterBlock5e", (monsterblock, html, data)=> {
-	console.log(`Monster Block |`, data);
+	console.log(`Monster Block |`, monsterblock, html, data);
 	
 	let popup = monsterblock._element[0];
-	let anchorPos = popup.querySelector("#endAnchor").offsetLeft;
-	popup.style.width = anchorPos + 408 + "px";
+	let anchorPosL = popup.querySelector("#endAnchor").offsetLeft;
+	let anchorPosT = popup.querySelector("#endAnchor").offsetTop;
+		
+	popup.style.width = anchorPosL + 408 + "px";
+	
+	// Working on a more dynamic maximum height // let h = window.innerHeight - 72; // 72px Keeps the popup from covering the macro bar, plus some padding.
+	let h = monsterblock.options.height;
+	let w = monsterblock.options.width;
+	
+	if (anchorPosT < h) {
+		let shrink = (h - anchorPosT) / 2;
+		let nh = h - shrink;
+		if (anchorPosL < w) nh = anchorPosT;
+		popup.style.height = nh + 8 + "px";
+	}
 });
 
 Actors.registerSheet("dnd5e", MonsterBlock5e, {
