@@ -76,19 +76,24 @@ function isLairAction(item) {
 	return item.data.activation.type === "lair";
 }
 Handlebars.registerHelper("haslegendary", (features)=> {
+	for (let feature of features) {
+		if (feature.label == "Actions") {
+			let items = feature.items;
+			for (let item of items) {
+				if (item.data.activation.type === "legendary") return true;
+			}
+		}
+	}
 	return false;
 });
 Handlebars.registerHelper("islegendary", (item)=> {
 	return isLegendaryAction(item);
 });
 Handlebars.registerHelper("getmultiattack", (features)=> {
-	for (let f in features) {
-		let items = features[f].items;
-		for (let i in items) {
-			if (isMultiAttack(items[i])) {
-				console.log(items[i]);
-				return items[i];
-			}
+	for (let feature of features) {
+		let items = feature.items;
+		for (let item of items) {
+			if (isMultiAttack(item)) return item;
 		}
 	}
 	return false;
@@ -98,18 +103,18 @@ Handlebars.registerHelper("notspecialaction", (item)=> {
 	return !(isMultiAttack(item) || isLegendaryAction(item) || isLairAction(item));
 });
 Handlebars.registerHelper("getattacks", (features)=> {
-	for (let f in features) {
-		if (features[f].label == "Attacks") return features[f].items;
+	for (let feature of features) {
+		if (feature.label == "Attacks") return feature.items;
 	}
 });
 Handlebars.registerHelper("getactions", (features)=> {
-	for (let f in features) {
-		if (features[f].label == "Actions") return features[f].items;
+	for (let feature of features) {
+		if (feature.label == "Actions") return feature.items;
 	}
 });
 Handlebars.registerHelper("getfeatures", (features)=> {
-	for (let f in features) {
-		if (features[f].label == "Features") return features[f].items;
+	for (let feature of features) {
+		if (feature.label == "Features") return feature.items;
 	}
 });
 Handlebars.registerHelper("getattacktype", (attack)=> {

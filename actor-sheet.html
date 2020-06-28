@@ -184,11 +184,14 @@
 		{{/if}}
 	{{/each}}
 	{{! Legendary Actions }}
-	<h2 class="section-header" >{{localize "DND5E.LegAct"}}</h2>
-	<p>The {{actor.name}} can take [3] legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {{actor.name}} regains spent legendary actions at the start of its turn.</p>
-	{{#each (getactions features) as |item iid|}}
-		{{#if (islegendary item)}}{{> featureBlock item=item actor=../actor}}{{/if}}
-	{{/each}}
+	{{#if (haslegendary features)}}
+		<h2 class="section-header" >{{localize "DND5E.LegAct"}}</h2>
+		<p>The {{actor.name}} can take [3] legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {{actor.name}} regains spent legendary actions at the start of its turn.</p>
+		{{#each (getactions features) as |item iid|}}
+			{{#if (islegendary item)}}{{> featureBlock item=item actor=../actor}}{{/if}}
+		{{/each}}
+	{{/if}}
 	
-	<span id="endAnchor">Anchor</span>
+	<!-- This element is required to calculate the actual width of the column layout in order to size the popup to the sheet -->
+	<span id="endAnchor"></span>
 </form>
