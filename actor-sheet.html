@@ -3,7 +3,7 @@
 		<section id="monster-identity">
 			<h1 class="charname">{{actor.name}}<!--input name="name" type="text" value="{{actor.name}}" placeholder="Name"/--></h1>
 			<p class="chartype">{{lookup config.actorSizes data.traits.size}}<span class="sep">&nbsp;</span>{{data.details.type}}<span class="sep">, </span>{{data.details.alignment}}</p>
-			<img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
+			<figure class="profile-image" style="background-image: url({{actor.img}});" title="{{actor.name}}" data-edit="img"/></figure>
 		</section>
 		<section id="monster-attributes1">
 			<ul class="attributes">

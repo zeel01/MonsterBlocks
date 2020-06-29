@@ -46,7 +46,7 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data)=> {
 		let shrink = (h - anchorPosT) / 2;
 		let nh = h - shrink;
 		if (anchorPosL < w) nh = anchorPosT;
-		popup.style.height = nh + 8 + "px";
+		popup.style.height = nh + 12 + "px";
 	}
 });
 

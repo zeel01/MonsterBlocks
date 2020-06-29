@@ -1,3 +1,11 @@
+.window-app .window-header {
+	padding-right: 7ch;
+}
+.window-header .close {
+	position: absolute;
+	right: 0px;
+}
+
 .monsterblock {
 	width: 100%;
 	--heading-color: #58170D;
@@ -40,18 +48,23 @@
 	font-family: serif;
 	font-variant: small-caps;
 	font-weight: bold;
+	width: 290px;
 }
 .monsterblock .chartype {
 	font-style: italic;
 	margin: 0;
 }
-.monsterblock img.profile {
+.monsterblock .profile-image {
+	background-size: contain;
+	background-position: right;
+	background-repeat: no-repeat;
 	border: none;
 	position: absolute;
 	height: 110px;
-	width: auto;
+	width: 110px;
 	right: 0;
 	top: 0;
+	margin: 0;
 }
 
 .monsterblock .attributes, 
@@ -61,8 +74,8 @@
 	padding: 0;
 	margin: 0;
 }
-.monsterblock .attributes {
-	font-size: 
+.monsterblock #monster-attributes1 .attributes {
+	width: 290px;
 }
 
 .monsterblock .ability-scores .ability {
