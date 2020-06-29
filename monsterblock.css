@@ -78,7 +78,7 @@
 	width: 290px;
 }
 
-.monsterblock .ability-scores .ability {
+.monsterblock item.ability-scores .ability {
 	text-align: center;
 }
 
