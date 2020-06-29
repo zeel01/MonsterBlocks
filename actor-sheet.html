@@ -151,7 +151,7 @@
 	<section class="item monster-feature" data-item-id="{{item._id}}">
 		<div class="feature-description inline-children">
 			<span class="feature-name">{{item.name}}</span>
-			<span class="description">{{{getchathtml item actor}}}</span>
+			<span class="description">{{{enrichhtml item.data.description.value}}}</span>
 		</div>
 	</section>
 	{{/inline}}
@@ -173,14 +173,14 @@
 			<span>reach {{item.data.range.value}} {{item.data.range.units}}.</span><br>
 			<span class="hit-label">Hit:&nbsp;</span>
 			<span>{{! average damage }} ({{item.data.damage.parts.[0].[0]}}) {{item.data.damage.parts.[0].[1]}} damage.&nbsp;</span>
-			<span class="description">{{{getchathtml item ../actor}}}</span>
+			<span class="description">{{{enrichhtml item.data.description.value}}}</span>
 		</div>
 	</section>
 	{{/if}}
 	{{/each}}
 	{{#each (getactions features) as |item iid|}}
 		{{#if (notspecialaction item)}}
-			{{> featureBlock item=item actor=../actor}}
+			{{> featureBlock item=item}}
 		{{/if}}
 	{{/each}}
 	{{! Legendary Actions }}
@@ -188,7 +188,7 @@
 		<h2 class="section-header" >{{localize "DND5E.LegAct"}}</h2>
 		<p>The {{actor.name}} can take [3] legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {{actor.name}} regains spent legendary actions at the start of its turn.</p>
 		{{#each (getactions features) as |item iid|}}
-			{{#if (islegendary item)}}{{> featureBlock item=item actor=../actor}}{{/if}}
+			{{#if (islegendary item)}}{{> featureBlock item=item}}{{/if}}
 		{{/each}}
 	{{/if}}
 	

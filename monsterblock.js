@@ -145,3 +145,6 @@ Handlebars.registerHelper("getattackbonus", (attack, data)=> {
 Handlebars.registerHelper("getchathtml", (item, actor)=> {
 	return game.actors.get(actor._id).getOwnedItem(item._id).getChatData().description.value;
 });
+Handlebars.registerHelper("enrichhtml", (str)=> {
+	return TextEditor.enrichHTML(str, {secrets: true});
+});
