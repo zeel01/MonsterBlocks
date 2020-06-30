@@ -13,6 +13,10 @@
 				<a class="switch" data-control="hide-profile-image"
 				>{{#if flags.hide-profile-image}}Show{{else}}Hide{{/if}} profile image.</a>
 			</li>
+			<li>
+				<a class="switch" data-control="show-lair-actions"
+				>{{#if flags.show-lair-actions}}Hide{{else}}Show{{/if}} lair actions.</a>
+			</li>
 		</ul>
 	</nav>
     <header class="sheet-header">
@@ -210,6 +214,15 @@
 		{{#each (getactions features) as |item iid|}}
 			{{#if (islegendary item)}}{{> featureBlock item=item}}{{/if}}
 		{{/each}}
+	{{/if}}
+	{{! Lair Actions }}
+	{{#if (haslair features)}}
+	{{#if flags.show-lair-actions}}
+		<h2 class="section-header" >Lair {{localize "DND5E.ActionPl"}}</h2>
+		{{#each (getactions features) as |item iid|}}
+			{{#if (islair item)}}{{> featureBlock item=item}}{{/if}}
+		{{/each}}
+	{{/if}}
 	{{/if}}
 	
 	<!-- This element is required to calculate the actual width of the column layout in order to size the popup to the sheet -->

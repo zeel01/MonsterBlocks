@@ -84,7 +84,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				if (feature.label == "Actions") {
 					let items = feature.items;
 					for (let item of items) {
-						if (item.data.activation.type === "legendary") return true;
+						if (this.isLegendaryAction(item)) return true;
+					}
+				}
+			}
+			return false;
+		});
+		Handlebars.registerHelper("haslair", (features)=> {
+			for (let feature of features) {
+				if (feature.label == "Actions") {
+					let items = feature.items;
+					for (let item of items) {
+						if (this.isLairAction(item)) return true;
 					}
 				}
 			}
@@ -92,6 +103,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		Handlebars.registerHelper("islegendary", (item)=> {
 			return this.isLegendaryAction(item);
+		});
+		Handlebars.registerHelper("islair", (item)=> {
+			return this.isLairAction(item);
 		});
 		Handlebars.registerHelper("getmultiattack", ()=> {
 			for (let item of this.actor.items) {
