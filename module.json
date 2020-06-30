@@ -3,7 +3,7 @@
 	"title": "Monster Blocks",
 	"description": "An NPC sheet designed to emulate standard 5e monster stat blocks as faithfully as possible.",
 	"author": "zeel",
-	"version": "0.2.1",
+	"version": "0.3.1",
 	"minimumCoreVersion": "0.6.2",
 	"compatibleCoreVersion": "0.6.4",
 	"esmodules": [

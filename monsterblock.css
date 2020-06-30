@@ -37,6 +37,10 @@
 	background: none;
 	padding: 0;
 }
+.monsterblock a.inline-roll {
+	border: none;
+	background: none;
+}
 .monsterblock .inline-secrets
 .secret > :first-child {
 	display: inline;

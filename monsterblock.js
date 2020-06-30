@@ -170,7 +170,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		Handlebars.registerHelper("damagetype", (item)=> {
 			return item.data.damage.parts[0][1];
-		});		
+		});
+		Handlebars.registerHelper("toinlineroll", (flag, options) => {
+			console.debug(flag, options.fn(this));
+			if (!flag) return options.fn(this);
+			
+			return TextEditor.enrichHTML(`[[/gmr ${options.fn(this)}]]`);
+		});
 	}
 }
 

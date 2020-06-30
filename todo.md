@@ -10,6 +10,7 @@
 	- Switch to toggle this feature on and off
 - Fix it so that the roll tooltips work on attacks
 - Add the ability to roll from the sheet. Might implement this as inline rolls, or try to do something more.
+	- ~~Inline damage rolls~~
 - Make the photo enlarge when hovering over it.
 - Still not happy with the way the box sizing works.
 - Make the background more yellowed like the book stat blocks.

@@ -3,7 +3,11 @@
 		<ul>
 			<li>
 				<a class="switch" data-control="attack-descriptions"
-				>{{#if flags.attack-descriptions}}Hide{{else}}Show{{/if}} automatic attack descriptions</a>
+				>{{#if flags.attack-descriptions}}Hide{{else}}Show{{/if}} automatic attack descriptions.</a>
+			</li>
+			<li>
+				<a class="switch" data-control="auto-inline-rolls"
+				>{{#if flags.auto-inline-rolls}}Hide{{else}}Show{{/if}} automatic inline rolls.</a>
 			</li>
 			<li>
 				<a class="switch" data-control="inline-secrets"
@@ -194,7 +198,7 @@
 				<span class="attack-bonus">{{numberFormat (getattackbonus item ../data) decimals=0 sign=true}} to hit, </span>
 				<span>reach {{item.data.range.value}} {{item.data.range.units}}.</span><br>
 				<span class="hit-label">Hit:&nbsp;</span>
-				<span>{{averagedamage item}} ({{damageformula item}}) {{damagetype item}} damage.&nbsp;</span>
+				<span>{{averagedamage item}} ({{#toinlineroll ../flags.auto-inline-rolls}}{{damageformula item}}{{/toinlineroll}}) {{damagetype item}} damage.&nbsp;</span>
 			</span>
 			{{/if}}
 			<span class="description">{{{enrichhtml item.data.description.value}}}</span>
