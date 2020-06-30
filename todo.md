@@ -1,6 +1,6 @@
 # TODO:
-- Handle ranged and spell attacks properly.
-- Figure out how to specify number of targets for an attack (if possible)
+- ~~Handle ranged and spell attacks properly.~~
+- ~~Figure out how to specify number of targets for an attack (if possible)~~ *doesn't appear to be possible, but I'm not sure an exception to the "one target" exists*
 - ~~Calculate damage bonus and average damage.~~
 - ~~Switches to hide or show the automatically generated attack descriptions.~~
 - ~~Switch to show or hide secrets.~~
@@ -13,6 +13,7 @@
 - Fix it so that the roll tooltips work on attacks
 - Add the ability to roll from the sheet. Might implement this as inline rolls, or try to do something more.
 	- ~~Inline damage rolls~~
+	- Inline Attack rolls
 - ~~Make the photo enlarge when hovering over it.~~
 - Still not happy with the way the box sizing works.
 - ~~Make the background more yellowed like the book stat blocks.~~

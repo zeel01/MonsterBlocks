@@ -24,7 +24,6 @@
 					</li>
 				</ul>
 			</li>
-			
 			<li>
 				<a>Descriptions</a>
 				<ul>
@@ -235,7 +234,7 @@
 			<span class="generated-text">
 				<span class="attack-type">{{localize (getattacktype item)}}</span>
 				<span class="attack-bonus">{{numberFormat (getattackbonus item ../data) decimals=0 sign=true}} to hit, </span>
-				<span>reach {{item.data.range.value}} {{item.data.range.units}}.</span><br>
+				<span>{{#if (israngedattack item)}}range{{else}}reach{{/if}} {{item.data.range.value}} {{#if (israngedattack item)}}/ {{item.data.range.long}}{{/if}} {{item.data.range.units}}., one target.</span>
 				<span class="hit-label">Hit:&nbsp;</span>
 				<span>{{averagedamage item}} ({{#toinlineroll ../flags.auto-inline-rolls}}{{damageformula item}}{{/toinlineroll}}) {{damagetype item}} damage.&nbsp;</span>
 			</span>

@@ -141,6 +141,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		Handlebars.registerHelper("getattacktype", (attack)=> {
 			return "DND5E.Action" + attack.data.actionType.toUpperCase();
 		});
+		Handlebars.registerHelper("israngedattack", (attack)=> {
+			return ["rwak", "rsak"].includes(attack.data.actionType);
+		});
 		Handlebars.registerHelper("getattackbonus", (attack, data)=> {
 			let attr = attack.data.ability;
 			let abilityBonus = data.abilities[attr].mod;
