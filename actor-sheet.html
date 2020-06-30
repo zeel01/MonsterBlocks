@@ -1,58 +1,59 @@
 <form class="{{cssClass}} flexcol{{#if flags.inline-secrets}} inline-secrets{{/if}}" autocomplete="off">
+	<nav class="switches">
+		<i class="fas fa-cog"></i>
+		<ul>
+			<li>
+				<a class="switch" data-control="attack-descriptions">Attack descriptions</a>
+				<ul>
+					<li>
+						<a class="switch" data-control="attack-descriptions"
+						>{{#if flags.attack-descriptions}}Hide{{else}}Show{{/if}} generated</a>
+					</li>
+					<li>
+						<a class="switch" data-control="auto-inline-rolls"
+						>{{#if flags.auto-inline-rolls}}Hide{{else}}Show{{/if}} inline rolls</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a class="switch" data-control="casting-feature">Spellcasting</a>
+				<ul>
+					<li>
+						<a class="switch" data-control="casting-feature"
+						>{{#if flags.casting-feature}}Hide{{else}}Show{{/if}} generated</a>
+					</li>
+				</ul>
+			</li>
+			
+			<li>
+				<a>Descriptions</a>
+				<ul>
+					<li>
+						<a class="switch" data-control="inline-secrets"
+						>{{#if flags.inline-secrets}}Disable{{else}}Enable{{/if}} inline secrets</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a class="switch" data-control="hide-profile-image"
+				>{{#if flags.hide-profile-image}}Show{{else}}Hide{{/if}} profile image</a>
+			</li>
+			<li>
+				<a class="switch" data-control="show-lair-actions"
+				>{{#if flags.show-lair-actions}}Hide{{else}}Show{{/if}} lair actions</a>
+				
+			</li>
+		</ul>
+	</nav>	
 	<header class="sheet-header">
 		<section id="monster-identity">
 			<h1 class="charname">{{actor.name}}<!--input name="name" type="text" value="{{actor.name}}" placeholder="Name"/-->
-				<nav class="switches">
-					<i class="fas fa-cog"></i>
-					<ul>
-						<li>
-							<a class="switch" data-control="attack-descriptions">Attack descriptions</a>
-							<ul>
-								<li>
-									<a class="switch" data-control="attack-descriptions"
-									>{{#if flags.attack-descriptions}}Hide{{else}}Show{{/if}} generated</a>
-								</li>
-								<li>
-									<a class="switch" data-control="auto-inline-rolls"
-									>{{#if flags.auto-inline-rolls}}Hide{{else}}Show{{/if}} inline rolls</a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a class="switch" data-control="casting-feature">Spellcasting</a>
-							<ul>
-								<li>
-									<a class="switch" data-control="casting-feature"
-									>{{#if flags.casting-feature}}Hide{{else}}Show{{/if}} generated</a>
-								</li>
-							</ul>
-						</li>
-						
-						<li>
-							<a>Descriptions</a>
-							<ul>
-								<li>
-									<a class="switch" data-control="inline-secrets"
-									>{{#if flags.inline-secrets}}Disable{{else}}Enable{{/if}} inline secrets</a>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<a class="switch" data-control="hide-profile-image"
-							>{{#if flags.hide-profile-image}}Show{{else}}Hide{{/if}} profile image</a>
-						</li>
-						<li>
-							<a class="switch" data-control="show-lair-actions"
-							>{{#if flags.show-lair-actions}}Hide{{else}}Show{{/if}} lair actions</a>
-							
-						</li>
-					</ul>
-				</nav>
+				
 			</h1>
 			<p class="chartype">{{lookup config.actorSizes data.traits.size}}<span class="sep">&nbsp;</span>{{data.details.type}}<span class="sep">, </span>{{data.details.alignment}}</p>
 			{{#unless flags.hide-profile-image}}<figure class="profile-image" style="background-image: url({{actor.img}});" title="{{actor.name}}" data-edit="img"/></figure>{{/unless}}
 		</section>
-		<section id="monster-attributes1">
+		<section class="monster-attributes1">
 			<ul class="attributes">
 				<li class="attribute">
 					<h4 class="attribute-name box-title">{{ localize "DND5E.ArmorClass" }} </h4>
@@ -75,7 +76,7 @@
                 </li>
 			</ul>
 		</section>
-		<section id="monster-abilities">
+		<section class="monster-abilities">
 			<ul class="ability-scores flexrow">
             {{#each data.abilities as |ability id|}}
                 <li class="ability{{#if ability.proficient}} proficient{{/if}}" data-ability="{{id}}">
@@ -86,7 +87,7 @@
             {{/each}}
             </ul>
 		</section>
-		<section id="monster-attributes2">
+		<section class="monster-attributes2">
 			<ul class="attributes">
 				{{#if (hassave data.abilities)}}
 				<li class="monster-saves">

@@ -1,5 +1,6 @@
 .window-app .window-header {
 	padding-right: 7ch;
+	padding-left: 30px;
 }
 .window-header .close {
 	position: absolute;
@@ -12,15 +13,24 @@
 	--divider-color: rgba(140, 42, 42, 1);
 	--divider-color-end: rgba(140, 42, 42, 0);
 }
+.monsterblock .window-content {
+	background: url(/ui/parchment.jpg), #ffc80038;
+	background-repeat: repeat;
+	background-blend-mode: luminosity;
+}
+.monsterblock .window-content::before {
+
+}
 .monsterblock .switches {
-	display: inline;
-	z-index: 50;
-	position: relative;
+	/* background: red; */
+	width: 29px;
+	padding-left: 6px;
+	height: 24px;
+	position: absolute;
 	font-size: 14px;
-	top: -2px;
-	color: #afadad;
-	font-family: "Signika", sans-serif;
-	font-weight: normal;
+	top: 7px;
+	left: 2px;
+	color: #aaa;
 }
 .monsterblock .switches a {
 	width: 100%;
@@ -32,12 +42,16 @@
 	top: 0;
 	display: none;
 	position: absolute;
-	background-color: #dcdace;
+	background-color: #e9e0c3;
 	color: var(--heading-color);
 	padding: 0;
 	left: 100%;
 	z-index: 100;
 	box-shadow: -1px 1px 5px 0px black;
+}
+.monsterblock .switches > ul {
+	top: 23px;
+	left: -2px;
 }
 .monsterblock .switches:hover > ul {
 	display: block;
@@ -143,7 +157,7 @@
 	padding: 0;
 	margin: 0;
 }
-.monsterblock #monster-attributes1 .attributes {
+.monsterblock .monster-attributes1 .attributes {
 	width: 290px;
 }
 
