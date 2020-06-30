@@ -131,9 +131,13 @@
 	top: 0;
 	margin: 0;
 }
-
-.monsterblock .attributes, 
-.monsterblock .ability-scores {
+.monsterblock .profile-image:hover {
+	width: 300px;
+	height: 300px;
+	/* top: -40px; */
+	z-index: 75;
+}
+.monsterblock .attributes, .monsterblock .ability-scores {
 	list-style: none;
 	color: var(--heading-color);
 	padding: 0;
@@ -143,7 +147,7 @@
 	width: 290px;
 }
 
-.monsterblock item.ability-scores .ability {
+.monsterblock .ability-scores .ability {
 	text-align: center;
 }
 

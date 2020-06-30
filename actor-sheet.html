@@ -78,7 +78,7 @@
 		<section id="monster-abilities">
 			<ul class="ability-scores flexrow">
             {{#each data.abilities as |ability id|}}
-                <li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
+                <li class="ability{{#if ability.proficient}} proficient{{/if}}" data-ability="{{id}}">
                     <h4 class="ability-name box-title">{{id}}</h4>
 					<span class="attr-value">{{ability.value}} </span>\
 					<span class="ability-mod" title="Modifier">({{numberFormat ability.mod decimals=0 sign=true}})</span>\
