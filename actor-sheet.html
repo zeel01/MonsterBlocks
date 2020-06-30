@@ -1,31 +1,54 @@
 <form class="{{cssClass}} flexcol{{#if flags.inline-secrets}} inline-secrets{{/if}}" autocomplete="off">
-	<nav class="switches">
-		<ul>
-			<li>
-				<a class="switch" data-control="attack-descriptions"
-				>{{#if flags.attack-descriptions}}Hide{{else}}Show{{/if}} automatic attack descriptions.</a>
-			</li>
-			<li>
-				<a class="switch" data-control="auto-inline-rolls"
-				>{{#if flags.auto-inline-rolls}}Hide{{else}}Show{{/if}} automatic inline rolls.</a>
-			</li>
-			<li>
-				<a class="switch" data-control="inline-secrets"
-				>{{#if flags.inline-secrets}}Disable{{else}}Enable{{/if}} inline secrets.</a>
-			</li>
-			<li>
-				<a class="switch" data-control="hide-profile-image"
-				>{{#if flags.hide-profile-image}}Show{{else}}Hide{{/if}} profile image.</a>
-			</li>
-			<li>
-				<a class="switch" data-control="show-lair-actions"
-				>{{#if flags.show-lair-actions}}Hide{{else}}Show{{/if}} lair actions.</a>
-			</li>
-		</ul>
-	</nav>
-    <header class="sheet-header">
+	<header class="sheet-header">
 		<section id="monster-identity">
-			<h1 class="charname">{{actor.name}}<!--input name="name" type="text" value="{{actor.name}}" placeholder="Name"/--></h1>
+			<h1 class="charname">{{actor.name}}<!--input name="name" type="text" value="{{actor.name}}" placeholder="Name"/-->
+				<nav class="switches">
+					<i class="fas fa-cog"></i>
+					<ul>
+						<li>
+							<a class="switch" data-control="attack-descriptions">Attack descriptions</a>
+							<ul>
+								<li>
+									<a class="switch" data-control="attack-descriptions"
+									>{{#if flags.attack-descriptions}}Hide{{else}}Show{{/if}} generated</a>
+								</li>
+								<li>
+									<a class="switch" data-control="auto-inline-rolls"
+									>{{#if flags.auto-inline-rolls}}Hide{{else}}Show{{/if}} inline rolls</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a class="switch" data-control="casting-feature">Spellcasting</a>
+							<ul>
+								<li>
+									<a class="switch" data-control="casting-feature"
+									>{{#if flags.casting-feature}}Hide{{else}}Show{{/if}} generated</a>
+								</li>
+							</ul>
+						</li>
+						
+						<li>
+							<a>Descriptions</a>
+							<ul>
+								<li>
+									<a class="switch" data-control="inline-secrets"
+									>{{#if flags.inline-secrets}}Disable{{else}}Enable{{/if}} inline secrets</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a class="switch" data-control="hide-profile-image"
+							>{{#if flags.hide-profile-image}}Show{{else}}Hide{{/if}} profile image</a>
+						</li>
+						<li>
+							<a class="switch" data-control="show-lair-actions"
+							>{{#if flags.show-lair-actions}}Hide{{else}}Show{{/if}} lair actions</a>
+							
+						</li>
+					</ul>
+				</nav>
+			</h1>
 			<p class="chartype">{{lookup config.actorSizes data.traits.size}}<span class="sep">&nbsp;</span>{{data.details.type}}<span class="sep">, </span>{{data.details.alignment}}</p>
 			{{#unless flags.hide-profile-image}}<figure class="profile-image" style="background-image: url({{actor.img}});" title="{{actor.name}}" data-edit="img"/></figure>{{/unless}}
 		</section>
@@ -36,7 +59,7 @@
 					<span class="attr-value">{{data.attributes.ac.value}}</span>
 				</li>
 				<li class="attribute health">
-					<h4 class="attribute-name box-title rollable">{{ localize "DND5E.Health" }} </h4>
+					<h4 class="attribute-name box-title">{{ localize "DND5E.Health" }} </h4>
 					<span class="attr-value">{{data.attributes.hp.value}}</span>
                     <span class="sep">&nbsp;/&nbsp;</span>
 					<span class="attr-value">{{data.attributes.hp.max}}</span>
@@ -56,7 +79,7 @@
 			<ul class="ability-scores flexrow">
             {{#each data.abilities as |ability id|}}
                 <li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
-                    <h4 class="ability-name box-title rollable">{{id}}</h4>
+                    <h4 class="ability-name box-title">{{id}}</h4>
 					<span class="attr-value">{{ability.value}} </span>\
 					<span class="ability-mod" title="Modifier">({{numberFormat ability.mod decimals=0 sign=true}})</span>\
                 </li>
@@ -72,7 +95,7 @@
 					{{#each data.abilities as |ability id|}}
 					{{#if ability.proficient}}
 						<li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
-							<span class="ability-name rollable">{{id}}</span>
+							<span class="ability-name">{{id}}</span>
 							<span class="ability-save" title="Saving Throw">&nbsp;{{numberFormat ability.save decimals=0 sign=true}}</span>\
 						</li>
 					{{/if}}
@@ -87,7 +110,7 @@
 					{{#each data.skills as |skill s|}}
 					{{#if skill.value}}
 						<li class="skill {{#if skill.value}}proficient{{/if}}" data-skill="{{s}}">
-							<span class="skill-name rollable">{{skill.label}}</span>
+							<span class="skill-name">{{skill.label}}</span>
 							<span class="skill-mod">&nbsp;{{numberFormat skill.total decimals=0 sign=true}}</span>
 						</li>
 					{{/if}}
@@ -163,8 +186,40 @@
 	</section>
 	{{/inline}}
 	
+	{{#*inline "spellcasting"}}
+	<section class="item monster-feature spellcasting-trait" data-item-id="{{item._id}}">
+		<div class="feature-description inline-children">
+			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>
+			<span class="description">The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster. Its spellcasting ability is {{! casting ability}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus) decimals=0 sign=true}} to hit with spell attacks). The {{actor.name}} has following {{! spell class is unavailable}} spells prepared:</span>
+			<ul class="spell-list">
+			{{#each spellbook as |spelllevel id|}}
+				<li>
+					<span class="spell-level-name">{{localize (spelllevellocalization spelllevel.dataset.level)}}{{#unless spelllevel.dataset.level}}s{{/unless}}</span>
+					<span class="spell-slots">{{! spell slots count}}</span>
+					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
+					{{#each spelllevel.spells as |spell id|}}
+						<li class="spell">
+							<span class="spell-name">{{spell.name}}</span>
+						</li>
+					{{/each}}
+					</ul>
+				</li>
+			{{/each}}
+			</ul>
+		</div>
+	</section>
+	{{/inline}}
+	
+	{{#if flags.casting-feature}}
+		{{> spellcasting spellbook=spellbook actor=actor}}
+	{{/if}}
+	
 	{{#each (getfeatures features) as |item iid|}}
-		{{#if (notspecialaction item)}}{{> featureBlock item=item}}{{/if}}
+		{{#if (notspecialaction item)}}
+		{{#unless (and ../flags.casting-feature (isspellcasting item))}}
+			{{> featureBlock item=item}}
+		{{/unless}}
+		{{/if}}
 	{{/each}}
 	<h2 class="section-header" >{{localize "DND5E.ActionPl"}}</h2>
 	{{#if (getmultiattack)}}
@@ -173,7 +228,7 @@
 	{{#each (getattacks features) as |item iid|}}
 	{{#if (notspecialaction item)}}
 	<section class="item monster-action" data-item-id="{{item._id}}">
-		<div class="attack-description rollable inline-children">
+		<div class="attack-description inline-children">
 			<span class="attack-name item-name">{{item.name}}</span>
 			{{#if ../flags.attack-descriptions}}
 			<span class="generated-text">

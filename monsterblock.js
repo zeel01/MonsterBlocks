@@ -61,6 +61,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	isLairAction(item) {
 		return item.data.activation.type === "lair";
 	}
+	isSpellcasting(item) {
+		return item.name.toLowerCase().replace(/\s+/g, '') === "spellcasting";
+	}
 	createHandlebarsHelpers() {
 		Handlebars.registerHelper("hascontents", (obj)=> {
 			return Object.keys(obj).length > 0;
@@ -103,6 +106,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		Handlebars.registerHelper("islegendary", (item)=> {
 			return this.isLegendaryAction(item);
+		});
+		Handlebars.registerHelper("isspellcasting", (item)=> {
+			return this.isSpellcasting(item);
 		});
 		Handlebars.registerHelper("islair", (item)=> {
 			return this.isLairAction(item);
@@ -177,6 +183,40 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			
 			return TextEditor.enrichHTML(`[[/gmr ${options.fn(this)}]]`);
 		});
+		Handlebars.registerHelper("spelllevellocalization", (level)=> {
+			return "DND5E.SpellLevel" + level;
+		});
+		Handlebars.registerHelper("getspellattackbonus", ()=> {
+			let data = this.actor.data.data;
+			let attr = data.attributes.spellcasting;
+			if (!attr) return 0;
+			let abilityBonus = data.abilities[attr].mod;
+			let profBonus = data.attributes.prof;
+			
+			return abilityBonus + profBonus;
+		});
+		
+		// Logical operations
+		Handlebars.registerHelper("not", (arg)=> {
+			return !arg;
+		});
+		Handlebars.registerHelper("and", (...args)=> {
+			args.pop();
+			console.debug(args);
+			return args.reduce((v, c) => v && c);
+		});
+		Handlebars.registerHelper("or", (...args)=> {
+			args.pop();
+			return args.reduce((v, c) => v || c);
+		});
+		
+		
+		Handlebars.registerHelper("formatordinal", (number)=> {
+			if (number == 1) return number + "st";
+			if (number == 2) return number + "nd";
+			if (number == 3) return number + "rd";
+			return number + "th";
+		});
 	}
 }
 
@@ -191,7 +231,7 @@ Hooks.on("renderActorSheet", ()=> {
 })
 
 Hooks.on("renderMonsterBlock5e", (monsterblock, html, data)=> {
-	//console.debug(`Monster Block |`, monsterblock, html, data);
+	console.debug(`Monster Block |`, monsterblock, html, data);
 	
 	let popup = monsterblock._element[0];
 	let anchorPosL = popup.querySelector("#endAnchor").offsetLeft;
@@ -207,7 +247,7 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data)=> {
 		let shrink = (h - anchorPosT) / 2;
 		let nh = h - shrink;
 		if (anchorPosL < w) nh = anchorPosT;
-		popup.style.height = nh + 38 + "px";
+		popup.style.height = nh + 16 + "px";
 	}
 });
 

@@ -5,9 +5,11 @@
 - ~~Switches to hide or show the automatically generated attack descriptions.~~
 - ~~Switch to show or hide secrets.~~
 - Spellcasting
-	- Generate spellcasting feature
+	- ~~Generate spellcasting feature~~
 	- Include links to spells
-	- Switch to toggle this feature on and off
+	- ~~Switch to toggle this feature on and off~~
+	- Make it work with natural casters
+	- Fix at-will and other a-typical spells
 - Fix it so that the roll tooltips work on attacks
 - Add the ability to roll from the sheet. Might implement this as inline rolls, or try to do something more.
 	- ~~Inline damage rolls~~

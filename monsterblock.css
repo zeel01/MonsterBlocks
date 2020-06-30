@@ -13,23 +13,55 @@
 	--divider-color-end: rgba(140, 42, 42, 0);
 }
 .monsterblock .switches {
-	margin: -8px;
-	column-span: all;
-	height: 36px;
+	display: inline;
+	z-index: 50;
+	position: relative;
+	font-size: 14px;
+	top: -2px;
+	color: #afadad;
+	font-family: "Signika", sans-serif;
+	font-weight: normal;
+}
+.monsterblock .switches a {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
 }
 .monsterblock .switches ul {
-	display: flex;
-	flex-direction: row;
+	margin: 0;
+	top: 0;
+	display: none;
 	position: absolute;
-	background-color: gold;
-	width: 100%;
-	padding: 2px;
+	background-color: #dcdace;
+	color: var(--heading-color);
+	padding: 0;
+	left: 100%;
+	z-index: 100;
+	box-shadow: -1px 1px 5px 0px black;
+}
+.monsterblock .switches:hover > ul {
+	display: block;
+}
+.monsterblock .switches li a:not(:only-child):after {
+	display: block;
+	content: '>';
+	position: absolute;
+	right: .2em;
+	top: 0;
+}
+.monsterblock .switches li:hover > ul {
+	display: block;
 }
 .monsterblock .switches li {
+	margin: 0;
+	width: 200px;
+	position: relative;
 	display: inline-block;
-	/* flex: 1; */
-	padding-right: 8px;
+	padding: 2px;
+	padding-right: 14px;
 	padding-left: 8px;
+	border-left: 3px solid var(--divider-color);
+	border-bottom: 1px dashed gray;
 }
 .monsterblock .inline-secrets .secret {
 	display: inline;
@@ -44,9 +76,6 @@
 .monsterblock .inline-secrets
 .secret > :first-child {
 	display: inline;
-}
-.monsterblock .switch {
-	
 }
 .monsterblock form {
 	font-size: 0px;
@@ -162,6 +191,12 @@
 
 .monsterblock .inline-list li:last-of-type:after {
     content: '';
+}
+.monsterblock .spell-level-name:after {
+	content: ': ';
+}
+.monsterblock .spell-list {
+	margin-top: 14px;
 }
 
 .monsterblock .monster-saves .ability {
