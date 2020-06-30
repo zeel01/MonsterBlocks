@@ -1,4 +1,3 @@
-
 <form class="{{cssClass}} flexcol" autocomplete="off">
 	<nav class="switches">
 		<ul>
@@ -163,11 +162,11 @@
 	{{/inline}}
 	
 	{{#each (getfeatures features) as |item iid|}}
-		{{#if (notspecialaction item)}}{{> featureBlock item=item actor=../actor}}{{/if}}
+		{{#if (notspecialaction item)}}{{> featureBlock item=item}}{{/if}}
 	{{/each}}
 	<h2 class="section-header" >{{localize "DND5E.ActionPl"}}</h2>
-	{{#if (getmultiattack features)}}
-		{{> featureBlock item=(getmultiattack features) actor=actor}}
+	{{#if (getmultiattack)}}
+		{{> featureBlock item=(getmultiattack)}}
 	{{/if}}
 	{{#each (getattacks features) as |item iid|}}
 	{{#if (notspecialaction item)}}

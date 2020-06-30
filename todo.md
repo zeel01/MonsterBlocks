@@ -1,6 +1,7 @@
 # TODO:
 - Handle ranged and spell attacks properly.
 - Figure out how to specify number of targets for an attack (if possible)
+- Calculate damage bonus and average damage.
 - Switches to hide or show the automatically generated attack descriptions.
 - Switch to show or hide secrets.
 - Spellcasting

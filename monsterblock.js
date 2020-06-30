@@ -93,12 +93,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		Handlebars.registerHelper("islegendary", (item)=> {
 			return this.isLegendaryAction(item);
 		});
-		Handlebars.registerHelper("getmultiattack", (features)=> {
-			for (let feature of features) {
-				let items = feature.items;
-				for (let item of items) {
-					if (this.isMultiAttack(item)) return item;
-				}
+		Handlebars.registerHelper("getmultiattack", ()=> {
+			for (let item of this.actor.items) {
+				if (this.isMultiAttack(item.data)) return item.data;
 			}
 			return false;
 		});
