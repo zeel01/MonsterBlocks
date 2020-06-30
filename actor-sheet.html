@@ -34,33 +34,21 @@
 				<li class="attribute">
 					<h4 class="attribute-name box-title">{{ localize "DND5E.ArmorClass" }} </h4>
 					<span class="attr-value">{{data.attributes.ac.value}}</span>
-					<input name="data.attributes.ac.value" type="text" value="{{data.attributes.ac.value}}"
-                               data-dtype="Number" placeholder="10"/>
 				</li>
 				<li class="attribute health">
 					<h4 class="attribute-name box-title rollable">{{ localize "DND5E.Health" }} </h4>
 					<span class="attr-value">{{data.attributes.hp.value}}</span>
-					<input name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}"
-                               data-dtype="Number" placeholder="10"/>
                     <span class="sep">&nbsp;/&nbsp;</span>
 					<span class="attr-value">{{data.attributes.hp.max}}</span>
-                    <input name="data.attributes.hp.max" type="text" value="{{data.attributes.hp.max}}"
-                               data-dtype="Number" placeholder="10"/>
 					<span class="sep">&nbsp;(</span>
 					<span class="attr-value">{{data.attributes.hp.formula}}</span>
-					<input name="data.attributes.hp.formula" class="hpformula" type="text" placeholder="{{ localize 'DND5E.HealthFormula' }}"
-                               value="{{data.attributes.hp.formula}}"/>
 					<span class="sep">)</span>
 				</li>
 				<li class="attribute">
                     <h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }} </h4>
-					<span class="attr-value">{{data.attributes.speed.value}}</span>
-                    <input name="data.attributes.speed.value" type="text"
-						value="{{data.attributes.speed.value}}" placeholder="0"/>
+					<span class="attr-value">{{data.attributes.speed.value}}</span>\
 					<span class="sep">, </span>
-					<span class="attr-value">{{data.attributes.speed.special}}</span>
-                    <input type="text" class="speed" name="data.attributes.speed.special"
-                        value="{{data.attributes.speed.special}}" placeholder="{{ localize 'DND5E.SpeedSpecial' }}"/>
+					<span class="attr-value">{{data.attributes.speed.special}}</span>\
                 </li>
 			</ul>
 		</section>
@@ -69,12 +57,8 @@
             {{#each data.abilities as |ability id|}}
                 <li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
                     <h4 class="ability-name box-title rollable">{{id}}</h4>
-					<span class="attr-value">{{ability.value}} </span>
-                    <input class="ability-score" name="data.abilities.{{id}}.value" type="text" value="{{ability.value}}" data-dtype="Number" placeholder="10"/>
-					<span class="ability-mod" title="Modifier">({{numberFormat ability.mod decimals=0 sign=true}})</span>
-					<input type="hidden" name="data.abilities.{{id}}.proficient" value="{{ability.proficient}}" data-dtype="Number"/>
-					<!--a class="proficiency-toggle ability-proficiency" title="{{ localize 'DND5E.Proficiency' }}">{{{ability.icon}}}</a-->
-					<!--span class="ability-save" title="Saving Throw">{{numberFormat ability.save decimals=0 sign=true}}</span-->
+					<span class="attr-value">{{ability.value}} </span>\
+					<span class="ability-mod" title="Modifier">({{numberFormat ability.mod decimals=0 sign=true}})</span>\
                 </li>
             {{/each}}
             </ul>
@@ -89,8 +73,7 @@
 					{{#if ability.proficient}}
 						<li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
 							<span class="ability-name rollable">{{id}}</span>
-							<span class="ability-save" title="Saving Throw">&nbsp;{{numberFormat ability.save decimals=0 sign=true}}</span>
-							<!--a class="proficiency-toggle ability-proficiency" title="{{ localize 'DND5E.Proficiency' }}">{{{ability.icon}}}</a-->
+							<span class="ability-save" title="Saving Throw">&nbsp;{{numberFormat ability.save decimals=0 sign=true}}</span>\
 						</li>
 					{{/if}}
 					{{/each}}
