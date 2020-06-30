@@ -149,6 +149,27 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		Handlebars.registerHelper("enrichhtml", (str)=> {
 			return TextEditor.enrichHTML(str, {secrets: true});
+		});
+		Handlebars.registerHelper("averagedamage", (item)=> {
+			let formula = item.data.damage.parts[0][0];
+			let attr = item.data.ability;
+			let abilityBonus = this.actor.data.data.abilities[attr].mod;
+			let roll = new Roll(formula, {mod: abilityBonus}).roll();
+			return Math.ceil((
+					Roll.maximize(roll.formula)._total + 
+					Roll.minimize(roll.formula)._total 
+				)	/ 2
+			);
+		});
+		Handlebars.registerHelper("damageformula", (item)=> {
+			let formula = item.data.damage.parts[0][0];
+			let attr = item.data.ability;
+			let abilityBonus = this.actor.data.data.abilities[attr].mod;
+			let roll = new Roll(formula, {mod: abilityBonus}).roll();
+			return roll.formula;
+		});
+		Handlebars.registerHelper("damagetype", (item)=> {
+			return item.data.damage.parts[0][1];
 		});		
 	}
 }
