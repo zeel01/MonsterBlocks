@@ -18,10 +18,31 @@
 	height: 36px;
 }
 .monsterblock .switches ul {
+	display: flex;
+	flex-direction: row;
 	position: absolute;
 	background-color: gold;
 	width: 100%;
 	padding: 2px;
+}
+.monsterblock .switches li {
+	display: inline-block;
+	/* flex: 1; */
+	padding-right: 8px;
+	padding-left: 8px;
+}
+.monsterblock .inline-secrets .secret {
+	display: inline;
+	border: none;
+	background: none;
+	padding: 0;
+}
+.monsterblock .inline-secrets
+.secret > :first-child {
+	display: inline;
+}
+.monsterblock .switch {
+	
 }
 .monsterblock form {
 	font-size: 0px;

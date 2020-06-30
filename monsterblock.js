@@ -27,23 +27,23 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	
 	activateListeners(html) {
-		html.find('.switch').click(this._onSwitch.bind(this));
+		html.find('.switch').click((event) => {
+			let control = event.target.dataset.control;
+			let state = !this.actor.getFlag("monsterblock", control);
+			console.debug(`Monster Block | %cSwitching: ${control} to: ${state}`, "color: orange")
+			this.actor.setFlag(
+				"monsterblock", 
+				control, 
+				!this.actor.getFlag("monsterblock", control)
+			);
+		});
 	}
 	
 	toggleAttackDescription() {
-		let flag = !this.actor.getFlag("monsterblock", "attack-descriptions");
-		console.log(flag);
-		this.actor.setFlag("monsterblock", "attack-descriptions", flag);
+		
 	}
 	
-	_onSwitch(event) {
-		console.log(event);
-		let control = event.target.dataset.control;
-		switch (control) {
-			case "attack-description": this.toggleAttackDescription(); break;
-			default: console.warn(`Monster Block | ${control} is not a valid switch.`);
-		}
-	}
+	
 	isMultiAttack(item) {
 		let name = item.name.toLowerCase().replace(/\s+/g, '');
 		return [
@@ -150,7 +150,7 @@ Hooks.on("renderActorSheet", ()=> {
 })
 
 Hooks.on("renderMonsterBlock5e", (monsterblock, html, data)=> {
-	console.debug(`Monster Block |`, monsterblock, html, data);
+	//console.debug(`Monster Block |`, monsterblock, html, data);
 	
 	let popup = monsterblock._element[0];
 	let anchorPosL = popup.querySelector("#endAnchor").offsetLeft;

@@ -2,8 +2,8 @@
 - Handle ranged and spell attacks properly.
 - Figure out how to specify number of targets for an attack (if possible)
 - Calculate damage bonus and average damage.
-- Switches to hide or show the automatically generated attack descriptions.
-- Switch to show or hide secrets.
+- ~~Switches to hide or show the automatically generated attack descriptions.~~
+- ~~Switch to show or hide secrets.~~
 - Spellcasting
 	- Generate spellcasting feature
 	- Include links to spells
@@ -13,4 +13,4 @@
 - Make the photo enlarge when hovering over it.
 - Still not happy with the way the box sizing works.
 - Make the background more yellowed like the book stat blocks.
-- Switch to hide the picture.
+- ~~Switch to hide the picture.~~

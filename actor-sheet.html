@@ -1,14 +1,25 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
+<form class="{{cssClass}} flexcol{{#if flags.inline-secrets}} inline-secrets{{/if}}" autocomplete="off">
 	<nav class="switches">
 		<ul>
-			<li><a class="switch" data-control="attack-description">{{#if flags.attack-descriptions}}Hide{{/if}} Automatic Attack Descriptions</a></li>
+			<li>
+				<a class="switch" data-control="attack-descriptions"
+				>{{#if flags.attack-descriptions}}Hide{{else}}Show{{/if}} automatic attack descriptions</a>
+			</li>
+			<li>
+				<a class="switch" data-control="inline-secrets"
+				>{{#if flags.inline-secrets}}Disable{{else}}Enable{{/if}} inline secrets.</a>
+			</li>
+			<li>
+				<a class="switch" data-control="hide-profile-image"
+				>{{#if flags.hide-profile-image}}Show{{else}}Hide{{/if}} profile image.</a>
+			</li>
 		</ul>
 	</nav>
     <header class="sheet-header">
 		<section id="monster-identity">
 			<h1 class="charname">{{actor.name}}<!--input name="name" type="text" value="{{actor.name}}" placeholder="Name"/--></h1>
 			<p class="chartype">{{lookup config.actorSizes data.traits.size}}<span class="sep">&nbsp;</span>{{data.details.type}}<span class="sep">, </span>{{data.details.alignment}}</p>
-			<figure class="profile-image" style="background-image: url({{actor.img}});" title="{{actor.name}}" data-edit="img"/></figure>
+			{{#unless flags.hide-profile-image}}<figure class="profile-image" style="background-image: url({{actor.img}});" title="{{actor.name}}" data-edit="img"/></figure>{{/unless}}
 		</section>
 		<section id="monster-attributes1">
 			<ul class="attributes">
@@ -173,11 +184,15 @@
 	<section class="item monster-action" data-item-id="{{item._id}}">
 		<div class="attack-description rollable inline-children">
 			<span class="attack-name item-name">{{item.name}}</span>
-			<span class="attack-type">{{localize (getattacktype item)}}</span>
-			<span class="attack-bonus">{{numberFormat (getattackbonus item ../data) decimals=0 sign=true}} to hit, </span>
-			<span>reach {{item.data.range.value}} {{item.data.range.units}}.</span><br>
-			<span class="hit-label">Hit:&nbsp;</span>
-			<span>{{! average damage }} ({{item.data.damage.parts.[0].[0]}}) {{item.data.damage.parts.[0].[1]}} damage.&nbsp;</span>
+			{{#if ../flags.attack-descriptions}}
+			<span class="generated-text">
+				<span class="attack-type">{{localize (getattacktype item)}}</span>
+				<span class="attack-bonus">{{numberFormat (getattackbonus item ../data) decimals=0 sign=true}} to hit, </span>
+				<span>reach {{item.data.range.value}} {{item.data.range.units}}.</span><br>
+				<span class="hit-label">Hit:&nbsp;</span>
+				<span>{{! average damage }} ({{item.data.damage.parts.[0].[0]}}) {{item.data.damage.parts.[0].[1]}} damage.&nbsp;</span>
+			</span>
+			{{/if}}
 			<span class="description">{{{enrichhtml item.data.description.value}}}</span>
 		</div>
 	</section>
