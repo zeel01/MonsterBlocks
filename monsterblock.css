@@ -12,11 +12,22 @@
 	--divider-color: rgba(140, 42, 42, 1);
 	--divider-color-end: rgba(140, 42, 42, 0);
 }
+.monsterblock .switches {
+	margin: -8px;
+	column-span: all;
+	height: 36px;
+}
+.monsterblock .switches ul {
+	position: absolute;
+	background-color: gold;
+	width: 100%;
+	padding: 2px;
+}
 .monsterblock form {
 	font-size: 0px;
 }
 
-.monsterblock span, .monsterblock p {
+.monsterblock span, .monsterblock p, .monsterblock a {
 	font-size: 14px;
 }
 .monsterblock .flexcol {

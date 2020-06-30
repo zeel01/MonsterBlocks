@@ -1,4 +1,10 @@
+
 <form class="{{cssClass}} flexcol" autocomplete="off">
+	<nav class="switches">
+		<ul>
+			<li><a class="switch" data-control="attack-description">{{#if flags.attack-descriptions}}Hide{{/if}} Automatic Attack Descriptions</a></li>
+		</ul>
+	</nav>
     <header class="sheet-header">
 		<section id="monster-identity">
 			<h1 class="charname">{{actor.name}}<!--input name="name" type="text" value="{{actor.name}}" placeholder="Name"/--></h1>
