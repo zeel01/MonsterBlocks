@@ -46,9 +46,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 		return false;
 	}
-	get hasAtWillSpells() { return false;
+	get hasAtWillSpells() {
 		for (let item of this.actor.items) {
-			if (this.isInnateSpellcasting(item)) return true;
+			if (item.data.data.preparation && item.data.data.preparation.mode === "atwill") return true;
 		}
 	}
 	prepareInnateSpellbook(spellbook) { // We need to completely re-organize the spellbook for an innate spellcaster
@@ -271,6 +271,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		Handlebars.registerHelper("spelllevellocalization", (level)=> {
 			return "DND5E.SpellLevel" + level;
 		});
+		Handlebars.registerHelper("getatwill", (spellbook)=> {
+			for (let level of spellbook) {
+				if (level.prop === "atwill") return level.spells;
+			}
+			return [];
+		});
+			
 		Handlebars.registerHelper("getspellattackbonus", ()=> {
 			let data = this.actor.data.data;
 			let attr = data.attributes.spellcasting;

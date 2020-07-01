@@ -219,6 +219,29 @@
 .monsterblock .spell-list {
 	margin-top: 14px;
 }
+.monsterblock .at-will-spells {
+	font-size: 14px;
+	display: inline;
+	list-style: none;
+	padding: 0;
+}
+.monsterblock .at-will-spells li {
+	display: inline;
+}
+.monsterblock .at-will-spells li:after {
+	content: ', ';
+}
+.monsterblock .at-will-spells 
+li:not(:first-of-type):nth-last-of-type(2):after {
+	content: ', and ';
+}
+.monsterblock .at-will-spells 
+li:nth-last-of-type(2):after {
+	content: ' and ';
+}
+.monsterblock .at-will-spells li:last-of-type:after {
+	content: '';
+}
 
 .monsterblock .monster-saves .ability {
 	display: inline;

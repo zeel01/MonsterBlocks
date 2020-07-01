@@ -188,11 +188,25 @@
 	</section>
 	{{/inline}}
 	
+	{{#*inline "atwillcasting"}}
+		{{#each spells as |spell id|}}
+			<li class="at-will-spell">{{spell.name}}</li>
+		{{/each}}
+	{{/inline}}
+	
 	{{#*inline "spellcasting"}}
 	<section class="item monster-feature spellcasting-trait" data-item-id="{{item._id}}">
 		<div class="feature-description inline-children">
 			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>
-			<span class="description">The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster. Its spellcasting ability is {{! casting ability}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus) decimals=0 sign=true}} to hit with spell attacks). The {{actor.name}} has following {{! spell class is unavailable}} spells prepared:</span>
+			<span class="description">The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster. Its spellcasting ability is {{! casting ability}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus) decimals=0 sign=true}} to hit with spell attacks). The {{actor.name}}
+			{{#if info.hasAtWillSpells}}
+				can cast 
+				<ul class="at-will-spells">
+					{{> atwillcasting spells=(getatwill spellbook)}}	
+				</ul>
+				at will and
+			{{/if}}
+			has the following {{! spell class is unavailable}} spells prepared:</span>
 			<ul class="spell-list">
 			{{#each spellbook as |spelllevel id|}}
 			{{#unless (invalidspelllevel spelllevel.dataset.level)}}
@@ -240,10 +254,10 @@
 	
 	{{#if (and info.hasCastingFeature flags.casting-feature)}}
 		{{#if info.isSpellcaster}}
-			{{> spellcasting spellbook=spellbook actor=actor}}
+			{{> spellcasting spellbook=spellbook actor=actor info=info}}
 		{{/if}}
 		{{#if info.isInnateSpellcaster}}
-			{{> innatespellcasting spellbook=innateSpellbook actor=actor}}
+			{{> innatespellcasting spellbook=innateSpellbook actor=actor info=info}}
 		{{/if}}
 	{{/if}}
 	
