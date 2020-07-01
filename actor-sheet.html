@@ -212,7 +212,7 @@
 			{{#unless (invalidspelllevel spelllevel.dataset.level)}}
 				<li>
 					<span class="spell-level-name">{{localize (spelllevellocalization spelllevel.dataset.level)}}{{#unless spelllevel.dataset.level}}s{{/unless}}</span>
-					<span class="spell-slots">{{! spell slots count}}</span>
+					<span class="spell-slots">&nbsp;({{#if spelllevel.dataset.level}}{{spelllevel.slots}} slot{{#if (greater spelllevel.slots 1)}}s{{/if}}{{else}}at will{{/if}}): </span>
 					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
 					{{#each spelllevel.spells as |spell id|}}
 						<li class="spell">

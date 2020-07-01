@@ -300,7 +300,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			args.pop();
 			return args.reduce((v, c) => v || c);
 		});
-		
+		Handlebars.registerHelper("greater", (a, b)=> {
+			return a > b;
+		});
+		Handlebars.registerHelper("less", (a, b)=> {
+			return a < b;
+		});
+		Handlebars.registerHelper("equals", (a, b)=> {
+			return a == b;
+		});
 		
 		Handlebars.registerHelper("formatordinal", (number)=> {
 			if (number == 1) return number + "st";

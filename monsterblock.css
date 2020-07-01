@@ -213,9 +213,6 @@
 .monsterblock .inline-list li:last-of-type:after {
     content: '';
 }
-.monsterblock .spell-level-name:after {
-	content: ': ';
-}
 .monsterblock .spell-list {
 	margin-top: 14px;
 }
