@@ -8,7 +8,7 @@
 	- ~~Generate spellcasting feature~~
 	- Include links to spells
 	- ~~Switch to toggle this feature on and off~~
-	- Make it work with natural casters
+	- ~~Make it work with natural casters~~ *seems good?*
 	- Fix at-will and other a-typical spells
 - Fix it so that the roll tooltips work on attacks
 - Add the ability to roll from the sheet. Might implement this as inline rolls, or try to do something more.

@@ -15,6 +15,7 @@
 					</li>
 				</ul>
 			</li>
+			{{#if info.hasCastingFeature}}
 			<li>
 				<a class="switch" data-control="casting-feature">Spellcasting</a>
 				<ul>
@@ -24,6 +25,7 @@
 					</li>
 				</ul>
 			</li>
+			{{/if}}
 			<li>
 				<a>Descriptions</a>
 				<ul>
@@ -37,17 +39,17 @@
 				<a class="switch" data-control="hide-profile-image"
 				>{{#if flags.hide-profile-image}}Show{{else}}Hide{{/if}} profile image</a>
 			</li>
+			{{#if (haslair features)}}
 			<li>
 				<a class="switch" data-control="show-lair-actions"
 				>{{#if flags.show-lair-actions}}Hide{{else}}Show{{/if}} lair actions</a>
-				
 			</li>
+			{{/if}}
 		</ul>
 	</nav>	
 	<header class="sheet-header">
 		<section id="monster-identity">
-			<h1 class="charname">{{actor.name}}<!--input name="name" type="text" value="{{actor.name}}" placeholder="Name"/-->
-				
+			<h1 class="charname">{{actor.name}}
 			</h1>
 			<p class="chartype">{{lookup config.actorSizes data.traits.size}}<span class="sep">&nbsp;</span>{{data.details.type}}<span class="sep">, </span>{{data.details.alignment}}</p>
 			{{#unless flags.hide-profile-image}}<figure class="profile-image" style="background-image: url({{actor.img}});" title="{{actor.name}}" data-edit="img"/></figure>{{/unless}}
@@ -210,8 +212,37 @@
 	</section>
 	{{/inline}}
 	
-	{{#if flags.casting-feature}}
-		{{> spellcasting spellbook=spellbook actor=actor}}
+	{{#*inline "innatespellcasting"}}
+	<section class="item monster-feature spellcasting-trait" data-item-id="{{item._id}}">
+		<div class="feature-description inline-children">
+			<span class="feature-name">{{localize "DND5E.SpellPrepInnate"}}</span>
+			<span class="description">The {{actor.name}}'s innate spellcasting ability is {{! casting ability}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus) decimals=0 sign=true}} to hit with spell attacks). The {{actor.name}} can innately cast the following spells, requiring no material components:</span>
+			<ul class="spell-list">
+			{{#each spellbook as |spelllevel id|}}
+				<li>
+					<span class="spell-level-name">{{spelllevel.label}}{{! logic to add the word "each" here when there are multiple seplls}}</span>
+					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
+					{{#each spelllevel.spells as |spell id|}}
+						<li class="spell">
+							<span class="spell-name">{{spell.name}}</span>
+						</li>
+					{{/each}}
+					</ul>
+				</li>
+			{{/each}}
+			</ul>
+		</div>
+	</section>
+	{{/inline}}
+	
+	
+	{{#if (and info.hasCastingFeature flags.casting-feature)}}
+		{{#if info.isSpellcaster}}
+			{{> spellcasting spellbook=spellbook actor=actor}}
+		{{/if}}
+		{{#if info.isInnateSpellcaster}}
+			{{> innatespellcasting spellbook=innateSpellbook actor=actor}}
+		{{/if}}
 	{{/if}}
 	
 	{{#each (getfeatures features) as |item iid|}}
@@ -252,7 +283,7 @@
 	{{! Legendary Actions }}
 	{{#if (haslegendary features)}}
 		<h2 class="section-header" >{{localize "DND5E.LegAct"}}</h2>
-		<p>The {{actor.name}} can take [3] legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {{actor.name}} regains spent legendary actions at the start of its turn.</p>
+		<p>The {{actor.name}} can take 3 legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {{actor.name}} regains spent legendary actions at the start of its turn.</p>
 		{{#each (getactions features) as |item iid|}}
 			{{#if (islegendary item)}}{{> featureBlock item=item}}{{/if}}
 		{{/each}}

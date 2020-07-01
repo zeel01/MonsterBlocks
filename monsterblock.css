@@ -1,5 +1,8 @@
 .window-app .window-header {
 	padding-right: 7ch;
+}
+.monsterblock .window-header {
+	padding-right: 7ch;
 	padding-left: 30px;
 }
 .window-header .close {

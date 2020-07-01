@@ -23,7 +23,75 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	getData() {
 		const data = super.getData();
 		data.flags = this.actor.data.flags.monsterblock;
+		data.info = {
+			hasCastingFeature: (this.isSpellcaster || this.isInnateSpellcaster),
+			isSpellcaster: this.isSpellcaster,
+			isInnateSpellcaster: this.isInnateSpellcaster
+		}
+		
+		data.innateSpellbook = this.prepareInnateSpellbook(data.spellbook);
+		
 		return data;
+	}
+	get isSpellcaster () {
+		for (let item of this.actor.items) {
+			if (this.isSpellcasting(item)) return true;
+		}
+		return false;
+	}
+	get isInnateSpellcaster() {
+		for (let item of this.actor.items) {
+			if (this.isInnateSpellcasting(item)) return true;
+		}
+		return false;
+	}
+	prepareInnateSpellbook(spellbook) { // We need to completely re-organize the spellbook for an innate spellcaster
+	//	let innateLevels = [];
+	//	for (let level of spellbook) {
+	//		if (level.prop !== "innate") continue;
+	//		for (let spell of level.spells) {
+	//			innateLevels.push(spell.data.uses.max);
+	//		}
+	//	}
+		let innateSpellbook = [];
+	//	for (let l of innateLevels) {
+	//		
+	//	}
+		for (let level of spellbook) {
+			if (level.prop !== "innate") continue;
+			for (let spell of level.spells) {
+				let uses = spell.data.uses.max;
+				
+				let finder = e => e.uses == uses;
+				
+				if (!innateSpellbook.some(finder)) {
+					innateSpellbook.push({
+						canCreate: false,
+						canPrepare: false,
+						dataset: { level: -10, type: "spell" },
+						label: uses < 1 ? "At will" : (uses + "/day"),
+						order: -10,
+						override: 0,
+						prop: "innate",
+						slots: "-",
+						spells: [],
+						uses: uses,
+						usesSlots: false
+					});
+				}
+				
+				innateSpellbook.find(finder).spells.push(spell);
+			}
+		}
+		innateSpellbook.sort((a, b) => {
+			if (a.uses == 0 && b.uses == 0) return 0;
+			if (a.uses == 0) return -1;
+			if (b.uses == 0) return 1;
+			
+			return a.uses < b.uses ? 1 : -1;
+		});
+		
+		return innateSpellbook;
 	}
 	
 	activateListeners(html) {
@@ -64,6 +132,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	isSpellcasting(item) {
 		return item.name.toLowerCase().replace(/\s+/g, '') === "spellcasting";
 	}
+	isInnateSpellcasting(item) {
+		return item.name.toLowerCase().replace(/\s+/g, '') === "innatespellcasting";
+	}
+	
+	
 	createHandlebarsHelpers() {
 		Handlebars.registerHelper("hascontents", (obj)=> {
 			return Object.keys(obj).length > 0;
@@ -108,7 +181,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			return this.isLegendaryAction(item);
 		});
 		Handlebars.registerHelper("isspellcasting", (item)=> {
-			return this.isSpellcasting(item);
+			return this.isSpellcasting(item) || this.isInnateSpellcasting(item);
 		});
 		Handlebars.registerHelper("islair", (item)=> {
 			return this.isLairAction(item);
@@ -205,7 +278,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		Handlebars.registerHelper("and", (...args)=> {
 			args.pop();
-			console.debug(args);
 			return args.reduce((v, c) => v && c);
 		});
 		Handlebars.registerHelper("or", (...args)=> {
