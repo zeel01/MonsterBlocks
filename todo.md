@@ -10,6 +10,7 @@
 	- ~~Switch to toggle this feature on and off~~
 	- ~~Make it work with natural casters~~ *seems good?*
 	- Fix at-will and other a-typical spells
+	- Spell slot quantity indicator
 - Fix it so that the roll tooltips work on attacks
 - Add the ability to roll from the sheet. Might temporarily implement this as inline rolls, or try to do something more.
 	- ~~Inline damage rolls~~
@@ -19,3 +20,7 @@
 - ~~Make the background more yellowed like the book stat blocks.~~
 - ~~Switch to hide the picture.~~
 - Make it possible to edit the sheet!
+- Better support limited use features like legendary resistance
+- Automatically display the cost of legendary actions where applicable
+- Automatically display the recharge roll for applicable features
+- Automatically indicate passive perception if it isn't already mentioned under senses
