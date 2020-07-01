@@ -236,7 +236,7 @@
 			<ul class="spell-list">
 			{{#each spellbook as |spelllevel id|}}
 				<li>
-					<span class="spell-level-name">{{spelllevel.label}}{{! logic to add the word "each" here when there are multiple seplls}}</span>
+					<span class="spell-level-name">{{spelllevel.label}}{{#if (and (greater spelllevel.uses 0) (greater spelllevel.spells.length 1))}} each{{/if}}: </span>
 					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
 					{{#each spelllevel.spells as |spell id|}}
 						<li class="spell">

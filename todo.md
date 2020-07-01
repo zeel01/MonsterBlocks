@@ -11,7 +11,7 @@
 	- ~~Make it work with natural casters~~ *seems good?*
 	- Fix ~~at-will~~ and other a-typical spells
 	- ~~Spell slot quantity indicator~~
-	- Logic to add the word "each" for innate caster spell lists when there are multiple seplls
+	- ~~Logic to add the word "each" for innate caster spell lists when there are multiple seplls~~
 - Fix it so that the roll tooltips work on attacks
 - Add the ability to roll from the sheet. Might temporarily implement this as inline rolls, or try to do something more.
 	- ~~Inline damage rolls~~
