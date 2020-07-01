@@ -4,6 +4,8 @@ An NPC sheet for FoundryVTT designed to faithfully reproduce the apperance of D&
 
 Currently does not support rolls or editing, ideal for users who need a creature reference during a game, but don't intend to use Foundry for rolls. Rolls and editability are planned for the future. See: [To Do List](todo.md)
 
+![Ancient Red Dragon](examples/ancientRedDragon.png)
+
 ## Features
  - Generate attack descriptions including hit bonus, damage formula, and average damage.
  - Generate spellcasting features for regular and innate casters based on the actor's spellbook data.
