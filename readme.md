@@ -4,7 +4,7 @@ An NPC sheet for FoundryVTT designed to faithfully reproduce the apperance of D&
 
 Currently does not support rolls or editing, ideal for users who need a creature reference during a game, but don't intend to use Foundry for rolls. Rolls and editability are planned for the future. See: [To Do List](todo.md)
 
-## Features:
+## Features
  - Generate attack descriptions including hit bonus, damage formula, and average damage.
  - Generate spellcasting features for regular and innate casters based on the actor's spellbook data.
  - Promote the Multiattack action to be displayed first, even if it isn't the first in the actor's list.
@@ -16,3 +16,19 @@ Currently does not support rolls or editing, ideal for users who need a creature
  - Settings cog to toggle some features in the upper left corner.
  - Made it so that the [X Close] button can't get overflown off of the control bar (this effects all windows, not just this sheet).
  
+## Helpful Macros
+See [macros.js](macros.js)
+
+### Toggle the selected token between the default 5e sheet, and MonsterBlock:
+```
+(async ()=> {
+	await token.actor.sheet.close();
+	if (token.actor.getFlag("core", "sheetClass") === "dnd5e.ActorSheet5eNPC") {
+		await token.actor.setFlag("core", "sheetClass", "dnd5e.MonsterBlock5e")
+	}
+	else {
+		await token.actor.setFlag("core", "sheetClass", "dnd5e.ActorSheet5eNPC")
+	}
+	await token.actor.sheet.render(true)
+})();
+```
