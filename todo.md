@@ -11,10 +11,11 @@
 	- ~~Make it work with natural casters~~ *seems good?*
 	- Fix at-will and other a-typical spells
 - Fix it so that the roll tooltips work on attacks
-- Add the ability to roll from the sheet. Might implement this as inline rolls, or try to do something more.
+- Add the ability to roll from the sheet. Might temporarily implement this as inline rolls, or try to do something more.
 	- ~~Inline damage rolls~~
 	- Inline Attack rolls
 - ~~Make the photo enlarge when hovering over it.~~
 - Still not happy with the way the box sizing works.
 - ~~Make the background more yellowed like the book stat blocks.~~
 - ~~Switch to hide the picture.~~
+- Make it possible to edit the sheet!
