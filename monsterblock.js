@@ -26,7 +26,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		data.info = {
 			hasCastingFeature: (this.isSpellcaster || this.isInnateSpellcaster),
 			isSpellcaster: this.isSpellcaster,
-			isInnateSpellcaster: this.isInnateSpellcaster
+			isInnateSpellcaster: this.isInnateSpellcaster,
+			hasAtWillSpells: this.hasAtWillSpells
 		}
 		
 		data.innateSpellbook = this.prepareInnateSpellbook(data.spellbook);
@@ -44,6 +45,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			if (this.isInnateSpellcasting(item)) return true;
 		}
 		return false;
+	}
+	get hasAtWillSpells() { return false;
+		for (let item of this.actor.items) {
+			if (this.isInnateSpellcasting(item)) return true;
+		}
 	}
 	prepareInnateSpellbook(spellbook) { // We need to completely re-organize the spellbook for an innate spellcaster
 	//	let innateLevels = [];
@@ -185,6 +191,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		Handlebars.registerHelper("islair", (item)=> {
 			return this.isLairAction(item);
+		});
+		Handlebars.registerHelper("invalidspelllevel", (level)=> {
+			return level < 0;
 		});
 		Handlebars.registerHelper("getmultiattack", ()=> {
 			for (let item of this.actor.items) {

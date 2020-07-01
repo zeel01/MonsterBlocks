@@ -195,6 +195,7 @@
 			<span class="description">The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster. Its spellcasting ability is {{! casting ability}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus) decimals=0 sign=true}} to hit with spell attacks). The {{actor.name}} has following {{! spell class is unavailable}} spells prepared:</span>
 			<ul class="spell-list">
 			{{#each spellbook as |spelllevel id|}}
+			{{#unless (invalidspelllevel spelllevel.dataset.level)}}
 				<li>
 					<span class="spell-level-name">{{localize (spelllevellocalization spelllevel.dataset.level)}}{{#unless spelllevel.dataset.level}}s{{/unless}}</span>
 					<span class="spell-slots">{{! spell slots count}}</span>
@@ -206,6 +207,7 @@
 					{{/each}}
 					</ul>
 				</li>
+			{{/unless}}
 			{{/each}}
 			</ul>
 		</div>
