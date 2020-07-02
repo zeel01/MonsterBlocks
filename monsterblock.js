@@ -14,7 +14,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return mergeObject(super.defaultOptions, {
 			classes: ["monsterblock", "sheet", "actor"],
 		//	template: "modules/monsterblock/actor-sheet.html",
-			width: 416,
+			width: 391,
 			height: 800,
 			tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
 		});
@@ -52,17 +52,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 	}
 	prepareInnateSpellbook(spellbook) { // We need to completely re-organize the spellbook for an innate spellcaster
-	//	let innateLevels = [];
-	//	for (let level of spellbook) {
-	//		if (level.prop !== "innate") continue;
-	//		for (let spell of level.spells) {
-	//			innateLevels.push(spell.data.uses.max);
-	//		}
-	//	}
 		let innateSpellbook = [];
-	//	for (let l of innateLevels) {
-	//		
-	//	}
+
 		for (let level of spellbook) {
 			if (level.prop !== "innate") continue;
 			for (let spell of level.spells) {
@@ -336,7 +327,7 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data)=> {
 	let anchorPosL = popup.querySelector("#endAnchor").offsetLeft;
 	let anchorPosT = popup.querySelector("#endAnchor").offsetTop;
 		
-	popup.style.width = anchorPosL + 408 + "px";
+	popup.style.width = anchorPosL + 383 + "px";
 	
 	// Working on a more dynamic maximum height // let h = window.innerHeight - 72; // 72px Keeps the popup from covering the macro bar, plus some padding.
 	let h = monsterblock.options.height;

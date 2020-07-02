@@ -102,11 +102,12 @@
 	font-size: 14px;
 }
 .monsterblock .flexcol {
+    /* text-align: justify; */
     display: block;
     height: 100%;
-    width: 400px;
-    column-width: 400px;
-    column-gap: 40px;
+    width: 386px;
+    column-width: 375px;
+    column-gap: 35px;
     column-fill: auto;
 }
 
@@ -115,13 +116,19 @@
 	position: relative;
 }
 .monsterblock .sheet-header section::after {
+	font-size: 14px;
 	margin-top: 4px;
 	margin-bottom: 4px;
 	display: block;
 	width: 100%;
-	height: 4px;
+	/* height: 4px; */
 	content: "";
-	background: linear-gradient(to right, var(--divider-color), var(--divider-color-end));
+	/* This has an interesting result... */
+	border: none;
+	border-top: .2em solid transparent;
+	border-bottom: .2em solid transparent;
+	border-left: 375px solid var(--divider-color);
+	/* background: linear-gradient(to right, var(--divider-color), var(--divider-color-end)); */
 }
 
 .monsterblock .charname {
