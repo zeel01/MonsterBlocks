@@ -71,9 +71,11 @@
 				</li>
 				<li class="attribute">
                     <h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }} </h4>
-					<span class="attr-value">{{data.attributes.speed.value}}</span>\
-					<span class="sep">, </span>
-					<span class="attr-value">{{data.attributes.speed.special}}</span>\
+					<span class="attr-value">{{data.attributes.speed.value}}</span>
+					{{#if data.attributes.speed.special}}
+						<span class="sep">, </span>
+						<span class="attr-value">{{data.attributes.speed.special}}</span>
+					{{/if}}
                 </li>
 			</ul>
 		</section>

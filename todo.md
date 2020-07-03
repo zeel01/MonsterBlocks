@@ -5,6 +5,7 @@
 - ~~Switches to hide or show the automatically generated attack descriptions.~~
 - ~~Switch to show or hide secrets.~~
 - Spellcasting
+	- Spell attacks don't/might not have range increments.
 	- ~~Generate spellcasting feature~~
 	- Include links to spells
 	- ~~Switch to toggle this feature on and off~~
@@ -25,3 +26,4 @@
 - Automatically display the cost of legendary actions where applicable
 - Automatically display the recharge roll for applicable features
 - Automatically indicate passive perception if it isn't already mentioned under senses
+- Fix magic weapons so the attack and damage bonuses look right.

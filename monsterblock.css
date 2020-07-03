@@ -102,10 +102,9 @@
 	font-size: 14px;
 }
 .monsterblock .flexcol {
-    /* text-align: justify; */
     display: block;
     height: 100%;
-    width: 386px;
+    width: 375px;
     column-width: 375px;
     column-gap: 35px;
     column-fill: auto;

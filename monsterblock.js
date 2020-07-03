@@ -327,7 +327,7 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data)=> {
 	let anchorPosL = popup.querySelector("#endAnchor").offsetLeft;
 	let anchorPosT = popup.querySelector("#endAnchor").offsetTop;
 		
-	popup.style.width = anchorPosL + 383 + "px";
+	popup.style.width = anchorPosL + 375 + 8 + "px";
 	
 	// Working on a more dynamic maximum height // let h = window.innerHeight - 72; // 72px Keeps the popup from covering the macro bar, plus some padding.
 	let h = monsterblock.options.height;
