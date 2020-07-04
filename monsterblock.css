@@ -90,9 +90,14 @@
 	background: none;
 	padding: 0;
 }
+.monsterblock a.inline-roll .fa-dice-d20 {
+	display: inline;
+	color: black;
+}
 .monsterblock a.inline-roll {
 	border: none;
 	background: none;
+	padding: 0;
 }
 .monsterblock .inline-secrets
 .secret > :first-child {
@@ -105,7 +110,8 @@
 .monsterblock .saving-throw:hover,
 .monsterblock .skill:hover,
 .monsterblock .item-name:hover,
-.monsterblock .spell:hover {
+.monsterblock .spell:hover,
+.monsterblock a.inline-roll:hover {
 	text-shadow: 0px 0px .05em var(--roll-hover-color);
 	cursor: pointer;
 	color: var(--roll-hover-color);
