@@ -7,12 +7,13 @@
 }
 .window-header .close {
 	position: absolute;
-	right: 0px;
+	right: 6px;
 }
 
 .monsterblock {
 	width: 100%;
-	--heading-color: #58170D;
+	--heading-color: rgb(89 23 13);
+	--roll-hover-color: hsl(8 70% 14% / 1);
 	--divider-color: rgba(140, 42, 42, 1);
 	--divider-color-end: rgba(140, 42, 42, 0);
 }
@@ -100,6 +101,15 @@
 .monsterblock form {
 	font-size: 0px;
 }
+.monsterblock .ability:hover,
+.monsterblock .saving-throw:hover,
+.monsterblock .skill:hover,
+.monsterblock .item-name:hover,
+.monsterblock .spell:hover {
+	text-shadow: 0px 0px .05em var(--roll-hover-color);
+	cursor: pointer;
+	color: var(--roll-hover-color);
+}
 
 .monsterblock span, .monsterblock p, .monsterblock a {
 	font-size: 14px;
@@ -146,7 +156,7 @@
 }
 .monsterblock .image-enabled .charname,
 .monsterblock .image-enabled .chartype,
-.monsterblock .image-enabled .attributes {
+.monsterblock .image-enabled .monster-attributes1 .attributes {
 	width: 265px;
 }
 .monsterblock .profile-image {
@@ -283,25 +293,12 @@ li:nth-last-of-type(2):after {
 .monsterblock .item {
 	margin-top: 14px;
 }
-.monsterblock .attack-name {
+.monsterblock .item-name {
 	font-weight: bold;
 	font-style: italic;
-}
-.monsterblock .attack-name:after {
-	content: '. ';
-}
-.monsterblock .feature-name {
-	font-weight: bold;
-	font-style: italic;
-}
-.monsterblock .feature-name:after {
-	content: '. ';
 }
 .monsterblock .attack-type {
 	font-style: italic;
-}
-.monsterblock .attack-type:after {
-	content: ': ';
 }
 .monsterblock .attack-bonus {
 }

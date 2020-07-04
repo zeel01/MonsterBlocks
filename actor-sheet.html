@@ -84,7 +84,7 @@
             {{#each data.abilities as |ability id|}}
                 <li class="ability{{#if ability.proficient}} proficient{{/if}}" data-ability="{{id}}">
                     <h4 class="ability-name box-title">{{id}}</h4>
-					<span class="attr-value">{{ability.value}} </span>\
+					<span class="attr-value">{{ability.value}} </span>
 					<span class="ability-mod" title="Modifier">({{numberFormat ability.mod decimals=0 sign=true}})</span>
                 </li>
             {{/each}}
@@ -98,7 +98,7 @@
 					<ul class="inline-list">
 					{{#each data.abilities as |ability id|}}
 					{{#if ability.proficient}}
-						<li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
+						<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
 							<span class="ability-name">{{id}}</span>
 							<span class="ability-save" title="Saving Throw">&nbsp;{{numberFormat ability.save decimals=0 sign=true}}</span>
 						</li>
@@ -182,9 +182,9 @@
 		</section>
     </header>
 	{{#*inline "featureBlock"}}
-	<section class="item monster-feature" data-item-id="{{item._id}}">
+	<section class="item monster-feature">
 		<div class="feature-description inline-children">
-			<span class="feature-name">{{item.name}}</span>
+			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}. </span>
 			<span class="description">{{{enrichhtml item.data.description.value}}}</span>
 		</div>
 	</section>
@@ -197,7 +197,7 @@
 	{{/inline}}
 	
 	{{#*inline "spellcasting"}}
-	<section class="item monster-feature spellcasting-trait" data-item-id="{{item._id}}">
+	<section class="monster-feature spellcasting-trait" data-item-id="{{item._id}}">
 		<div class="feature-description inline-children">
 			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>
 			<span class="description">The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster. Its spellcasting ability is {{! casting ability}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus) decimals=0 sign=true}} to hit with spell attacks). The {{actor.name}}
@@ -231,7 +231,7 @@
 	{{/inline}}
 	
 	{{#*inline "innatespellcasting"}}
-	<section class="item monster-feature spellcasting-trait" data-item-id="{{item._id}}">
+	<section class="monster-feature spellcasting-trait" data-item-id="{{item._id}}">
 		<div class="feature-description inline-children">
 			<span class="feature-name">{{localize "DND5E.SpellPrepInnate"}}</span>
 			<span class="description">The {{actor.name}}'s innate spellcasting ability is {{! casting ability}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus) decimals=0 sign=true}} to hit with spell attacks). The {{actor.name}} can innately cast the following spells, requiring no material components:</span>
@@ -241,7 +241,7 @@
 					<span class="spell-level-name">{{spelllevel.label}}{{#if (and (greater spelllevel.uses 0) (greater spelllevel.spells.length 1))}} each{{/if}}: </span>
 					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
 					{{#each spelllevel.spells as |spell id|}}
-						<li class="spell">
+						<li class="spell" data-item-id="{{spell._id}}">
 							<span class="spell-name">{{spell.name}}</span>
 						</li>
 					{{/each}}
@@ -276,12 +276,12 @@
 	{{/if}}
 	{{#each (getattacks features) as |item iid|}}
 	{{#if (notspecialaction item)}}
-	<section class="item monster-action" data-item-id="{{item._id}}">
+	<section class="item monster-action">
 		<div class="attack-description inline-children">
-			<span class="attack-name item-name">{{item.name}}</span>
+			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}. </span>
 			{{#if ../flags.attack-descriptions}}
 			<span class="generated-text">
-				<span class="attack-type">{{localize (getattacktype item)}}</span>
+				<span class="attack-type">{{localize (getattacktype item)}}: </span>
 				<span class="attack-bonus">{{numberFormat (getattackbonus item ../data) decimals=0 sign=true}} to hit, </span>
 				<span>{{#if (israngedattack item)}}range{{else}}reach{{/if}} {{item.data.range.value}} {{#if (israngedattack item)}}/ {{item.data.range.long}}{{/if}} {{item.data.range.units}}., one target.</span>
 				<span class="hit-label">Hit:&nbsp;</span>

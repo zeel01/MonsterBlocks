@@ -93,6 +93,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	
 	activateListeners(html) {
 		html.find('.switch').click((event) => {
+			event.preventDefault();
 			let control = event.target.dataset.control;
 			let state = !this.actor.getFlag("monsterblock", control);
 			console.debug(`Monster Block | %cSwitching: ${control} to: ${state}`, "color: orange")
@@ -101,6 +102,34 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				control, 
 				!this.actor.getFlag("monsterblock", control)
 			);
+		});
+		html.find('.ability').click((event) => {
+			event.preventDefault();
+			let ability = event.currentTarget.dataset.ability;
+			this.actor.rollAbilityTest(ability, {event: event});
+		});
+		html.find('.saving-throw').click((event) => {
+			event.preventDefault();
+			let ability = event.currentTarget.dataset.ability;
+			this.actor.rollAbilitySave(ability, {event: event});
+		});
+		html.find('.skill').click((event) => {
+			event.preventDefault();
+			let ability = event.currentTarget.dataset.skill;
+			this.actor.rollSkill(ability, {event: event});
+		});
+		html.find('.item-name').click((event) => {
+			event.preventDefault();
+			let id = event.currentTarget.dataset.itemId;
+			let item = this.actor.getOwnedItem(id);
+			return item.roll();
+		});
+		html.find('.spell').click((event) => {
+			event.preventDefault();
+			let id = event.currentTarget.dataset.itemId;
+			console.log("Spell ID:", id);
+			let item = this.actor.getOwnedItem(id);
+			return this.actor.useSpell(item, {configureDialog: !event.shiftKey});
 		});
 	}
 	

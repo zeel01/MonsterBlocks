@@ -14,9 +14,8 @@
 	- ~~Spell slot quantity indicator~~
 	- ~~Logic to add the word "each" for innate caster spell lists when there are multiple seplls~~
 - Fix it so that the roll tooltips work on attacks
-- Add the ability to roll from the sheet. Might temporarily implement this as inline rolls, or try to do something more.
-	- ~~Inline damage rolls~~
-	- Inline Attack rolls
+- ~~Add the ability to roll from the sheet.~~
+	- Add quick rolls for attack and damage
 - ~~Make the photo enlarge when hovering over it.~~
 - Still not happy with the way the box sizing works.
 - ~~Make the background more yellowed like the book stat blocks.~~
@@ -27,3 +26,13 @@
 - Automatically display the recharge roll for applicable features
 - Automatically indicate passive perception if it isn't already mentioned under senses
 - ~~Fix magic weapons so the attack and damage bonuses look right.~~
+- Refactor CSS to use more variables
+	- Make adjusting the text size viable
+	- Make it easy to adjust other attributes
+	- Remove anythign that isn't actually in use
+	- Clean up classes from the template that aren't needed
+- Add multiple themes
+	- Per monster selection
+	- "Custom" option that allows you to paste in CSS
+	- "Clean" theme that's a white background.
+	- "Dark" theme

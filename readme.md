@@ -2,7 +2,7 @@
 
 An NPC sheet for FoundryVTT designed to faithfully reproduce the apperance of D&D 5e monster statblocks.
 
-Currently does not support rolls or editing, ideal for users who need a creature reference during a game, but don't intend to use Foundry for rolls. Rolls and editability are planned for the future. See: [To Do List](todo.md)
+Currently does not support editing, this is a planned feature. See: [To Do List](todo.md)
 
 ![Ancient Red Dragon](examples/ancientRedDragon.png)
 
@@ -17,6 +17,7 @@ Currently does not support rolls or editing, ideal for users who need a creature
  - Show or hide lair actions, standard statblocks don't really include those, but since you can add them to the actor I made it possible to display them.
  - Settings cog to toggle some features in the upper left corner.
  - Made it so that the [X Close] button can't get overflown off of the control bar (this effects all windows, not just this sheet).
+ - Rolls for ability checks, saving throws, skills, features, actions, and spells.
  
 ## Helpful Macros
 See [macros.js](macros.js)
