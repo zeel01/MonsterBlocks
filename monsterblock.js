@@ -219,12 +219,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		Handlebars.registerHelper("getattackbonus", (attack, data)=> {
 			let attr = attack.data.ability;
+			let attackBonus = attack.data.attackBonus;
 			let abilityBonus = data.abilities[attr].mod;
 			let isProf = attack.data.proficient;
 			let profBonus = data.attributes.prof;
-		//	console.debug(attr, abilityBonus, isProf, profBonus);
 			
-			return abilityBonus + (isProf ? profBonus : 0);
+			return abilityBonus + (isProf ? profBonus : 0) + attackBonus;
 		});
 		Handlebars.registerHelper("getchathtml", (item, actor)=> {
 			return game.actors.get(actor._id).getOwnedItem(item._id).getChatData().description.value;
@@ -248,13 +248,30 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			let attr = item.data.ability;
 			let abilityBonus = this.actor.data.data.abilities[attr].mod;
 			let roll = new Roll(formula, {mod: abilityBonus}).roll();
-			return roll.formula;
+			
+			let parts = [];
+			let bonus = 0;
+			let op = "+";
+			
+			for (let part of roll.parts) {
+				if (typeof part == "object") parts.push(part.formula);
+				else if (part === "+" || part === "-") op = part;
+				else if (parseInt(part, 10) === NaN) console.error("Unexpected part in damage roll");
+				else {
+					let n = parseInt(part, 10);
+					bonus = op === "+" ? bonus + n : bonus - n;
+				}
+			}
+			if (bonus > 0) parts.push("+");
+			if (bonus < 0) parts.push("-");
+			if (bonus != 0) parts.push(bonus);
+			
+			return parts.join(" ");
 		});
 		Handlebars.registerHelper("damagetype", (item)=> {
 			return item.data.damage.parts[0][1];
 		});
 		Handlebars.registerHelper("toinlineroll", (flag, options) => {
-			console.debug(flag, options.fn(this));
 			if (!flag) return options.fn(this);
 			
 			return TextEditor.enrichHTML(`[[/gmr ${options.fn(this)}]]`);

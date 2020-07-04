@@ -47,7 +47,7 @@
 			{{/if}}
 		</ul>
 	</nav>	
-	<header class="sheet-header">
+	<header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
 		<section id="monster-identity">
 			<h1 class="charname">{{actor.name}}
 			</h1>
@@ -85,7 +85,7 @@
                 <li class="ability{{#if ability.proficient}} proficient{{/if}}" data-ability="{{id}}">
                     <h4 class="ability-name box-title">{{id}}</h4>
 					<span class="attr-value">{{ability.value}} </span>\
-					<span class="ability-mod" title="Modifier">({{numberFormat ability.mod decimals=0 sign=true}})</span>\
+					<span class="ability-mod" title="Modifier">({{numberFormat ability.mod decimals=0 sign=true}})</span>
                 </li>
             {{/each}}
             </ul>
@@ -100,7 +100,7 @@
 					{{#if ability.proficient}}
 						<li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
 							<span class="ability-name">{{id}}</span>
-							<span class="ability-save" title="Saving Throw">&nbsp;{{numberFormat ability.save decimals=0 sign=true}}</span>\
+							<span class="ability-save" title="Saving Throw">&nbsp;{{numberFormat ability.save decimals=0 sign=true}}</span>
 						</li>
 					{{/if}}
 					{{/each}}

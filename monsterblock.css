@@ -16,6 +16,9 @@
 	--divider-color: rgba(140, 42, 42, 1);
 	--divider-color-end: rgba(140, 42, 42, 0);
 }
+.monsterblock * {
+	user-select: text;
+}
 .monsterblock .window-content {
 	background: url(/ui/parchment.jpg), #ffc80038;
 	background-repeat: repeat;
@@ -116,15 +119,15 @@
 }
 .monsterblock .sheet-header section::after {
 	font-size: 14px;
-	margin-top: 4px;
-	margin-bottom: 4px;
+	margin-top: .75em;
+	margin-bottom: .75em;
 	display: block;
-	width: 100%;
+	width: 375px;
 	/* height: 4px; */
 	content: "";
 	/* This has an interesting result... */
 	border: none;
-	border-top: .2em solid transparent;
+	border-top: .2em solid #00000000;
 	border-bottom: .2em solid transparent;
 	border-left: 375px solid var(--divider-color);
 	/* background: linear-gradient(to right, var(--divider-color), var(--divider-color-end)); */
@@ -136,11 +139,15 @@
 	font-family: serif;
 	font-variant: small-caps;
 	font-weight: bold;
-	width: 290px;
 }
 .monsterblock .chartype {
 	font-style: italic;
 	margin: 0;
+}
+.monsterblock .image-enabled .charname,
+.monsterblock .image-enabled .chartype,
+.monsterblock .image-enabled .attributes {
+	width: 265px;
 }
 .monsterblock .profile-image {
 	background-size: contain;
@@ -167,7 +174,6 @@
 	margin: 0;
 }
 .monsterblock .monster-attributes1 .attributes {
-	width: 290px;
 }
 
 .monsterblock .ability-scores .ability {

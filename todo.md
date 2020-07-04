@@ -26,4 +26,4 @@
 - Automatically display the cost of legendary actions where applicable
 - Automatically display the recharge roll for applicable features
 - Automatically indicate passive perception if it isn't already mentioned under senses
-- Fix magic weapons so the attack and damage bonuses look right.
+- ~~Fix magic weapons so the attack and damage bonuses look right.~~
