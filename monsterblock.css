@@ -104,21 +104,22 @@
 	display: inline;
 }
 .monsterblock form {
-	font-size: 0px;
+	
 }
 .monsterblock .ability:hover,
 .monsterblock .saving-throw:hover,
 .monsterblock .skill:hover,
 .monsterblock .item-name:hover,
 .monsterblock .spell:hover,
-.monsterblock a.inline-roll:hover {
+.monsterblock a.inline-roll:hover,
+.monsterblock [data-roll-formula]:hover {
 	text-shadow: 0px 0px .05em var(--roll-hover-color);
 	cursor: pointer;
 	color: var(--roll-hover-color);
 }
 
 .monsterblock span, .monsterblock p, .monsterblock a {
-	font-size: 14px;
+	/* font-size: 14px; */
 }
 .monsterblock .flexcol {
     display: block;

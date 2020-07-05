@@ -94,7 +94,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	activateListeners(html) {
 		html.find('.switch').click((event) => {
 			event.preventDefault();
-			let control = event.target.dataset.control;
+			let control = event.currentTarget.dataset.control;
 			let state = !this.actor.getFlag("monsterblock", control);
 			console.debug(`Monster Block | %cSwitching: ${control} to: ${state}`, "color: orange")
 			this.actor.setFlag(
@@ -103,6 +103,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				!this.actor.getFlag("monsterblock", control)
 			);
 		});
+		
+		html.find('[data-roll-formula]').click((event) => {
+			event.preventDefault();
+			let formula = event.currentTarget.dataset.rollFormula;
+			let flavor = event.currentTarget.dataset.rollFlavor;
+			
+			new Roll(formula).roll().toMessage({
+				flavor: flavor,
+				speaker: ChatMessage.getSpeaker({actor: this.actor})
+			});
+		});
+		
 		html.find('.ability').click((event) => {
 			event.preventDefault();
 			let ability = event.currentTarget.dataset.ability;

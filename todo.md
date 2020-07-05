@@ -15,7 +15,7 @@
 	- ~~Logic to add the word "each" for innate caster spell lists when there are multiple seplls~~
 - Fix it so that the roll tooltips work on attacks
 - ~~Add the ability to roll from the sheet.~~
-	- Add quick rolls for attack and damage
+	- ~~Add quick rolls for attack and damage~~
 - ~~Make the photo enlarge when hovering over it.~~
 - Still not happy with the way the box sizing works.
 - ~~Make the background more yellowed like the book stat blocks.~~
