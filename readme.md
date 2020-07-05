@@ -2,7 +2,7 @@
 
 An NPC sheet for FoundryVTT designed to faithfully reproduce the apperance of D&D 5e monster statblocks.
 
-Currently does not support editing, this is a planned feature. See: [To Do List](todo.md)
+Currently does not support editing, this is a planned feature. You *can* edit features and other items by right clicking their descriptions. See: [To Do List](todo.md)
 
 ![Ancient Red Dragon](examples/ancientRedDragon.png)
 
@@ -18,6 +18,7 @@ Currently does not support editing, this is a planned feature. See: [To Do List]
  - Settings cog to toggle some features in the upper left corner.
  - Made it so that the [X Close] button can't get overflown off of the control bar (this effects all windows, not just this sheet).
  - Rolls for ability checks, saving throws, skills, features, actions, and spells.
+ - Open and edit features, spells, and other items by right-clicking their description.
  
 ## Helpful Macros
 See [macros.js](macros.js)

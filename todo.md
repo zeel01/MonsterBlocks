@@ -1,26 +1,14 @@
 # TODO:
-- ~~Handle ranged and spell attacks properly.~~
 - ~~Figure out how to specify number of targets for an attack (if possible)~~ *doesn't appear to be possible, but I'm not sure an exception to the "one target" exists*
-- ~~Calculate damage bonus and average damage.~~
-- ~~Switches to hide or show the automatically generated attack descriptions.~~
-- ~~Switch to show or hide secrets.~~
 - Spellcasting
 	- Spell attacks don't/might not have range increments.
-	- ~~Generate spellcasting feature~~
 	- Include links to spells
-	- ~~Switch to toggle this feature on and off~~
-	- ~~Make it work with natural casters~~ *seems good?*
 	- Fix ~~at-will~~ and other a-typical spells
-	- ~~Spell slot quantity indicator~~
-	- ~~Logic to add the word "each" for innate caster spell lists when there are multiple seplls~~
-- Fix it so that the roll tooltips work on attacks
 - ~~Add the ability to roll from the sheet.~~
 	- ~~Add quick rolls for attack and damage~~
-- ~~Make the photo enlarge when hovering over it.~~
 - Still not happy with the way the box sizing works.
-- ~~Make the background more yellowed like the book stat blocks.~~
-- ~~Switch to hide the picture.~~
 - Make it possible to edit the sheet!
+	- ~~Open item sheets from the sheet~~ *right click*
 - Better support limited use features like legendary resistance
 - Automatically display the cost of legendary actions where applicable
 - Automatically display the recharge roll for applicable features
@@ -36,3 +24,5 @@
 	- "Custom" option that allows you to paste in CSS
 	- "Clean" theme that's a white background.
 	- "Dark" theme
+- Add more comments to the code!
+- Re-organize code a bit

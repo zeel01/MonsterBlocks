@@ -133,15 +133,27 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		html.find('.item-name').click((event) => {
 			event.preventDefault();
 			let id = event.currentTarget.dataset.itemId;
-			let item = this.actor.getOwnedItem(id);
+			const item = this.actor.getOwnedItem(id);
 			return item.roll();
+		});
+		html.find('.item').contextmenu((event) => {
+			event.preventDefault();
+			let nameEl = event.currentTarget.querySelector('.item-name');
+			const item = this.actor.getOwnedItem(nameEl.dataset.itemId);
+			item.sheet.render(true);
 		});
 		html.find('.spell').click((event) => {
 			event.preventDefault();
 			let id = event.currentTarget.dataset.itemId;
-			console.log("Spell ID:", id);
-			let item = this.actor.getOwnedItem(id);
+			const item = this.actor.getOwnedItem(id);
 			return this.actor.useSpell(item, {configureDialog: !event.shiftKey});
+		});
+		html.find('.spell').contextmenu((event) => {
+			event.preventDefault();
+			console.log("Double Click!", event.currentTarget);
+			let id = event.currentTarget.dataset.itemId;
+			const item = this.actor.getOwnedItem(id);
+			item.sheet.render(true);
 		});
 	}
 	
