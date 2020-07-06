@@ -29,7 +29,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			isInnateSpellcaster: this.isInnateSpellcaster,
 			hasAtWillSpells: this.hasAtWillSpells
 		}
-		
+		data.special = {
+			multiattack: this.getMultiattack(data),
+		}
 		data.innateSpellbook = this.prepareInnateSpellbook(data.spellbook);
 		
 		return data;
@@ -50,6 +52,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		for (let item of this.actor.items) {
 			if (item.data.data.preparation && item.data.data.preparation.mode === "atwill") return true;
 		}
+	}
+	getMultiattack(data) {
+		for (let item of data.items) {
+			if (this.isMultiAttack(item)) return item;
+		}
+		return false;
 	}
 	prepareInnateSpellbook(spellbook) { // We need to completely re-organize the spellbook for an innate spellcaster
 		let innateSpellbook = [];
@@ -239,14 +247,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		Handlebars.registerHelper("invalidspelllevel", (level)=> {
 			return level < 0;
 		});
-		Handlebars.registerHelper("getmultiattack", ()=> {
-			for (let item of this.actor.items) {
-				if (this.isMultiAttack(item.data)) return item.data;
-			}
-			return false;
-		});
+	//	Handlebars.registerHelper("getmultiattack", (items)=> {
+	//		for (let item of items) {
+	//			if (this.isMultiAttack(item.data)) return item.data;
+	//		}
+	//		return false;
+	//	});
 		Handlebars.registerHelper("notspecialaction", (item)=> {
-			// Handlebars has no negation in conditions afik, so we have to create one.
 			return !(this.isMultiAttack(item) || this.isLegendaryAction(item) || this.isLairAction(item));
 		});
 		Handlebars.registerHelper("getattacks", (features)=> {

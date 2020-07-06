@@ -26,3 +26,4 @@
 	- "Dark" theme
 - Add more comments to the code!
 - Re-organize code a bit
+- Hide languages if none known
