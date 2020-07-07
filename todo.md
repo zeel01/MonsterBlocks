@@ -12,7 +12,7 @@
 	- ~~Open item sheets from the sheet~~ *right click*
 	- ~~Ability to quickly switch between this sheet and default~~
 - Better support limited use features like legendary resistance
-- Automatically display the cost of legendary actions where applicable
+- ~~Automatically display the cost of legendary actions where applicable~~
 - ~~Automatically display the recharge roll for applicable features~~
 - Automatically indicate passive perception if it isn't already mentioned under senses
 - ~~Fix magic weapons so the attack and damage bonuses look right.~~

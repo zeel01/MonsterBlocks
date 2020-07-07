@@ -184,7 +184,7 @@
 	{{#*inline "featureBlock"}}
 	<section class="item monster-feature">
 		<div class="feature-description inline-children">
-			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>{{#if item.data.recharge.value}} <span class="action-recharge" data-roll-flavor="{{item.name}} (Recharge {{item.data.recharge.value}}-6): " data-roll-formula="1d6" data-roll-target="{{item.data.recharge.value}}" data-roll-success="Charged" data-roll-failure="Not charged">(Recharge {{item.data.recharge.value}}-6)</span>{{/if}}.
+			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>{{#if item.data.recharge.value}} <span class="action-recharge" data-roll-flavor="{{item.name}} (Recharge {{item.data.recharge.value}}-6): " data-roll-formula="1d6" data-roll-target="{{item.data.recharge.value}}" data-roll-success="Charged" data-roll-failure="Not charged">(Recharge {{item.data.recharge.value}}-6)</span>{{/if}}{{#if (and (islegendary item) (greater item.data.activation.cost 1))}} <span class="action-cost">(Costs {{item.data.activation.cost}} {{localize "DND5E.ActionPl"}})</span>{{/if}}.
 			<span class="description">{{{enrichhtml item.data.description.value}}}</span>
 		</div>
 	</section>

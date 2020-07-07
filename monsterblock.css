@@ -303,7 +303,8 @@ li:nth-last-of-type(2):after {
 	margin-top: 14px;
 }
 .monsterblock .item-name,
-.monsterblock .action-recharge {
+.monsterblock .action-recharge,
+.monsterblock .action-cost {
 	font-weight: bold;
 	font-style: italic;
 }
