@@ -2,7 +2,7 @@
 
 An NPC sheet for FoundryVTT designed to faithfully reproduce the apperance of D&D 5e monster statblocks.
 
-Does not support editing directly. You *can* edit features and other items by right clicking their descriptions. This sheet is intended for use as an in-game reference to a monster, not as a tool for building NPCs. See: [To Do List](todo.md)
+Does not support editing directly. You *can* edit features and other items by right clicking their descriptions. This sheet is intended for use as an in-game reference to a monster, *not* as a tool for building NPCs. See: [To Do List](todo.md)
 
 ![Ancient Red Dragon](examples/ancientRedDragon_2.png)
 
