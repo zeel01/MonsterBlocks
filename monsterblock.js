@@ -155,8 +155,19 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			event.preventDefault();									// This handler makes "quick rolls" possible, it just takes some data stored on the HTML element, and rolls dice directly.
 			let formula = event.currentTarget.dataset.rollFormula;
 			let flavor = event.currentTarget.dataset.rollFlavor;	// Optionally, you can include data-roll-flavor to add text to the message.
+			let target = event.currentTarget.dataset.rollTarget;
+			let success = event.currentTarget.dataset.rollSuccess;
+			let failure = event.currentTarget.dataset.rollFailure;
 			
-			new Roll(formula).roll().toMessage({					// Creates a new Roll, rolls it, and sends the result as a message
+			let roll = new Roll(formula).roll();
+			
+			if (target) {
+				let s = roll._total >= parseInt(target, 10);
+				
+				flavor += `<span style="font-weight: bold; color: ${s ? "green" : "red"};">${s ? success : failure}</span>`;
+			}
+			
+			roll.toMessage({					// Creates a new Roll, rolls it, and sends the result as a message
 				flavor: flavor,										// Including the text as defined
 				speaker: ChatMessage.getSpeaker({actor: this.actor})// And setting the speaker to the actor this sheet represents
 			});

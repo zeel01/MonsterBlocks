@@ -2,7 +2,7 @@
 - ~~Figure out how to specify number of targets for an attack (if possible)~~ *doesn't appear to be possible, but I'm not sure an exception to the "one target" exists*
 - Spellcasting
 	- Spell attacks don't/might not have range increments.
-	- Include links to spells
+	- ~~Include links to spells~~ *can be rolled or edited*
 	- Fix ~~at-will~~ and other a-typical spells
 - ~~Add the ability to roll from the sheet.~~
 	- ~~Add quick rolls for attack and damage~~
@@ -13,7 +13,7 @@
 	- ~~Ability to quickly switch between this sheet and default~~
 - Better support limited use features like legendary resistance
 - Automatically display the cost of legendary actions where applicable
-- Automatically display the recharge roll for applicable features
+- ~~Automatically display the recharge roll for applicable features~~
 - Automatically indicate passive perception if it isn't already mentioned under senses
 - ~~Fix magic weapons so the attack and damage bonuses look right.~~
 - Refactor CSS to use more variables
