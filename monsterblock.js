@@ -13,7 +13,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			classes: ["monsterblock", "sheet", "actor"],
 			width: 391,
 			height: 800,
-			tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
+			dragDrop: [{dragSelector: ".item .item-name"}, {dragSelector: ".spell-list .spell"}]
 		});
 	}
 	
@@ -216,6 +216,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			this._element[0].classList.add("dnd5e");
 			this._element[0].classList.add("npc");
 		});
+		
+		this._dragDrop.forEach(d => d.bind(html[0]));
 	}
 	
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
