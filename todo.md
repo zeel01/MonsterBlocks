@@ -7,8 +7,10 @@
 - ~~Add the ability to roll from the sheet.~~
 	- ~~Add quick rolls for attack and damage~~
 - Still not happy with the way the box sizing works.
-- Make it possible to edit the sheet!
+- Make it possible to edit some things in the sheet.
+	- Add hit point modification
 	- ~~Open item sheets from the sheet~~ *right click*
+	- ~~Ability to quickly switch between this sheet and default~~
 - Better support limited use features like legendary resistance
 - Automatically display the cost of legendary actions where applicable
 - Automatically display the recharge roll for applicable features

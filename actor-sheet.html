@@ -3,6 +3,9 @@
 		<i class="fas fa-cog"></i>
 		<ul>
 			<li>
+				<a class="trigger" data-control="switchToDefault">Switch to Default Sheet</a>
+			</li>
+			<li>
 				<a class="switch" data-control="attack-descriptions">Attack descriptions</a>
 				<ul>
 					<li>
@@ -44,10 +47,13 @@
 		</ul>
 	</nav>	
 	<header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
+		{{#if info.bigRedButton}}<button class="big-red-button" style="color: red">Big Red Button!</button>{{/if}}
 		<section id="monster-identity">
-			<h1 class="charname">{{actor.name}}
+			<h1 class="charname" contenteditable="false" data-field-key="name">{{actor.name}}
 			</h1>
-			<p class="chartype">{{lookup config.actorSizes data.traits.size}}<span class="sep">&nbsp;</span>{{data.details.type}}<span class="sep">, </span>{{data.details.alignment}}</p>
+			<p class="chartype">
+				<span contenteditable="false" data-field-key="">{{lookup config.actorSizes data.traits.size}}</span><span class="sep">&nbsp;</span><span contenteditable="false" data-field-key="data.details.type">{{data.details.type}}</span><span class="sep">, </span><span contenteditable="false" data-field-key="data.details.alignment">{{data.details.alignment}}</span>
+			</p>
 			{{#unless flags.hide-profile-image}}<figure class="profile-image" style="background-image: url({{actor.img}});" title="{{actor.name}}" data-edit="img"/></figure>{{/unless}}
 		</section>
 		<section class="monster-attributes1">
@@ -65,10 +71,10 @@
 				</li>
 				<li class="attribute">
                     <h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }} </h4>
-					<span class="attr-value">{{data.attributes.speed.value}}</span>
+					<span class="attr-value" contenteditable="false" data-field-key="data.attributes.speed.value">{{data.attributes.speed.value}}</span>
 					{{#if data.attributes.speed.special}}
 						<span class="sep">, </span>
-						<span class="attr-value">{{data.attributes.speed.special}}</span>
+						<span class="attr-value" contenteditable="false" data-field-key="data.attributes.speed.special">{{data.attributes.speed.special}}</span>
 					{{/if}}
                 </li>
 			</ul>
@@ -208,7 +214,7 @@
 			{{#unless (invalidspelllevel spelllevel.dataset.level)}}
 				<li>
 					<span class="spell-level-name">{{localize (spelllevellocalization spelllevel.dataset.level)}}{{#unless spelllevel.dataset.level}}s{{/unless}}</span>
-					<span class="spell-slots">&nbsp;({{#if spelllevel.dataset.level}}{{spelllevel.slots}} slot{{#if (greater spelllevel.slots 1)}}s{{/if}}{{else}}at will{{/if}}): </span>
+					<span class="spell-slots">({{#if spelllevel.dataset.level}}{{spelllevel.slots}} slot{{#if (greater spelllevel.slots 1)}}s{{/if}}{{else}}at will{{/if}}): </span>
 					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
 					{{#each spelllevel.spells as |spell id|}}
 						<li class="spell" data-item-id="{{spell._id}}">

@@ -25,7 +25,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			hasCastingFeature: (this.isSpellcaster || this.isInnateSpellcaster),
 			isSpellcaster: this.isSpellcaster,
 			isInnateSpellcaster: this.isInnateSpellcaster,
-			hasAtWillSpells: this.hasAtWillSpells
+			hasAtWillSpells: this.hasAtWillSpells,
+			bigRedButton: false
 		}
 		data.special = {									// A collection of cherry-picked data used in special places.
 			multiattack: this.getMultiattack(data),
@@ -33,6 +34,26 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		data.innateSpellbook = this.prepareInnateSpellbook(data.spellbook); 
 		
 		return data;
+	}
+	
+	_getFormData(form) {	// Work in progress, might not use.
+		console.debug("_getFormData!");
+		let formData = new FormData();
+		let dtypes = {};
+		
+		let fields = form.querySelectorAll('[data-field-key]');
+		
+		for (let field of fields) {
+			let key = field.dataset.fieldKey;
+			let type = field.dataset.fieldType;
+			let value = field.innerText;
+			
+			formData.append(key, value);
+			if (type) dtypes[key] = type;
+		}
+		
+		formData._dtypes = dtypes;
+		return formData;
 	}
 	get isSpellcaster () {	// Regular spellcaster with typical spell slots.
 		for (let item of this.actor.items) {
@@ -97,6 +118,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return innateSpellbook;
 	}
 	
+	async switchToDefault(event) {
+		const config = CONFIG[this.object.entity];
+		const type = this.object.data.type;
+		const classes = Object.values(config.sheetClasses[type]);
+		const defcls = classes.find(c => c.default);
+		
+		await this.close();
+		await this.actor.setFlag("core", "sheetClass", defcls);
+		
+		return this.actor.sheet.render(true)
+	}
+	
 	activateListeners(html) {	// We need listeners to provide interaction.
 		html.find('.switch').click((event) => {							// Switches are the primary way that settings are applied per-actor.
 			event.preventDefault();
@@ -110,6 +143,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				control, 
 				!this.actor.getFlag("monsterblock", control)			// Get the current setting of this flag, and reverse it.
 			);
+		});
+		html.find('.trigger').click((event) => {							
+			event.preventDefault();
+			let control = event.currentTarget.dataset.control;
+			
+			this[control](event);
 		});
 		
 		html.find('[data-roll-formula]').click((event) => {			// Universal way to add an element that provides a roll, just add the data attribute "data-roll-formula" with a formula in it, and this applies.
@@ -167,6 +206,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			let id = event.currentTarget.dataset.itemId;
 			const item = this.actor.getOwnedItem(id);
 			item.sheet.render(true);
+		});
+		
+		html.find('.big-red-button').click((event) => {
+			event.preventDefault();
+			//this._onSubmit(event);
+			new ActorSheet5eNPC(this.object).render(true);
+			this._element[0].classList.remove("monsterblock");
+			this._element[0].classList.add("dnd5e");
+			this._element[0].classList.add("npc");
 		});
 	}
 	
@@ -393,14 +441,14 @@ Hooks.on("init", () => {
 	console.log(`Monster Block | %cInitialized.`, "color: orange");
 });
 
-Hooks.on("renderActorSheet", ()=> {	// This is just for debugging, it prevents this sheet's template from being cached.
+Hooks.on("renderActorSheet", () => {	// This is just for debugging, it prevents this sheet's template from being cached.
 	let template = "modules/monsterblock/actor-sheet.html";
     delete _templateCache[template];
     console.debug(`Monster Block | removed "${template}" from _templateCache.`);
 })
 
 // This is how the box sizing is corrected to fit the statblock
-Hooks.on("renderMonsterBlock5e", (monsterblock, html, data)=> {	// When the sheet is rendered
+Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the sheet is rendered
 	console.debug(`Monster Block |`, monsterblock, html, data);
 	
 	let popup = monsterblock._element[0]; // The window panel
@@ -421,6 +469,28 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data)=> {	// When the shee
 		if (anchorPosL < w) nh = anchorPosT;
 		popup.style.height = nh + 16 + "px";
 	}
+});
+
+Hooks.on("renderActorSheet5eNPC", (sheet, html, data) => {
+	console.debug("Adding Control...");
+	let nav = document.createElement("nav");
+	nav.innerHTML = `
+		<i class="fas fa-cog"></i>
+		<ul>
+			<li>
+				<a class="trigger" data-control="switchToMonsterBlock">Switch to Monster Blocks</a>
+			</li>
+		</ul>
+	`;
+	nav.classList.add("switches");
+
+	html.find('.window-content .editable')[0].appendChild(nav);
+	
+	nav.addEventListener("click", async (event) => {
+		await sheet.close();
+		await sheet.actor.setFlag("core", "sheetClass", "dnd5e.MonsterBlock5e");
+		return sheet.actor.sheet.render(true)
+	});
 });
 
 Actors.registerSheet("dnd5e", MonsterBlock5e, {
