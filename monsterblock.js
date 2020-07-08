@@ -30,6 +30,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 		data.special = {									// A collection of cherry-picked data used in special places.
 			multiattack: this.getMultiattack(data),
+			legresist: this.getLegendaryResistance(data)
 		}
 		data.innateSpellbook = this.prepareInnateSpellbook(data.spellbook); 
 		
@@ -75,6 +76,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	getMultiattack(data) { // The Multiattack action is always first in the list, so we need to find it and seperate it out.
 		for (let item of data.items) {
 			if (MonsterBlock5e.isMultiAttack(item)) return item;
+		}
+		return false;
+	}
+	getLegendaryResistance(data) {
+		for (let item of data.items) {
+			if (MonsterBlock5e.isLegendaryResistance(item)) return item;
 		}
 		return false;
 	}
@@ -243,6 +250,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		].includes(name); // Array.includes() checks if any item in the array matches the value given. This will determin if the name of the item is one of the options in the array.
 	}
 	
+	static isLegendaryResistance(item) {
+		return item.data.consume.target === "resources.legres.value";
+	}
+	
 	// Item purpose checks
 	static isLegendaryAction(item) {
 		return item.data.activation.type === "legendary";
@@ -301,6 +312,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		Handlebars.registerHelper("islegendary", (item)=> {			// Check if an action is a legendary action
 			return this.isLegendaryAction(item);
 		});
+		Handlebars.registerHelper("islegresist", (item)=> {			// Check if an action is a legendary action
+			return this.isLegendaryResistance(item);
+		});
 		Handlebars.registerHelper("isspellcasting", (item)=> {		// Check if this item is the spellcasting feature
 			return this.isSpellcasting(item) || this.isInnateSpellcasting(item);
 		});
@@ -311,7 +325,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			return level < 0;
 		});
 		Handlebars.registerHelper("notspecialaction", (item)=> {	// Used to unsure that actions that need seperated out aren't shown twice
-			return !(this.isMultiAttack(item) || this.isLegendaryAction(item) || this.isLairAction(item));
+			return !(this.isMultiAttack(item) || this.isLegendaryAction(item) || this.isLairAction(item) || this.isLegendaryResistance(item));
 		});
 		
 		// Feature type groups
@@ -405,6 +419,16 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				if (level.prop === "atwill") return level.spells;
 			}
 			return [];
+		});
+		Handlebars.registerHelper("hasresource", (item)=> {
+			return Boolean(item.data.consume.target);
+		});
+		Handlebars.registerHelper("getresourcelimit", (item, actor)=> {
+			let res = item.data.consume.target.match(/(.+)\.(.+)\.(.+)/);
+			return actor.data[res[1]][res[2]].max;
+		});
+		Handlebars.registerHelper("getresourcerefresh", (item, actor)=> {
+			return "Day";
 		});
 			
 		Handlebars.registerHelper("getspellattackbonus", (actor)=> {	// Calculate the spell attack bonus

@@ -303,11 +303,16 @@ li:nth-last-of-type(2):after {
 	margin-top: 14px;
 }
 .monsterblock .item-name,
-.monsterblock .action-recharge,
-.monsterblock .action-cost {
+.monsterblock .name-extension {
 	font-weight: bold;
 	font-style: italic;
 }
+.monsterblock .legendary-actions .item-name,
+.monsterblock .legendary-actions .name-extension {
+	font-weight: bold;
+	font-style: normal;
+}
+
 .monsterblock .attack-type {
 	font-style: italic;
 }

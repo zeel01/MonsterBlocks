@@ -11,7 +11,7 @@
 	- Add hit point modification
 	- ~~Open item sheets from the sheet~~ *right click*
 	- ~~Ability to quickly switch between this sheet and default~~
-- Better support limited use features like legendary resistance
+- ~~Better support limited use features like legendary resistance~~ *May have some bugs*
 - ~~Automatically display the cost of legendary actions where applicable~~
 - ~~Automatically display the recharge roll for applicable features~~
 - Automatically indicate passive perception if it isn't already mentioned under senses
@@ -29,3 +29,4 @@
 - Add more comments to the code!
 - Re-organize code a bit
 - Hide languages if none known
+- ~~Legendary action names are not in italics~~

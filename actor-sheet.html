@@ -182,9 +182,11 @@
 		</section>
     </header>
 	{{#*inline "featureBlock"}}
-	<section class="item monster-feature">
+	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}">
 		<div class="feature-description inline-children">
-			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>{{#if item.data.recharge.value}} <span class="action-recharge" data-roll-flavor="{{item.name}} (Recharge {{item.data.recharge.value}}-6): " data-roll-formula="1d6" data-roll-target="{{item.data.recharge.value}}" data-roll-success="Charged" data-roll-failure="Not charged">(Recharge {{item.data.recharge.value}}-6)</span>{{/if}}{{#if (and (islegendary item) (greater item.data.activation.cost 1))}} <span class="action-cost">(Costs {{item.data.activation.cost}} {{localize "DND5E.ActionPl"}})</span>{{/if}}.
+			{{! This mess brought to you by "Spaces where you don't want them"}}
+			
+			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>{{#if item.data.recharge.value}} <span class="name-extension" data-roll-flavor="{{item.name}} (Recharge {{item.data.recharge.value}}-6): " data-roll-formula="1d6" data-roll-target="{{item.data.recharge.value}}" data-roll-success="Charged" data-roll-failure="Not charged">(Recharge {{item.data.recharge.value}}-6)</span>{{/if}}{{#if (and (islegendary item) (greater item.data.activation.cost 1))}} <span class="name-extension">(Costs {{item.data.activation.cost}} {{localize "DND5E.ActionPl"}})</span>{{/if}}{{#unless legendaryactions}}{{#if (hasresource item)}} <span class="name-extension">({{getresourcelimit item actor}}/{{getresourcerefresh item actor}})</span>{{/if}}{{/unless}}.
 			<span class="description">{{{enrichhtml item.data.description.value}}}</span>
 		</div>
 	</section>
@@ -266,13 +268,16 @@
 	{{#each (getfeatures features) as |item iid|}}
 		{{#if (notspecialaction item)}}
 		{{#unless (and ../flags.casting-feature (isspellcasting item))}}
-			{{> featureBlock item=item}}
+			{{> featureBlock item=item actor=../actor}}
 		{{/unless}}
 		{{/if}}
 	{{/each}}
+	{{#if special.legresist}}
+		{{> featureBlock item=special.legresist actor=actor}}
+	{{/if}}
 	<h2 class="section-header" >{{localize "DND5E.ActionPl"}}</h2>
 	{{#if special.multiattack}}
-		{{> featureBlock item=special.multiattack}}
+		{{> featureBlock item=special.multiattack actor=actor}}
 	{{/if}}
 	{{#each (getattacks features) as |item iid|}}
 	{{#if (notspecialaction item)}}
@@ -281,7 +286,7 @@
 			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>. 
 			{{#if ../flags.attack-descriptions}}
 			<span class="generated-text">
-				<span class="attack-type">{{localize (getattacktype item)}}</span>:
+				<span class="attack-type">{{localize (getattacktype item)}}</span>{{#unless legendaryactions}}{{#if (hasresource item)}} <span class="name-extension">({{getresourcelimit item ../actor}}/{{getresourcerefresh item ../actor}})</span>{{/if}}{{/unless}}:
 				<span class="attack-bonus" data-roll-flavor="{{localize "DND5E.Attack"}}: {{item.name}}" data-roll-formula="1d20 + {{getattackbonus item ../data}}">{{numberFormat (getattackbonus item ../data) decimals=0 sign=true}} to hit</span>, 
 				<span>{{#if (israngedattack item)}}range{{else}}reach{{/if}} {{item.data.range.value}} {{#if (israngedattack item)}}/ {{item.data.range.long}}{{/if}} {{item.data.range.units}}., one target.</span>
 				<span class="attack-damage" data-roll-flavor="{{localize "DND5E.Damage"}}: {{item.name}}" data-roll-formula="{{damageformula item ../actor}}">
@@ -298,7 +303,7 @@
 	{{/each}}
 	{{#each (getactions features) as |item iid|}}
 		{{#if (notspecialaction item)}}
-			{{> featureBlock item=item}}
+			{{> featureBlock item=item actor=../actor}}
 		{{/if}}
 	{{/each}}
 	{{! Legendary Actions }}
@@ -306,7 +311,9 @@
 		<h2 class="section-header" >{{localize "DND5E.LegAct"}}</h2>
 		<p>The {{actor.name}} can take 3 legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {{actor.name}} regains spent legendary actions at the start of its turn.</p>
 		{{#each (getactions features) as |item iid|}}
-			{{#if (islegendary item)}}{{> featureBlock item=item}}{{/if}}
+			{{#if (and (islegendary item) (not (islegresist item))) }}
+				{{> featureBlock item=item actor=../actor legendaryactions=true}}
+			{{/if}}
 		{{/each}}
 	{{/if}}
 	{{! Lair Actions }}
@@ -314,7 +321,7 @@
 	{{#if flags.show-lair-actions}}
 		<h2 class="section-header" >Lair {{localize "DND5E.ActionPl"}}</h2>
 		{{#each (getactions features) as |item iid|}}
-			{{#if (islair item)}}{{> featureBlock item=item}}{{/if}}
+			{{#if (islair item)}}{{> featureBlock item=item actor=../actor}}{{/if}}
 		{{/each}}
 	{{/if}}
 	{{/if}}
