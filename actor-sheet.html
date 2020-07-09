@@ -243,7 +243,7 @@
 			<span class="item-name">{{localize "DND5E.Spellcasting"}}</span>.
 			<span class="description">
 				The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster.
-				Its spellcasting ability is {{getcastingability actor}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
+				Its spellcasting ability is {{getcastingability actor spellbook castertype}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
 				The {{actor.name}}
 				{{#if info.hasAtWillSpells}}
 					can cast 
@@ -289,7 +289,7 @@
 			<span class="item-name">{{localize "DND5E.Spellcasting"}}</span>.
 			<span class="description">
 				The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster.
-				Its spellcasting ability is {{getcastingability actor}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
+				Its spellcasting ability is {{getcastingability actor spellbook castertype}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
 				It regains its expended spell slots when it finishes a short or long rest.
 				It
 				{{#if info.hasAtWillSpells}}
@@ -339,7 +339,7 @@
 		<div class="feature-description inline-children">
 			<span class="item-name">{{localize "DND5E.SpellPrepInnate"}}</span>.
 			<span class="description">
-				The {{actor.name}}'s innate spellcasting ability is {{getcastingability actor}}
+				The {{actor.name}}'s innate spellcasting ability is {{getcastingability actor spellbook castertype}}
 				(spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
 				The {{actor.name}} can innately cast the following spells, requiring no material components:
 			</span>
@@ -370,14 +370,14 @@
 	{{#if (and info.hasCastingFeature flags.casting-feature)}}
 		{{#if info.isSpellcaster}}
 			{{#if info.isWarlock}}
-				{{> warlockcasting spellbook=spellbook actor=actor info=info}}
+				{{> warlockcasting spellbook=spellbook actor=actor info=info castertype="pact"}}
 			{{else}}
-				{{> spellcasting spellbook=spellbook actor=actor info=info}}
+				{{> spellcasting spellbook=spellbook actor=actor info=info castertype="slots"}}
 			{{/if}}
 		{{/if}}
 		
 		{{#if info.isInnateSpellcaster}}
-			{{> innatespellcasting spellbook=innateSpellbook actor=actor info=info}}
+			{{> innatespellcasting spellbook=innateSpellbook actor=actor info=info castertype="innate"}}
 		{{/if}}
 	{{/if}}
 	

@@ -408,8 +408,24 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			
 			return abilityBonus + (isProf ? profBonus : 0) + attackBonus;
 		});
-		Handlebars.registerHelper("getcastingability", (actor) => {
-			return actor.data.abilities[actor.data.attributes.spellcasting].label;
+		Handlebars.registerHelper("getcastingability", (actor, spellbook, type) => {
+			let main = actor.data.attributes.spellcasting;
+			let castingability = main;
+			
+			let types = {
+				"will": (l) => l.order == -20,
+				"innate": (l) => l.order == -10,
+				"pact": (l) => l.order == 0.5,
+				"cantrip": (l) => l.order == 0,
+				"slots": (l) => l.order > 0
+			}
+			let spelllevel = spellbook.find(types[type])
+			if (spelllevel !== undefined) {
+				let spell = spelllevel.spells.find((s) => s.data.ability && s.data.ability != actor.data.attributes.spellcasting);
+				if (spell !== undefined) castingability = spell.data.ability;
+			}
+			return actor.data.abilities[castingability].label;
+			 
 		});
 		Handlebars.registerHelper("getchathtml", (item, actor) => {	// Finds the *real* instance of the actor and the item, and uses the .getChatData() method to get the the description with inline rolls and links properly formatted.
 			return game.actors.get(actor._id).getOwnedItem(item._id).getChatData().description.value;

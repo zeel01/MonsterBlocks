@@ -4,7 +4,7 @@
 	- ~~Spell attacks don't/might not have range increments.~~
 	- ~~Include links to spells~~ *can be rolled or edited*
 	- ~~Fix ~~at-will~~ and other a-typical spells~~ *I think it's good?*
-	- Some casters with multiple casting features have multiple casting abilities, though the data model doesn't support this very well.
+	- ~~Some casters with multiple casting features have multiple casting abilities, though the data model doesn't support this very well.~~
 	- ~~Warlocks~~
 - Still not happy with the way the box sizing works.
 - Make it possible to edit some things in the sheet.
