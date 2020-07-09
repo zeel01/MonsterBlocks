@@ -49,10 +49,18 @@
 	<header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
 		{{#if info.bigRedButton}}<button class="big-red-button" style="color: red">Big Red Button!</button>{{/if}}
 		<section id="monster-identity">
-			<h1 class="charname" contenteditable="false" data-field-key="name">{{actor.name}}
-			</h1>
+			<h1 class="charname" contenteditable="false" data-field-key="name">{{actor.name}}</h1>
 			<p class="chartype">
-				<span contenteditable="false" data-field-key="">{{lookup config.actorSizes data.traits.size}}</span><span class="sep">&nbsp;</span><span contenteditable="false" data-field-key="data.details.type">{{data.details.type}}</span><span class="sep">, </span><span contenteditable="false" data-field-key="data.details.alignment">{{data.details.alignment}}</span>
+				<span contenteditable="false" data-field-key="">
+					{{~lookup config.actorSizes data.traits.size~}}
+				</span>
+				<span contenteditable="false" data-field-key="data.details.type">
+					{{~data.details.type~}}
+				</span>{{~" "~}}
+				<span class="sep">,</span>
+				<span contenteditable="false" data-field-key="data.details.alignment">
+					{{~data.details.alignment~}}
+				</span>
 			</p>
 			{{#unless flags.hide-profile-image}}<figure class="profile-image" style="background-image: url({{actor.img}});" title="{{actor.name}}" data-edit="img"/></figure>{{/unless}}
 		</section>
@@ -65,17 +73,17 @@
 				<li class="attribute health">
 					<h4 class="attribute-name box-title">{{ localize "DND5E.Health" }} </h4>
 					<span class="attr-value">{{data.attributes.hp.value}}</span>
-                    <span class="sep">&nbsp;/&nbsp;</span>
+                    <span class="sep">/</span>
 					<span class="attr-value">{{data.attributes.hp.max}}</span>
-					<span class="sep">&nbsp;(</span><span class="attr-value">{{data.attributes.hp.formula}}</span><span class="sep">)</span>
+					<span class="sep">(</span><span class="attr-value">{{data.attributes.hp.formula}}</span><span class="sep">)</span>
 				</li>
 				<li class="attribute">
                     <h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }} </h4>
 					<span class="attr-value" contenteditable="false" data-field-key="data.attributes.speed.value">{{data.attributes.speed.value}}</span>
-					{{#if data.attributes.speed.special}}
+					{{~#if data.attributes.speed.special~}}
 						<span class="sep">, </span>
 						<span class="attr-value" contenteditable="false" data-field-key="data.attributes.speed.special">{{data.attributes.speed.special}}</span>
-					{{/if}}
+					{{~/if~}}
                 </li>
 			</ul>
 		</section>
@@ -94,13 +102,13 @@
 			<ul class="attributes">
 				{{#if (hassave data.abilities)}}
 				<li class="monster-saves">
-					<h4 class="attribute-name">{{localize "DND5E.SavingThrows"}}&nbsp;</h4>
+					<h4 class="attribute-name">{{localize "DND5E.SavingThrows"}}</h4>
 					<ul class="inline-list">
 					{{#each data.abilities as |ability id|}}
 					{{#if ability.proficient}}
 						<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
 							<span class="ability-name">{{id}}</span>
-							<span class="ability-save" title="Saving Throw">&nbsp;{{numberFormat ability.save decimals=0 sign=true}}</span>
+							<span class="ability-save" title="Saving Throw">{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
 						</li>
 					{{/if}}
 					{{/each}}
@@ -109,13 +117,13 @@
 				{{/if}}
 				{{#if (hasskills data.skills)}}
 				<li class="monster-skills">
-					<h4 class="attribute-name">{{localize "DND5E.Skills"}}&nbsp;</h4>
+					<h4 class="attribute-name">{{localize "DND5E.Skills"}}</h4>
 					<ul class="inline-list">
 					{{#each data.skills as |skill s|}}
 					{{#if skill.value}}
 						<li class="skill {{#if skill.value}}proficient{{/if}}" data-skill="{{s}}">
 							<span class="skill-name">{{skill.label}}</span>
-							<span class="skill-mod">&nbsp;{{numberFormat skill.total decimals=0 sign=true}}</span>
+							<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>{{~" "~}}
 						</li>
 					{{/if}}
 					{{/each}}
@@ -124,59 +132,65 @@
 				{{/if}}
 				{{#if (hascontents data.traits.dv.selected)}}
 				<li class="attribute">
-					<h4 class="attribute-name">{{localize "DND5E.DamVuln"}}&nbsp;</h4>
+					<h4 class="attribute-name">{{localize "DND5E.DamVuln"}}</h4>
 					<ul class="traits-list inline-list">
 					{{#each data.traits.dv.selected as |v k|}}
-						<li class="tag {{k}}"><span class="trait-value">{{v}}</span></li>
+						<li class="trait-value">{{v}}</li>
 					{{/each}}
 					</ul>
 				</li>
 				{{/if}}
 				{{#if (hascontents data.traits.dr.selected)}}
 				<li class="attribute">
-					<h4 class="attribute-name">{{localize "DND5E.DamRes"}}&nbsp;</h4>
+					<h4 class="attribute-name">{{localize "DND5E.DamRes"}}</h4>
 					<ul class="traits-list inline-list">
 					{{#each data.traits.dr.selected as |v k|}}
-						<li class="tag {{k}}"><span class="trait-value">{{v}}</span></li>
+						<li class="trait-value">{{v}}</li>
 					{{/each}}
 					</ul>
 				</li>
 				{{/if}}
 				{{#if (hascontents data.traits.di.selected)}}
 				<li class="attribute">
-					<h4 class="attribute-name">{{localize "DND5E.DamImm"}}&nbsp;</h4>
+					<h4 class="attribute-name">{{localize "DND5E.DamImm"}}</h4>
 					<ul class="traits-list inline-list">
 					{{#each data.traits.di.selected as |v k|}}
-						<li class="tag {{k}}"><span class="trait-value">{{v}}</span></li>
+						<li class="trait-value">{{v}}</li>
 					{{/each}}
 					</ul>
 				</li>
 				{{/if}}
 				{{#if (hascontents data.traits.ci.selected)}}
 				<li class="attribute">
-					<h4 class="attribute-name">{{localize "DND5E.ConImm"}}&nbsp;</h4>
+					<h4 class="attribute-name">{{localize "DND5E.ConImm"}}</h4>
 					<ul class="traits-list inline-list">
 					{{#each data.traits.ci.selected as |v k|}}
-						<li class="tag {{k}}"><span class="trait-value">{{v}}</span></li>
+						<li class="trait-value">{{v}}</li>
 					{{/each}}
 					</ul>
 				</li>
 				{{/if}}
 				<li class="attribute">
-					<h4 class="attribute-name">{{localize "DND5E.Senses"}}&nbsp;</h4>
+					<h4 class="attribute-name">{{localize "DND5E.Senses"}}</h4>
 					<span class="trait-value">{{data.traits.senses}}</span>
 				</li>
+				
 				<li class="attribute">
-					<h4 class="attribute-name">{{localize "DND5E.Languages"}}&nbsp;</h4>
+					<h4 class="attribute-name">{{localize "DND5E.Languages"}}</h4>
 					<ul class="traits-list inline-list">
-					{{#each data.traits.languages.selected as |v k|}}
-						<li class="tag {{k}}"><span class="trait-value">{{v}}</span></li>
-					{{/each}}
+					{{#if (hascontents data.traits.languages.selected)}}
+						{{#each data.traits.languages.selected as |v k|}}
+							<li class="trait-value">{{v}}</li>
+						{{/each}}
+					{{else}}
+						<li class="trait-value">&mdash;</li>
+					{{/if}}
 					</ul>
 				</li>
+				
 				<li class="attribute">
-					<h4 class="attribute-name">{{localize "DND5E.ChallengeRating"}}&nbsp;</h4>
-					<span class="trait-value">{{labels.cr}}</span><span>&nbsp;({{data.details.xp.value}} XP)</span>
+					<h4 class="attribute-name">{{localize "DND5E.ChallengeRating"}}</h4>
+					<span class="trait-value">{{labels.cr}}</span> <span>({{data.details.xp.value}} XP)</span>
 				</li>
 			</ul>
 		</section>
@@ -184,9 +198,31 @@
 	{{#*inline "featureBlock"}}
 	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}">
 		<div class="feature-description inline-children">
-			{{! This mess brought to you by "Spaces where you don't want them"}}
-			
-			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>{{#if item.data.recharge.value}} <span class="name-extension" data-roll-flavor="{{item.name}} (Recharge {{item.data.recharge.value}}-6): " data-roll-formula="1d6" data-roll-target="{{item.data.recharge.value}}" data-roll-success="Charged" data-roll-failure="Not charged">(Recharge {{item.data.recharge.value}}-6)</span>{{/if}}{{#if (and (islegendary item) (greater item.data.activation.cost 1))}} <span class="name-extension">(Costs {{item.data.activation.cost}} {{localize "DND5E.ActionPl"}})</span>{{/if}}{{#unless legendaryactions}}{{#if (hasresource item)}} <span class="name-extension">({{getresourcelimit item actor}}/{{getresourcerefresh item actor}})</span>{{/if}}{{/unless}}.
+			<span class="item-name" data-item-id="{{item._id}}">
+				{{~item.name~}} 
+			</span>
+			{{~#if item.data.recharge.value~}}
+				<span class="name-extension" 
+					data-roll-flavor="{{item.name}} (Recharge {{item.data.recharge.value}}-6): " 
+					data-roll-formula="1d6" 
+					data-roll-target="{{item.data.recharge.value}}" 
+					data-roll-success="Charged" 
+					data-roll-failure="Not charged">
+					(Recharge {{item.data.recharge.value}}-6){{~" "~}}
+				</span>
+			{{~/if~}}
+			{{~#if (and (islegendary item) (greater item.data.activation.cost 1))~}}
+				<span class="name-extension">
+					(Costs {{item.data.activation.cost}} {{localize "DND5E.ActionPl"}}){{~" "~}}
+				</span>
+			{{~/if~}}
+			{{~#unless legendaryactions~}}
+				{{~#if (hasresource item)~}}
+					<span class="name-extension">
+						({{~getresourcelimit item actor}}/{{getresourcerefresh item actor~}}){{~" "~}}
+					</span>
+				{{~/if~}}
+			{{~/unless~}}.
 			<span class="description">{{{enrichhtml item.data.description.value}}}</span>
 		</div>
 	</section>
@@ -202,25 +238,37 @@
 	<section class="monster-feature spellcasting-trait" data-item-id="{{item._id}}">
 		<div class="feature-description inline-children">
 			<span class="item-name">{{localize "DND5E.Spellcasting"}}</span>.
-			<span class="description">The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster. Its spellcasting ability is {{! casting ability}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks). The {{actor.name}}
-			{{#if info.hasAtWillSpells}}
-				can cast 
-				<ul class="at-will-spells">
-					{{> atwillcasting spells=(getatwill spellbook)}}	
-				</ul>
-				at will and
-			{{/if}}
-			has the following {{! spell class is unavailable}} spells prepared:</span>
+			<span class="description">
+				The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster.
+				Its spellcasting ability is {{getcastingability actor}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
+				The {{actor.name}}
+				{{#if info.hasAtWillSpells}}
+					can cast 
+					<ul class="at-will-spells">
+						{{> atwillcasting spells=(getatwill spellbook)}}	
+					</ul>
+					at will and
+				{{/if}}
+				has the following {{! spell class is unavailable}} spells prepared:
+			</span>
 			<ul class="spell-list">
 			{{#each spellbook as |spelllevel id|}}
 			{{#unless (invalidspelllevel spelllevel.dataset.level)}}
 				<li>
-					<span class="spell-level-name">{{localize (spelllevellocalization spelllevel.dataset.level)}}{{#unless spelllevel.dataset.level}}s{{/unless}}</span>
-					<span class="spell-slots">({{#if spelllevel.dataset.level}}{{spelllevel.slots}} slot{{#if (greater spelllevel.slots 1)}}s{{/if}}{{else}}at will{{/if}}): </span>
+					<span class="spell-level-name">
+						{{localize (spelllevellocalization spelllevel.dataset.level)}}{{#unless spelllevel.dataset.level}}s{{/unless}}
+					</span>
+					<span class="spell-slots">
+						({{#if spelllevel.dataset.level~}}
+							{{spelllevel.slots}} slot{{#if (greater spelllevel.slots 1)}}s{{/if}}
+						{{~else~}}
+							at will
+						{{~/if~}}){{~" "~}}
+					</span>:
 					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
 					{{#each spelllevel.spells as |spell id|}}
 						<li class="spell" data-item-id="{{spell._id}}">
-							<span class="spell-name">{{spell.name}}</span>
+							<span class="spell-name">{{spell.name}}</span>{{~" "~}}
 						</li>
 					{{/each}}
 					</ul>
@@ -236,15 +284,24 @@
 	<section class="monster-feature spellcasting-trait" data-item-id="{{item._id}}">
 		<div class="feature-description inline-children">
 			<span class="item-name">{{localize "DND5E.SpellPrepInnate"}}</span>.
-			<span class="description">The {{actor.name}}'s innate spellcasting ability is {{! casting ability}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks). The {{actor.name}} can innately cast the following spells, requiring no material components:</span>
+			<span class="description">
+				The {{actor.name}}'s innate spellcasting ability is {{getcastingability actor}}
+				(spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
+				The {{actor.name}} can innately cast the following spells, requiring no material components:
+			</span>
 			<ul class="spell-list">
 			{{#each spellbook as |spelllevel id|}}
 				<li>
-					<span class="spell-level-name">{{spelllevel.label}}{{#if (and (greater spelllevel.uses 0) (greater spelllevel.spells.length 1))}} each{{/if}}: </span>
+					<span class="spell-level-name">
+						{{spelllevel.label}}
+						{{~#if (and (greater spelllevel.uses 0) (greater spelllevel.spells.length 1))}}
+							each
+						{{~/if}}:
+					</span>
 					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
 					{{#each spelllevel.spells as |spell id|}}
 						<li class="spell" data-item-id="{{spell._id}}">
-							<span class="spell-name">{{spell.name}}</span>
+							<span class="spell-name">{{spell.name}}</span>{{~" "~}}
 						</li>
 					{{/each}}
 					</ul>
@@ -285,12 +342,39 @@
 		<div class="attack-description inline-children">
 			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>. 
 			{{#if ../flags.attack-descriptions}}
-			<span class="generated-text">
-				<span class="attack-type">{{localize (getattacktype item)}}</span>{{#unless legendaryactions}}{{#if (hasresource item)}} <span class="name-extension">({{getresourcelimit item ../actor}}/{{getresourcerefresh item ../actor}})</span>{{/if}}{{/unless}}:
-				<span class="attack-bonus" data-roll-flavor="{{localize "DND5E.Attack"}}: {{item.name}}" data-roll-formula="1d20 + {{getattackbonus item ../data}}">{{numberFormat (getattackbonus item ../data) decimals=0 sign=true}} to hit</span>, 
-				<span>{{#if (israngedattack item)}}range{{else}}reach{{/if}} {{item.data.range.value}} {{#if (israngedattack item)}}/ {{item.data.range.long}}{{/if}} {{item.data.range.units}}., one target.</span>
-				<span class="attack-damage" data-roll-flavor="{{localize "DND5E.Damage"}}: {{item.name}}" data-roll-formula="{{damageformula item ../actor}}">
-					<span class="hit-label">Hit:&nbsp;</span>
+			<span class="generated-text">			
+				<span class="attack-type">
+					{{~localize (getattacktype item)~}}
+				</span>
+				{{~#unless legendaryactions~}}
+					{{~#if (hasresource item)~}} 
+						<span class="name-extension">
+							({{~getresourcelimit item ../actor}}/{{getresourcerefresh item ../actor~}})
+						</span>
+					{{~/if~}}
+				{{~/unless}}:
+				<span class="attack-bonus" 
+					data-roll-flavor="{{localize 'DND5E.Attack'}}: {{item.name}}" 
+					data-roll-formula="1d20 + {{getattackbonus item ../data}}">
+					{{~numberFormat (getattackbonus item ../data) decimals=0 sign=true}} to hit {{~" "~}}
+				</span>, 
+				<span>
+					{{~#if (israngedattack item)~}}
+						range
+					{{~else~}}
+						reach
+					{{~/if}}
+					{{item.data.range.value}} 
+					{{#if (and (israngedattack item) item.data.range.long)}}
+						/ {{item.data.range.long}}
+					{{/if}} {{item.data.range.units}}., one target.
+				</span>
+				<span class="attack-damage" 
+					data-roll-flavor="{{localize 'DND5E.Damage'}}: {{item.name}}" 
+					data-roll-formula="{{damageformula item ../actor}}">
+					<span class="hit-label">
+						Hit:&nbsp;
+					</span>
 					<span>{{averagedamage item ../actor}} ({{damageformula item ../actor}})</span>
 				</span>
 				<span class="damage-type">{{damagetype item}} damage</span>.
@@ -319,7 +403,7 @@
 	{{! Lair Actions }}
 	{{#if (haslair features)}}
 	{{#if flags.show-lair-actions}}
-		<h2 class="section-header" >Lair {{localize "DND5E.ActionPl"}}</h2>
+		<h2 class="section-header">Lair {{localize "DND5E.ActionPl"}}</h2>
 		{{#each (getactions features) as |item iid|}}
 			{{#if (islair item)}}{{> featureBlock item=item actor=../actor}}{{/if}}
 		{{/each}}

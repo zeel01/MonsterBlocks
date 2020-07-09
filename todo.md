@@ -1,9 +1,10 @@
 # TODO:
 - ~~Figure out how to specify number of targets for an attack (if possible)~~ *doesn't appear to be possible, but I'm not sure an exception to the "one target" exists*
 - Spellcasting
-	- Spell attacks don't/might not have range increments.
+	- ~~Spell attacks don't/might not have range increments.~~
 	- ~~Include links to spells~~ *can be rolled or edited*
-	- Fix ~~at-will~~ and other a-typical spells
+	- ~~Fix ~~at-will~~ and other a-typical spells~~ *I tihnk it's good?*
+	- Some casters with multiple casting features have multiple casting abilities, though the data model doesn't support this very well.
 - ~~Add the ability to roll from the sheet.~~
 	- ~~Add quick rolls for attack and damage~~
 - Still not happy with the way the box sizing works.
@@ -28,5 +29,6 @@
 	- "Dark" theme
 - Add more comments to the code!
 - Re-organize code a bit
-- Hide languages if none known
+- ~~Hide languages if none known~~ *Actually, doesn't "hide" languages, but shows an mdash as is done in the MM*
 - ~~Legendary action names are not in italics~~
+- Set default flags

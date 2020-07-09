@@ -361,6 +361,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			
 			return abilityBonus + (isProf ? profBonus : 0) + attackBonus;
 		});
+		Handlebars.registerHelper("getcastingability", (actor)=> {
+			return actor.data.abilities[actor.data.attributes.spellcasting].label;
+		});
 		Handlebars.registerHelper("getchathtml", (item, actor)=> {	// Finds the *real* instance of the actor and the item, and uses the .getChatData() method to get the the description with inline rolls and links properly formatted.
 			return game.actors.get(actor._id).getOwnedItem(item._id).getChatData().description.value;
 		});

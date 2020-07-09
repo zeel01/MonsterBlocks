@@ -223,7 +223,7 @@
 	border: none;
 }
 .monsterblock .inline-list {
-	font-size: 0;
+	/*font-size: 0;*/
 	display: inline;
 	list-style: none;
 	padding: 0;
@@ -270,7 +270,9 @@ li:nth-last-of-type(2):after {
 .monsterblock .at-will-spells li:last-of-type:after {
 	content: '';
 }
-
+.monsterblock .spell-name {
+	font-style: italic;
+}
 .monsterblock .monster-saves .ability {
 	display: inline;
 }
