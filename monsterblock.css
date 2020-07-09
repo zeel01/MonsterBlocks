@@ -191,6 +191,8 @@
 
 .monsterblock .attributes .attribute {
 	margin: 0;
+	padding-left: 2ch;
+	text-indent: -2ch;
 }
 .monsterblock .attribute-name {
 	display: inline;
@@ -231,6 +233,8 @@
 	list-style: none;
 	margin-top: 1em;
 	padding: 0;
+	padding-left: 2ch;
+	text-indent: -2ch;
 }
 .monsterblock .at-will-spells {
 	display: inline;
@@ -274,10 +278,21 @@ li:nth-last-of-type(2):after {
 	font-weight: bold;
 	font-style: italic;
 }
+.monsterblock .legendary-actions .feature-description {
+	padding-left: 2ch;
+	text-indent: -2ch;
+}
 .monsterblock .legendary-actions .item-name,
 .monsterblock .legendary-actions .name-extension {
 	font-weight: bold;
 	font-style: normal;
+}
+.monsterblock .legendary-actions,
+.monsterblock .lair-actions {
+	margin: 0;
+}
+.monsterblock .legendary-description {
+	margin-bottom: 1em;
 }
 
 .monsterblock .attack-type {

@@ -196,33 +196,36 @@
 		</section>
     </header>
 	{{#*inline "featureBlock"}}
-	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}">
+	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}{{#if lairactions}} lair-actions{{/if}}">
 		<div class="feature-description inline-children">
-			<span class="item-name" data-item-id="{{item._id}}">
-				{{~item.name~}} 
-			</span>
-			{{~#if item.data.recharge.value~}}
-				<span class="name-extension" 
-					data-roll-flavor="{{item.name}} (Recharge {{item.data.recharge.value}}-6): " 
-					data-roll-formula="1d6" 
-					data-roll-target="{{item.data.recharge.value}}" 
-					data-roll-success="Charged" 
-					data-roll-failure="Not charged">
-					(Recharge {{item.data.recharge.value}}-6){{~" "~}}
+			{{#unless lairactions}}
+				<span class="item-name" data-item-id="{{item._id}}">
+					{{~item.name~}} 
 				</span>
-			{{~/if~}}
-			{{~#if (and (islegendary item) (greater item.data.activation.cost 1))~}}
-				<span class="name-extension">
-					(Costs {{item.data.activation.cost}} {{localize "DND5E.ActionPl"}}){{~" "~}}
-				</span>
-			{{~/if~}}
-			{{~#unless legendaryactions~}}
-				{{~#if (hasresource item)~}}
-					<span class="name-extension">
-						({{~getresourcelimit item actor}}/{{getresourcerefresh item actor~}}){{~" "~}}
+				
+				{{~#if item.data.recharge.value~}}
+					<span class="name-extension" 
+						data-roll-flavor="{{item.name}} (Recharge {{item.data.recharge.value}}-6): " 
+						data-roll-formula="1d6" 
+						data-roll-target="{{item.data.recharge.value}}" 
+						data-roll-success="Charged" 
+						data-roll-failure="Not charged">
+						(Recharge {{item.data.recharge.value}}-6){{~" "~}}
 					</span>
 				{{~/if~}}
-			{{~/unless~}}.
+				{{~#if (and (islegendary item) (greater item.data.activation.cost 1))~}}
+					<span class="name-extension">
+						(Costs {{item.data.activation.cost}} {{localize "DND5E.ActionPl"}}){{~" "~}}
+					</span>
+				{{~/if~}}
+				{{~#unless legendaryactions~}}
+					{{~#if (hasresource item)~}}
+						<span class="name-extension">
+							({{~getresourcelimit item actor}}/{{getresourcerefresh item actor~}}){{~" "~}}
+						</span>
+					{{~/if~}}
+				{{~/unless~}}.
+			{{~/unless}}
 			<span class="description">{{{enrichhtml item.data.description.value}}}</span>
 		</div>
 	</section>
@@ -280,6 +283,57 @@
 	</section>
 	{{/inline}}
 	
+	{{#*inline "warlockcasting"}}
+	<section class="monster-feature spellcasting-trait" data-item-id="{{item._id}}">
+		<div class="feature-description inline-children">
+			<span class="item-name">{{localize "DND5E.Spellcasting"}}</span>.
+			<span class="description">
+				The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster.
+				Its spellcasting ability is {{getcastingability actor}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
+				It regains its expended spell slots when it finishes a short or long rest.
+				It
+				{{#if info.hasAtWillSpells}}
+					can cast 
+					<ul class="at-will-spells">
+						{{> atwillcasting spells=(getatwill spellbook)}}	
+					</ul>
+					at will and
+				{{/if}}
+				has the following warlock spells prepared:
+			</span>
+			<ul class="spell-list">
+			{{#each spellbook as |spelllevel id|}}
+			{{#unless (or (invalidspelllevel spelllevel.dataset.level) (greater spelllevel.dataset.level 0.5))}}
+				<li>
+					<span class="spell-level-name">
+						{{#unless spelllevel.dataset.level}}
+							{{localize "DND5E.SpellLevel0"}}s
+						{{else}}
+							1st-{{localize (spelllevellocalization (warlockslotlevel spelllevel))}}
+						{{/unless}}
+					</span>
+					<span class="spell-slots">
+						({{#if (warlockslotlevel spelllevel)~}}
+							{{spelllevel.slots}} {{formatordinal (warlockslotlevel spelllevel)}}-level slot{{#if (greater spelllevel.slots 1)}}s{{/if}}
+						{{~else~}}
+							at will
+						{{~/if~}}){{~" "~}}
+					</span>:
+					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
+					{{#each spelllevel.spells as |spell id|}}
+						<li class="spell" data-item-id="{{spell._id}}">
+							<span class="spell-name">{{spell.name}}</span>{{~" "~}}
+						</li>
+					{{/each}}
+					</ul>
+				</li>
+			{{/unless}}
+			{{/each}}
+			</ul>
+		</div>
+	</section>
+	{{/inline}}
+	
 	{{#*inline "innatespellcasting"}}
 	<section class="monster-feature spellcasting-trait" data-item-id="{{item._id}}">
 		<div class="feature-description inline-children">
@@ -315,8 +369,13 @@
 	
 	{{#if (and info.hasCastingFeature flags.casting-feature)}}
 		{{#if info.isSpellcaster}}
-			{{> spellcasting spellbook=spellbook actor=actor info=info}}
+			{{#if info.isWarlock}}
+				{{> warlockcasting spellbook=spellbook actor=actor info=info}}
+			{{else}}
+				{{> spellcasting spellbook=spellbook actor=actor info=info}}
+			{{/if}}
 		{{/if}}
+		
 		{{#if info.isInnateSpellcaster}}
 			{{> innatespellcasting spellbook=innateSpellbook actor=actor info=info}}
 		{{/if}}
@@ -402,8 +461,8 @@
 	{{/each}}
 	{{! Legendary Actions }}
 	{{#if (haslegendary features)}}
-		<h2 class="section-header" >{{localize "DND5E.LegAct"}}</h2>
-		<p>The {{actor.name}} can take 3 legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {{actor.name}} regains spent legendary actions at the start of its turn.</p>
+		<h2 class="section-header">{{localize "DND5E.LegAct"}}</h2>
+		<p class="legendary-description">The {{actor.name}} can take 3 legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {{actor.name}} regains spent legendary actions at the start of its turn.</p>
 		{{#each (getactions features) as |item iid|}}
 			{{#if (and (islegendary item) (not (islegresist item))) }}
 				{{> featureBlock item=item actor=../actor legendaryactions=true}}
@@ -414,9 +473,16 @@
 	{{#if (haslair features)}}
 	{{#if flags.show-lair-actions}}
 		<h2 class="section-header">Lair {{localize "DND5E.ActionPl"}}</h2>
+		<p>On initiative count 20 (losing all initiative ties), the {{actor.name}} takes a lair action to cause one of the following effects; the {{actor.name}} can't use the same effect two rounds in a row:</p>
+		<ul>
 		{{#each (getactions features) as |item iid|}}
-			{{#if (islair item)}}{{> featureBlock item=item actor=../actor}}{{/if}}
+			{{#if (islair item)}}
+			<li>
+				{{> featureBlock item=item actor=../actor lairactions=true}}
+			</li>
+			{{/if}}
 		{{/each}}
+		</ul>
 	{{/if}}
 	{{/if}}
 	

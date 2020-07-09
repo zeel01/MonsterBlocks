@@ -25,6 +25,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			hasCastingFeature: (this.isSpellcaster || this.isInnateSpellcaster),
 			isSpellcaster: this.isSpellcaster,
 			isInnateSpellcaster: this.isInnateSpellcaster,
+			isWarlock: this.isWarlock,
 			hasAtWillSpells: this.hasAtWillSpells,
 			bigRedButton: false
 		}
@@ -65,6 +66,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	get isInnateSpellcaster() {	// Innate casters have lists of spells that can be cast a certain number of times per day
 		for (let item of this.actor.items) {
 			if (MonsterBlock5e.isInnateSpellcasting(item)) return true;
+		}
+		return false;
+	}
+	get isWarlock() {
+		for (let item of this.actor.items) {
+			if (MonsterBlock5e.isWarlockCasting(item)) return true;
 		}
 		return false;
 	}
@@ -124,7 +131,45 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		return innateSpellbook;
 	}
-	
+	prepareWarlockSpellbook(spellbook) { // We need to completely re-organize the spellbook for an innate spellcaster
+		let innateSpellbook = [];
+
+		for (let level of spellbook) {								// Spellbook is seperated into sections based on level, though all the innate spells are lumped together, we still want to check all the sections.
+			if (level.prop !== "innate") continue;					// We don't care about sections that aren't marked as innate though
+			for (let spell of level.spells) {						// Check all the spells
+				let uses = spell.data.uses.max;						// The max uses are the only thing actually displayed, though the data tracks usage
+																	// Max uses is what we are going to end up sorting the spellbook by.
+				let finder = e => e.uses == uses;					// The conditional expression for later. We are going to check if our new spellbook has a section for this spells usage amount.
+				
+				if (!innateSpellbook.some(finder)) {				// Array.some() is used to check the whole array to see if the condition is ever satisfied.
+					innateSpellbook.push({							// If there isn't a section to put this spell into, we create a new one.
+						canCreate: false,							// Most of this is just intended to match the data in the regular spell book, though most isn't ultimately going to be used.
+						canPrepare: false,
+						dataset: { level: -10, type: "spell" },
+						label: uses < 1 ? "At will" : (uses + "/day"),	// This is important, as this string will be used to display on the sheet.
+						order: -10,
+						override: 0,
+						prop: "innate",
+						slots: "-",
+						spells: [],									// An empty array to put spells in later.
+						uses: uses,									// How we will identify this type of spell later, rather than by spell level.
+						usesSlots: false
+					});
+				}
+				
+				innateSpellbook.find(finder).spells.push(spell);	// We can use the same condition as above, this time to lacate the item that satisfies the condition. We then insert the current spell into that section.
+			}
+		}
+		innateSpellbook.sort((a, b) => {	// This sorts the spellbook sections, so that the first section is the "0" useage one, which is actually infinite uses - At will, and Cantrips.
+			if (a.uses == 0 && b.uses == 0) return 0;
+			if (a.uses == 0) return -1;
+			if (b.uses == 0) return 1;
+			
+			return a.uses < b.uses ? 1 : -1;
+		});
+		
+		return innateSpellbook;
+	}
 	async switchToDefault(event) {
 		const config = CONFIG[this.object.entity];
 		const type = this.object.data.type;
@@ -267,27 +312,29 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static isInnateSpellcasting(item) {
 		return item.name.toLowerCase().replace(/\s+/g, '') === "innatespellcasting";
 	}
-	
+	static isWarlockCasting(item) {
+		return item.data.data.preparation && item.data.data.preparation.mode === "pact";
+	}
 	
 	static createHandlebarsHelpers() {	// Register all the helpers needed for Handlebars
-		Handlebars.registerHelper("hascontents", (obj)=> { // Check if an array is empty.
+		Handlebars.registerHelper("hascontents", (obj) => { // Check if an array is empty.
 			return Object.keys(obj).length > 0;
 		});
 
-		Handlebars.registerHelper("hasskills", (skills)=> { // Check if the creature has any skill proficiencies
+		Handlebars.registerHelper("hasskills", (skills) => { // Check if the creature has any skill proficiencies
 			for (let s in skills) {
 				if (skills[s].value) return true;
 			}
 			return false;
 		});
-		Handlebars.registerHelper("hassave", (saves)=> {	// Check if it has saving-throw proficiencies
+		Handlebars.registerHelper("hassave", (saves) => {	// Check if it has saving-throw proficiencies
 			for (let s in saves) {
 				if (saves[s].proficient) return true;
 			}
 			return false;
 		});
 		
-		Handlebars.registerHelper("haslegendary", (features)=> {	// Check for Legendary Actions
+		Handlebars.registerHelper("haslegendary", (features) => {	// Check for Legendary Actions
 			for (let feature of features) {
 				if (feature.label == "Actions") {
 					let items = feature.items;
@@ -298,7 +345,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 			return false;
 		});
-		Handlebars.registerHelper("haslair", (features)=> {			// Check for Lair actions
+		Handlebars.registerHelper("haslair", (features) => {			// Check for Lair actions
 			for (let feature of features) {
 				if (feature.label == "Actions") {
 					let items = feature.items;
@@ -309,50 +356,50 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 			return false;
 		});
-		Handlebars.registerHelper("islegendary", (item)=> {			// Check if an action is a legendary action
+		Handlebars.registerHelper("islegendary", (item) => {			// Check if an action is a legendary action
 			return this.isLegendaryAction(item);
 		});
-		Handlebars.registerHelper("islegresist", (item)=> {			// Check if an action is a legendary action
+		Handlebars.registerHelper("islegresist", (item) => {			// Check if an action is a legendary action
 			return this.isLegendaryResistance(item);
 		});
-		Handlebars.registerHelper("isspellcasting", (item)=> {		// Check if this item is the spellcasting feature
+		Handlebars.registerHelper("isspellcasting", (item) => {		// Check if this item is the spellcasting feature
 			return this.isSpellcasting(item) || this.isInnateSpellcasting(item);
 		});
 		Handlebars.registerHelper("islair", (item)=> {				// Check if an action is a lair action
 			return this.isLairAction(item);
 		});
-		Handlebars.registerHelper("invalidspelllevel", (level)=> {	// Spell levels less than 0 mean sometihng special, and need checkd for
+		Handlebars.registerHelper("invalidspelllevel", (level) => {	// Spell levels less than 0 mean sometihng special, and need checkd for
 			return level < 0;
 		});
-		Handlebars.registerHelper("notspecialaction", (item)=> {	// Used to unsure that actions that need seperated out aren't shown twice
+		Handlebars.registerHelper("notspecialaction", (item) => {	// Used to unsure that actions that need seperated out aren't shown twice
 			return !(this.isMultiAttack(item) || this.isLegendaryAction(item) || this.isLairAction(item) || this.isLegendaryResistance(item));
 		});
 		
 		// Feature type groups
-		Handlebars.registerHelper("getattacks", (features)=> {
+		Handlebars.registerHelper("getattacks", (features) => {
 			for (let feature of features) {
 				if (feature.label == "Attacks") return feature.items;
 			}
 		});
-		Handlebars.registerHelper("getactions", (features)=> {
+		Handlebars.registerHelper("getactions", (features) => {
 			for (let feature of features) {
 				if (feature.label == "Actions") return feature.items;
 			}
 		});
-		Handlebars.registerHelper("getfeatures", (features)=> {
+		Handlebars.registerHelper("getfeatures", (features) => {
 			for (let feature of features) {
 				if (feature.label == "Features") return feature.items;
 			}
 		});
 		
 		
-		Handlebars.registerHelper("getattacktype", (attack)=> { // Returns the localization string for the given type of attack.
+		Handlebars.registerHelper("getattacktype", (attack) => { // Returns the localization string for the given type of attack.
 			return "DND5E.Action" + attack.data.actionType.toUpperCase();
 		});
-		Handlebars.registerHelper("israngedattack", (attack)=> {
+		Handlebars.registerHelper("israngedattack", (attack) => {
 			return ["rwak", "rsak"].includes(attack.data.actionType);
 		});
-		Handlebars.registerHelper("getattackbonus", (attack, data)=> { // Calculate the "+X to hit"
+		Handlebars.registerHelper("getattackbonus", (attack, data) => { // Calculate the "+X to hit"
 			let attr = attack.data.ability;					// The ability the item says it uses
 			let attackBonus = attack.data.attackBonus;		// Magical item or other bonus
 			let abilityBonus = data.abilities[attr].mod;	// The ability bonus of the actor
@@ -361,16 +408,16 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			
 			return abilityBonus + (isProf ? profBonus : 0) + attackBonus;
 		});
-		Handlebars.registerHelper("getcastingability", (actor)=> {
+		Handlebars.registerHelper("getcastingability", (actor) => {
 			return actor.data.abilities[actor.data.attributes.spellcasting].label;
 		});
-		Handlebars.registerHelper("getchathtml", (item, actor)=> {	// Finds the *real* instance of the actor and the item, and uses the .getChatData() method to get the the description with inline rolls and links properly formatted.
+		Handlebars.registerHelper("getchathtml", (item, actor) => {	// Finds the *real* instance of the actor and the item, and uses the .getChatData() method to get the the description with inline rolls and links properly formatted.
 			return game.actors.get(actor._id).getOwnedItem(item._id).getChatData().description.value;
 		});
-		Handlebars.registerHelper("enrichhtml", (str)=> { // Formats any text to include proper inline rolls and links.
+		Handlebars.registerHelper("enrichhtml", (str) => { // Formats any text to include proper inline rolls and links.
 			return TextEditor.enrichHTML(str, {secrets: true});
 		});
-		Handlebars.registerHelper("averagedamage", (item, actor)=> {	// Calculates the average damage from an attack
+		Handlebars.registerHelper("averagedamage", (item, actor) => {	// Calculates the average damage from an attack
 			let formula = item.data.damage.parts[0][0];
 			let attr = item.data.ability;
 			let abilityBonus = actor.data.abilities[attr].mod;
@@ -381,7 +428,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				)	/ 2
 			);
 		});
-		Handlebars.registerHelper("damageformula", (item, actor)=> {	// Extract and re-format the damage formula
+		Handlebars.registerHelper("damageformula", (item, actor) => {	// Extract and re-format the damage formula
 			let formula = item.data.damage.parts[0][0];	// This is the existing formula, typicallys contains a non-number like @mod
 			let attr = item.data.ability;				// The ability used for this attack
 			let abilityBonus = actor.data.abilities[attr].mod;	// The ability bonus of the actor
@@ -406,7 +453,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			
 			return parts.join(" ");
 		});
-		Handlebars.registerHelper("damagetype", (item)=> {
+		Handlebars.registerHelper("damagetype", (item) => {
 			return item.data.damage.parts[0][1];
 		});
 		Handlebars.registerHelper("toinlineroll", (flag, options) => { // Takes a roll formula, and runs it through the enrichHTML method to create an inline roll link.
@@ -414,26 +461,28 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			
 			return TextEditor.enrichHTML(`[[/gmr ${options.fn(this)}]]`);
 		});
-		Handlebars.registerHelper("spelllevellocalization", (level)=> { // Returns the localization string for a given spell level
+		Handlebars.registerHelper("spelllevellocalization", (level) => { // Returns the localization string for a given spell level
 			return "DND5E.SpellLevel" + parseInt(level, 10); // Never allow this to be a fraction, the results aren't good.
 		});
-		Handlebars.registerHelper("getatwill", (spellbook)=> { // Retuns the spellbook section marked "atwill"
+		Handlebars.registerHelper("getatwill", (spellbook) => { // Retuns the spellbook section marked "atwill"
 			for (let level of spellbook) {
 				if (level.prop === "atwill") return level.spells;
 			}
 			return [];
 		});
-		Handlebars.registerHelper("hasresource", (item)=> {
+		Handlebars.registerHelper("hasresource", (item) => {
 			return Boolean(item.data.consume.target);
 		});
-		Handlebars.registerHelper("getresourcelimit", (item, actor)=> {
+		Handlebars.registerHelper("getresourcelimit", (item, actor) => {
 			let res = item.data.consume.target.match(/(.+)\.(.+)\.(.+)/);
 			return actor.data[res[1]][res[2]].max;
 		});
-		Handlebars.registerHelper("getresourcerefresh", (item, actor)=> {
+		Handlebars.registerHelper("getresourcerefresh", (item, actor) => {
 			return "Day";
 		});
-			
+		Handlebars.registerHelper("warlockslotlevel", (spelllevel) => {
+			return spelllevel.spells.reduce((a, b) => a > b.data.level ? a : b.data.level, 0);
+		});
 		Handlebars.registerHelper("getspellattackbonus", (actor)=> {	// Calculate the spell attack bonus
 			let data = actor.data;
 			let attr = data.attributes.spellcasting;
@@ -452,34 +501,34 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		
 		// Logical operations
-		Handlebars.registerHelper("not", (arg)=> {
+		Handlebars.registerHelper("not", (arg) => {
 			return !arg;
 		});
-		Handlebars.registerHelper("and", (...args)=> {
+		Handlebars.registerHelper("and", (...args) => {
 			args.pop();
 			return args.reduce((v, c) => v && c);
 		});
-		Handlebars.registerHelper("or", (...args)=> {
+		Handlebars.registerHelper("or", (...args) => {
 			args.pop();
 			return args.reduce((v, c) => v || c);
 		});
-		Handlebars.registerHelper("greater", (a, b)=> {
+		Handlebars.registerHelper("greater", (a, b) => {
 			return a > b;
 		});
-		Handlebars.registerHelper("less", (a, b)=> {
+		Handlebars.registerHelper("less", (a, b) => {
 			return a < b;
 		});
-		Handlebars.registerHelper("equals", (a, b)=> {
+		Handlebars.registerHelper("equals", (a, b) => {
 			return a == b;
 		});
 		
-		Handlebars.registerHelper("formatordinal", (number)=> { // Format numbers like "1st", "2nd", "3rd", "4th", etc.
+		Handlebars.registerHelper("formatordinal", (number) => { // Format numbers like "1st", "2nd", "3rd", "4th", etc.
 			if (number == 1) return number + "st";
 			if (number == 2) return number + "nd";
 			if (number == 3) return number + "rd";
 			return number + "th";
 		});
-		Handlebars.registerHelper("getnumber", (number)=> {
+		Handlebars.registerHelper("getnumber", (number) => {
 			number = Number(number);
 			if (number > 9 || number < 0) return number.toString();
 			return ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"][number];

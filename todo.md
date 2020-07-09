@@ -3,9 +3,9 @@
 - Spellcasting
 	- ~~Spell attacks don't/might not have range increments.~~
 	- ~~Include links to spells~~ *can be rolled or edited*
-	- ~~Fix ~~at-will~~ and other a-typical spells~~ *I tihnk it's good?*
+	- ~~Fix ~~at-will~~ and other a-typical spells~~ *I think it's good?*
 	- Some casters with multiple casting features have multiple casting abilities, though the data model doesn't support this very well.
-	- Warlocks
+	- ~~Warlocks~~
 - Still not happy with the way the box sizing works.
 - Make it possible to edit some things in the sheet.
 	- Add hit point modification
@@ -26,6 +26,6 @@
 - Add more comments to the code!
 - Re-organize code a bit
 - Set default flags
-- Legendary actions shouldn't have any space between them
+- ~~Legendary actions shouldn't have any space between them~~
 - Some creatures have "sub features" like breath weapns, the bodies of these are indented. *unsure if this is possible to do correctly*
 - The menu is not consistantly displaying on the default sheet.
