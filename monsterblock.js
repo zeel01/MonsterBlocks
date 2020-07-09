@@ -472,6 +472,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			if (number == 3) return number + "rd";
 			return number + "th";
 		});
+		Handlebars.registerHelper("getnumber", (number)=> {
+			number = Number(number);
+			if (number > 9 || number < 0) return number.toString();
+			return ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"][number];
+		});
 	}
 }
 

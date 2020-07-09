@@ -1,22 +1,18 @@
 # TODO:
-- ~~Figure out how to specify number of targets for an attack (if possible)~~ *doesn't appear to be possible, but I'm not sure an exception to the "one target" exists*
+- ~~Figure out how to specify number and type of targets for an attack~~ *I'm not sure an exception to the "one target" exists, but it's supported!*
 - Spellcasting
 	- ~~Spell attacks don't/might not have range increments.~~
 	- ~~Include links to spells~~ *can be rolled or edited*
 	- ~~Fix ~~at-will~~ and other a-typical spells~~ *I tihnk it's good?*
 	- Some casters with multiple casting features have multiple casting abilities, though the data model doesn't support this very well.
-- ~~Add the ability to roll from the sheet.~~
-	- ~~Add quick rolls for attack and damage~~
 - Still not happy with the way the box sizing works.
 - Make it possible to edit some things in the sheet.
 	- Add hit point modification
 	- ~~Open item sheets from the sheet~~ *right click*
 	- ~~Ability to quickly switch between this sheet and default~~
+		- Not working consistantly...
 - ~~Better support limited use features like legendary resistance~~ *May have some bugs*
-- ~~Automatically display the cost of legendary actions where applicable~~
-- ~~Automatically display the recharge roll for applicable features~~
 - Automatically indicate passive perception if it isn't already mentioned under senses
-- ~~Fix magic weapons so the attack and damage bonuses look right.~~
 - Refactor CSS to use more variables
 	- Make adjusting the text size viable
 	- Make it easy to adjust other attributes
@@ -29,6 +25,4 @@
 	- "Dark" theme
 - Add more comments to the code!
 - Re-organize code a bit
-- ~~Hide languages if none known~~ *Actually, doesn't "hide" languages, but shows an mdash as is done in the MM*
-- ~~Legendary action names are not in italics~~
 - Set default flags

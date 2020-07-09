@@ -367,7 +367,17 @@
 					{{item.data.range.value}} 
 					{{#if (and (israngedattack item) item.data.range.long)}}
 						/ {{item.data.range.long}}
-					{{/if}} {{item.data.range.units}}., one target.
+					{{/if}} {{item.data.range.units}}.,
+					{{#if item.data.target.value}}
+						{{getnumber item.data.target.value}}
+					{{~else~}}
+						one
+					{{~/if}}
+					{{#if item.data.target.type}}
+						{{item.data.target.type}}
+					{{~else}}
+						target{{#if (greater item.data.target.value 1)}}s{{/if}}
+					{{~/if~}}.
 				</span>
 				<span class="attack-damage" 
 					data-roll-flavor="{{localize 'DND5E.Damage'}}: {{item.name}}" 
