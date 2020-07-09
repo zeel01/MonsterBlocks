@@ -443,6 +443,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			
 			return abilityBonus + profBonus;
 		});
+		Handlebars.registerHelper("handlesenses", (senses, actor) => {
+			if (senses.toLowerCase().indexOf("perception") > -1) return senses;
+			
+			let perception = actor.data.skills.prc.passive;
+			
+			return `${senses}${senses ? ", " : ""}passive Perception ${perception}`
+		});
 		
 		// Logical operations
 		Handlebars.registerHelper("not", (arg)=> {

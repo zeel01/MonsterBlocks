@@ -10,9 +10,8 @@
 	- Add hit point modification
 	- ~~Open item sheets from the sheet~~ *right click*
 	- ~~Ability to quickly switch between this sheet and default~~
-		- Not working consistantly...
 - ~~Better support limited use features like legendary resistance~~ *May have some bugs*
-- Automatically indicate passive perception if it isn't already mentioned under senses
+- ~~Automatically indicate passive perception if it isn't already mentioned under senses~~
 - Refactor CSS to use more variables
 	- Make adjusting the text size viable
 	- Make it easy to adjust other attributes
@@ -26,3 +25,6 @@
 - Add more comments to the code!
 - Re-organize code a bit
 - Set default flags
+- Legendary actions shouldn't have any space between them
+- Some creatures have "sub features" like breath weapns, the bodies of these are indented. *unsure if this is possible to do correctly*
+- The menu is not consistantly displaying on the default sheet.
