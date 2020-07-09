@@ -415,7 +415,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			return TextEditor.enrichHTML(`[[/gmr ${options.fn(this)}]]`);
 		});
 		Handlebars.registerHelper("spelllevellocalization", (level)=> { // Returns the localization string for a given spell level
-			return "DND5E.SpellLevel" + level;
+			return "DND5E.SpellLevel" + parseInt(level, 10); // Never allow this to be a fraction, the results aren't good.
 		});
 		Handlebars.registerHelper("getatwill", (spellbook)=> { // Retuns the spellbook section marked "atwill"
 			for (let level of spellbook) {
