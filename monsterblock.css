@@ -12,21 +12,22 @@
 
 .monsterblock, .switches {
 	width: 100%;
+	font-size: 14px;
 	--heading-color: rgb(89 23 13);
 	--roll-hover-color: hsl(8 70% 14% / 1);
 	--divider-color: rgba(140, 42, 42, 1);
 	--divider-color-end: rgba(140, 42, 42, 0);
+	--background-filter: #ffc80038;
+	--background-blend: luminosity;
+	--menu-background: #e9e0c3;
 }
 .monsterblock * {
 	user-select: text;
 }
 .monsterblock .window-content {
-	background: url(/ui/parchment.jpg), #ffc80038;
+	background: url(/ui/parchment.jpg), var(--background-filter);
 	background-repeat: repeat;
-	background-blend-mode: luminosity;
-}
-.monsterblock .window-content::before {
-
+	background-blend-mode: var(--background-blend);
 }
 .window-app .switches {
 	/* background: red; */
@@ -34,7 +35,6 @@
 	padding-left: 6px;
 	height: 24px;
 	position: absolute;
-	font-size: 14px;
 	top: 7px;
 	left: 2px;
 	color: #aaa;
@@ -49,7 +49,7 @@
 	top: 0;
 	display: none;
 	position: absolute;
-	background-color: #e9e0c3;
+	background-color: var(--menu-background);
 	color: var(--heading-color);
 	padding: 0;
 	left: 100%;
@@ -118,9 +118,6 @@
 	color: var(--roll-hover-color);
 }
 
-.monsterblock span, .monsterblock p, .monsterblock a {
-	/* font-size: 14px; */
-}
 .monsterblock .flexcol {
     display: block;
     height: 100%;
@@ -135,23 +132,19 @@
 	position: relative;
 }
 .monsterblock .sheet-header section::after {
-	font-size: 14px;
 	margin-top: .75em;
 	margin-bottom: .75em;
 	display: block;
 	width: 375px;
-	/* height: 4px; */
 	content: "";
-	/* This has an interesting result... */
 	border: none;
-	border-top: .2em solid #00000000;
+	border-top: .2em solid transparent;
 	border-bottom: .2em solid transparent;
 	border-left: 375px solid var(--divider-color);
-	/* background: linear-gradient(to right, var(--divider-color), var(--divider-color-end)); */
 }
 
 .monsterblock .charname {
-	font-size: 28px;
+	font-size: 2em;
 	color: var(--heading-color);
 	font-family: serif;
 	font-variant: small-caps;
@@ -181,7 +174,6 @@
 .monsterblock .profile-image:hover {
 	width: 300px;
 	height: 300px;
-	/* top: -40px; */
 	z-index: 75;
 }
 .monsterblock .attributes, .monsterblock .ability-scores {
@@ -201,12 +193,10 @@
 	margin: 0;
 }
 .monsterblock .attribute-name {
-	font-size: 14px;
 	display: inline;
 	font-weight: bold;
 }
 .monsterblock .ability-name {
-	font-size: 14px;
 	display: block;
 	font-weight: bold;
 	margin: 0;
@@ -223,19 +213,14 @@
 	border: none;
 }
 .monsterblock .inline-list {
-	/*font-size: 0;*/
 	display: inline;
 	list-style: none;
 	padding: 0;
-}
-.monsterblock .inline-list span {
-	font-size: 14px;
 }
 .monsterblock .inline-list li {
 	display: inline;
 }
 .monsterblock .inline-list li:after {
-	font-size: 14px;
     content: ', ';
 }
 
@@ -244,11 +229,10 @@
 }
 .monsterblock .spell-list {
 	list-style: none;
-	margin-top: 14px;
+	margin-top: 1em;
 	padding: 0;
 }
 .monsterblock .at-will-spells {
-	font-size: 14px;
 	display: inline;
 	list-style: none;
 	padding: 0;
@@ -276,33 +260,14 @@ li:nth-last-of-type(2):after {
 .monsterblock .monster-saves .ability {
 	display: inline;
 }
-.monsterblock input[name="data.attributes.ac.value"] {
-	width: 2ch;
-}
-.monsterblock input[name="data.attributes.hp.value"] {
-	width: 4ch;
-}
-.monsterblock input[name="data.attributes.hp.max"] {
-	width: 4ch;
-}
-.monsterblock input[name="data.attributes.hp.formula"] {
-	width: 11ch;
-}
-.monsterblock input[name="data.attributes.speed.value"] {
-	width: 7ch;
-}
-.monsterblock input[name="data.attributes.speed.special"] {
-	width: 24ch;
-}
-
 .monsterblock .section-header {
-	margin-top: 14px;
-	font-size: 22px;
+	margin-top: 1em;
+	font-size: 1.5em;
 	color: var(--heading-color);
 	font-variant: small-caps;
 }
 .monsterblock .item {
-	margin-top: 14px;
+	margin-top: 1em;
 }
 .monsterblock .item-name,
 .monsterblock .name-extension {
@@ -325,11 +290,13 @@ li:nth-last-of-type(2):after {
 .monsterblock .hit-label {
 	font-style: italic;
 }
-.monsterblock .inline-children .description > p:first-of-type,
-.monsterblock .inline-children .description > div:first-of-type {
+.monsterblock .inline-children 
+.description > p:first-of-type,
+.monsterblock .inline-children 
+.description > div:first-of-type {
 	display: inline;
 }
 .monsterblock .description {
-	line-height: 18px;
+	line-height: 1.3em;
 }
 	
