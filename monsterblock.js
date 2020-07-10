@@ -58,22 +58,19 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return formData;
 	}
 	get isSpellcaster () {	// Regular spellcaster with typical spell slots.
-		for (let item of this.actor.items) {
-			if (MonsterBlock5e.isSpellcasting(item)) return true;
-		}
-		return false;
+		return this.actor.data.items.some((item) => {
+			return item.data.preparation && item.data.level > 0.5 && (item.data.preparation.mode === "prepared" || item.data.preparation.mode === "always");
+		});
 	}
 	get isInnateSpellcaster() {	// Innate casters have lists of spells that can be cast a certain number of times per day
-		for (let item of this.actor.items) {
-			if (MonsterBlock5e.isInnateSpellcasting(item)) return true;
-		}
-		return false;
+		return this.actor.data.items.some((item) => {
+			return item.data.preparation && item.data.preparation.mode === "innate";
+		});
 	}
 	get isWarlock() {
-		for (let item of this.actor.items) {
-			if (MonsterBlock5e.isWarlockCasting(item)) return true;
-		}
-		return false;
+		return this.actor.data.items.some((item) => {
+			return item.data.preparation && item.data.preparation.mode === "pact";
+		});
 	}
 	get hasAtWillSpells() {	// Some normal casters also have a few spells that they can cast "At will"
 		for (let item of this.actor.items) {
@@ -312,9 +309,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static isInnateSpellcasting(item) {
 		return item.name.toLowerCase().replace(/\s+/g, '') === "innatespellcasting";
 	}
-	static isWarlockCasting(item) {
-		return item.data.data.preparation && item.data.data.preparation.mode === "pact";
-	}
 	
 	static createHandlebarsHelpers() {	// Register all the helpers needed for Handlebars
 		Handlebars.registerHelper("hascontents", (obj) => { // Check if an array is empty.
@@ -417,7 +411,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				"innate": (l) => l.order == -10,
 				"pact": (l) => l.order == 0.5,
 				"cantrip": (l) => l.order == 0,
-				"slots": (l) => l.order > 0
+				"prepared": (l) => l.order > 0.5
 			}
 			let spelllevel = spellbook.find(types[type])
 			if (spelllevel !== undefined) {
@@ -515,6 +509,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			
 			return `${senses}${senses ? ", " : ""}passive Perception ${perception}`
 		});
+		Handlebars.registerHelper("isprepared", (item) => {
+			return item.data.preparation.mode === "prepared" || item.data.preparation.mode === "always";
+		});
 		
 		// Logical operations
 		Handlebars.registerHelper("not", (arg) => {
@@ -536,6 +533,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		Handlebars.registerHelper("equals", (a, b) => {
 			return a == b;
+		});
+		Handlebars.registerHelper("notequal", (a, b) => {
+			return a != b;
 		});
 		
 		Handlebars.registerHelper("formatordinal", (number) => { // Format numbers like "1st", "2nd", "3rd", "4th", etc.

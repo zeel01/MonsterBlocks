@@ -256,7 +256,7 @@
 			</span>
 			<ul class="spell-list">
 			{{#each spellbook as |spelllevel id|}}
-			{{#unless (invalidspelllevel spelllevel.dataset.level)}}
+			{{#unless (or (invalidspelllevel spelllevel.dataset.level) (equals spelllevel.dataset.level 0.5))}}
 				<li>
 					<span class="spell-level-name">
 						{{localize (spelllevellocalization spelllevel.dataset.level)}}{{#unless spelllevel.dataset.level}}s{{/unless}}
@@ -270,9 +270,9 @@
 					</span>:
 					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
 					{{#each spelllevel.spells as |spell id|}}
-						<li class="spell" data-item-id="{{spell._id}}">
-							<span class="spell-name">{{spell.name}}</span>{{~" "~}}
-						</li>
+							<li class="spell" data-item-id="{{spell._id}}">
+								<span class="spell-name">{{spell.name}}</span>{{~" "~}}
+							</li>
 					{{/each}}
 					</ul>
 				</li>
@@ -369,13 +369,11 @@
 	
 	{{#if (and info.hasCastingFeature flags.casting-feature)}}
 		{{#if info.isSpellcaster}}
-			{{#if info.isWarlock}}
-				{{> warlockcasting spellbook=spellbook actor=actor info=info castertype="pact"}}
-			{{else}}
-				{{> spellcasting spellbook=spellbook actor=actor info=info castertype="slots"}}
-			{{/if}}
+			{{> spellcasting spellbook=spellbook actor=actor info=info castertype="prepared"}}
 		{{/if}}
-		
+		{{#if info.isWarlock}}		
+			{{> warlockcasting spellbook=spellbook actor=actor info=info castertype="pact"}}
+		{{/if}}	
 		{{#if info.isInnateSpellcaster}}
 			{{> innatespellcasting spellbook=innateSpellbook actor=actor info=info castertype="innate"}}
 		{{/if}}
