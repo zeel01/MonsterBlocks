@@ -7,7 +7,7 @@
 	- ~~Some casters with multiple casting features have multiple casting abilities, though the data model doesn't support this very well.~~
 	- ~~Warlocks~~
 	- Differentiate which cantrips belong to what casting feature.
-- Still not happy with the way the box sizing works.
+- ~~Still not happy with the way the box sizing works.~~ *it's awesome now!*
 - Make it possible to edit some things in the sheet.
 	- Add hit point modification
 	- ~~Open item sheets from the sheet~~ *right click*

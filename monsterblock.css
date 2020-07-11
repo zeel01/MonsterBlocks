@@ -23,6 +23,9 @@
 }
 .monsterblock * {
 	user-select: text;
+	break-inside: auto;
+	break-after: auto;
+	overflow-wrap: break-word;
 }
 .monsterblock .window-content {
 	background: url(/ui/parchment.jpg), var(--background-filter);
@@ -121,10 +124,11 @@
 .monsterblock .flexcol {
     display: block;
     height: 100%;
-    width: 375px;
+    /* width: 375px; */
     column-width: 375px;
     column-gap: 35px;
-    column-fill: auto;
+    column-fill: balance;
+    /* border: 1px solid red; */
 }
 
 .monsterblock .sheet-header {
@@ -314,4 +318,12 @@ li:nth-last-of-type(2):after {
 .monsterblock .description {
 	line-height: 1.3em;
 }
-	
+
+.endAnchor {
+	width: 100%;
+	/* visibility: hidden; */
+	display: block;
+	border: 1px solid red;
+	/* height: 1em; */
+	/* box-sizing: border-box; */
+}
