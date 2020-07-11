@@ -29,4 +29,4 @@
 - Set default flags
 - ~~Legendary actions shouldn't have any space between them~~
 - Some creatures have "sub features" like breath weapns, the bodies of these are indented. *unsure if this is possible to do correctly*
-- The menu is not consistantly displaying on the default sheet.
+- ~~The menu is not consistantly displaying on the default sheet.~~

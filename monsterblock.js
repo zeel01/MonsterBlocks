@@ -630,6 +630,7 @@ class PopupHandler {
 	fixHeight() {
 		this.height = this.layoutHeight + this.padding;
 	}
+	
 	fixPos() {
 		this.fixLeft();
 		this.fixTop();
@@ -683,7 +684,7 @@ Hooks.on("renderActorSheet5eNPC", (sheet, html, data) => {
 	`;
 	nav.classList.add("switches");
 
-	html.find('.window-content .editable')[0].appendChild(nav);
+	$(sheet.element[0]).find('.window-content .editable')[0].appendChild(nav);
 	
 	nav.addEventListener("click", async (event) => {
 		await sheet.close();
