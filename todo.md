@@ -1,30 +1,21 @@
 # TODO:
 - ~~Figure out how to specify number and type of targets for an attack~~ *I'm not sure an exception to the "one target" exists, but it's supported!*
 - Spellcasting
-	- ~~Spell attacks don't/might not have range increments.~~
-	- ~~Include links to spells~~ *can be rolled or edited*
-	- ~~Fix ~~at-will~~ and other a-typical spells~~ *I think it's good?*
-	- ~~Some casters with multiple casting features have multiple casting abilities, though the data model doesn't support this very well.~~
-	- ~~Warlocks~~
 	- Differentiate which cantrips belong to what casting feature.
 - ~~Still not happy with the way the box sizing works.~~ *it's awesome now!*
 - Make it possible to edit some things in the sheet.
 	- Add hit point modification
-	- ~~Open item sheets from the sheet~~ *right click*
-	- ~~Ability to quickly switch between this sheet and default~~
-- ~~Better support limited use features like legendary resistance~~ *May have some bugs*
-- ~~Automatically indicate passive perception if it isn't already mentioned under senses~~
-- Refactor CSS to use more variables
-	- Make adjusting the text size viable
-	- Make it easy to adjust other attributes
-	- Remove anythign that isn't actually in use
-	- Clean up classes from the template that aren't needed
+- ~~Refactor CSS to use more variables~~
+	- ~~Make adjusting the text size viable~~
+	- ~~Make it easy to adjust other attributes~
+	- ~~Remove anything that isn't actually in use~~
+- Clean up classes from the template that aren't needed
 - Add multiple themes
 	- Per monster selection
 	- "Custom" option that allows you to paste in CSS
 	- "Clean" theme that's a white background.
 	- "Dark" theme
-- Add more comments to the code!
+- Add more comments to the code! *much done*
 - Re-organize code a bit
 - Set default flags
 - ~~Legendary actions shouldn't have any space between them~~

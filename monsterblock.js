@@ -131,45 +131,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		return innateSpellbook;
 	}
-	prepareWarlockSpellbook(spellbook) { // We need to completely re-organize the spellbook for an innate spellcaster
-		let innateSpellbook = [];
-
-		for (let level of spellbook) {								// Spellbook is seperated into sections based on level, though all the innate spells are lumped together, we still want to check all the sections.
-			if (level.prop !== "innate") continue;					// We don't care about sections that aren't marked as innate though
-			for (let spell of level.spells) {						// Check all the spells
-				let uses = spell.data.uses.max;						// The max uses are the only thing actually displayed, though the data tracks usage
-																	// Max uses is what we are going to end up sorting the spellbook by.
-				let finder = e => e.uses == uses;					// The conditional expression for later. We are going to check if our new spellbook has a section for this spells usage amount.
-				
-				if (!innateSpellbook.some(finder)) {				// Array.some() is used to check the whole array to see if the condition is ever satisfied.
-					innateSpellbook.push({							// If there isn't a section to put this spell into, we create a new one.
-						canCreate: false,							// Most of this is just intended to match the data in the regular spell book, though most isn't ultimately going to be used.
-						canPrepare: false,
-						dataset: { level: -10, type: "spell" },
-						label: uses < 1 ? "At will" : (uses + "/day"),	// This is important, as this string will be used to display on the sheet.
-						order: -10,
-						override: 0,
-						prop: "innate",
-						slots: "-",
-						spells: [],									// An empty array to put spells in later.
-						uses: uses,									// How we will identify this type of spell later, rather than by spell level.
-						usesSlots: false
-					});
-				}
-				
-				innateSpellbook.find(finder).spells.push(spell);	// We can use the same condition as above, this time to lacate the item that satisfies the condition. We then insert the current spell into that section.
-			}
-		}
-		innateSpellbook.sort((a, b) => {	// This sorts the spellbook sections, so that the first section is the "0" useage one, which is actually infinite uses - At will, and Cantrips.
-			if (a.uses == 0 && b.uses == 0) return 0;
-			if (a.uses == 0) return -1;
-			if (b.uses == 0) return 1;
-			
-			return a.uses < b.uses ? 1 : -1;
-		});
-		
-		return innateSpellbook;
-	}
 	async switchToDefault(event) {
 		const config = CONFIG[this.object.entity];
 		const type = this.object.data.type;

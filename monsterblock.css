@@ -213,11 +213,6 @@
 	font-weight: normal;
 	text-transform: capitalize;
 }
-
-.monsterblock input {
-	display: none;
-	border: none;
-}
 .monsterblock .inline-list {
 	display: inline;
 	list-style: none;
@@ -270,7 +265,6 @@ li:nth-last-of-type(2):after {
 }
 .monsterblock .section-header {
 	margin-top: 1em;
-	font-size: 1.5em;
 	color: var(--heading-color);
 	font-variant: small-caps;
 }
@@ -317,13 +311,4 @@ li:nth-last-of-type(2):after {
 }
 .monsterblock .description {
 	line-height: 1.3em;
-}
-
-.endAnchor {
-	width: 100%;
-	/* visibility: hidden; */
-	display: block;
-	border: 1px solid red;
-	/* height: 1em; */
-	/* box-sizing: border-box; */
 }
