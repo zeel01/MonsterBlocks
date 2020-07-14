@@ -5,6 +5,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		super(...args);
 		
 		this.position.default = true;
+		
+		this.prepFlags();	
 	}
 
 	get template() {
@@ -141,6 +143,24 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		await this.actor.setFlag("core", "sheetClass", defcls);
 		
 		return this.actor.sheet.render(true)
+	}
+	async prepFlags() {
+		if (!this.actor.getFlag("monsterblock", "initialized")) {
+			return await this.actor.update({
+				"flags": {
+					"monsterblock": {
+						"initialized": true,
+						"attack-descriptions": true,
+						"casting-feature": true,
+						"inline-secrets": false,
+						"hidden-secrets": false,
+						"hide-profile-image": false,
+						"show-lair-actions": false
+					}
+				}
+			}, {});
+		}
+		return true;
 	}
 	
 	activateListeners(html) {	// We need listeners to provide interaction.

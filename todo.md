@@ -7,9 +7,10 @@
 	- "Custom" option that allows you to paste in CSS
 	- "Clean" theme that's a white background.
 	- "Dark" theme
+- Add options for default sheet settings.
 ## Changes
 - Some creatures have "sub features" like breath weapns, the bodies of these are indented. *unsure if this is possible to do correctly*
-- Set default flags
+- ~~Set default flags~~
 - ~~Still not happy with the way the box sizing works.~~ *it's awesome now!*
 - ~~Figure out how to specify number and type of targets for an attack~~ *I'm not sure an exception to the "one target" exists, but it's supported!*
 ## Fixes
