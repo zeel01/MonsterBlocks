@@ -150,12 +150,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				"flags": {
 					"monsterblock": {
 						"initialized": true,
-						"attack-descriptions": true,
-						"casting-feature": true,
-						"inline-secrets": false,
-						"hidden-secrets": false,
-						"hide-profile-image": false,
-						"show-lair-actions": false
+						"attack-descriptions": game.settings.get("monsterblock", "attack-descriptions"),
+						"casting-feature": game.settings.get("monsterblock", "casting-feature"),
+						"inline-secrets": game.settings.get("monsterblock", "inline-secrets"),
+						"hidden-secrets": game.settings.get("monsterblock", "hidden-secrets"),
+						"hide-profile-image": game.settings.get("monsterblock", "hide-profile-image"),
+						"show-lair-actions": game.settings.get("monsterblock", "show-lair-actions")
 					}
 				}
 			}, {});
@@ -544,6 +544,57 @@ Hooks.on("init", () => {
 	MonsterBlock5e.createHandlebarsHelpers();
 	
 	console.log(`Monster Block | %cInitialized.`, "color: orange");
+});
+
+Hooks.on('ready', () => {
+	game.settings.register("monsterblock", "attack-descriptions", {
+		name: "Generated Attack Descriptions",
+		hint: "Show automatically generated attack descriptions by default.",
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: true
+	});
+	game.settings.register("monsterblock", "casting-feature", {
+		name: "Generated Casting Features",
+		hint: "Show automatically generated casting features by default.",
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: true
+	});
+	game.settings.register("monsterblock", "inline-secrets", {
+		name: "Display Secrets Inline",
+		hint: "By default, display blocks of secret text inline like all other text? Otherwise, display inline blocks as styled blocks of text.",
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: false
+	});
+	game.settings.register("monsterblock", "hidden-secrets", {
+		name: "Hide Secrets",
+		hint: "By default, hide secret blocks of text from the sheet.",
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: false
+	});
+	game.settings.register("monsterblock", "hide-profile-image", {
+		name: "Hide Image",
+		hint: "By default, don't show the creature's image on the sheet (more accurate).",
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: false
+	});
+	game.settings.register("monsterblock", "show-lair-actions", {
+		name: "Show Lair Actions",
+		hint: "By default, show Lair Actions (not normally included in 5e monster stat-blocks).",
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: false
+	});
 });
 
 Hooks.on("renderActorSheet", () => {	// This is just for debugging, it prevents this sheet's template from being cached.

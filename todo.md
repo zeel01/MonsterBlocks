@@ -7,7 +7,7 @@
 	- "Custom" option that allows you to paste in CSS
 	- "Clean" theme that's a white background.
 	- "Dark" theme
-- Add options for default sheet settings.
+- ~~Add options for default sheet settings.~~
 ## Changes
 - Some creatures have "sub features" like breath weapns, the bodies of these are indented. *unsure if this is possible to do correctly*
 - ~~Set default flags~~
