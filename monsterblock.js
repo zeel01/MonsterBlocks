@@ -15,7 +15,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
 			classes: ["monsterblock", "sheet", "actor"],
-			width: 391,	// Column width of 375, plus 8px of padding on each side.
+			width: 406,	// Column width of 390, plus 8px of padding on each side.
 			height: 400, // Arbitrary and basically meaningless.
 			dragDrop: [{dragSelector: ".item .item-name"}, {dragSelector: ".spell-list .spell"}],
 			resizable: false
@@ -595,6 +595,19 @@ Hooks.on('ready', () => {
 		type: Boolean,
 		default: false
 	});
+	game.settings.register("monsterblock", "max-height-offset", {
+		name: "Maximum Height Offset",
+		hint: "The maximum height of a Monster Blocks window is based on the height of the browser viewport, minus this offset. The default value of 72 is the height of the macro bar plus 10px of padding. If you prefer statblocks to be tall and narrow, reduce this value. If you prefer that stat blocks be wider (more columns) increase this value.",
+		scope: "world",
+		config: true,
+		type: Number,
+		range: {
+			min: 0,
+			max: 670,
+			step: 1
+		},
+		default: 72
+	});
 });
 
 Hooks.on("renderActorSheet", () => {	// This is just for debugging, it prevents this sheet's template from being cached.
@@ -694,9 +707,9 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the she
 	let popup = new PopupHandler(
 		monsterblock, 	// The Application window
 		"form.flexcol",
-		monsterblock.options.width, // From default options
-		window.innerHeight - 72,	// 72px Keeps the popup from covering the macro bar, plus some padding.
-		8							// The margins on the window content are 8px
+		monsterblock.options.width, 													// From default options
+		window.innerHeight - game.settings.get("monsterblock", "max-height-offset"),	// Configurable offset, default is 72 to give space for the macro bar and 10px of padding.
+		8																				// The margins on the window content are 8px
 	);
 	
 	popup.fix();

@@ -17,7 +17,7 @@
 	--roll-hover-color: hsl(8 70% 14% / 1);
 	--divider-color: rgba(140, 42, 42, 1);
 	--divider-color-end: rgba(140, 42, 42, 0);
-	--background-filter: #ffc80038;
+	--background-filter: hsl(50 100% 50% / 0.28);
 	--background-blend: luminosity;
 	--menu-background: #e9e0c3;
 }
@@ -127,8 +127,8 @@
 .monsterblock .flexcol {
     display: block;
     height: 100%;
-    /* width: 375px; */
-    column-width: 375px;
+    /* width: 390px; */
+    column-width: 390px;
     column-gap: 35px;
     column-fill: balance;
     /* border: 1px solid red; */
@@ -139,15 +139,15 @@
 	position: relative;
 }
 .monsterblock .sheet-header section::after {
-	margin-top: .75em;
-	margin-bottom: .75em;
+	margin-top: .5em;
+	margin-bottom: .5em;
 	display: block;
-	width: 375px;
+	/* width: 390px; */
 	content: "";
 	border: none;
 	border-top: .2em solid transparent;
 	border-bottom: .2em solid transparent;
-	border-left: 375px solid var(--divider-color);
+	border-left: 390px solid var(--divider-color);
 }
 
 .monsterblock .charname {
@@ -272,7 +272,9 @@ li:nth-last-of-type(2):after {
 	display: inline;
 }
 .monsterblock .section-header {
-	margin-top: 1em;
+	margin-top: 0.5em;
+	margin-bottom: -.4em;
+	line-height: 1em;
 	font-size: 1.5em;
 	color: var(--heading-color);
 	font-variant: small-caps;
@@ -299,6 +301,7 @@ li:nth-last-of-type(2):after {
 	margin: 0;
 }
 .monsterblock .legendary-description {
+	margin-top: 1em;
 	margin-bottom: 1em;
 }
 

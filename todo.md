@@ -14,6 +14,7 @@
 - ~~Set default flags~~
 - ~~Still not happy with the way the box sizing works.~~ *it's awesome now!*
 - ~~Figure out how to specify number and type of targets for an attack~~ *I'm not sure an exception to the "one target" exists, but it's supported!*
+- Fix number formatting of XP to include a comma
 ## Fixes
 - Differentiate which cantrips belong to what casting feature. *unsure how possible*
 - ~~Legendary actions shouldn't have any space between them~~
