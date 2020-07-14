@@ -8,6 +8,7 @@
 	- "Clean" theme that's a white background.
 	- "Dark" theme
 - ~~Add options for default sheet settings.~~
+- Rolls for saves/skills that aren't listed (not proficient);
 ## Changes
 - Some creatures have "sub features" like breath weapns, the bodies of these are indented. *unsure if this is possible to do correctly*
 - ~~Set default flags~~
