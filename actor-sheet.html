@@ -1,4 +1,4 @@
-<form class="{{cssClass}} flexcol{{#if flags.inline-secrets}} inline-secrets{{/if}}" autocomplete="off">
+<form class="{{cssClass}} flexcol{{#if flags.inline-secrets}} inline-secrets{{/if}}{{#if flags.hidden-secrets}} hidden-secrets{{/if}}" autocomplete="off">
 	<nav class="switches">
 		<i class="fas fa-cog"></i>
 		<ul>
@@ -31,6 +31,10 @@
 					<li>
 						<a class="switch" data-control="inline-secrets"
 						>{{#if flags.inline-secrets}}Disable{{else}}Enable{{/if}} inline secrets</a>
+					</li>
+					<li>
+						<a class="switch" data-control="hidden-secrets"
+						>{{#if flags.hidden-secrets}}Show{{else}}Hide{{/if}} secrets</a>
 					</li>
 				</ul>
 			</li>

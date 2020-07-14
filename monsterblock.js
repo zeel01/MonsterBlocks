@@ -271,7 +271,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return item.name.toLowerCase().replace(/\s+/g, '') === "spellcasting";
 	}
 	static isInnateSpellcasting(item) {
-		return item.name.toLowerCase().replace(/\s+/g, '') === "innatespellcasting";
+		return [
+			"innatespellcasting",
+			"innatespellcasting(psionics)",
+			"innatespellcastingpsionics"
+		].includes(item.name.toLowerCase().replace(/\s+/g, ''));
 	}
 	
 	static createHandlebarsHelpers() {	// Register all the helpers needed for Handlebars

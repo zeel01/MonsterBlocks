@@ -1,15 +1,19 @@
 {
 	"name": "monsterblock",
 	"title": "Monster Blocks",
-	"description": "An NPC sheet designed to emulate standard 5e monster stat blocks as faithfully as possible.",
+	"description": "(Beta) An NPC sheet designed to emulate standard 5e monster stat blocks as faithfully as possible. Read-only, supports rolls.",
 	"author": "zeel",
 	"version": "0.5.4",
 	"minimumCoreVersion": "0.6.2",
 	"compatibleCoreVersion": "0.6.4",
+	"system": "dnd5e",
 	"esmodules": [
 		"monsterblock.js"
 	],
 	"styles": [
 		"monsterblock.css"
 	]
+	"manifest": "https://raw.githubusercontent.com/zeel01/MonsterBlocks/master/module.json",
+	"url": "https://github.com/zeel01/MonsterBlocks",
+	"download": "https://github.com/zeel01/MonsterBlocks/releases/download/Beta-v0.5.4/monsterblock.zip"
 }
