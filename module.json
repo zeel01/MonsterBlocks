@@ -12,7 +12,7 @@
 	],
 	"styles": [
 		"monsterblock.css"
-	]
+	],
 	"manifest": "https://raw.githubusercontent.com/zeel01/MonsterBlocks/master/module.json",
 	"url": "https://github.com/zeel01/MonsterBlocks",
 	"download": "https://github.com/zeel01/MonsterBlocks/releases/download/Beta-v0.5.5/monsterblock.zip"
