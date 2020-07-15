@@ -94,6 +94,8 @@ Feature recharges, likewise, can be clicked to roll a d6 and the chat card will 
 At this time, there isn't a semantic way to roll a save or skill that the creature is not proficient with, as these are not listed on the sheet.
 In this case, you can simply roll the corrisponding abillity check.
 
+If you have Better Rolls installed, most rolls from this sheet will use BRs custom rolls.
+
 ### Q: When I use [insert creature] something displays wrong!
 **A**: Please let me know! I'm on the lookout for creatures that break the mold, so if you find something that doesn't work right plase report it and I'll try to figure out how to handle it.
 
