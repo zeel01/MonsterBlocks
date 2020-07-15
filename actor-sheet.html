@@ -39,6 +39,19 @@
 				</ul>
 			</li>
 			<li>
+				<a>Hit Points</a>
+				<ul>
+					<li>
+						<a class="switch" data-control="current-hit-points"
+						>{{#if flags.current-hit-points}}Hide{{else}}Show{{/if}} current hit points</a>
+					</li>
+					<li>
+						<a class="switch" data-control="maximum-hit-points"
+						>{{#if flags.maximum-hit-points}}Hide{{else}}Show{{/if}} maximum hit points</a>
+					</li>
+				</ul>
+			</li>
+			<li>
 				<a class="switch" data-control="hide-profile-image"
 				>{{#if flags.hide-profile-image}}Show{{else}}Hide{{/if}} profile image</a>
 			</li>
@@ -76,10 +89,20 @@
 				</li>
 				<li class="attribute health">
 					<h4 class="attribute-name box-title">Hit Points{{! localize "DND5E.Health" }} </h4>
-					<span class="attr-value">{{data.attributes.hp.value}}</span>
-                    <span class="sep">/</span>
-					<span class="attr-value">{{data.attributes.hp.max}}</span>
-					<span class="sep">(</span><span class="attr-value">{{data.attributes.hp.formula}}</span><span class="sep">)</span>
+					{{~#if (and (not flags.current-hit-points) (not flags.maximum-hit-points))~}}
+						<span title="Average" class="attr-value">{{averageroll data.attributes.hp.formula}}</span>
+					{{~/if~}}
+					{{#if flags.current-hit-points}}
+						<span title="Current" class="attr-value">{{data.attributes.hp.value}}</span>
+					{{~/if~}}
+					{{~#if (and flags.current-hit-points flags.maximum-hit-points)~}}
+						<span class="sep"> / </span>
+					{{~/if~}}
+					{{~#if flags.maximum-hit-points~}}
+						<span title="Maximum" class="attr-value">{{data.attributes.hp.max}}</span>
+					{{/if}}
+					
+					<span class="sep">(</span><span title="Average: {{averageroll data.attributes.hp.formula}}" class="attr-value">{{data.attributes.hp.formula}}</span><span class="sep">)</span>
 				</li>
 				<li class="attribute">
                     <h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }} </h4>
@@ -95,8 +118,8 @@
 			<ul class="ability-scores flexrow">
             {{#each data.abilities as |ability id|}}
                 <li class="ability{{#if ability.proficient}} proficient{{/if}}" data-ability="{{id}}">
-                    <h4 class="ability-name box-title">{{id}}</h4>
-					<span class="attr-value">{{ability.value}} </span>
+                    <h4 class="ability-name box-title" title="{{ability.label}}">{{id}}</h4>
+					<span class="attr-value" title="Score">{{ability.value}} </span>
 					<span class="ability-mod" title="Modifier">({{numberFormat ability.mod decimals=0 sign=true}})</span>
                 </li>
             {{/each}}
@@ -110,9 +133,9 @@
 					<ul class="inline-list">
 					{{#each data.abilities as |ability id|}}
 					{{#if ability.proficient}}
-						<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
+						<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}" title="{{ability.label}}">
 							<span class="ability-name">{{id}}</span>
-							<span class="ability-save" title="Saving Throw">{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
+							<span class="ability-save">{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
 						</li>
 					{{/if}}
 					{{/each}}
@@ -125,7 +148,7 @@
 					<ul class="inline-list">
 					{{#each data.skills as |skill s|}}
 					{{#if skill.value}}
-						<li class="skill {{#if skill.value}}proficient{{/if}}" data-skill="{{s}}">
+						<li class="skill {{#if skill.value}}proficient{{/if}}"  title="{{skill.ability}}" data-skill="{{s}}">
 							<span class="skill-name">{{skill.label}}</span>
 							<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>{{~" "~}}
 						</li>

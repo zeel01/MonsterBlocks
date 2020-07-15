@@ -154,6 +154,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 						"casting-feature": game.settings.get("monsterblock", "casting-feature"),
 						"inline-secrets": game.settings.get("monsterblock", "inline-secrets"),
 						"hidden-secrets": game.settings.get("monsterblock", "hidden-secrets"),
+						"current-hit-points": game.settings.get("monsterblock", "current-hit-points"),
+						"maximum-hit-points": game.settings.get("monsterblock", "maximum-hit-points"),
 						"hide-profile-image": game.settings.get("monsterblock", "hide-profile-image"),
 						"show-lair-actions": game.settings.get("monsterblock", "show-lair-actions")
 					}
@@ -426,6 +428,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				)	/ 2
 			);
 		});
+		Handlebars.registerHelper("averageroll", (formula) => {			// Calculates the average of a roll
+			let roll = new Roll(formula).roll();
+			return Math.ceil((											// The maximum roll plus the minimum roll, divided by two, rounded up.
+					Roll.maximize(roll.formula)._total + 
+					Roll.minimize(roll.formula)._total 
+				)	/ 2
+			);
+		});
 		Handlebars.registerHelper("damageformula", (item, actor) => {	// Extract and re-format the damage formula
 			let formula = item.data.damage.parts[0][0];	// This is the existing formula, typicallys contains a non-number like @mod
 			let attr = item.data.ability;				// The ability used for this attack
@@ -594,6 +604,22 @@ Hooks.on('ready', () => {
 		config: true,
 		type: Boolean,
 		default: false
+	});
+	game.settings.register("monsterblock", "current-hit-points", {
+		name: "Show Current Hit Points",
+		hint: "By default, display the current hit point in the hit points field. If neither maximum nor minimum Hit Points are shown, the average will be calculated and displayed.",
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: true
+	});
+	game.settings.register("monsterblock", "maximum-hit-points", {
+		name: "Show Maximum Hit Points",
+		hint: "By default, display the current hit point in the hit points field. If neither maximum nor minimum Hit Points are shown, the average will be calculated and displayed.",
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: true
 	});
 	game.settings.register("monsterblock", "max-height-offset", {
 		name: "Maximum Height Offset",
