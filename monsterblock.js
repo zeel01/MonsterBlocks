@@ -300,7 +300,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		].includes(item.name.toLowerCase().replace(/\s+/g, ''));
 	}
 	
-	static createHandlebarsHelpers() {	// Register all the helpers needed for Handlebars
+/*	static createHandlebarsHelpers() {	// Register all the helpers needed for Handlebars
 		Handlebars.registerHelper("hascontents", (obj) => { // Check if an array is empty.
 			return Object.keys(obj).length > 0;
 		});
@@ -436,6 +436,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				)	/ 2
 			);
 		});
+		Handlebars.registerHelper("formatnumbercommas", (number) {
+			return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");	// https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+		});
 		Handlebars.registerHelper("damageformula", (item, actor) => {	// Extract and re-format the damage formula
 			let formula = item.data.damage.parts[0][0];	// This is the existing formula, typicallys contains a non-number like @mod
 			let attr = item.data.ability;				// The ability used for this attack
@@ -546,6 +549,263 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			number = Number(number);
 			if (number > 9 || number < 0) return number.toString();
 			return ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"][number];
+		});
+	}
+}*/
+	static createHandlebarsHelpers() {	// Register all the helpers needed for Handlebars
+		this.handlebarsHelpers = {
+			"hascontents": (obj) => { // Check if an array is empty.
+				return Object.keys(obj).length > 0;
+			},
+
+			"hasskills": (skills) => { // Check if the creature has any skill proficiencies
+				for (let s in skills) {
+					if (skills[s].value) return true;
+				}
+				return false;
+			},
+			"hassave": (saves) => {	// Check if it has saving-throw proficiencies
+				for (let s in saves) {
+					if (saves[s].proficient) return true;
+				}
+				return false;
+			},
+			
+			"haslegendary": (features) => {	// Check for Legendary Actions
+				for (let feature of features) {
+					if (feature.label == "Actions") {
+						let items = feature.items;
+						for (let item of items) {
+							if (this.isLegendaryAction(item)) return true;
+						}
+					}
+				}
+				return false;
+			},
+			"haslair": (features) => {			// Check for Lair actions
+				for (let feature of features) {
+					if (feature.label == "Actions") {
+						let items = feature.items;
+						for (let item of items) {
+							if (this.isLairAction(item)) return true;
+						}
+					}
+				}
+				return false;
+			},
+			"islegendary": (item) => {			// Check if an action is a legendary action
+				return this.isLegendaryAction(item);
+			},
+			"islegresist": (item) => {			// Check if an action is a legendary action
+				return this.isLegendaryResistance(item);
+			},
+			"isspellcasting": (item) => {		// Check if this item is the spellcasting feature
+				return this.isSpellcasting(item) || this.isInnateSpellcasting(item);
+			},
+			"islair": (item)=> {				// Check if an action is a lair action
+				return this.isLairAction(item);
+			},
+			"invalidspelllevel": (level) => {	// Spell levels less than 0 mean sometihng special, and need checkd for
+				return level < 0;
+			},
+			"notspecialaction": (item) => {	// Used to unsure that actions that need seperated out aren't shown twice
+				return !(this.isMultiAttack(item) || this.isLegendaryAction(item) || this.isLairAction(item) || this.isLegendaryResistance(item));
+			},
+			
+			// Feature type groups
+			"getattacks": (features) => {
+				for (let feature of features) {
+					if (feature.label == "Attacks") return feature.items;
+				}
+			},
+			"getactions": (features) => {
+				for (let feature of features) {
+					if (feature.label == "Actions") return feature.items;
+				}
+			},
+			"getfeatures": (features) => {
+				for (let feature of features) {
+					if (feature.label == "Features") return feature.items;
+				}
+			},
+			
+			
+			"getattacktype": (attack) => { // Returns the localization string for the given type of attack.
+				return "DND5E.Action" + attack.data.actionType.toUpperCase();
+			},
+			"israngedattack": (attack) => {
+				return ["rwak", "rsak"].includes(attack.data.actionType);
+			},
+			"getattackbonus": (attack, data) => { // Calculate the "+X to hit"
+				let attr = attack.data.ability;					// The ability the item says it uses
+				let attackBonus = attack.data.attackBonus;		// Magical item or other bonus
+				let abilityBonus = data.abilities[attr].mod;	// The ability bonus of the actor
+				let isProf = attack.data.proficient;			// Is the actor proficient with this item?
+				let profBonus = data.attributes.prof;			// The actor's proficiency bonus
+				
+				return abilityBonus + (isProf ? profBonus : 0) + attackBonus;
+			},
+			"getcastingability": (actor, spellbook, type) => {
+				let main = actor.data.attributes.spellcasting;
+				let castingability = main;
+				
+				let types = {
+					"will": (l) => l.order == -20,
+					"innate": (l) => l.order == -10,
+					"pact": (l) => l.order == 0.5,
+					"cantrip": (l) => l.order == 0,
+					"prepared": (l) => l.order > 0.5
+				}
+				let spelllevel = spellbook.find(types[type])
+				if (spelllevel !== undefined) {
+					let spell = spelllevel.spells.find((s) => s.data.ability && s.data.ability != actor.data.attributes.spellcasting);
+					if (spell !== undefined) castingability = spell.data.ability;
+				}
+				return actor.data.abilities[castingability].label;
+				 
+			},
+			"getchathtml": (item, actor) => {	// Finds the *real* instance of the actor and the item, and uses the .getChatData() method to get the the description with inline rolls and links properly formatted.
+				return game.actors.get(actor._id).getOwnedItem(item._id).getChatData().description.value;
+			},
+			"enrichhtml": (str) => { // Formats any text to include proper inline rolls and links.
+				return TextEditor.enrichHTML(str, {secrets: true});
+			},
+			"averagedamage": (item, actor) => {	// Calculates the average damage from an attack
+				let formula = item.data.damage.parts[0][0];
+				let attr = item.data.ability;
+				let abilityBonus = actor.data.abilities[attr].mod;
+				let roll = new Roll(formula, {mod: abilityBonus}).roll();
+				return Math.ceil((											// The maximum roll plus the minimum roll, divided by two, rounded up.
+						Roll.maximize(roll.formula)._total + 
+						Roll.minimize(roll.formula)._total 
+					)	/ 2
+				);
+			},
+			"averageroll": (formula) => {			// Calculates the average of a roll
+				let roll = new Roll(formula).roll();
+				return Math.ceil((											// The maximum roll plus the minimum roll, divided by two, rounded up.
+						Roll.maximize(roll.formula)._total + 
+						Roll.minimize(roll.formula)._total 
+					)	/ 2
+				);
+			},
+			"formatnumbercommas": (number) => {
+				return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");	// https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+			},
+			"damageformula": (item, actor) => {	// Extract and re-format the damage formula
+				let formula = item.data.damage.parts[0][0];	// This is the existing formula, typicallys contains a non-number like @mod
+				let attr = item.data.ability;				// The ability used for this attack
+				let abilityBonus = actor.data.abilities[attr].mod;	// The ability bonus of the actor
+				let roll = new Roll(formula, {mod: abilityBonus}).roll();	// Create a new Roll, giving the ability modifier to sub in for @mod
+				
+				let parts = [];
+				let bonus = 0;
+				let op = "+";
+				
+				for (let part of roll.parts) {	// Now the formula from Roll is broken down, and re-constructed to combine all the constants.
+					if (typeof part == "object") parts.push(part.formula);
+					else if (part === "+" || part === "-") op = part;
+					else if (parseInt(part, 10) === NaN) console.error("Unexpected part in damage roll");
+					else {
+						let n = parseInt(part, 10);
+						bonus = op === "+" ? bonus + n : bonus - n;
+					}
+				}
+				if (bonus > 0) parts.push("+");
+				if (bonus < 0) parts.push("-");
+				if (bonus != 0) parts.push(bonus);
+				
+				return parts.join(" ");
+			},
+			"damagetype": (item) => {
+				return item.data.damage.parts[0][1];
+			},
+			"toinlineroll": (flag, options) => { // Takes a roll formula, and runs it through the enrichHTML method to create an inline roll link.
+				if (!flag) return options.fn(this);
+				
+				return TextEditor.enrichHTML(`[[/gmr ${options.fn(this)}]]`);
+			},
+			"spelllevellocalization": (level) => { // Returns the localization string for a given spell level
+				return "DND5E.SpellLevel" + parseInt(level, 10); // Never allow this to be a fraction, the results aren't good.
+			},
+			"getatwill": (spellbook) => { // Retuns the spellbook section marked "atwill"
+				for (let level of spellbook) {
+					if (level.prop === "atwill") return level.spells;
+				}
+				return [];
+			},
+			"hasresource": (item) => {
+				return Boolean(item.data.consume.target);
+			},
+			"getresourcelimit": (item, actor) => {
+				let res = item.data.consume.target.match(/(.+)\.(.+)\.(.+)/);
+				return actor.data[res[1]][res[2]].max;
+			},
+			"getresourcerefresh": (item, actor) => {
+				return "Day";
+			},
+			"warlockslotlevel": (spelllevel) => {
+				return spelllevel.spells.reduce((a, b) => a > b.data.level ? a : b.data.level, 0);
+			},
+			"getspellattackbonus": (actor)=> {	// Calculate the spell attack bonus
+				let data = actor.data;
+				let attr = data.attributes.spellcasting;
+				if (!attr) return 0;
+				let abilityBonus = data.abilities[attr].mod;
+				let profBonus = data.attributes.prof;
+				
+				return abilityBonus + profBonus;
+			},
+			"handlesenses": (senses, actor) => {
+				if (senses.toLowerCase().indexOf("perception") > -1) return senses;
+				
+				let perception = actor.data.skills.prc.passive;
+				
+				return `${senses}${senses ? ", " : ""}passive Perception ${perception}`
+			},
+			"isprepared": (item) => {
+				return item.data.preparation.mode === "prepared" || item.data.preparation.mode === "always";
+			},
+			
+			// Logical operations
+			"not": (arg) => {
+				return !arg;
+			},
+			"and": (...args) => {
+				args.pop();
+				return args.reduce((v, c) => v && c);
+			},
+			"or": (...args) => {
+				args.pop();
+				return args.reduce((v, c) => v || c);
+			},
+			"greater": (a, b) => {
+				return a > b;
+			},
+			"less": (a, b) => {
+				return a < b;
+			},
+			"equals": (a, b) => {
+				return a == b;
+			},
+			"notequal": (a, b) => {
+				return a != b;
+			},
+			
+			"formatordinal": (number) => { // Format numbers like "1st", "2nd", "3rd", "4th", etc.
+				if (number == 1) return number + "st";
+				if (number == 2) return number + "nd";
+				if (number == 3) return number + "rd";
+				return number + "th";
+			},
+			"getnumber": (number) => {
+				number = Number(number);
+				if (number > 9 || number < 0) return number.toString();
+				return ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"][number];
+			}
+		};
+		new Map(Object.entries(this.handlebarsHelpers)).forEach((value, key) => {
+			Handlebars.registerHelper(key, value);
 		});
 	}
 }
