@@ -14,7 +14,7 @@
 
 ## Fixes
 - Differentiate which cantrips belong to what casting feature. *unsure how possible*
-- Fix number formatting of XP to include a comma
+- ~~Fix number formatting of XP to include a comma~~
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
