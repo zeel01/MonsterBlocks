@@ -283,6 +283,7 @@ li:nth-last-of-type(2):after {
 	margin-top: 1em;
 }
 .monsterblock .item-name,
+.monsterblock .feature-name,
 .monsterblock .name-extension {
 	font-weight: bold;
 	font-style: italic;
@@ -316,9 +317,9 @@ li:nth-last-of-type(2):after {
 	font-style: italic;
 }
 .monsterblock .inline-children 
-.description > p:first-of-type,
+.description p:first-of-type,
 .monsterblock .inline-children 
-.description > div:first-of-type {
+.description div:first-of-type {
 	display: inline;
 }
 .monsterblock .description {

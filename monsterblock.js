@@ -6,7 +6,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		this.position.default = true;
 		
-		this.prepFlags();	
+		this.prepFlags();
 	}
 
 	get template() {
@@ -164,8 +164,17 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 		return true;
 	}
-	
-	activateListeners(html) {	// We need listeners to provide interaction.
+	static async getBetterRolls() {
+		if (typeof BetterRolls !== 'undefined') {
+			let { CustomItemRoll, CustomRoll } = await import("../betterrolls5e/scripts/custom-roll.js");
+			Object.assign(this, { CustomItemRoll, CustomRoll });
+		}
+		else {
+			this.CustomItemRoll = false;
+			this.CustomRoll = false;
+		}
+	}
+	async activateListeners(html) {	// We need listeners to provide interaction.
 		html.find('.switch').click((event) => {							// Switches are the primary way that settings are applied per-actor.
 			event.preventDefault();
 			let control = event.currentTarget.dataset.control;			// A data attribute is used on an element with the class .switch, and it contains the name of the switch to toggle.
@@ -212,17 +221,22 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		html.find('.ability').click((event) => {
 			event.preventDefault();
 			let ability = event.currentTarget.dataset.ability;
-			this.actor.rollAbilityTest(ability, {event: event});
+			
+			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.fullRollAttribute(this.actor, ability, "check", MonsterBlock5e.CustomRoll.eventToAdvantage(event));
+			else this.actor.rollAbilityTest(ability, {event: event});
 		});
 		html.find('.saving-throw').click((event) => {
 			event.preventDefault();
 			let ability = event.currentTarget.dataset.ability;
-			this.actor.rollAbilitySave(ability, {event: event});
+			
+			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.fullRollAttribute(this.actor, ability, "save", MonsterBlock5e.CustomRoll.eventToAdvantage(event));
+			else this.actor.rollAbilitySave(ability, {event: event});
 		});
 		html.find('.skill').click((event) => {
 			event.preventDefault();
-			let ability = event.currentTarget.dataset.skill;
-			this.actor.rollSkill(ability, {event: event});
+			let skill = event.currentTarget.dataset.skill;
+			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.fullRollSkill(this.actor, skill, MonsterBlock5e.CustomRoll.eventToAdvantage(event));
+			else this.actor.rollSkill(skill, {event: event});
 		});
 		
 		// Item and spell "roll" handlers. Really just pops their chat card into chat, allowing for rolling from there.
@@ -230,13 +244,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			event.preventDefault();
 			let id = event.currentTarget.dataset.itemId;
 			const item = this.actor.getOwnedItem(id);
-			return item.roll(); // Conveniently, items have all this logic built in already.
+			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.newItemRoll(item, mergeObject(MonsterBlock5e.CustomRoll.eventToAdvantage(event), {preset:0})).toMessage();
+			else return item.roll(); // Conveniently, items have all this logic built in already.
 		});
 		html.find('.spell').click((event) => {
 			event.preventDefault();
 			let id = event.currentTarget.dataset.itemId;
 			const item = this.actor.getOwnedItem(id);
-			return this.actor.useSpell(item, {configureDialog: !event.shiftKey}); // Spells are used through the actor, to track slots.
+			if (MonsterBlock5e.CustomRoll && !event.shiftKey) MonsterBlock5e.CustomRoll.newItemRoll(item, mergeObject(MonsterBlock5e.CustomRoll.eventToAdvantage(event), {preset:0})).toMessage();
+			else return this.actor.useSpell(item, {configureDialog: !event.shiftKey}); // Spells are used through the actor, to track slots.
 		});
 		
 		// Item editing handlers. Allows right clicking on the description of any item (features, action, etc.) to open its own sheet to edit.
@@ -817,6 +833,8 @@ Hooks.on("init", () => {
 });
 
 Hooks.on('ready', () => {
+	MonsterBlock5e.getBetterRolls();
+	
 	game.settings.register("monsterblock", "attack-descriptions", {
 		name: "Generated Attack Descriptions",
 		hint: "Show automatically generated attack descriptions by default.",

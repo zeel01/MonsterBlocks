@@ -252,6 +252,8 @@
 						</span>
 					{{~/if~}}
 				{{~/unless~}}.
+			{{~else~}}
+				<span class="item-name" data-item-id="{{item._id}}"></span>
 			{{~/unless}}
 			<span class="description">{{{enrichhtml item.data.description.value}}}</span>
 		</div>
@@ -265,9 +267,9 @@
 	{{/inline}}
 	
 	{{#*inline "spellcasting"}}
-	<section class="monster-feature spellcasting-trait" data-item-id="{{item._id}}">
+	<section class="monster-feature spellcasting-trait">
 		<div class="feature-description inline-children">
-			<span class="item-name">{{localize "DND5E.Spellcasting"}}</span>.
+			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>.
 			<span class="description">
 				The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster.
 				Its spellcasting ability is {{getcastingability actor spellbook castertype}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
@@ -311,9 +313,9 @@
 	{{/inline}}
 	
 	{{#*inline "warlockcasting"}}
-	<section class="monster-feature spellcasting-trait" data-item-id="{{item._id}}">
+	<section class="monster-feature spellcasting-trait">
 		<div class="feature-description inline-children">
-			<span class="item-name">{{localize "DND5E.Spellcasting"}}</span>.
+			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>.
 			<span class="description">
 				The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster.
 				Its spellcasting ability is {{getcastingability actor spellbook castertype}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
@@ -362,9 +364,9 @@
 	{{/inline}}
 	
 	{{#*inline "innatespellcasting"}}
-	<section class="monster-feature spellcasting-trait" data-item-id="{{item._id}}">
+	<section class="monster-feature spellcasting-trait">
 		<div class="feature-description inline-children">
-			<span class="item-name">{{localize "DND5E.SpellPrepInnate"}}</span>.
+			<span class="feature-name">{{localize "DND5E.SpellPrepInnate"}}</span>.
 			<span class="description">
 				The {{actor.name}}'s innate spellcasting ability is {{getcastingability actor spellbook castertype}}
 				(spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
