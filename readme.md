@@ -22,7 +22,7 @@ Does not support editing directly. You *can* edit features and other items by ri
  - Quick switch between this sheet and the default through the cog menu in the upper left.
  - Drag and drop items from the sheet to elsewhere.
  - Set default options in settings, and per-actor settings from the settings cog.
- - Supports rolls from [Better Rolls for 5e](https://github.com/ultrakorne/better-rolltables) if installed.
+ - Supports rolls from [Better Rolls for 5e](https://github.com/RedReign/FoundryVTT-BetterRolls5e/tree/master/betterrolls5e) if installed.
 
 ## FAQ
 
