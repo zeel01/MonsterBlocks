@@ -15,6 +15,7 @@
 ## Fixes
 - Differentiate which cantrips belong to what casting feature. *unsure how possible*
 - ~~Fix number formatting of XP to include a comma~~
+- Hide the comma after creature type if there is no alignment specified.
 
 ## Cleanup
 - Clean up classes from the template that aren't needed

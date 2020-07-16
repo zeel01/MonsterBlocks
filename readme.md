@@ -4,27 +4,30 @@ An NPC sheet for FoundryVTT designed to faithfully reproduce the apperance of D&
 
 Does not support editing directly. You *can* edit features and other items by right clicking their descriptions. This sheet is intended for use as an in-game reference to a monster, *not* as a tool for building NPCs. See: [To Do List](todo.md)
 
-![Ancient Red Dragon](examples/ancientRedDragon_4.png)
+![Ancient Red Dragon](examples/ancientRedDragon_5.png)
 
 ## Features
- - Generate attack descriptions including hit bonus, damage formula, and average damage.
- - Generate spellcasting features for regular and innate casters based on the actor's spellbook data.
- - Promote the Multiattack action to be displayed first, even if it isn't the first in the actor's list.
- - Show a concise view of all the relavant game statistics as in oficial 5e books.
- - Optionally display an image of the creature for reference.
- - Optionally display the "secret" blocks of feature descriptions inline rather than in boxes (useful for SRD monsters as they come with descriptions in secret boxes).
- - Automatically set the size of the window to fit the content of the statblock, simple creatures automatically take up less space!
- - Show or hide lair actions, standard statblocks don't really include those, but since you can add them to the actor I made it possible to display them.
- - Settings cog to toggle some features in the upper left corner.
- - Made it so that the [X Close] button can't get overflown off of the control bar (this effects all windows, not just this sheet).
- - Rolls for ability checks, saving throws, skills, features, actions, and spells.
- - Open and edit features, spells, and other items by right-clicking their description.
- - Quick switch between this sheet and the default through the cog menu in the upper left.
- - Drag and drop items from the sheet to elsewhere.
- - Set default options in settings, and per-actor settings from the settings cog.
- - Supports rolls from [Better Rolls for 5e](https://github.com/RedReign/FoundryVTT-BetterRolls5e) if installed.
- - Themes: You can pick different themes for each monster to help differentiate.
- 
+- Generate attack descriptions including hit bonus, damage formula, and average damage.
+- Generate spellcasting features for regular and innate casters based on the actor's spellbook data.
+- Promote the Multiattack action to be displayed first, even if it isn't the first in the actor's list.
+- Show a concise view of all the relavant game statistics as in oficial 5e books.
+- Optionally display an image of the creature for reference.
+- Optionally display the "secret" blocks of feature descriptions inline rather than in boxes (useful for SRD monsters as they come with descriptions in secret boxes).
+- Automatically set the size of the window to fit the content of the statblock, simple creatures automatically take up less space!
+- Show or hide lair actions, standard statblocks don't really include those, but since you can add them to the actor I made it possible to display them.
+- Settings cog to toggle some features in the upper left corner.
+- Made it so that the [X Close] button can't get overflown off of the control bar (this effects all windows, not just this sheet).
+- Rolls for ability checks, saving throws, skills, features, actions, and spells.
+- Open and edit features, spells, and other items by right-clicking their description.
+- Quick switch between this sheet and the default through the cog menu in the upper left.
+- Drag and drop items from the sheet to elsewhere.
+- Set default options in settings, and per-actor settings from the settings cog.
+- Supports rolls from [Better Rolls for 5e](https://github.com/RedReign/FoundryVTT-BetterRolls5e) if installed.
+- Themes: You can pick different themes for each monster to help differentiate.<br>
+	<img src="examples/ancientRedDragon_5.png" width="150">
+	<img src="examples/ancientRedDragon_5-dark.png" width="150">
+	<img src="examples/ancientRedDragon_5-simple.png" width="150">
+
 ## FAQ
 
 ### Q: How do I change settings for a given monster?
