@@ -8,6 +8,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		this.prepFlags().then((p) => {
 			this.options.classes.push(this.themes[this.currentTheme].class);
+			if (p) this.setCurrentTheme(this.currentTheme);
 		});
 	}
 
@@ -87,11 +88,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 	}
 	
-	themes = {
+	static themes = {
 		"default": { name: "Monster Manual", class: "default-theme" },
 		"srd": { name: "5e SRD", class: "srd-theme" },
 		"dark": { name: "Darkness", class: "dark-theme" },
-		"custom": { name: "Custom", class: this.actor.getFlag("monsterblock", "custom-theme-class") }
+		"custom": { name: "Custom", class: "" }
+	}
+	get themes() {
+		if (this._themes) return this._themes;
+		
+		this._themes = MonsterBlock5e.themes;
+		this._themes.custom = { name: "Custom", class: this.actor.getFlag("monsterblock", "custom-theme-class") };
+		return this._themes;
 	}
 	get currentTheme() {
 		return this.actor.getFlag("monsterblock", "theme-choice");
@@ -107,6 +115,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		this.element[0].classList.remove(oldTheme.class);
 		this.element[0].classList.add(newTheme.class);
 		
+		let classes = this.options.classes;
+		classes[classes.indexOf(oldTheme.class)] = newTheme.class;
+		
 		return await this.actor.setFlag("monsterblock", "theme-choice", theme);
 	}
 		
@@ -115,9 +126,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		if (value == "custom") {
 			await this.setCurrentTheme("default");
-			let className = event.currentTarget.nextElementSibling.value;
+			const className = event.currentTarget.nextElementSibling.value;
 			this.themes.custom.class = className;
-			this.actor.setFlag("monsterblock", "custom-theme-class", className);
+			await this.actor.setFlag("monsterblock", "custom-theme-class", className);
 		}
 		
 		this.setCurrentTheme(value);
@@ -195,24 +206,27 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"maximum-hit-points": game.settings.get("monsterblock", "maximum-hit-points"),
 		"hide-profile-image": game.settings.get("monsterblock", "hide-profile-image"),
 		"show-lair-actions": game.settings.get("monsterblock", "show-lair-actions"),
-		"theme-choice": "default",
-		"custom-theme-class": ""
+		"theme-choice": game.settings.get("monsterblock", "default-theme"),
+		"custom-theme-class": game.settings.get("monsterblock", "custom-theme-class")
 	}
 	async prepFlags() {
 		if (!this.actor.getFlag("monsterblock", "initialized")) {
-			return await this.actor.update({
+			await this.actor.update({
 				"flags": { "monsterblock": this.defaultFlags }
 			}, {});
+			return true;
 		}
 		
 		// Verify that there are no missing flags, which could cause an error.
+		let changes = false;
 		for (let flag in this.defaultFlags) {
-			if (this.actor.getFlag("monsterblock", flag)) continue;
+			if (this.actor.getFlag("monsterblock", flag) !== undefined) continue;
 			
+			changes = true;
 			await this.actor.setFlag("monsterblock", flag, this.defaultFlags[flag]);
 		}
 		
-		return this.actor.data.data.flags;
+		return changes;
 	}
 	static async getBetterRolls() {
 		if (typeof BetterRolls !== 'undefined') {
@@ -246,7 +260,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		html.find('.custom-class-input').keydown((event) => {							
 			if (event.key !== "Enter") return;
-			console.debug("ENTER!");
 			event.preventDefault();
 			let target = event.currentTarget;
 			let anchor = target.previousElementSibling;
@@ -504,6 +517,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			);
 		},
 		"averageroll": (formula) => {			// Calculates the average of a roll
+			if (!formula) return 0;
 			let roll = new Roll(formula).roll();
 			return Math.ceil((											// The maximum roll plus the minimum roll, divided by two, rounded up.
 					Roll.maximize(roll.formula)._total + 
@@ -718,6 +732,26 @@ Hooks.on('ready', () => {
 			step: 1
 		},
 		default: 72
+	});
+	
+	let themeChoices = {};
+	for (let theme in MonsterBlock5e.themes) themeChoices[theme] = MonsterBlock5e.themes[theme].name;
+	game.settings.register("monsterblock", "default-theme", {
+		name: "Default Theme",
+		hint: "Choose which theme applies by default.",
+		scope: "world",
+		config: true,
+		type: String,
+		choices: themeChoices,
+		default: "default"
+	});
+	game.settings.register("monsterblock", "custom-theme-class", {
+		name: "Default Custom Theme Class",
+		hint: "The class name used for your default custom theme.",
+		scope: "world",
+		config: true,
+		type: String,
+		default: ""
 	});
 });
 
