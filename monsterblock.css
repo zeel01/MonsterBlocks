@@ -5,9 +5,10 @@
 .dnd5e.npc .window-header {
 	padding-left: 30px;
 }
-.window-header .close {
+.window-app .window-header a.close {
 	position: absolute;
-	right: 6px;
+	right: 9px;
+	height: 30px !important;	/* Prevents other modules that might try 100% from messing this up now that it's an absolute element. */
 }
 
 .monsterblock, .switches {
@@ -19,7 +20,7 @@
 	--divider-color-end: rgba(140, 42, 42, 0);
 	--background-filter: hsl(39deg 100% 60% / 80%);
 	--background-blend: hard-light;
-	--menu-background: #e9e0c3;
+	--menu-background: #f7e2ac;
 	--main-text-color: black;
 	--inline-link-color: #ff6400;
 }
@@ -80,6 +81,9 @@
 	height: 100%;
 	display: inline-block;
 }
+.window-app .switches a.nochild {
+	width: initial;
+}
 .window-app .switches ul {
 	margin: 0;
 	top: 0;
@@ -106,6 +110,9 @@
 	right: .2em;
 	top: 0;
 }
+.window-app .switches li a.nochild:not(:only-child):after {
+	content: "";
+}
 .window-app .switches li:hover > ul {
 	display: block;
 }
@@ -119,6 +126,16 @@
 	padding-left: 8px;
 	border-left: 3px solid var(--divider-color);
 	border-bottom: 1px dashed gray;
+}
+
+.monsterblock .switches .selected:after {
+	content: " \2713";
+	font-size: .7em;
+	font-weight: bold;
+}
+.monsterblock .switches .custom-class-input {
+	width: 60%;
+	
 }
 .monsterblock .inline-secrets .secret {
 	display: inline;
@@ -251,7 +268,6 @@
 }
 
 .monsterblock input {
-	display: none;
 	border: none;
 }
 .monsterblock .inline-list {
@@ -358,13 +374,4 @@ li:nth-last-of-type(2):after {
 }
 .monsterblock .description {
 	line-height: 1.3em;
-}
-
-.endAnchor {
-	width: 100%;
-	/* visibility: hidden; */
-	display: block;
-	border: 1px solid red;
-	/* height: 1em; */
-	/* box-sizing: border-box; */
 }

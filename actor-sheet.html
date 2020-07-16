@@ -65,11 +65,19 @@
 				<a>Theme</a>
 				<ul>
 				{{#each themes as |theme id|}}
+				{{#unless (equals id "custom")}}
 					<li>
-						<a class="trigger{{#if (equals flags.theme-choice id)}} selected{{/if}}" data-control="pickTheme" data-value="{{id}}"
+						<a class="trigger{{#if (equals ../flags.theme-choice id)}} selected{{/if}}" data-control="pickTheme" data-value="{{id}}"
 						>{{ theme.name }}</a>
 					</li>
+				{{/unless}}
 				{{/each}}
+					<li>
+						<label class="custome-class-label{{#if (equals flags.theme-choice 'custom')}} selected{{/if}}">
+							<a class="trigger nochild" data-control="pickTheme" data-value="custom">Custom:</a>
+							<input type="text" class="custom-class-input" placeholder="class-name" value="{{flags.custom-theme-class}}">
+						</label>
+					</li>
 				</ul>
 			</li>
 		</ul>

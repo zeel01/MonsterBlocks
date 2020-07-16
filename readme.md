@@ -24,9 +24,26 @@ Does not support editing directly. You *can* edit features and other items by ri
 - Set default options in settings, and per-actor settings from the settings cog.
 - Supports rolls from [Better Rolls for 5e](https://github.com/RedReign/FoundryVTT-BetterRolls5e) if installed.
 - Themes: You can pick different themes for each monster to help differentiate.<br>
-	<img src="examples/ancientRedDragon_5.png" width="150">
-	<img src="examples/ancientRedDragon_5-dark.png" width="150">
-	<img src="examples/ancientRedDragon_5-simple.png" width="150">
+	<img src="examples/ancientRedDragon_5.png" width="200">
+	<img src="examples/ancientRedDragon_5-dark.png" width="200">
+	<img src="examples/ancientRedDragon_5-simple.png" width="200">
+	- Custom themes: You may specifcy a custom CSS class name to be used as a theme,
+	you can use a module like
+	[Custom CSS](https://github.com/cswendrowski/FoundryVTT-Custom-CSS)
+	or a browser extension like [Stylish](https://chrome.google.com/webstore/detail/stylish-custom-themes-for/fjnbnpbmkenffdnngjfgmeleoegfcffe) 
+	to target `.monsterblock.your-class-name` and modify the apperance however you like.
+	The following CSS variables are used to define the most important values:
+		```CSS
+		--heading-color: rgb(89 23 13);
+		--roll-hover-color: hsl(8 70% 14% / 1);
+		--divider-color: rgba(140, 42, 42, 1);
+		--divider-color-end: rgba(140, 42, 42, 0);
+		--background-filter: hsl(39deg 100% 60% / 80%);
+		--background-blend: hard-light;
+		--menu-background: #f7e2ac;
+		--main-text-color: black;
+		--inline-link-color: #ff6400;
+		```
 
 ## FAQ
 

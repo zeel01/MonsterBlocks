@@ -90,26 +90,37 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	themes = {
 		"default": { name: "Monster Manual", class: "default-theme" },
 		"srd": { name: "5e SRD", class: "srd-theme" },
-		"dark": { name: "Darkness", class: "dark-theme" }
-	//	"custom": { name: "Custom", class: "custom-theme" }
+		"dark": { name: "Darkness", class: "dark-theme" },
+		"custom": { name: "Custom", class: this.actor.getFlag("monsterblock", "custom-theme-class") }
 	}
 	get currentTheme() {
 		return this.actor.getFlag("monsterblock", "theme-choice");
 	}
-	set currentTheme(theme) {
-		if (!(theme in this.themes) || theme == this.currentTheme) return this.currentTheme;
+	set currentTheme(t) {
+		this.setCurrentTheme(t);
+	}
+	async setCurrentTheme(theme) {
+		if (!(theme in this.themes)) return this.currentTheme;
 		let oldTheme = this.themes[this.currentTheme];
 		let newTheme = this.themes[theme];
 			
 		this.element[0].classList.remove(oldTheme.class);
 		this.element[0].classList.add(newTheme.class);
 		
-		this.actor.setFlag("monsterblock", "theme-choice", theme);
+		return await this.actor.setFlag("monsterblock", "theme-choice", theme);
 	}
 		
-	pickTheme(event) {
+	async pickTheme(event) {
 		let value = event.currentTarget.dataset.value;
-		this.currentTheme = value;
+		
+		if (value == "custom") {
+			await this.setCurrentTheme("default");
+			let className = event.currentTarget.nextElementSibling.value;
+			this.themes.custom.class = className;
+			this.actor.setFlag("monsterblock", "custom-theme-class", className);
+		}
+		
+		this.setCurrentTheme(value);
 	}
 	
 	getMultiattack(data) { // The Multiattack action is always first in the list, so we need to find it and seperate it out.
@@ -184,7 +195,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"maximum-hit-points": game.settings.get("monsterblock", "maximum-hit-points"),
 		"hide-profile-image": game.settings.get("monsterblock", "hide-profile-image"),
 		"show-lair-actions": game.settings.get("monsterblock", "show-lair-actions"),
-		"theme-choice": "default"
+		"theme-choice": "default",
+		"custom-theme-class": ""
 	}
 	async prepFlags() {
 		if (!this.actor.getFlag("monsterblock", "initialized")) {
@@ -231,6 +243,16 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			let control = event.currentTarget.dataset.control;
 			
 			this[control](event);
+		});
+		html.find('.custom-class-input').keydown((event) => {							
+			if (event.key !== "Enter") return;
+			console.debug("ENTER!");
+			event.preventDefault();
+			let target = event.currentTarget;
+			let anchor = target.previousElementSibling;
+			event.currentTarget = anchor;
+			
+			this.pickTheme(event);
 		});
 		
 		html.find('[data-roll-formula]').click((event) => {			// Universal way to add an element that provides a roll, just add the data attribute "data-roll-formula" with a formula in it, and this applies.
