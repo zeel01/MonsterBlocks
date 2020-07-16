@@ -17,9 +17,33 @@
 	--roll-hover-color: hsl(8 70% 14% / 1);
 	--divider-color: rgba(140, 42, 42, 1);
 	--divider-color-end: rgba(140, 42, 42, 0);
-	--background-filter: hsl(50 100% 50% / 0.28);
-	--background-blend: luminosity;
+	--background-filter: hsl(39deg 100% 60% / 80%);
+	--background-blend: hard-light;
 	--menu-background: #e9e0c3;
+	--main-text-color: black;
+	--inline-link-color: #ff6400;
+}
+.monsterblock.dark-theme {
+	font-size: 14px;
+	color: white;
+	--heading-color: rgb(121 121 121);
+	--roll-hover-color: hsl(199deg 9% 66%);
+	--divider-color: rgb(46 68 130);
+	--background-filter: hsl(0deg 0% 0% / 87%);
+	--background-blend: darken;
+	--main-text-color: #aaa;
+	--inline-link-color: #879ba9;
+}
+.monsterblock.srd-theme {
+	font-size: 14px;
+	color: white;
+	--heading-color: rgb(0 0 0);
+	--roll-hover-color: #828282;
+	--divider-color: rgb(0 0 0);
+	--background-filter: white;
+	--background-blend: color;
+	--main-text-color: #000;
+	--inline-link-color: #808080;
 }
 .monsterblock * {
 	user-select: text;
@@ -27,10 +51,19 @@
 	break-after: auto;
 	overflow-wrap: break-word;
 }
+
+.monsterblock a[href] {
+	color: var(--inline-link-color);
+}
+.monsterblock a[href]:hover {
+	text-shadow: 0 0 8px var(--inline-link-color);
+}
 .monsterblock .window-content {
 	background: url(/ui/parchment.jpg), var(--background-filter);
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
+	color: var(--main-text-color);
+	background-position: 0px 130px;
 }
 .window-app .switches {
 	/* background: red; */
@@ -98,7 +131,7 @@
 }
 .monsterblock a.inline-roll .fa-dice-d20 {
 	display: inline;
-	color: black;
+	color: var(--main-text-color);
 }
 .monsterblock a.inline-roll {
 	border: none;
@@ -278,6 +311,7 @@ li:nth-last-of-type(2):after {
 	font-size: 1.5em;
 	color: var(--heading-color);
 	font-variant: small-caps;
+	border-bottom: 1px solid var(--heading-color);
 }
 .monsterblock .item {
 	margin-top: 1em;

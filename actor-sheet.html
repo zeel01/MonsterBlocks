@@ -61,6 +61,17 @@
 				>{{#if flags.show-lair-actions}}Hide{{else}}Show{{/if}} lair actions</a>
 			</li>
 			{{/if}}
+			<li>
+				<a>Theme</a>
+				<ul>
+				{{#each themes as |theme id|}}
+					<li>
+						<a class="trigger{{#if (equals flags.theme-choice id)}} selected{{/if}}" data-control="pickTheme" data-value="{{id}}"
+						>{{ theme.name }}</a>
+					</li>
+				{{/each}}
+				</ul>
+			</li>
 		</ul>
 	</nav>	
 	<header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
