@@ -44,6 +44,7 @@ Does not support editing directly. You *can* edit features and other items by ri
 		--main-text-color: black;
 		--inline-link-color: #ff6400;
 		```
+- Clicking on the creature's artwork will open an image pop-up that can be shown to the players.
 
 ## FAQ
 
