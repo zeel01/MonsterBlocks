@@ -48,8 +48,6 @@
 }
 .monsterblock * {
 	user-select: text;
-	break-inside: auto;
-	break-after: auto;
 	overflow-wrap: break-word;
 }
 
@@ -322,6 +320,9 @@ li:nth-last-of-type(2):after {
 	display: inline;
 }
 .monsterblock .section-header {
+	break-before: auto;
+	break-after: avoid;
+	break-inside: avoid;
 	margin-top: 0.5em;
 	margin-bottom: -.4em;
 	line-height: 1em;
