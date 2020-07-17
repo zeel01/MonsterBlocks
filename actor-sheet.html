@@ -148,7 +148,7 @@
 			<ul class="attributes">
 				{{#if (hassave data.abilities)}}
 				<li class="monster-saves">
-					<h4 class="attribute-name">{{localize "DND5E.SavingThrows"}}</h4>
+					<h4 class="attribute-name">Saving Throws</h4>
 					<ul class="inline-list">
 					{{#each data.abilities as |ability id|}}
 					{{#if ability.proficient}}
@@ -163,7 +163,7 @@
 				{{/if}}
 				{{#if (hasskills data.skills)}}
 				<li class="monster-skills">
-					<h4 class="attribute-name">{{localize "DND5E.Skills"}}</h4>
+					<h4 class="attribute-name">Skill</h4>
 					<ul class="inline-list">
 					{{#each data.skills as |skill s|}}
 					{{#if skill.value}}

@@ -7,7 +7,7 @@
 	- ~"Custom" option~
 	- ~"Clean" theme that's a white background.~
 	- ~"Dark" theme~
-- "Show to player" option for the character art.
+- ~"Show to player" option for the character art.~
 
 ## Changes
 - Some creatures have "sub features" like breath weapns, the bodies of these are indented. *unsure if this is possible to do correctly*

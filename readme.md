@@ -59,7 +59,7 @@ For monsters from the SRD, or imported from other sources, simply switching that
 For custom creatures and NPCs, I recommend using the default 5e sheet, or any other sheet of your choice, to build and design your creature... then switch it to Monster Blocks during your session for quick reference.
 In the future, I intend to add limited editability, starting with hit points, but I don't plan to make Monster Blocks a fully editable sheet - of course, you are welcome to fork it and add feature, and I would be happy to accept pull requests if you do!
 
-### Q: Switching sheets is annopying though...
+### Q: Switching sheets is annoying though...
 **A**: Yep, that's why I added an option in the settings cog to quickly switch to default, and I added the same cog to the default sheet with a "Switch to Monster Blocks" option to make this as painless as possible.
 
 ### Q: What about my features and spells, can I edit those?

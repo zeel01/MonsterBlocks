@@ -267,6 +267,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			
 			this.pickTheme(event);
 		});
+		html.find('.profile-image').click((event) => {
+			event.preventDefault();
+
+			new ImagePopout(this.actor.data.img, {
+				title: this.actor.name,
+				shareable: true,
+				uuid: this.actor.uuid
+			}).render(true);
+		});
 		
 		html.find('[data-roll-formula]').click((event) => {			// Universal way to add an element that provides a roll, just add the data attribute "data-roll-formula" with a formula in it, and this applies.
 			event.preventDefault();									// This handler makes "quick rolls" possible, it just takes some data stored on the HTML element, and rolls dice directly.
