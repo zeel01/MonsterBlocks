@@ -3,14 +3,14 @@
 		<i class="fas fa-cog"></i>
 		<ul>
 			<li>
-				<a class="trigger" data-control="switchToDefault">Switch to Default Sheet</a>
+				<a class="trigger" data-control="switchToDefault">{{ localize "MOBLOKS5E.SwitchToDefault" }}</a>
 			</li>
 			<li>
-				<a class="switch" data-control="attack-descriptions">Attack descriptions</a>
+				<a class="switch" data-control="attack-descriptions">{{ localize "MOBLOKS5E.AttackDescriptions" }}</a>
 				<ul>
 					<li>
 						<a class="switch" data-control="attack-descriptions"
-						>{{#if flags.attack-descriptions}}Hide{{else}}Show{{/if}} generated</a>
+						>{{#if flags.attack-descriptions}}{{ localize "MOBLOKS5E.Hide" }}{{else}}{{ localize "MOBLOKS5E.Show" }}{{/if}} {{ localize "MOBLOKS5E.generated" }}</a>
 					</li>
 				</ul>
 			</li>
@@ -20,49 +20,49 @@
 				<ul>
 					<li>
 						<a class="switch" data-control="casting-feature"
-						>{{#if flags.casting-feature}}Hide{{else}}Show{{/if}} generated</a>
+						>{{#if flags.casting-feature}}{{ localize "MOBLOKS5E.Hide" }}{{else}}{{ localize "MOBLOKS5E.Show" }}{{/if}} {{ localize "MOBLOKS5E.generated" }}</a>
 					</li>
 				</ul>
 			</li>
 			{{/if}}
 			<li>
-				<a>Descriptions</a>
+				<a>{{ localize "MOBLOKS5E.DescriptionS" }}</a>
 				<ul>
 					<li>
 						<a class="switch" data-control="inline-secrets"
-						>{{#if flags.inline-secrets}}Disable{{else}}Enable{{/if}} inline secrets</a>
+						>{{#if flags.inline-secrets}}Disable{{else}}Enable{{/if}} {{ localize "MOBLOKS5E.inlineSecrets" }}</a>
 					</li>
 					<li>
 						<a class="switch" data-control="hidden-secrets"
-						>{{#if flags.hidden-secrets}}Show{{else}}Hide{{/if}} secrets</a>
+						>{{#if flags.hidden-secrets}}{{ localize "MOBLOKS5E.Show" }}{{else}}{{ localize "MOBLOKS5E.Hide" }}{{/if}} {{ localize "MOBLOKS5E.secrets" }}</a>
 					</li>
 				</ul>
 			</li>
 			<li>
-				<a>Hit Points</a>
+				<a>{{ localize "MOBLOKS5E.HitPointS" }}</a>
 				<ul>
 					<li>
 						<a class="switch" data-control="current-hit-points"
-						>{{#if flags.current-hit-points}}Hide{{else}}Show{{/if}} current hit points</a>
+						>{{#if flags.current-hit-points}}{{ localize "MOBLOKS5E.Hide" }}{{else}}{{ localize "MOBLOKS5E.Show" }}{{/if}} {{ localize "MOBLOKS5E.CurrentHPT" }}</a>
 					</li>
 					<li>
 						<a class="switch" data-control="maximum-hit-points"
-						>{{#if flags.maximum-hit-points}}Hide{{else}}Show{{/if}} maximum hit points</a>
+						>{{#if flags.maximum-hit-points}}{{ localize "MOBLOKS5E.Hide" }}{{else}}{{ localize "MOBLOKS5E.Show" }}{{/if}} {{ localize "MOBLOKS5E.MaxHPT" }}</a>
 					</li>
 				</ul>
 			</li>
 			<li>
 				<a class="switch" data-control="hide-profile-image"
-				>{{#if flags.hide-profile-image}}Show{{else}}Hide{{/if}} profile image</a>
+				>{{#if flags.hide-profile-image}}{{ localize "MOBLOKS5E.Show" }}{{else}}{{ localize "MOBLOKS5E.Hide" }}{{/if}} {{ localize "MOBLOKS5E.ProfileImgT" }}</a>
 			</li>
 			{{#if (haslair features)}}
 			<li>
 				<a class="switch" data-control="show-lair-actions"
-				>{{#if flags.show-lair-actions}}Hide{{else}}Show{{/if}} lair actions</a>
+				>{{#if flags.show-lair-actions}}{{ localize "MOBLOKS5E.Hide" }}{{else}}{{ localize "MOBLOKS5E.Show" }}{{/if}} {{ localize "MOBLOKS5E.LairActT" }}</a>
 			</li>
 			{{/if}}
 			<li>
-				<a>Theme</a>
+				<a>{{ localize "MOBLOKS5E.Theme" }}</a>
 				<ul>
 				{{#each themes as |theme id|}}
 				{{#unless (equals id "custom")}}
@@ -74,7 +74,7 @@
 				{{/each}}
 					<li>
 						<label class="custome-class-label{{#if (equals flags.theme-choice 'custom')}} selected{{/if}}">
-							<a class="trigger nochild" data-control="pickTheme" data-value="custom">Custom:</a>
+							<a class="trigger nochild" data-control="pickTheme" data-value="custom">{{ localize "MOBLOKS5E.CustomThemeName" }}:</a>
 							<input type="text" class="custom-class-input" placeholder="class-name" value="{{flags.custom-theme-class}}">
 						</label>
 					</li>
@@ -83,7 +83,6 @@
 		</ul>
 	</nav>	
 	<header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
-		{{#if info.bigRedButton}}<button class="big-red-button" style="color: red">Big Red Button!</button>{{/if}}
 		<section id="monster-identity">
 			<h1 class="charname" contenteditable="false" data-field-key="name">{{actor.name}}</h1>
 			<p class="chartype">
@@ -109,16 +108,16 @@
 				<li class="attribute health">
 					<h4 class="attribute-name box-title">Hit Points{{! localize "DND5E.Health" }} </h4>
 					{{~#if (and (not flags.current-hit-points) (not flags.maximum-hit-points))~}}
-						<span title="Average" class="attr-value">{{averageroll data.attributes.hp.formula}}</span>
+						<span title="{{ localize 'MOBLOKS5E.Average' }}" class="attr-value">{{averageroll data.attributes.hp.formula}}</span>
 					{{~/if~}}
 					{{#if flags.current-hit-points}}
-						<span title="Current" class="attr-value">{{data.attributes.hp.value}}</span>
+						<span title="{{ localize 'MOBLOKS5E.Current' }}" class="attr-value">{{data.attributes.hp.value}}</span>
 					{{~/if~}}
 					{{~#if (and flags.current-hit-points flags.maximum-hit-points)~}}
 						<span class="sep"> / </span>
 					{{~/if~}}
 					{{~#if flags.maximum-hit-points~}}
-						<span title="Maximum" class="attr-value">{{data.attributes.hp.max}}</span>
+						<span title="{{ localize 'MOBLOKS5E.Maximum' }}" class="attr-value">{{data.attributes.hp.max}}</span>
 					{{/if}}
 					
 					<span class="sep">(</span><span title="Average: {{averageroll data.attributes.hp.formula}}" class="attr-value">{{data.attributes.hp.formula}}</span><span class="sep">)</span>
@@ -138,8 +137,8 @@
             {{#each data.abilities as |ability id|}}
                 <li class="ability{{#if ability.proficient}} proficient{{/if}}" data-ability="{{id}}">
                     <h4 class="ability-name box-title" title="{{ability.label}}">{{id}}</h4>
-					<span class="attr-value" title="Score">{{ability.value}} </span>
-					<span class="ability-mod" title="Modifier">({{numberFormat ability.mod decimals=0 sign=true}})</span>
+					<span class="attr-value" title="{{ localize 'MOBLOKS5E.Score' }}">{{ability.value}} </span>
+					<span class="ability-mod" title="{{ localize 'MOBLOKS5E.Modifier' }}">({{numberFormat ability.mod decimals=0 sign=true}})</span>
                 </li>
             {{/each}}
             </ul>
@@ -148,7 +147,7 @@
 			<ul class="attributes">
 				{{#if (hassave data.abilities)}}
 				<li class="monster-saves">
-					<h4 class="attribute-name">Saving Throws</h4>
+					<h4 class="attribute-name">{{ localize "MOBLOKS5E.SavingThrowS" }}</h4>
 					<ul class="inline-list">
 					{{#each data.abilities as |ability id|}}
 					{{#if ability.proficient}}
@@ -163,7 +162,7 @@
 				{{/if}}
 				{{#if (hasskills data.skills)}}
 				<li class="monster-skills">
-					<h4 class="attribute-name">Skill</h4>
+					<h4 class="attribute-name">{{ localize "MOBLOKS5E.SkillS" }}</h4>
 					<ul class="inline-list">
 					{{#each data.skills as |skill s|}}
 					{{#if skill.value}}
@@ -251,17 +250,17 @@
 				
 				{{~#if item.data.recharge.value~}}
 					<span class="name-extension" 
-						data-roll-flavor="{{item.name}} (Recharge {{item.data.recharge.value}}-6): " 
+						data-roll-flavor="{{item.name}} ({{ localize 'MOBLOKS5E.Recharge' }} {{item.data.recharge.value}}-6): " 
 						data-roll-formula="1d6" 
 						data-roll-target="{{item.data.recharge.value}}" 
-						data-roll-success="Charged" 
-						data-roll-failure="Not charged">
-						(Recharge {{item.data.recharge.value}}-6){{~" "~}}
+						data-roll-success="{{ localize 'MOBLOKS5E.Charged' }}" 
+						data-roll-failure="{{ localize 'MOBLOKS5E.NCharged' }}">
+						({{ localize 'MOBLOKS5E.Recharge' }} {{item.data.recharge.value}}-6){{~" "~}}
 					</span>
 				{{~/if~}}
 				{{~#if (and (islegendary item) (greater item.data.activation.cost 1))~}}
 					<span class="name-extension">
-						(Costs {{item.data.activation.cost}} {{localize "DND5E.ActionPl"}}){{~" "~}}
+						({{ localize "MOBLOKS5E.Costs" }} {{item.data.activation.cost}} {{localize "DND5E.ActionPl"}}){{~" "~}}
 					</span>
 				{{~/if~}}
 				{{~#unless legendaryactions~}}
