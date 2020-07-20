@@ -399,6 +399,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static isLairAction(item) {
 		return item.data.activation.type === "lair";
 	}
+	static isReaction(item) {
+		return item.data.activation.type === "reaction";
+	}
 	static isSpellcasting(item) {
 		return item.name.toLowerCase().replace(/\s+/g, '') === "spellcasting";
 	}
@@ -449,24 +452,30 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 			return false;
 		},
-		"islegendary": (item) => {			// Check if an action is a legendary action
-			return this.isLegendaryAction(item);
+		"hasreaction": (features) => {
+			for (let feature of features) {
+				if (feature.label == "Actions") {
+					let items = feature.items;
+					for (let item of items) {
+						if (this.isReaction(item)) return true;
+					}
+				}
+			}
+			return false;
 		},
-		"islegresist": (item) => {			// Check if an action is a legendary action
-			return this.isLegendaryResistance(item);
-		},
-		"isspellcasting": (item) => {		// Check if this item is the spellcasting feature
-			return this.isSpellcasting(item) || this.isInnateSpellcasting(item);
-		},
-		"islair": (item)=> {				// Check if an action is a lair action
-			return this.isLairAction(item);
-		},
-		"invalidspelllevel": (level) => {	// Spell levels less than 0 mean sometihng special, and need checkd for
-			return level < 0;
-		},
-		"notspecialaction": (item) => {	// Used to unsure that actions that need seperated out aren't shown twice
-			return !(this.isMultiAttack(item) || this.isLegendaryAction(item) || this.isLairAction(item) || this.isLegendaryResistance(item));
-		},
+		"islegendary": (item) => this.isLegendaryAction(item),
+		"islegresist": (item) => this.isLegendaryResistance(item),
+		"isspellcasting": (item) => this.isSpellcasting(item) || this.isInnateSpellcasting(item),
+		"islair": (item)=> this.isLairAction(item),
+		"isreaction": (item) => this.isReaction(item),
+		"invalidspelllevel": (level) => level < 0,	// Spell levels less than 0 mean sometihng special, and need checkd for
+		"notspecialaction": (item) => !(	// Used to ensure that actions that need seperated out aren't shown twice
+			   this.isMultiAttack(item) 
+			|| this.isLegendaryAction(item) 
+			|| this.isLairAction(item) 
+			|| this.isLegendaryResistance(item)
+			|| this.isReaction(item)
+		),
 		
 		// Feature type groups
 		"getattacks": (features) => {

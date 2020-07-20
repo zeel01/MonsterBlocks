@@ -520,6 +520,15 @@
 			{{> featureBlock item=item actor=../actor}}
 		{{/if}}
 	{{/each}}
+	{{! Reactions }}
+	{{#if (hasreaction features)}}
+		<h2 class="section-header">{{localize "DND5E.Reaction"}}s</h2>
+		{{#each (getactions features) as |item iid|}}
+			{{#if (isreaction item)}}
+				{{> featureBlock item=item actor=../actor}}
+			{{/if}}
+		{{/each}}
+	{{/if}}
 	{{! Legendary Actions }}
 	{{#if (haslegendary features)}}
 		<h2 class="section-header">{{localize "DND5E.LegAct"}}</h2>
