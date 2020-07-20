@@ -50,7 +50,9 @@
 	user-select: text;
 	overflow-wrap: break-word;
 }
-
+.monsterblock .hidden {
+	display: none;
+}
 .monsterblock a[href] {
 	color: var(--inline-link-color);
 }
@@ -157,8 +159,13 @@
 .secret > :first-child {
 	display: inline;
 }
-.monsterblock form {
+.monsterblock .hasinput {
 	
+}
+.monsterblock input.hp-input {
+	width: 4ch;
+	height: 1em;
+	padding: 0;
 }
 .monsterblock .ability:hover,
 .monsterblock .saving-throw:hover,

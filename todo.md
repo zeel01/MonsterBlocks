@@ -1,7 +1,7 @@
 # TODO:
 
 ## Additions
-- Add hit point modification
+- ~Add hit point modification~
 - ~Add multiple themes~
 	- ~Per monster selection~
 	- ~"Custom" option~

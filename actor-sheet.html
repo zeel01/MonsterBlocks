@@ -111,13 +111,27 @@
 						<span title="{{ localize 'MOBLOKS5E.Average' }}" class="attr-value">{{averageroll data.attributes.hp.formula}}</span>
 					{{~/if~}}
 					{{#if flags.current-hit-points}}
-						<span title="{{ localize 'MOBLOKS5E.Current' }}" class="attr-value">{{data.attributes.hp.value}}</span>
+						<span title="{{ localize 'MOBLOKS5E.Current' }}" data-field-key="data.attributes.hp.value" class="attr-value hasinput">
+						{{#if data.attributes.hp.value}}
+							{{data.attributes.hp.value}}
+						{{else}}
+							0
+						{{/if}}
+						</span>
+						<input title="{{ localize 'MOBLOKS5E.Current' }}" data-dtype="Number" name="data.attributes.hp.value" class="attr-value hiddeninput hidden hp-input" value="{{data.attributes.hp.value}}">
 					{{~/if~}}
 					{{~#if (and flags.current-hit-points flags.maximum-hit-points)~}}
 						<span class="sep"> / </span>
 					{{~/if~}}
 					{{~#if flags.maximum-hit-points~}}
-						<span title="{{ localize 'MOBLOKS5E.Maximum' }}" class="attr-value">{{data.attributes.hp.max}}</span>
+						<span title="{{ localize 'MOBLOKS5E.Maximum' }}" data-field-key="data.attributes.hp.max" class="attr-value hasinput">
+						{{#if data.attributes.hp.max}}
+							{{data.attributes.hp.max}}
+						{{else}}
+							0
+						{{/if}}
+						</span>
+						<input title="{{ localize 'MOBLOKS5E.Maximum' }}" data-dtype="Number" name="data.attributes.hp.max" class="attr-value hiddeninput hidden hp-input" value="{{data.attributes.hp.max}}">
 					{{/if}}
 					
 					<span class="sep">(</span><span title="Average: {{averageroll data.attributes.hp.formula}}" class="attr-value">{{data.attributes.hp.formula}}</span><span class="sep">)</span>

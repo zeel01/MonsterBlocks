@@ -48,7 +48,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return data;
 	}
 	
-	_getFormData(form) {	// Work in progress, might not use.
+/*	_getFormData(form) {	// Work in progress, might not use.
 		console.debug("_getFormData!");
 		let formData = new FormData();
 		let dtypes = {};
@@ -66,7 +66,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		formData._dtypes = dtypes;
 		return formData;
-	}
+	}*/
 	get isSpellcaster () {	// Regular spellcaster with typical spell slots.
 		return this.actor.data.items.some((item) => {
 			return item.data.preparation && item.data.level > 0.5 && (item.data.preparation.mode === "prepared" || item.data.preparation.mode === "always");
@@ -360,8 +360,20 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			this._element[0].classList.add("dnd5e");
 			this._element[0].classList.add("npc");
 		});
+					
+		html.find('.hasinput').click((event) => {
+			event.currentTarget.classList.add("hidden");
+			event.currentTarget.nextElementSibling.classList.remove("hidden");
+			event.currentTarget.nextElementSibling.select();
+		});
+		html.find('.hiddeninput').blur((event) => {
+			event.currentTarget.classList.add("hidden");
+			event.currentTarget.previousElementSibling.classList.remove("hidden");
+		});
 		
 		this._dragDrop.forEach(d => d.bind(html[0]));
+		html.on("change", "input,select,textarea", this._onChangeInput.bind(this));
+		html.find('input[data-dtype="Number"]').change(this._onChangeInputDelta.bind(this));
 	}
 	
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
