@@ -1,27 +1,30 @@
 # TODO:
 
 ## Additions
-- ~Add hit point modification~
-- ~Add multiple themes~
-	- ~Per monster selection~
-	- ~"Custom" option~
-	- ~"Clean" theme that's a white background.~
-	- ~"Dark" theme~
-- ~"Show to player" option for the character art.~
+- ~~Add hit point modification~~
+- ~~Add theme support~~
+- Add Themes:
+	- ~~Per monster selection~~
+	- ~~"Custom" option~~
+	- ~~"Clean" theme that's a white background.~~
+	- ~~"Dark" theme~~
+	- "Ice" theme
+	- "Red" theme
 
 ## Changes
-- Some creatures have "sub features" like breath weapns, the bodies of these are indented. *unsure if this is possible to do correctly*
-- Rolls for saves/skills that aren't listed (not proficient) *One can simply roll an ability check*
 - Section for reactions seperate from actions.
-- Convert static strings to language file references.
+- Convert static strings to language file references. *in progress*
 
 ## Fixes
-- Differentiate which cantrips belong to what casting feature. *unsure how possible*
-- ~~Fix number formatting of XP to include a comma~~
-- Hide the comma after creature type if there is no alignment specified.
+- ~~Hide the comma after creature type if there is no alignment specified.~~
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
-- Add more comments to the code! *much done*
+- Add more comments to the code! <sup>much done!</sup>
 - Re-organize code a bit
 - Remove anything unused
+
+## Back Burner
+- Rolls for saves/skills that aren't listed (not proficient) <sup>One can simply roll an ability check</sup>
+- Some creatures have "sub features" like breath weapns, the bodies of these are indented. <sup>unsure if this is possible to do correctly</sup>
+- Differentiate which cantrips belong to what casting feature. <sup>unsure how possible</sup>

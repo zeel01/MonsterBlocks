@@ -92,7 +92,9 @@
 				<span contenteditable="false" data-field-key="data.details.type">
 					{{~data.details.type~}}
 				</span>{{~" "~}}
-				<span class="sep">,</span>
+				{{~#if data.details.alignment~}}
+					<span class="sep">,</span>
+				{{/if}}
 				<span contenteditable="false" data-field-key="data.details.alignment">
 					{{~data.details.alignment~}}
 				</span>
