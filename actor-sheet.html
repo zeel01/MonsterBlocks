@@ -108,7 +108,7 @@
 					<span class="attr-value">{{data.attributes.ac.value}}</span>
 				</li>
 				<li class="attribute health">
-					<h4 class="attribute-name box-title">Hit Points{{! localize "DND5E.Health" }} </h4>
+					<h4 class="attribute-name box-title">{{localize "MOBLOKS5E.HitPoints" }} </h4>
 					{{~#if (and (not flags.current-hit-points) (not flags.maximum-hit-points))~}}
 						<span title="{{ localize 'MOBLOKS5E.Average' }}" class="attr-value">{{averageroll data.attributes.hp.formula}}</span>
 					{{~/if~}}
@@ -269,7 +269,7 @@
 						data-roll-flavor="{{item.name}} ({{ localize 'MOBLOKS5E.Recharge' }} {{item.data.recharge.value}}-6): " 
 						data-roll-formula="1d6" 
 						data-roll-target="{{item.data.recharge.value}}" 
-						data-roll-success="{{ localize 'MOBLOKS5E.Charged' }}" 
+						data-roll-success="{{ localize 'DND5E.Charged' }}" 
 						data-roll-failure="{{ localize 'MOBLOKS5E.NCharged' }}">
 						({{ localize 'MOBLOKS5E.Recharge' }} {{item.data.recharge.value}}-6){{~" "~}}
 					</span>
@@ -305,6 +305,7 @@
 		<div class="feature-description inline-children">
 			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>.
 			<span class="description">
+				{{! Needs Localization }}
 				The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster.
 				Its spellcasting ability is {{getcastingability actor spellbook castertype}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
 				The {{actor.name}}
@@ -351,6 +352,7 @@
 		<div class="feature-description inline-children">
 			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>.
 			<span class="description">
+				{{! Needs Localization }}
 				The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster.
 				Its spellcasting ability is {{getcastingability actor spellbook castertype}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
 				It regains its expended spell slots when it finishes a short or long rest.
@@ -402,6 +404,7 @@
 		<div class="feature-description inline-children">
 			<span class="feature-name">{{localize "DND5E.SpellPrepInnate"}}</span>.
 			<span class="description">
+				{{! Needs Localization }}
 				The {{actor.name}}'s innate spellcasting ability is {{getcastingability actor spellbook castertype}}
 				(spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
 				The {{actor.name}} can innately cast the following spells, requiring no material components:
@@ -489,25 +492,25 @@
 						/ {{item.data.range.long}}
 					{{/if}} {{item.data.range.units}}.,
 					{{#if item.data.target.value}}
-						{{getnumber item.data.target.value}}
+						{{localize (getnumber item.data.target.value)}}
 					{{~else~}}
-						one
+						{{ localize "MOBLOKS5E.one" }}
 					{{~/if}}
 					{{#if item.data.target.type}}
 						{{item.data.target.type}}
 					{{~else}}
-						target{{#if (greater item.data.target.value 1)}}s{{/if}}
+						{{ localize "MOBLOKS5E.target" }}{{#if (greater item.data.target.value 1)}}s{{/if}}
 					{{~/if~}}.
 				</span>
 				<span class="attack-damage" 
 					data-roll-flavor="{{localize 'DND5E.Damage'}}: {{item.name}}" 
 					data-roll-formula="{{damageformula item ../actor}}">
 					<span class="hit-label">
-						Hit:&nbsp;
+						{{ localize "MOBLOKS5E.Hit" }}:&nbsp;
 					</span>
 					<span>{{averagedamage item ../actor}} ({{damageformula item ../actor}})</span>
 				</span>
-				<span class="damage-type">{{damagetype item}} damage</span>.
+				<span class="damage-type">{{damagetype item}} {{ localize "MOBLOKS5E.damage" }}</span>.
 			</span>
 			{{/if}}
 			<span class="description">{{{enrichhtml item.data.description.value}}}</span>
@@ -542,7 +545,7 @@
 	{{! Lair Actions }}
 	{{#if (haslair features)}}
 	{{#if flags.show-lair-actions}}
-		<h2 class="section-header">Lair {{localize "DND5E.ActionPl"}}</h2>
+		<h2 class="section-header">{{ localize "MOBLOKS5E.Lair" }} {{localize "DND5E.ActionPl"}}</h2>
 		<p>On initiative count 20 (losing all initiative ties), the {{actor.name}} takes a lair action to cause one of the following effects; the {{actor.name}} can't use the same effect two rounds in a row:</p>
 		<ul>
 		{{#each (getactions features) as |item iid|}}
