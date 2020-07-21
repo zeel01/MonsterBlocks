@@ -540,7 +540,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			let attr = item.data.ability;
 			let abilityBonus = actor.data.abilities[attr].mod;
 			let roll = new Roll(formula, {mod: abilityBonus}).roll();
-			return Math.ceil((											// The maximum roll plus the minimum roll, divided by two, rounded up.
+			return Math.floor((											// The maximum roll plus the minimum roll, divided by two, rounded down.
 					Roll.maximize(roll.formula)._total + 
 					Roll.minimize(roll.formula)._total 
 				)	/ 2
@@ -549,7 +549,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"averageroll": (formula) => {			// Calculates the average of a roll
 			if (!formula) return 0;
 			let roll = new Roll(formula).roll();
-			return Math.ceil((											// The maximum roll plus the minimum roll, divided by two, rounded up.
+			return Math.floor((											// The maximum roll plus the minimum roll, divided by two, rounded down.
 					Roll.maximize(roll.formula)._total + 
 					Roll.minimize(roll.formula)._total 
 				)	/ 2
