@@ -651,7 +651,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"less": (a, b) => {
 			return a < b;
 		},
-		"equals": (a, b) => {
+		"equal": (a, b) => {
 			return a == b;
 		},
 		"notequal": (a, b) => {
@@ -683,7 +683,7 @@ Hooks.on("init", () => {
 	console.log(`Monster Block | %cInitialized.`, "color: orange");
 });
 
-Hooks.on('ready', () => {
+Hooks.once('ready', () => {
 	MonsterBlock5e.getBetterRolls();
 	
 	game.settings.register("monsterblock", "attack-descriptions", {

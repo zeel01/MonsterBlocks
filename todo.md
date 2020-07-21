@@ -17,6 +17,8 @@
 
 ## Fixes
 - ~~Hide the comma after creature type if there is no alignment specified.~~
+- ~~"Hit Points" not "Darkness"~~
+- ~~Handlebars "equals" conflics with another module~~
 
 ## Cleanup
 - Clean up classes from the template that aren't needed

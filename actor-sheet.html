@@ -65,15 +65,15 @@
 				<a>{{ localize "MOBLOKS5E.Theme" }}</a>
 				<ul>
 				{{#each themes as |theme id|}}
-				{{#unless (equals id "custom")}}
+				{{#unless (equal id "custom")}}
 					<li>
-						<a class="trigger{{#if (equals ../flags.theme-choice id)}} selected{{/if}}" data-control="pickTheme" data-value="{{id}}"
+						<a class="trigger{{#if (equal ../flags.theme-choice id)}} selected{{/if}}" data-control="pickTheme" data-value="{{id}}"
 						>{{ theme.name }}</a>
 					</li>
 				{{/unless}}
 				{{/each}}
 					<li>
-						<label class="custome-class-label{{#if (equals flags.theme-choice 'custom')}} selected{{/if}}">
+						<label class="custome-class-label{{#if (equal flags.theme-choice 'custom')}} selected{{/if}}">
 							<a class="trigger nochild" data-control="pickTheme" data-value="custom">{{ localize "MOBLOKS5E.CustomThemeName" }}:</a>
 							<input type="text" class="custom-class-input" placeholder="class-name" value="{{flags.custom-theme-class}}">
 						</label>
@@ -108,7 +108,7 @@
 					<span class="attr-value">{{data.attributes.ac.value}}</span>
 				</li>
 				<li class="attribute health">
-					<h4 class="attribute-name box-title">{{localize "MOBLOKS5E.HitPoints" }} </h4>
+					<h4 class="attribute-name box-title">{{localize "MOBLOKS5E.HitPointS" }} </h4>
 					{{~#if (and (not flags.current-hit-points) (not flags.maximum-hit-points))~}}
 						<span title="{{ localize 'MOBLOKS5E.Average' }}" class="attr-value">{{averageroll data.attributes.hp.formula}}</span>
 					{{~/if~}}
@@ -320,7 +320,7 @@
 			</span>
 			<ul class="spell-list">
 			{{#each spellbook as |spelllevel id|}}
-			{{#unless (or (invalidspelllevel spelllevel.dataset.level) (equals spelllevel.dataset.level 0.5))}}
+			{{#unless (or (invalidspelllevel spelllevel.dataset.level) (equal spelllevel.dataset.level 0.5))}}
 				<li>
 					<span class="spell-level-name">
 						{{localize (spelllevellocalization spelllevel.dataset.level)}}{{#unless spelllevel.dataset.level}}s{{/unless}}
