@@ -37,10 +37,8 @@ Does not support editing directly except for Hit Points. You *can* edit features
 		--heading-color: rgb(89 23 13);
 		--roll-hover-color: hsl(8 70% 14% / 1);
 		--divider-color: rgba(140, 42, 42, 1);
-		--divider-color-end: rgba(140, 42, 42, 0);
 		--background-filter: hsl(39deg 100% 60% / 80%);
 		--background-blend: hard-light;
-		--menu-background: #f7e2ac;
 		--main-text-color: black;
 		--inline-link-color: #ff6400;
 		```

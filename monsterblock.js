@@ -92,6 +92,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"default": { name: "Monster Manual", class: "default-theme" },
 		"srd": { name: "5e SRD", class: "srd-theme" },
 		"dark": { name: "Darkness", class: "dark-theme" },
+		"cool": { name: "Icy Breeze", class: "cool-theme" },
+		"hot": { name: "Smouldering Ember", class: "hot-theme" },
 		"custom": { name: "Custom", class: "" }
 	}
 	get themes() {

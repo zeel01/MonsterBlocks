@@ -46,6 +46,25 @@
 	--main-text-color: #000;
 	--inline-link-color: #808080;
 }
+.monsterblock.cool-theme {
+	--heading-color: rgb(0 37 93);
+	--roll-hover-color: hsl(202deg 39% 38%);
+	--divider-color: rgb(37 120 169);
+	--background-filter: hsl(180deg 100% 66% / 54%);
+	--background-blend: hard-light;
+	--main-text-color: #000000;
+	--inline-link-color: #246094;
+}
+.monsterblock.hot-theme {
+	--heading-color: rgb(123 28 0);
+	--roll-hover-color: hsl(0deg 50% 37%);
+	--divider-color: rgb(86 0 0);
+	--background-filter: hsl(0deg 96% 2% / 87%);
+	--background-blend: darken;
+	--main-text-color: #a7a1a1;
+	--inline-link-color: #ab4b2e;
+}
+
 .monsterblock * {
 	user-select: text;
 	overflow-wrap: break-word;
