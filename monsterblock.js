@@ -419,7 +419,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			return Object.keys(obj).length > 0;
 		},
 
-		"hasskills": (skills) => { // Check if the creature has any skill proficiencies
+		"mobloks5e-hasskills": (skills) => { // Check if the creature has any skill proficiencies
 			for (let s in skills) {
 				if (skills[s].value) return true;
 			}
@@ -672,15 +672,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			return "MOBLOKS5E."+["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"][number];
 		}
 	};
-	static createHandlebarsHelpers() {	// Register all the helpers needed for Handlebars
-		new Map(Object.entries(this.handlebarsHelpers)).forEach((value, key) => {
-			Handlebars.registerHelper(key, value);
-		});
-	}
 }
 
-Hooks.on("init", () => {
-	MonsterBlock5e.createHandlebarsHelpers();
+Hooks.once("init", () => {
+	Handlebars.registerHelper(MonsterBlock5e.handlebarsHelpers); // Register all the helpers needed for Handlebars
 	
 	console.log(`Monster Block | %cInitialized.`, "color: orange");
 });

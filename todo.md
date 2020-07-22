@@ -25,6 +25,9 @@
 - Add more comments to the code! <sup>much done!</sup>
 - Re-organize code a bit
 - Remove anything unused
+- Refactor away as many Handlebars helpers as possible.
+- Replace redundant helpers with ones from Core/just-handlebars-helpers
+- Add `mobloks5e-` to the names of remaining helpers to prevent name collisions with other modules.
 
 ## Back Burner
 - Rolls for saves/skills that aren't listed (not proficient) <sup>One can simply roll an ability check</sup>
