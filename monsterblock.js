@@ -28,6 +28,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	// getData() provides the data used in Handlebars for the sheet template.
 	getData() {	// Override and add to the getData() function
 		const data = super.getData();
+		data.master = this;
 		data.flags = this.actor.data.flags.monsterblock;	// Get the flags for this module, and make them available in the data
 		data.info = {										// A collection of extra information used mainly for conditionals
 			hasCastingFeature: (this.isSpellcaster || this.isInnateSpellcaster),
@@ -414,6 +415,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			"innatespellcastingpsionics"
 		].includes(item.name.toLowerCase().replace(/\s+/g, ''));
 	}
+	static getItemAbility(item, actor, master) {
+		return master.object.items.get(item._id).abilityMod;
+	} 
 	static handlebarsHelpers = {
 		"hascontents": (obj) => { // Check if an array is empty.
 			return Object.keys(obj).length > 0;
@@ -434,7 +438,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		"haslegendary": (features) => {	// Check for Legendary Actions
 			for (let feature of features) {
-				if (feature.label == "Actions") {
+				if (feature.label == game.i18n.localize("DND5E.ActionPl")) {
 					let items = feature.items;
 					for (let item of items) {
 						if (this.isLegendaryAction(item)) return true;
@@ -445,7 +449,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		},
 		"haslair": (features) => {			// Check for Lair actions
 			for (let feature of features) {
-				if (feature.label == "Actions") {
+				if (feature.label == game.i18n.localize("DND5E.ActionPl")) {
 					let items = feature.items;
 					for (let item of items) {
 						if (this.isLairAction(item)) return true;
@@ -456,7 +460,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		},
 		"hasreaction": (features) => {
 			for (let feature of features) {
-				if (feature.label == "Actions") {
+				if (feature.label == game.i18n.localize("DND5E.ActionPl")) {
 					let items = feature.items;
 					for (let item of items) {
 						if (this.isReaction(item)) return true;
@@ -482,17 +486,17 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		// Feature type groups
 		"getattacks": (features) => {
 			for (let feature of features) {
-				if (feature.label == "Attacks") return feature.items;
+				if (feature.label == game.i18n.localize("DND5E.AttackPl")) return feature.items;
 			}
 		},
 		"getactions": (features) => {
 			for (let feature of features) {
-				if (feature.label == "Actions") return feature.items;
+				if (feature.label == game.i18n.localize("DND5E.ActionPl")) return feature.items;
 			}
 		},
 		"getfeatures": (features) => {
 			for (let feature of features) {
-				if (feature.label == "Features") return feature.items;
+				if (feature.label == game.i18n.localize("DND5E.Features")) return feature.items;
 			}
 		},
 		
@@ -503,8 +507,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"israngedattack": (attack) => {
 			return ["rwak", "rsak"].includes(attack.data.actionType);
 		},
-		"getattackbonus": (attack, data) => { // Calculate the "+X to hit"
-			let attr = attack.data.ability;					// The ability the item says it uses
+		"getattackbonus": (attack, data, actor, options) => { // Calculate the "+X to hit"
+			let attr = this.getItemAbility(attack, actor, options.data.root.master);	// The ability the item says it uses
 			let attackBonus = attack.data.attackBonus;		// Magical item or other bonus
 			let abilityBonus = data.abilities[attr].mod;	// The ability bonus of the actor
 			let isProf = attack.data.proficient;			// Is the actor proficient with this item?
@@ -537,9 +541,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"enrichhtml": (str) => { // Formats any text to include proper inline rolls and links.
 			return TextEditor.enrichHTML(str, {secrets: true});
 		},
-		"averagedamage": (item, actor) => {	// Calculates the average damage from an attack
+		"averagedamage": (item, actor, options) => {	// Calculates the average damage from an attack
 			let formula = item.data.damage.parts[0][0];
-			let attr = item.data.ability;
+			let attr = this.getItemAbility(item, actor, options.data.root.master);
 			let abilityBonus = actor.data.abilities[attr].mod;
 			let roll = new Roll(formula, {mod: abilityBonus}).roll();
 			return Math.floor((											// The maximum roll plus the minimum roll, divided by two, rounded down.
@@ -560,9 +564,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"formatnumbercommas": (number) => {
 			return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");	// https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
 		},
-		"damageformula": (item, actor) => {	// Extract and re-format the damage formula
+		"damageformula": (item, actor, options) => {	// Extract and re-format the damage formula
 			let formula = item.data.damage.parts[0][0];	// This is the existing formula, typicallys contains a non-number like @mod
-			let attr = item.data.ability;				// The ability used for this attack
+			let attr = this.getItemAbility(item, actor, options.data.root.master);				// The ability used for this attack
 			let abilityBonus = actor.data.abilities[attr].mod;	// The ability bonus of the actor
 			let roll = new Roll(formula, {mod: abilityBonus}).roll();	// Create a new Roll, giving the ability modifier to sub in for @mod
 			

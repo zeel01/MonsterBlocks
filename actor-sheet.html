@@ -478,8 +478,8 @@
 				{{~/unless}}:
 				<span class="attack-bonus" 
 					data-roll-flavor="{{localize 'DND5E.Attack'}}: {{item.name}}" 
-					data-roll-formula="1d20 + {{getattackbonus item ../data}}">
-					{{~numberFormat (getattackbonus item ../data) decimals=0 sign=true}} to hit {{~" "~}}
+					data-roll-formula="1d20 + {{getattackbonus item ../data ../actor}}">
+					{{~numberFormat (getattackbonus item ../data ../actor) decimals=0 sign=true}} to hit {{~" "~}}
 				</span>, 
 				<span>
 					{{~#if (israngedattack item)~}}
