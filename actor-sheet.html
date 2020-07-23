@@ -502,6 +502,7 @@
 						{{ localize "MOBLOKS5E.target" }}{{#if (greater item.data.target.value 1)}}s{{/if}}
 					{{~/if~}}.
 				</span>
+				{{#if (dealsdamage item)}}
 				<span class="attack-damage" 
 					data-roll-flavor="{{localize 'DND5E.Damage'}}: {{item.name}}" 
 					data-roll-formula="{{damageformula item ../actor}}">
@@ -511,6 +512,7 @@
 					<span>{{averagedamage item ../actor}} ({{damageformula item ../actor}})</span>
 				</span>
 				<span class="damage-type">{{damagetype item}} {{ localize "MOBLOKS5E.damage" }}</span>.
+				{{~/if}}
 			</span>
 			{{/if}}
 			<span class="description">{{{enrichhtml item.data.description.value}}}</span>

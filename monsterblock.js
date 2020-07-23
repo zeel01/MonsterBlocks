@@ -564,6 +564,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"formatnumbercommas": (number) => {
 			return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");	// https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
 		},
+		"dealsdamage": (item) => {
+			return Boolean(item.data.damage.parts.length);
+		},
 		"damageformula": (item, actor, options) => {	// Extract and re-format the damage formula
 			let formula = item.data.damage.parts[0][0];	// This is the existing formula, typicallys contains a non-number like @mod
 			let attr = this.getItemAbility(item, actor, options.data.root.master);				// The ability used for this attack
