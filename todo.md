@@ -8,8 +8,8 @@
 	- ~~"Custom" option~~
 	- ~~"Clean" theme that's a white background.~~
 	- ~~"Dark" theme~~
-	- "Ice" theme
-	- "Red" theme
+	- ~~"Ice" theme~~
+	- ~~"Red" theme~~
 
 ## Changes
 - ~~Section for reactions seperate from actions.~~
