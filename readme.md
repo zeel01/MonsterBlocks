@@ -124,6 +124,15 @@ If you have Better Rolls installed, most rolls from this sheet will use BRs cust
 Technically, Lair Actions aren't part of monster statblocks, but since Foundry 5e treats them as monster features rather than location features, I did make it possible to show them.
 They appear in their own section after Legendary Actions, in a bulleted list.
 
+### Q: Some of the buttons on the title bar are missing! What do I do?
+**A**: When the sheet only needs to be one column wide, the titlebar may not be able to fit the name of the monster and all the buttons.
+This is much more of a problem if you have *lots* of other modules installed. A quick fix is to hide the labels on those buttons with Custom CSS:
+```css
+.window-app.monsterblock .window-header { font-size: 0px; padding-right: 30px; }
+.window-app.monsterblock .window-header i { font-size: 14px; }
+```
+This will show only icons, which should help as long as you remember what they all do.
+
 ## Helpful Macros
 See [macros.js](macros.js)
 
