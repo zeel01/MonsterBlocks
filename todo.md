@@ -14,6 +14,13 @@
 ## Changes
 - ~~Section for reactions seperate from actions.~~
 - Convert static strings to language file references. (`game.i18n.format`) <sup>*in progress*</sup>
+	- Spell slots
+	- Make legendary and lair action descriptions localizable
+	- Make spellcasting description localizable
+	- Replace use of commas and periods with localizable strings
+	- Indicate to new users that the menu in the corner exists
+	- Localize settings
+	- Ordinals?
 
 ## Fixes
 - ~~Hide the comma after creature type if there is no alignment specified.~~
