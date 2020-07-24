@@ -44,6 +44,10 @@ Does not support editing directly except for Hit Points. You *can* edit features
 		```
 - Clicking on the creature's artwork will open an image pop-up that can be shown to the players.
 
+### Languages
+- English
+- 日本語 (Thanks to @Brother Sharp)
+
 ## FAQ
 
 ### Q: How do I change settings for a given monster?

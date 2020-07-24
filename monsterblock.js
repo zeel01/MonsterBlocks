@@ -29,6 +29,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	getData() {	// Override and add to the getData() function
 		const data = super.getData();
 		data.master = this;
+		
+		this.updateItemsData(data);
+		
 		data.flags = this.actor.data.flags.monsterblock;	// Get the flags for this module, and make them available in the data
 		data.info = {										// A collection of extra information used mainly for conditionals
 			hasCastingFeature: (this.isSpellcaster || this.isInnateSpellcaster),
@@ -90,12 +93,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	
 	static themes = {
-		"default": { name: "Monster Manual", class: "default-theme" },
-		"srd": { name: "5e SRD", class: "srd-theme" },
-		"dark": { name: "Darkness", class: "dark-theme" },
-		"cool": { name: "Icy Breeze", class: "cool-theme" },
-		"hot": { name: "Smouldering Ember", class: "hot-theme" },
-		"custom": { name: "Custom", class: "" }
+		"default": { name: "MOBLOKS5E.DefaultThemeName", class: "default-theme" },
+		"srd": { name: "MOBLOKS5E.SimpleThemeName", class: "srd-theme" },
+		"dark": { name: "MOBLOKS5E.DarkThemeName", class: "dark-theme" },
+		"cool": { name: "MOBLOKS5E.CoolThemeName", class: "cool-theme" },
+		"hot": { name: "MOBLOKS5E.HotThemeName", class: "hot-theme" },
+		"custom": { name: "MOBLOKS5E.CustomThemeName", class: "" }
 	}
 	get themes() {
 		if (this._themes) return this._themes;
@@ -137,6 +140,83 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		this.setCurrentTheme(value);
 	}
 	
+	updateItemsData(data) {
+		for (let set of data.features) {
+			if (set.label == game.i18n.localize("DND5E.ActionPl")) this.updateActionsData(set);
+			if (set.label == game.i18n.localize("DND5E.AttackPl")) this.updateAttacksData(set);
+			if (set.label == game.i18n.localize("DND5E.Features")) this.updateFeaturessData(set);
+		}
+	}
+	updateActionsData(actions) {
+		return;
+	}
+	updateAttacksData(attacks) {
+		let H = this.constructor.handlebarsHelpers;
+		let format = game.i18n.format;
+		let local = game.i18n.localize;
+
+		for (let attackData of attacks.items) {
+			let attack = this.object.items.get(attackData._id);
+			
+			attackData.hasresource = H.hasresource(attack.data);
+			attackData.resourcelimit = attack.hasresource ? H.getresourcelimit(attack, this.actor.data) : 0;
+			attackData.resourcerefresh = attack.hasresource ? H.getresourcerefresh(attack, this.actor.data) : "";
+
+			attackData.tohit = this.getAttackBonus(attack);
+			
+			attackData.description = {
+				attackType: this.getAttackType(attack),
+				tohit: game.i18n.format("MOBLOKS5E.AttackToHit", {
+					bonus: `${attackData.tohit > -1 ? "+" : ""}${attackData.tohit}`,
+				}),
+				range: game.i18n.format("MOBLOKS5E.AttackRange", {
+					reachRange: game.i18n.localize(this.isRangedAttack(attack) ? "MOBLOKS5E.range" : "MOBLOKS5E.reach"),
+					range: attack.data.data.range.value,
+					sep: attack.data.data.range.long ? " / " : "",
+					max: attack.data.data.range.long ? attack.data.data.range.long : "",
+					units: attack.data.data.range.units
+				}),
+				target: game.i18n.format("MOBLOKS5E.AttackTarget", {
+					quantity: this.getNumberString(attack.data.data.target.value),
+					type:	attack.data.data.target.type ? 
+							attack.data.data.target.type : (
+								attack.data.data.target.value > 1 ?
+								game.i18n.localize("MOBLOKS5E.targetS") :
+								game.i18n.localize("MOBLOKS5E.target")
+							),
+								
+				}),
+				damage: "",
+				damageType: attack.data.data.damage.parts[0][1]
+			}
+			console.debug(attackData.description);
+		}
+		
+		console.debug(attacks);
+	}
+	updateFeaturessData(features) {
+		return;
+	}
+	getAttackType(attack) {
+		return "DND5E.Action" + attack?.data?.data?.actionType?.toUpperCase();
+	}
+	getAttackBonus(attack) {
+		let attr = attack.abilityMod;									// The ability the item says it uses
+		let attackBonus = attack.data.data.attackBonus;					// Magical item or other bonus
+		let abilityBonus = this.actor.data.data.abilities[attr].mod;	// The ability bonus of the actor
+		let isProf = attack.data.data.proficient;						// Is the actor proficient with this item?
+		let profBonus = this.actor.data.data.attributes.prof;			// The actor's proficiency bonus
+		
+		return abilityBonus + (isProf ? profBonus : 0) + attackBonus;
+	}
+	isRangedAttack(attack) {
+		return ["rwak", "rsak"].includes(attack.data.data.actionType);
+	}
+	getNumberString(number) {
+		number = Number(number);
+		if (number > 9 || number < 0) return number.toString();
+		return game.i18n.localize("MOBLOKS5E."+["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"][number]);
+	}
 	getMultiattack(data) { // The Multiattack action is always first in the list, so we need to find it and seperate it out.
 		for (let item of data.items) {
 			if (MonsterBlock5e.isMultiAttack(item)) return item;
@@ -502,7 +582,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		
 		"getattacktype": (attack) => { // Returns the localization string for the given type of attack.
-			return "DND5E.Action" + attack.data.actionType.toUpperCase();
+			return "DND5E.Action" + attack?.data?.actionType?.toUpperCase();
 		},
 		"israngedattack": (attack) => {
 			return ["rwak", "rsak"].includes(attack.data.actionType);
@@ -769,7 +849,7 @@ Hooks.once('ready', () => {
 	});
 	
 	let themeChoices = {};
-	for (let theme in MonsterBlock5e.themes) themeChoices[theme] = MonsterBlock5e.themes[theme].name;
+	for (let theme in MonsterBlock5e.themes) themeChoices[theme] = game.i18n.localize(MonsterBlock5e.themes[theme].name);
 	game.settings.register("monsterblock", "default-theme", {
 		name: "Default Theme",
 		hint: "Choose which theme applies by default.",
