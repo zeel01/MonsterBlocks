@@ -152,8 +152,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	updateAttacksData(attacks) {
 		let H = this.constructor.handlebarsHelpers;
-		let format = game.i18n.format;
-		let local = game.i18n.localize;
 
 		for (let attackData of attacks.items) {
 			let attack = this.object.items.get(attackData._id);
@@ -164,31 +162,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 			attackData.tohit = this.getAttackBonus(attack);
 			
-			attackData.description = {
-				attackType: this.getAttackType(attack),
-				tohit: game.i18n.format("MOBLOKS5E.AttackToHit", {
-					bonus: `${attackData.tohit > -1 ? "+" : ""}${attackData.tohit}`,
-				}),
-				range: game.i18n.format("MOBLOKS5E.AttackRange", {
-					reachRange: game.i18n.localize(this.isRangedAttack(attack) ? "MOBLOKS5E.range" : "MOBLOKS5E.reach"),
-					range: attack.data.data.range.value,
-					sep: attack.data.data.range.long ? " / " : "",
-					max: attack.data.data.range.long ? attack.data.data.range.long : "",
-					units: attack.data.data.range.units
-				}),
-				target: game.i18n.format("MOBLOKS5E.AttackTarget", {
-					quantity: this.getNumberString(attack.data.data.target.value),
-					type:	attack.data.data.target.type ? 
-							attack.data.data.target.type : (
-								attack.data.data.target.value > 1 ?
-								game.i18n.localize("MOBLOKS5E.targetS") :
-								game.i18n.localize("MOBLOKS5E.target")
-							),
-								
-				}),
-				damage: "",
-				damageType: attack.data.data.damage.parts[0][1]
-			}
+			attackData.description = this.getAttackDescription(attack);
 			console.debug(attackData.description);
 		}
 		
@@ -196,6 +170,39 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	updateFeaturessData(features) {
 		return;
+	}
+	getAttackDescription(attack) {
+		let atkd = attack.data.data;
+		let tohit = this.getAttackBonus(attack);
+		
+		return {
+			attackType: this.getAttackType(attack),
+			tohit: game.i18n.format("MOBLOKS5E.AttackToHit", {
+				bonus: `${tohit > -1 ? "+" : ""}${tohit}`,
+			}),
+			range: game.i18n.format("MOBLOKS5E.AttackRange", {
+				reachRange: game.i18n.localize(this.isRangedAttack(attack) ? "MOBLOKS5E.range" : "MOBLOKS5E.reach"),
+				range: atkd.range.value,
+				sep: atkd.range.long ? "/" : "",
+				max: atkd.range.long ? atkd.range.long : "",
+				units: atkd.range.units
+			}),
+			target: game.i18n.format("MOBLOKS5E.AttackTarget", {
+				quantity: this.getNumberString(atkd.target.value ? atkd.target.value : 1),
+				type:	atkd.target.type ? 
+						atkd.target.type : (
+							atkd.target.value > 1 ?
+							game.i18n.localize("MOBLOKS5E.targetS") :
+							game.i18n.localize("MOBLOKS5E.target")
+						),
+							
+			}),
+			damage: this.dealsDamage(attack) ? game.i18n.format("MOBLOKS5E.AttackDamageTemplate",  {
+				average: this.averageDamage(attack),
+				formula: this.damageFormula(attack),
+				type: atkd.damage.parts[0][1]
+			}) : false
+		}
 	}
 	getAttackType(attack) {
 		return "DND5E.Action" + attack?.data?.data?.actionType?.toUpperCase();
@@ -211,6 +218,46 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	isRangedAttack(attack) {
 		return ["rwak", "rsak"].includes(attack.data.data.actionType);
+	}
+	averageDamage(attack) {
+		let formula = attack.data.data.damage.parts[0][0];
+		let attr = attack.abilityMod;
+		let abilityBonus = this.actor.data.data.abilities[attr].mod;
+		let roll = new Roll(formula, {mod: abilityBonus}).roll();
+		return Math.floor((											// The maximum roll plus the minimum roll, divided by two, rounded down.
+				Roll.maximize(roll.formula)._total + 
+				Roll.minimize(roll.formula)._total 
+			)	/ 2
+		);
+	}
+	damageFormula(attack) {	// Extract and re-format the damage formula
+		let formula = attack.data.data.damage.parts[0][0];				// This is the existing formula, typicallys contains a non-number like @mod
+		let attr = attack.abilityMod;									// The ability used for this attack
+		let abilityBonus = this.actor.data.data.abilities[attr].mod;	// The ability bonus of the actor
+		let roll = new Roll(formula, {mod: abilityBonus}).roll();		// Create a new Roll, giving the ability modifier to sub in for @mod
+		
+		let parts = [];
+		let bonus = 0;
+		let op = "+";
+		
+		for (let part of roll.parts) {	// Now the formula from Roll is broken down, and re-constructed to combine all the constants.
+			if (typeof part == "object") parts.push(part.formula);
+			else if (part === "+" || part === "-") op = part;
+			else if (parseInt(part, 10) === NaN) console.error("Unexpected part in damage roll");
+			else {
+				let n = parseInt(part, 10);
+				bonus = op === "+" ? bonus + n : bonus - n;
+			}
+		}
+		if (bonus > 0) parts.push("+");
+		if (bonus < 0) parts.push("-");
+		if (bonus != 0) parts.push(bonus);
+		
+		return parts.join(" ");
+		
+	}
+	dealsDamage(item) {
+		return Boolean(item.data.data.damage.parts.length);
 	}
 	getNumberString(number) {
 		number = Number(number);

@@ -49,11 +49,12 @@
 	"MOBLOKS5E.FullStop": ".",
 	"MOBLOKS5E.NameDescriptionSep": ".",
 	"MOBLOKS5E.Comma": ",",
-	"MOBLOKS5E.AttackDescriptionTemplate": "{attackType} {tohit}, {reachRange} {range}{rangeSep}{maxRange}, {targetQuantity} {targetType}. {damageDetails} {damageType} damage.",
+	"MOBLOKS5E.Colon": ":",
 	"MOBLOKS5E.AttackToHit": "{bonus} to hit",
 	"MOBLOKS5E.AttackRange": "{reachRange} {range}{sep}{max} {units}.",
 	"MOBLOKS5E.AttackTarget": "{quantity} {type}",
 	"MOBLOKS5E.AttackHitLabel": "Hit:",
+	"MOBLOKS5E.AttackDamageTemplate": "{average} ({formula}) {type}",
 	"MOBLOKS5E.damage": "damage",
 	"MOBLOKS5E.LegendaryText": "The {name} can take 3 legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {name} regains spent legendary actions at the start of its turn."
 }
