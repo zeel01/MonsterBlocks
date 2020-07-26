@@ -197,6 +197,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 						),
 							
 			}),
+			damageFormula: this.damageFormula(attack),
 			damage: this.dealsDamage(attack) ? game.i18n.format("MOBLOKS5E.AttackDamageTemplate",  {
 				average: this.averageDamage(attack),
 				formula: this.damageFormula(attack),

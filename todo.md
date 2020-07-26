@@ -26,6 +26,7 @@
 - ~~Hide the comma after creature type if there is no alignment specified.~~
 - ~~"Hit Points" not "Darkness"~~
 - ~~Handlebars "equals" conflics with another module~~
+- Missing action uses? Example: Aboleth.enslave
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
