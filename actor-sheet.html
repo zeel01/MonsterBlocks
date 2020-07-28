@@ -9,8 +9,13 @@
 				<a class="switch" data-control="attack-descriptions">{{ localize "MOBLOKS5E.AttackDescriptions" }}</a>
 				<ul>
 					<li>
-						<a class="switch" data-control="attack-descriptions"
-						>{{#if flags.attack-descriptions}}{{ localize "MOBLOKS5E.Hide" }}{{else}}{{ localize "MOBLOKS5E.Show" }}{{/if}} {{ localize "MOBLOKS5E.generated" }}</a>
+						<a class="switch" data-control="attack-descriptions">
+							{{#if flags.attack-descriptions}}
+								{{ localize "MOBLOKS5E.HideGenerated" }}
+							{{else}}
+								{{ localize "MOBLOKS5E.ShowGenerated" }}
+							{{/if}}
+						</a>
 					</li>
 				</ul>
 			</li>
@@ -19,8 +24,12 @@
 				<a class="switch" data-control="casting-feature">Spellcasting</a>
 				<ul>
 					<li>
-						<a class="switch" data-control="casting-feature"
-						>{{#if flags.casting-feature}}{{ localize "MOBLOKS5E.Hide" }}{{else}}{{ localize "MOBLOKS5E.Show" }}{{/if}} {{ localize "MOBLOKS5E.generated" }}</a>
+						<a class="switch" data-control="casting-feature">
+							{{#if flags.casting-feature}}
+								{{ localize "MOBLOKS5E.HideGenerated" }}
+							{{else}}
+								{{ localize "MOBLOKS5E.ShowGenerated" }}
+							{{/if}}</a>
 					</li>
 				</ul>
 			</li>
@@ -29,12 +38,22 @@
 				<a>{{ localize "MOBLOKS5E.DescriptionS" }}</a>
 				<ul>
 					<li>
-						<a class="switch" data-control="inline-secrets"
-						>{{#if flags.inline-secrets}}Disable{{else}}Enable{{/if}} {{ localize "MOBLOKS5E.inlineSecrets" }}</a>
+						<a class="switch" data-control="inline-secrets">
+							{{#if flags.inline-secrets}}
+								{{ localize "MOBLOKS5E.DisableInlSecr" }}
+							{{else}}
+								{{ localize "MOBLOKS5E.EnableInlSecr" }}
+							{{/if}}
+						</a>
 					</li>
 					<li>
-						<a class="switch" data-control="hidden-secrets"
-						>{{#if flags.hidden-secrets}}{{ localize "MOBLOKS5E.Show" }}{{else}}{{ localize "MOBLOKS5E.Hide" }}{{/if}} {{ localize "MOBLOKS5E.secrets" }}</a>
+						<a class="switch" data-control="hidden-secrets">
+							{{#if flags.hidden-secrets}}
+								{{ localize "MOBLOKS5E.ShowSecrets" }}
+							{{else}}
+								{{ localize "MOBLOKS5E.HideSecrets" }}
+							{{/if}}
+						</a>
 					</li>
 				</ul>
 			</li>
@@ -42,23 +61,43 @@
 				<a>{{ localize "DND5E.HitPoints" }}</a>
 				<ul>
 					<li>
-						<a class="switch" data-control="current-hit-points"
-						>{{#if flags.current-hit-points}}{{ localize "MOBLOKS5E.Hide" }}{{else}}{{ localize "MOBLOKS5E.Show" }}{{/if}} {{ localize "MOBLOKS5E.CurrentHPT" }}</a>
+						<a class="switch" data-control="current-hit-points">
+							{{#if flags.current-hit-points}}
+								{{ localize "MOBLOKS5E.HideCurrentHP" }}
+							{{else}}
+								{{ localize "MOBLOKS5E.ShowCurrentHP" }}
+							{{/if}}
+						</a>
 					</li>
 					<li>
-						<a class="switch" data-control="maximum-hit-points"
-						>{{#if flags.maximum-hit-points}}{{ localize "MOBLOKS5E.Hide" }}{{else}}{{ localize "MOBLOKS5E.Show" }}{{/if}} {{ localize "MOBLOKS5E.MaxHPT" }}</a>
+						<a class="switch" data-control="maximum-hit-points">
+							{{#if flags.maximum-hit-points}}
+								{{ localize "MOBLOKS5E.HideMaxHP" }}
+							{{else}}
+								{{ localize "MOBLOKS5E.ShowMaxHP" }}
+							{{/if}}
+						<a>
 					</li>
 				</ul>
 			</li>
 			<li>
-				<a class="switch" data-control="hide-profile-image"
-				>{{#if flags.hide-profile-image}}{{ localize "MOBLOKS5E.Show" }}{{else}}{{ localize "MOBLOKS5E.Hide" }}{{/if}} {{ localize "MOBLOKS5E.ProfileImgT" }}</a>
+				<a class="switch" data-control="hide-profile-image">
+					{{#if flags.hide-profile-image}}
+						{{ localize "MOBLOKS5E.ShowProfileImage" }}
+					{{else}}
+						{{ localize "MOBLOKS5E.HideProfileImage" }}
+					{{/if}}
+				</a>
 			</li>
 			{{#if (haslair features)}}
 			<li>
-				<a class="switch" data-control="show-lair-actions"
-				>{{#if flags.show-lair-actions}}{{ localize "MOBLOKS5E.Hide" }}{{else}}{{ localize "MOBLOKS5E.Show" }}{{/if}} {{ localize "MOBLOKS5E.LairActT" }}</a>
+				<a class="switch" data-control="show-lair-actions">
+					{{#if flags.show-lair-actions}}
+						{{ localize "MOBLOKS5E.HideLair" }}
+					{{else}}
+						{{ localize "MOBLOKS5E.ShowLair" }}
+					{{/if}}
+				</a>
 			</li>
 			{{/if}}
 			<li>
@@ -67,14 +106,21 @@
 				{{#each themes as |theme id|}}
 				{{#unless (eq id "custom")}}
 					<li>
-						<a class="trigger{{#if (eq ../flags.theme-choice id)}} selected{{/if}}" data-control="pickTheme" data-value="{{id}}"
-						>{{ localize theme.name }}</a>
+						<a	class="trigger{{#if (eq ../flags.theme-choice id)}} selected{{/if}}"
+							data-control="pickTheme" 
+							data-value="{{id}}">
+							{{ localize theme.name }}
+						</a>
 					</li>
 				{{/unless}}
 				{{/each}}
 					<li>
 						<label class="custome-class-label{{#if (eq flags.theme-choice 'custom')}} selected{{/if}}">
-							<a class="trigger nochild" data-control="pickTheme" data-value="custom">{{ localize "MOBLOKS5E.CustomThemeName" }}:</a>
+							<a	class="trigger nochild" 
+								data-control="pickTheme" 
+								data-value="custom">
+								{{ localize "MOBLOKS5E.CustomThemeName" }}{{ localize "MOBLOKS5E.Colon" }}
+							</a>
 							<input type="text" class="custom-class-input" placeholder="class-name" value="{{flags.custom-theme-class}}">
 						</label>
 					</li>
@@ -533,7 +579,7 @@
 	{{! Lair Actions }}
 	{{#if (haslair features)}}
 	{{#if flags.show-lair-actions}}
-		<h2 class="section-header">{{ localize "MOBLOKS5E.Lair" }} {{localize "DND5E.ActionPl"}}</h2>
+		<h2 class="section-header">{{ localize "MOBLOKS5E.LairActionsHeading" }}</h2>
 		<p>{{ localize "MOBLOKS5E.LairText" name=actor.name }}</p>
 		<ul>
 		{{#each (getactions features) as |item iid|}}

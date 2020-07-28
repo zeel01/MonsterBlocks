@@ -1,19 +1,25 @@
 {
 	"MOBLOKS5E.MonsterBlocks": "Monster Blocks",
+	
 	"MOBLOKS5E.SwitchToDefault": "Switch to Default Sheet",
 	"MOBLOKS5E.AttackDescriptions": "Attack descriptions",
-	"MOBLOKS5E.Show": "Show",
-	"MOBLOKS5E.Hide": "Hide",
-	"MOBLOKS5E.Enable": "Enable",
-	"MOBLOKS5E.Disable": "Disable",
+	
+	"MOBLOKS5E.ShowGenerated": "Show generated",
+	"MOBLOKS5E.HideGenerated": "Hide generated",
 	"MOBLOKS5E.DescriptionS": "Descriptions",
-	"MOBLOKS5E.generated": "generated",
-	"MOBLOKS5E.secrets": "secrets",
-	"MOBLOKS5E.inlineSecrets": "inline secrets",
-	"MOBLOKS5E.CurrentHPT": "current hit points",
-	"MOBLOKS5E.MaxHPT": "maximum hit points",
-	"MOBLOKS5E.ProfileImgT": "profile image",
-	"MOBLOKS5E.LairActT": "lair actions",
+	"MOBLOKS5E.EnableInlSecr": "Enable inline secrets",
+	"MOBLOKS5E.DisableInlSecr": "Disable inline secrets",
+	"MOBLOKS5E.ShowSecrets": "Show secrets",
+	"MOBLOKS5E.HideSecrets": "Hide secrets",
+	"MOBLOKS5E.ShowMaxHP": "Show maximum hit points",
+	"MOBLOKS5E.HideMaxHP": "Hide maximum hit points",
+	"MOBLOKS5E.ShowCurrentHP": "Show current hit points",
+	"MOBLOKS5E.HideCurrentHP": "Hide current hit points",
+	"MOBLOKS5E.ShowProfileImage": "Show profile image",
+	"MOBLOKS5E.HideProfileImage": "Hide profile image",
+	"MOBLOKS5E.ShowLair": "Show lair actions",
+	"MOBLOKS5E.HideLair": "Hide lair actions",
+
 	"MOBLOKS5E.Theme": "Theme",
 	"MOBLOKS5E.CustomThemeName": "Custom",
 	"MOBLOKS5E.DefaultThemeName": "Monster Manual",
@@ -21,18 +27,20 @@
 	"MOBLOKS5E.DarkThemeName": "Darkness",
 	"MOBLOKS5E.CoolThemeName": "Icy Breeze",
 	"MOBLOKS5E.HotThemeName": "Smouldering Ember",
+	
 	"MOBLOKS5E.Average": "Average",
 	"MOBLOKS5E.Current": "Current",
 	"MOBLOKS5E.Maximum": "Maximum",
+	
 	"MOBLOKS5E.Score": "Score",
 	"MOBLOKS5E.Modifier": "Modifier",
 	"MOBLOKS5E.SavingThrowS": "Saving Throws",
 	"MOBLOKS5E.SkillS": "Skills",
+	
 	"MOBLOKS5E.Recharge": "Recharge",
 	"MOBLOKS5E.NCharged": "Not charged",
 	"MOBLOKS5E.Costs": "Costs",
-	"MOBLOKS5E.range": "range",
-	"MOBLOKS5E.reach": "reach",
+	
 	"MOBLOKS5E.zero": "zero",
 	"MOBLOKS5E.one": "one",
 	"MOBLOKS5E.two": "two",
@@ -43,19 +51,25 @@
 	"MOBLOKS5E.seven": "seven",
 	"MOBLOKS5E.eight": "eight",
 	"MOBLOKS5E.nine": "nine",
-	"MOBLOKS5E.target": "target",
-	"MOBLOKS5E.targetS": "targets",
-	"MOBLOKS5E.Lair": "Lair",
+	
 	"MOBLOKS5E.FullStop": ".",
 	"MOBLOKS5E.NameDescriptionSep": ".",
 	"MOBLOKS5E.Comma": ",",
 	"MOBLOKS5E.Colon": ":",
+	
+	"MOBLOKS5E.range": "range",
+	"MOBLOKS5E.reach": "reach",
+	"MOBLOKS5E.target": "target",
+	"MOBLOKS5E.targetS": "targets",
 	"MOBLOKS5E.AttackToHit": "{bonus} to hit",
 	"MOBLOKS5E.AttackRange": "{reachRange} {range}{sep}{max} {units}.",
 	"MOBLOKS5E.AttackTarget": "{quantity} {type}",
 	"MOBLOKS5E.AttackHitLabel": "Hit:",
 	"MOBLOKS5E.AttackDamageTemplate": "{average} ({formula}) {type}",
 	"MOBLOKS5E.damage": "damage",
+	
 	"MOBLOKS5E.LegendaryText": "The {name} can take 3 legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {name} regains spent legendary actions at the start of its turn.",
+	
+	"MOBLOKS5E.LairActionsHeading": "Lair Actions",
 	"MOBLOKS5E.LairText": "On initiative count 20 (losing all initiative ties), the {name} takes a lair action to cause one of the following effects; the {name} can't use the same effect two rounds in a row:"
 }

@@ -217,7 +217,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	getAttackBonus(attack) {
 		let attr = attack.abilityMod;									// The ability the item says it uses
-		let attackBonus = attack.data.data?.attackBonus;					// Magical item or other bonus
+		let attackBonus = attack.data.data?.attackBonus;				// Magical item or other bonus
 		let abilityBonus = this.actor.data.data.abilities[attr]?.mod;	// The ability bonus of the actor
 		let isProf = attack.data.data.proficient;						// Is the actor proficient with this item?
 		let profBonus = this.actor.data.data.attributes?.prof;			// The actor's proficiency bonus
