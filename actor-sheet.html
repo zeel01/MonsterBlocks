@@ -21,7 +21,7 @@
 			</li>
 			{{#if info.hasCastingFeature}}
 			<li>
-				<a class="switch" data-control="casting-feature">Spellcasting</a>
+				<a class="switch" data-control="casting-feature">{{ localize "DND5E.Spellcasting" }}</a>
 				<ul>
 					<li>
 						<a class="switch" data-control="casting-feature">
@@ -29,7 +29,8 @@
 								{{ localize "MOBLOKS5E.HideGenerated" }}
 							{{else}}
 								{{ localize "MOBLOKS5E.ShowGenerated" }}
-							{{/if}}</a>
+							{{/if}}
+						</a>
 					</li>
 				</ul>
 			</li>
@@ -89,7 +90,7 @@
 					{{/if}}
 				</a>
 			</li>
-			{{#if (haslair features)}}
+			{{#if info.hasLair}}
 			<li>
 				<a class="switch" data-control="show-lair-actions">
 					{{#if flags.show-lair-actions}}
@@ -551,12 +552,12 @@
 	{{/if}}
 	{{/each}}
 	{{#each (getactions features) as |item iid|}}
-		{{#if (notspecialaction item)}}
+		{{#unless item.isSpecialAction}}
 			{{> featureBlock item=item actor=../actor}}
-		{{/if}}
+		{{/unless}}
 	{{/each}}
 	{{! Reactions }}
-	{{#if (hasreaction features)}}
+	{{#if info.hasReactions}}
 		<h2 class="section-header">{{localize "DND5E.Reaction"}}s</h2>
 		{{#each (getactions features) as |item iid|}}
 			{{#if (isreaction item)}}
@@ -565,7 +566,7 @@
 		{{/each}}
 	{{/if}}
 	{{! Legendary Actions }}
-	{{#if (haslegendary features)}}
+	{{#if info.hasLegendaryActions}}
 		<h2 class="section-header">{{localize "DND5E.LegAct"}}</h2>
 		<p class="legendary-description">
 			{{ localize "MOBLOKS5E.LegendaryText" name=actor.name }}
@@ -577,7 +578,7 @@
 		{{/each}}
 	{{/if}}
 	{{! Lair Actions }}
-	{{#if (haslair features)}}
+	{{#if info.hasLair}}
 	{{#if flags.show-lair-actions}}
 		<h2 class="section-header">{{ localize "MOBLOKS5E.LairActionsHeading" }}</h2>
 		<p>{{ localize "MOBLOKS5E.LairText" name=actor.name }}</p>

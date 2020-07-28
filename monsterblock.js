@@ -35,12 +35,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		data.flags = this.actor.data.flags.monsterblock;	// Get the flags for this module, and make them available in the data
 		data.info = {										// A collection of extra information used mainly for conditionals
-			hasCastingFeature: (this.isSpellcaster || this.isInnateSpellcaster),
-			isSpellcaster: this.isSpellcaster,
-			isInnateSpellcaster: this.isInnateSpellcaster,
-			isWarlock: this.isWarlock,
-			hasAtWillSpells: this.hasAtWillSpells,
-			bigRedButton: false
+			hasCastingFeature: (this.isSpellcaster() || this.isInnateSpellcaster()),
+			isSpellcaster: this.isSpellcaster(),
+			isInnateSpellcaster: this.isInnateSpellcaster(),
+			isWarlock: this.isWarlock(),
+			hasAtWillSpells: this.hasAtWillSpells(),
+			hasLegendaryActions: this.hasLegendaryActions(),
+			hasLair: this.hasLair(),
+			hasReactions: this.hasReactions()
 		}
 		data.special = {									// A collection of cherry-picked data used in special places.
 			multiattack: this.getMultiattack(data),
@@ -72,7 +74,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		formData._dtypes = dtypes;
 		return formData;
 	}*/
-	get isSpellcaster () {	// Regular spellcaster with typical spell slots.
+	isSpellcaster () {	// Regular spellcaster with typical spell slots.
 		return this.actor.data.items.some((item) => {
 			return item.data.level > 0.5 && (
 				item.data.preparation?.mode === "prepared" || 
@@ -80,19 +82,34 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			);
 		});
 	}
-	get isInnateSpellcaster() {	// Innate casters have lists of spells that can be cast a certain number of times per day
+	isInnateSpellcaster() {	// Innate casters have lists of spells that can be cast a certain number of times per day
 		return this.actor.data.items.some((item) => {
 			return item.data.preparation?.mode === "innate";
 		});
 	}
-	get isWarlock() {
+	isWarlock() {
 		return this.actor.data.items.some((item) => {
 			return item.data.preparation?.mode === "pact";
 		});
 	}
-	get hasAtWillSpells() {	// Some normal casters also have a few spells that they can cast "At will"
+	hasAtWillSpells() {	// Some normal casters also have a few spells that they can cast "At will"
 		return this.actor.data.items.some((item) => {
 			return item.data.preparation?.mode === "atwill";
+		});
+	}
+	hasReactions() {
+		return this.actor.data.items.some((item) => {
+			return this.constructor.isReaction(item)
+		});
+	}
+	hasLair() {
+		return this.actor.data.items.some((item) => {
+			return this.constructor.isLairAction(item)
+		});
+	}
+	hasLegendaryActions() {
+		return this.actor.data.items.some((item) => {
+			return this.constructor.isLegendaryAction(item)
 		});
 	}
 	
@@ -152,7 +169,17 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 	}
 	updateActionsData(actions) {
-		return;
+		for (let actionData of actions.items) {
+			let action = this.object.items.get(actionData._id);
+				
+			actionData.isSpecialAction = (	// Used to ensure that actions that need seperated out aren't shown twice
+				   this.constructor.isMultiAttack(action.data) 
+				|| this.constructor.isLegendaryAction(action.data) 
+				|| this.constructor.isLairAction(action.data) 
+				|| this.constructor.isLegendaryResistance(action.data)
+				|| this.constructor.isReaction(action.data)
+			)
+		}
 	}
 	updateAttacksData(attacks) {
 		let H = this.constructor.handlebarsHelpers;
@@ -538,9 +565,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static isLegendaryAction(item) {
 		return item.data?.activation?.type === "legendary";
 	}
+	
 	static isLairAction(item) {
 		return item.data?.activation?.type === "lair";
 	}
+	
 	static isReaction(item) {
 		return item.data?.activation?.type === "reaction";
 	}
@@ -574,40 +603,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 			return false;
 		},
-		
-		"haslegendary": (features) => {	// Check for Legendary Actions
-			for (let feature of features) {
-				if (feature.label == game.i18n.localize("DND5E.ActionPl")) {
-					let items = feature.items;
-					for (let item of items) {
-						if (this.isLegendaryAction(item)) return true;
-					}
-				}
-			}
-			return false;
-		},
-		"haslair": (features) => {			// Check for Lair actions
-			for (let feature of features) {
-				if (feature.label == game.i18n.localize("DND5E.ActionPl")) {
-					let items = feature.items;
-					for (let item of items) {
-						if (this.isLairAction(item)) return true;
-					}
-				}
-			}
-			return false;
-		},
-		"hasreaction": (features) => {
-			for (let feature of features) {
-				if (feature.label == game.i18n.localize("DND5E.ActionPl")) {
-					let items = feature.items;
-					for (let item of items) {
-						if (this.isReaction(item)) return true;
-					}
-				}
-			}
-			return false;
-		},
 		"islegendary": (item) => this.isLegendaryAction(item),
 		"islegresist": (item) => this.isLegendaryResistance(item),
 		"isspellcasting": (item) => this.isSpellcasting(item) || this.isInnateSpellcasting(item),
@@ -638,23 +633,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				if (feature.label == game.i18n.localize("DND5E.Features")) return feature.items;
 			}
 		},
-		
-		
-		"getattacktype": (attack) => { // Returns the localization string for the given type of attack.
-			return "DND5E.Action" + attack?.data?.actionType?.toUpperCase();
-		},
-		"israngedattack": (attack) => {
-			return ["rwak", "rsak"].includes(attack.data.actionType);
-		},
-		"getattackbonus": (attack, data, actor, options) => { // Calculate the "+X to hit"
-			let attr = this.getItemAbility(attack, actor, options.data.root.master);	// The ability the item says it uses
-			let attackBonus = attack.data.attackBonus;		// Magical item or other bonus
-			let abilityBonus = data.abilities[attr].mod;	// The ability bonus of the actor
-			let isProf = attack.data.proficient;			// Is the actor proficient with this item?
-			let profBonus = data.attributes.prof;			// The actor's proficiency bonus
-			
-			return abilityBonus + (isProf ? profBonus : 0) + attackBonus;
-		},
 		"getcastingability": (actor, spellbook, type) => {
 			let main = actor.data.attributes.spellcasting;
 			let castingability = main;
@@ -680,59 +658,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"enrichhtml": (str) => { // Formats any text to include proper inline rolls and links.
 			return TextEditor.enrichHTML(str, {secrets: true});
 		},
-		"averagedamage": (item, actor, options) => {	// Calculates the average damage from an attack
-			let formula = item.data.damage.parts[0][0];
-			let attr = this.getItemAbility(item, actor, options.data.root.master);
-			let abilityBonus = actor.data.abilities[attr].mod;
-			let roll = new Roll(formula, {mod: abilityBonus}).roll();
-			return Math.floor((											// The maximum roll plus the minimum roll, divided by two, rounded down.
-					Roll.maximize(roll.formula)._total + 
-					Roll.minimize(roll.formula)._total 
-				)	/ 2
-			);
-		},
-		"averageroll": (formula) => {			// Calculates the average of a roll
-			if (!formula) return 0;
-			let roll = new Roll(formula).roll();
-			return Math.floor((											// The maximum roll plus the minimum roll, divided by two, rounded down.
-					Roll.maximize(roll.formula)._total + 
-					Roll.minimize(roll.formula)._total 
-				)	/ 2
-			);
-		},
 		"formatnumbercommas": (number) => {
 			return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");	// https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-		},
-		"dealsdamage": (item) => {
-			return Boolean(item.data.damage.parts.length);
-		},
-		"damageformula": (item, actor, options) => {	// Extract and re-format the damage formula
-			let formula = item.data.damage.parts[0][0];	// This is the existing formula, typicallys contains a non-number like @mod
-			let attr = this.getItemAbility(item, actor, options.data.root.master);				// The ability used for this attack
-			let abilityBonus = actor.data.abilities[attr].mod;	// The ability bonus of the actor
-			let roll = new Roll(formula, {mod: abilityBonus}).roll();	// Create a new Roll, giving the ability modifier to sub in for @mod
-			
-			let parts = [];
-			let bonus = 0;
-			let op = "+";
-			
-			for (let part of roll.parts) {	// Now the formula from Roll is broken down, and re-constructed to combine all the constants.
-				if (typeof part == "object") parts.push(part.formula);
-				else if (part === "+" || part === "-") op = part;
-				else if (parseInt(part, 10) === NaN) console.error("Unexpected part in damage roll");
-				else {
-					let n = parseInt(part, 10);
-					bonus = op === "+" ? bonus + n : bonus - n;
-				}
-			}
-			if (bonus > 0) parts.push("+");
-			if (bonus < 0) parts.push("-");
-			if (bonus != 0) parts.push(bonus);
-			
-			return parts.join(" ");
-		},
-		"damagetype": (item) => {
-			return item.data.damage.parts[0][1];
 		},
 		"toinlineroll": (flag, options) => { // Takes a roll formula, and runs it through the enrichHTML method to create an inline roll link.
 			if (!flag) return options.fn(this);
@@ -780,7 +707,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"isprepared": (item) => {
 			return item.data.preparation.mode === "prepared" || item.data.preparation.mode === "always";
 		},
-		
+		"averageroll": (formula) => {			// Calculates the average of a roll
+			if (!formula) return 0;
+			let roll = new Roll(formula).roll();
+			return Math.floor((											// The maximum roll plus the minimum roll, divided by two, rounded down.
+					Roll.maximize(roll.formula)._total + 
+					Roll.minimize(roll.formula)._total 
+				)	/ 2
+			);
+		},
 		// Logical operations
 		"not": (arg) => {
 			return !arg;
