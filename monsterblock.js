@@ -785,26 +785,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"not": (arg) => {
 			return !arg;
 		},
-		"and": (...args) => {
-			args.pop();
-			return args.reduce((v, c) => v && c);
-		},
-		"or": (...args) => {
-			args.pop();
-			return args.reduce((v, c) => v || c);
-		},
-		"greater": (a, b) => {
-			return a > b;
-		},
-		"less": (a, b) => {
-			return a < b;
-		},
-		"equal": (a, b) => {
-			return a == b;
-		},
-		"notequal": (a, b) => {
-			return a != b;
-		},
 		
 		"formatordinal": (number) => { // Format numbers like "1st", "2nd", "3rd", "4th", etc.
 			if (number == 1) return number + "st";

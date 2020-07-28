@@ -65,15 +65,15 @@
 				<a>{{ localize "MOBLOKS5E.Theme" }}</a>
 				<ul>
 				{{#each themes as |theme id|}}
-				{{#unless (equal id "custom")}}
+				{{#unless (eq id "custom")}}
 					<li>
-						<a class="trigger{{#if (equal ../flags.theme-choice id)}} selected{{/if}}" data-control="pickTheme" data-value="{{id}}"
+						<a class="trigger{{#if (eq ../flags.theme-choice id)}} selected{{/if}}" data-control="pickTheme" data-value="{{id}}"
 						>{{ localize theme.name }}</a>
 					</li>
 				{{/unless}}
 				{{/each}}
 					<li>
-						<label class="custome-class-label{{#if (equal flags.theme-choice 'custom')}} selected{{/if}}">
+						<label class="custome-class-label{{#if (eq flags.theme-choice 'custom')}} selected{{/if}}">
 							<a class="trigger nochild" data-control="pickTheme" data-value="custom">{{ localize "MOBLOKS5E.CustomThemeName" }}:</a>
 							<input type="text" class="custom-class-input" placeholder="class-name" value="{{flags.custom-theme-class}}">
 						</label>
@@ -109,9 +109,9 @@
 				</li>
 				<li class="attribute health">
 					<h4 class="attribute-name box-title">{{localize "DND5E.HitPoints" }} </h4>
-					{{~#if (and (not flags.current-hit-points) (not flags.maximum-hit-points))~}}
+					{{~#unless (or flags.current-hit-points flags.maximum-hit-points)~}}
 						<span title="{{ localize 'MOBLOKS5E.Average' }}" class="attr-value">{{averageroll data.attributes.hp.formula}}</span>
-					{{~/if~}}
+					{{~/unless~}}
 					{{#if flags.current-hit-points}}
 						<span title="{{ localize 'MOBLOKS5E.Current' }}" data-field-key="data.attributes.hp.value" class="attr-value hasinput">
 						{{#if data.attributes.hp.value}}
@@ -274,7 +274,7 @@
 						({{ localize 'MOBLOKS5E.Recharge' }} {{item.data.recharge.value}}-6){{~" "~}}
 					</span>
 				{{~/if~}}
-				{{~#if (and (islegendary item) (greater item.data.activation.cost 1))~}}
+				{{~#if (and (islegendary item) (gt item.data.activation.cost 1))~}}
 					<span class="name-extension">
 						({{ localize "MOBLOKS5E.Costs" }} {{item.data.activation.cost}} {{localize "DND5E.ActionPl"}}){{~" "~}}
 					</span>
@@ -320,14 +320,14 @@
 			</span>
 			<ul class="spell-list">
 			{{#each spellbook as |spelllevel id|}}
-			{{#unless (or (invalidspelllevel spelllevel.dataset.level) (equal spelllevel.dataset.level 0.5))}}
+			{{#unless (or (invalidspelllevel spelllevel.dataset.level) (eq spelllevel.dataset.level 0.5))}}
 				<li>
 					<span class="spell-level-name">
 						{{localize (spelllevellocalization spelllevel.dataset.level)}}{{#unless spelllevel.dataset.level}}s{{/unless}}
 					</span>
 					<span class="spell-slots">
 						({{#if spelllevel.dataset.level~}}
-							{{spelllevel.slots}} slot{{#if (greater spelllevel.slots 1)}}s{{/if}}
+							{{spelllevel.slots}} slot{{#if (gt spelllevel.slots 1)}}s{{/if}}
 						{{~else~}}
 							at will
 						{{~/if~}}){{~" "~}}
@@ -368,7 +368,7 @@
 			</span>
 			<ul class="spell-list">
 			{{#each spellbook as |spelllevel id|}}
-			{{#unless (or (invalidspelllevel spelllevel.dataset.level) (greater spelllevel.dataset.level 0.5))}}
+			{{#unless (or (invalidspelllevel spelllevel.dataset.level) (gt spelllevel.dataset.level 0.5))}}
 				<li>
 					<span class="spell-level-name">
 						{{#unless spelllevel.dataset.level}}
@@ -379,7 +379,7 @@
 					</span>
 					<span class="spell-slots">
 						({{#if (warlockslotlevel spelllevel)~}}
-							{{spelllevel.slots}} {{formatordinal (warlockslotlevel spelllevel)}}-level slot{{#if (greater spelllevel.slots 1)}}s{{/if}}
+							{{spelllevel.slots}} {{formatordinal (warlockslotlevel spelllevel)}}-level slot{{#if (gt spelllevel.slots 1)}}s{{/if}}
 						{{~else~}}
 							at will
 						{{~/if~}}){{~" "~}}
@@ -414,7 +414,7 @@
 				<li>
 					<span class="spell-level-name">
 						{{spelllevel.label}}
-						{{~#if (and (greater spelllevel.uses 0) (greater spelllevel.spells.length 1))}}
+						{{~#if (and (gt spelllevel.uses 0) (gt spelllevel.spells.length 1))}}
 							each
 						{{~/if}}:
 					</span>
