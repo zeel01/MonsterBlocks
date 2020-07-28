@@ -171,14 +171,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	updateActionsData(actions) {
 		for (let actionData of actions.items) {
 			let action = this.object.items.get(actionData._id);
-				
-			actionData.isSpecialAction = (	// Used to ensure that actions that need seperated out aren't shown twice
-				   this.constructor.isMultiAttack(action.data) 
-				|| this.constructor.isLegendaryAction(action.data) 
-				|| this.constructor.isLairAction(action.data) 
-				|| this.constructor.isLegendaryResistance(action.data)
-				|| this.constructor.isReaction(action.data)
-			)
+			
+			actionData.is = { 
+				multiAttaack: this.constructor.isMultiAttack(action.data),
+				legendary: this.constructor.isLegendaryAction(action.data),
+				lair: this.constructor.isLairAction(action.data),
+				legResist: this.constructor.isLegendaryResistance(action.data),
+				reaction: this.constructor.isReaction(action.data)
+			};
+			actionData.is.specialAction = Object.values(actionData.is).some(v => v == true);	// Used to ensure that actions that need seperated out aren't shown twice
 		}
 	}
 	updateAttacksData(attacks) {

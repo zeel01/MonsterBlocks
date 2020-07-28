@@ -323,7 +323,7 @@
 				{{~/if~}}
 				{{~#if (and (islegendary item) (gt item.data.activation.cost 1))~}}
 					<span class="name-extension">
-						({{ localize "MOBLOKS5E.Costs" }} {{item.data.activation.cost}} {{localize "DND5E.ActionPl"}}){{~" "~}}
+						({{ localize "MOBLOKS5E.LegActionCost" number=item.data.activation.cost}}){{~" "~}}
 					</span>
 				{{~/if~}}
 				{{~#unless legendaryactions~}}
@@ -493,11 +493,11 @@
 	{{/if}}
 	
 	{{#each (getfeatures features) as |item iid|}}
-		{{#if (notspecialaction item)}}
+		{{#unless item.is.specialAction}}
 		{{#unless (and ../flags.casting-feature (isspellcasting item))}}
 			{{> featureBlock item=item actor=../actor}}
 		{{/unless}}
-		{{/if}}
+		{{/unless}}
 	{{/each}}
 	{{#if special.legresist}}
 		{{> featureBlock item=special.legresist actor=actor}}
@@ -507,7 +507,7 @@
 		{{> featureBlock item=special.multiattack actor=actor}}
 	{{/if}}
 	{{#each (getattacks features) as |item iid|}}
-	{{#if (notspecialaction item)}}
+	{{#unless item.is.specialAction}}
 	<section class="item monster-action">
 		<div class="attack-description inline-children">
 			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>{{ localize "MOBLOKS5E.NameDescriptionSep" }}
@@ -549,10 +549,10 @@
 			<span class="description">{{{enrichhtml item.data.description.value}}}</span>
 		</div>
 	</section>
-	{{/if}}
+	{{/unless}}
 	{{/each}}
 	{{#each (getactions features) as |item iid|}}
-		{{#unless item.isSpecialAction}}
+		{{#unless item.is.specialAction}}
 			{{> featureBlock item=item actor=../actor}}
 		{{/unless}}
 	{{/each}}
