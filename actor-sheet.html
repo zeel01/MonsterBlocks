@@ -10,11 +10,11 @@
 				<ul>
 					<li>
 						<a class="switch" data-control="attack-descriptions">
-							{{#if flags.attack-descriptions}}
-								{{ localize "MOBLOKS5E.HideGenerated" }}
-							{{else}}
-								{{ localize "MOBLOKS5E.ShowGenerated" }}
-							{{/if}}
+							{{~#if flags.attack-descriptions}}
+								{{~ localize "MOBLOKS5E.HideGenerated" ~}}
+							{{~else}}
+								{{~ localize "MOBLOKS5E.ShowGenerated" ~}}
+							{{~/if~}}
 						</a>
 					</li>
 				</ul>
@@ -25,11 +25,11 @@
 				<ul>
 					<li>
 						<a class="switch" data-control="casting-feature">
-							{{#if flags.casting-feature}}
-								{{ localize "MOBLOKS5E.HideGenerated" }}
-							{{else}}
-								{{ localize "MOBLOKS5E.ShowGenerated" }}
-							{{/if}}
+							{{~#if flags.casting-feature~}}
+								{{~ localize "MOBLOKS5E.HideGenerated" ~}}
+							{{~else~}}
+								{{~ localize "MOBLOKS5E.ShowGenerated" ~}}
+							{{~/if~}}
 						</a>
 					</li>
 				</ul>
@@ -40,20 +40,20 @@
 				<ul>
 					<li>
 						<a class="switch" data-control="inline-secrets">
-							{{#if flags.inline-secrets}}
-								{{ localize "MOBLOKS5E.DisableInlSecr" }}
-							{{else}}
-								{{ localize "MOBLOKS5E.EnableInlSecr" }}
-							{{/if}}
+							{{~#if flags.inline-secrets~}}
+								{{~ localize "MOBLOKS5E.DisableInlSecr" ~}}
+							{{~else~}}
+								{{~ localize "MOBLOKS5E.EnableInlSecr" ~}}
+							{{~/if~}}
 						</a>
 					</li>
 					<li>
 						<a class="switch" data-control="hidden-secrets">
-							{{#if flags.hidden-secrets}}
-								{{ localize "MOBLOKS5E.ShowSecrets" }}
-							{{else}}
-								{{ localize "MOBLOKS5E.HideSecrets" }}
-							{{/if}}
+							{{~#if flags.hidden-secrets~}}
+								{{~ localize "MOBLOKS5E.ShowSecrets" ~}}
+							{{~else~}}
+								{{~ localize "MOBLOKS5E.HideSecrets" ~}}
+							{{~/if~}}
 						</a>
 					</li>
 				</ul>
@@ -63,41 +63,41 @@
 				<ul>
 					<li>
 						<a class="switch" data-control="current-hit-points">
-							{{#if flags.current-hit-points}}
-								{{ localize "MOBLOKS5E.HideCurrentHP" }}
-							{{else}}
-								{{ localize "MOBLOKS5E.ShowCurrentHP" }}
-							{{/if}}
+							{{~#if flags.current-hit-points~}}
+								{{~ localize "MOBLOKS5E.HideCurrentHP" ~}}
+							{{~else~}}
+								{{~ localize "MOBLOKS5E.ShowCurrentHP" ~}}
+							{{~/if~}}
 						</a>
 					</li>
 					<li>
 						<a class="switch" data-control="maximum-hit-points">
-							{{#if flags.maximum-hit-points}}
-								{{ localize "MOBLOKS5E.HideMaxHP" }}
-							{{else}}
-								{{ localize "MOBLOKS5E.ShowMaxHP" }}
-							{{/if}}
-						<a>
+							{{~#if flags.maximum-hit-points~}}
+								{{~ localize "MOBLOKS5E.HideMaxHP" ~}}
+							{{~else~}}
+								{{~ localize "MOBLOKS5E.ShowMaxHP" ~}}
+							{{~/if~}}
+						</a>
 					</li>
 				</ul>
 			</li>
 			<li>
 				<a class="switch" data-control="hide-profile-image">
-					{{#if flags.hide-profile-image}}
-						{{ localize "MOBLOKS5E.ShowProfileImage" }}
-					{{else}}
-						{{ localize "MOBLOKS5E.HideProfileImage" }}
-					{{/if}}
+					{{~#if flags.hide-profile-image~}}
+						{{ localize "MOBLOKS5E.ShowProfileImage" ~}}
+					{{~else~}}
+						{{ localize "MOBLOKS5E.HideProfileImage" ~}}
+					{{~/if~}}
 				</a>
 			</li>
 			{{#if info.hasLair}}
 			<li>
 				<a class="switch" data-control="show-lair-actions">
-					{{#if flags.show-lair-actions}}
-						{{ localize "MOBLOKS5E.HideLair" }}
-					{{else}}
-						{{ localize "MOBLOKS5E.ShowLair" }}
-					{{/if}}
+					{{~#if flags.show-lair-actions~}}
+						{{ localize "MOBLOKS5E.HideLair" ~}}
+					{{~else~}}
+						{{ localize "MOBLOKS5E.ShowLair" ~}}
+					{{~/if~}}
 				</a>
 			</li>
 			{{/if}}
@@ -110,7 +110,7 @@
 						<a	class="trigger{{#if (eq ../flags.theme-choice id)}} selected{{/if}}"
 							data-control="pickTheme" 
 							data-value="{{id}}">
-							{{ localize theme.name }}
+							{{~ localize theme.name ~}}
 						</a>
 					</li>
 				{{/unless}}
@@ -120,7 +120,7 @@
 							<a	class="trigger nochild" 
 								data-control="pickTheme" 
 								data-value="custom">
-								{{ localize "MOBLOKS5E.CustomThemeName" }}{{ localize "MOBLOKS5E.Colon" }}
+								{{~ localize "MOBLOKS5E.CustomThemeName" }}{{ localize "MOBLOKS5E.Colon" ~}}
 							</a>
 							<input type="text" class="custom-class-input" placeholder="class-name" value="{{flags.custom-theme-class}}">
 						</label>
@@ -223,7 +223,7 @@
 					</ul>
 				</li>
 				{{/if}}
-				{{#if (mobloks5e-hasskills data.skills)}}
+				{{#if (moblok-hasskills data.skills)}}
 				<li class="monster-skills">
 					<h4 class="attribute-name">{{ localize "MOBLOKS5E.SkillS" }}</h4>
 					<ul class="inline-list">
@@ -238,7 +238,7 @@
 					</ul>
 				</li>
 				{{/if}}
-				{{#if (hascontents data.traits.dv.selected)}}
+				{{#if (moblok-hascontents data.traits.dv.selected)}}
 				<li class="attribute">
 					<h4 class="attribute-name">{{localize "DND5E.DamVuln"}}</h4>
 					<ul class="traits-list inline-list">
@@ -248,7 +248,7 @@
 					</ul>
 				</li>
 				{{/if}}
-				{{#if (hascontents data.traits.dr.selected)}}
+				{{#if (moblok-hascontents data.traits.dr.selected)}}
 				<li class="attribute">
 					<h4 class="attribute-name">{{localize "DND5E.DamRes"}}</h4>
 					<ul class="traits-list inline-list">
@@ -258,7 +258,7 @@
 					</ul>
 				</li>
 				{{/if}}
-				{{#if (hascontents data.traits.di.selected)}}
+				{{#if (moblok-hascontents data.traits.di.selected)}}
 				<li class="attribute">
 					<h4 class="attribute-name">{{localize "DND5E.DamImm"}}</h4>
 					<ul class="traits-list inline-list">
@@ -268,7 +268,7 @@
 					</ul>
 				</li>
 				{{/if}}
-				{{#if (hascontents data.traits.ci.selected)}}
+				{{#if (moblok-hascontents data.traits.ci.selected)}}
 				<li class="attribute">
 					<h4 class="attribute-name">{{localize "DND5E.ConImm"}}</h4>
 					<ul class="traits-list inline-list">
@@ -286,7 +286,7 @@
 				<li class="attribute">
 					<h4 class="attribute-name">{{localize "DND5E.Languages"}}</h4>
 					<ul class="traits-list inline-list">
-					{{#if (hascontents data.traits.languages.selected)}}
+					{{#if (moblok-hascontents data.traits.languages.selected)}}
 						{{#each data.traits.languages.selected as |v k|}}
 							<li class="trait-value">{{v}}</li>
 						{{/each}}
@@ -298,7 +298,7 @@
 				
 				<li class="attribute">
 					<h4 class="attribute-name">{{localize "DND5E.ChallengeRating"}}</h4>
-					<span class="trait-value">{{labels.cr}}</span> <span>({{formatnumbercommas data.details.xp.value}} XP)</span>
+					<span class="trait-value">{{labels.cr}}</span> <span>({{moblok-formatnumbercommas data.details.xp.value}} XP)</span>
 				</li>
 			</ul>
 		</section>
@@ -321,13 +321,13 @@
 						({{ localize 'MOBLOKS5E.Recharge' }} {{item.data.recharge.value}}-6){{~" "~}}
 					</span>
 				{{~/if~}}
-				{{~#if (and (islegendary item) (gt item.data.activation.cost 1))~}}
+				{{~#if (and item.is.legendary (gt item.data.activation.cost 1))~}}
 					<span class="name-extension">
 						({{ localize "MOBLOKS5E.LegActionCost" number=item.data.activation.cost}}){{~" "~}}
 					</span>
 				{{~/if~}}
 				{{~#unless legendaryactions~}}
-					{{~#if (hasresource item)~}}
+					{{~#if item.hasResource~}}
 						<span class="name-extension">
 							({{~getresourcelimit item actor}}/{{getresourcerefresh item actor~}}){{~" "~}}
 						</span>
@@ -336,7 +336,7 @@
 			{{~else~}}
 				<span class="item-name" data-item-id="{{item._id}}"></span>
 			{{~/unless}}
-			<span class="description">{{{enrichhtml item.data.description.value}}}</span>
+			<span class="description">{{{moblok-enrichhtml item.data.description.value}}}</span>
 		</div>
 	</section>
 	{{/inline}}
@@ -353,7 +353,7 @@
 			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>.
 			<span class="description">
 				{{! Needs Localization }}
-				The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster.
+				The {{actor.name}} is a {{moblok-formatordinal data.details.spellLevel}}-level spellcaster.
 				Its spellcasting ability is {{getcastingability actor spellbook castertype}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
 				The {{actor.name}}
 				{{#if info.hasAtWillSpells}}
@@ -400,7 +400,7 @@
 			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>.
 			<span class="description">
 				{{! Needs Localization }}
-				The {{actor.name}} is a {{formatordinal data.details.spellLevel}}-level spellcaster.
+				The {{actor.name}} is a {{moblok-formatordinal data.details.spellLevel}}-level spellcaster.
 				Its spellcasting ability is {{getcastingability actor spellbook castertype}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
 				It regains its expended spell slots when it finishes a short or long rest.
 				It
@@ -426,7 +426,7 @@
 					</span>
 					<span class="spell-slots">
 						({{#if (warlockslotlevel spelllevel)~}}
-							{{spelllevel.slots}} {{formatordinal (warlockslotlevel spelllevel)}}-level slot{{#if (gt spelllevel.slots 1)}}s{{/if}}
+							{{spelllevel.slots}} {{moblok-formatordinal (warlockslotlevel spelllevel)}}-level slot{{#if (gt spelllevel.slots 1)}}s{{/if}}
 						{{~else~}}
 							at will
 						{{~/if~}}){{~" "~}}
@@ -513,7 +513,7 @@
 			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>{{ localize "MOBLOKS5E.NameDescriptionSep" }}
 			{{#if ../flags.attack-descriptions}}
 			{{~#unless legendaryactions~}}
-				{{~#if (hasresource item)~}} 
+				{{~#if item.hasResource~}} 
 					<span class="name-extension">
 						({{~getresourcelimit item ../actor}}/{{getresourcerefresh item ../actor~}})
 					</span>
@@ -546,7 +546,7 @@
 				{{/if}}
 			</span>
 			{{/if}}
-			<span class="description">{{{enrichhtml item.data.description.value}}}</span>
+			<span class="description">{{{moblok-enrichhtml item.data.description.value}}}</span>
 		</div>
 	</section>
 	{{/unless}}
@@ -572,8 +572,10 @@
 			{{ localize "MOBLOKS5E.LegendaryText" name=actor.name }}
 		</p>
 		{{#each (getactions features) as |item iid|}}
-			{{#if (and (islegendary item) (not (islegresist item))) }}
+			{{#if item.is.legendary }}
+			{{#unless item.is.legResist}}
 				{{> featureBlock item=item actor=../actor legendaryactions=true}}
+			{{/unless}}
 			{{/if}}
 		{{/each}}
 	{{/if}}

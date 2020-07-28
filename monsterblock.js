@@ -172,6 +172,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		for (let actionData of actions.items) {
 			let action = this.object.items.get(actionData._id);
 			
+			actionData.hasResource = this.constructor.hasResource(action.data);
+			
 			actionData.is = { 
 				multiAttaack: this.constructor.isMultiAttack(action.data),
 				legendary: this.constructor.isLegendaryAction(action.data),
@@ -188,7 +190,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		for (let attackData of attacks.items) {
 			let attack = this.object.items.get(attackData._id);
 			
-			attackData.hasresource = H.hasresource(attack.data);
+			attackData.hasresource = this.constructor.hasResource(attack.data);
 			attackData.resourcelimit = attack.hasresource ? H.getresourcelimit(attack, this.actor.data) : 0;
 			attackData.resourcerefresh = attack.hasresource ? H.getresourcerefresh(attack, this.actor.data) : "";
 
@@ -204,7 +206,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		for (let featureData of features.items) {
 			let feature = this.object.items.get(featureData._id);
 			
-			
+			featureData.hasresource = this.constructor.hasResource(feature.data);
 		}
 	}
 	getAttackDescription(attack) {
@@ -586,13 +588,16 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	static getItemAbility(item, actor, master) {
 		return master.object.items.get(item._id).abilityMod;
-	} 
+	}
+	static hasResource(item) {
+		return Boolean(item.data.consume?.target);
+	}
 	static handlebarsHelpers = {
-		"hascontents": (obj) => { // Check if an array is empty.
+		"moblok-hascontents": (obj) => { // Check if an array is empty.
 			return Object.keys(obj).length > 0;
 		},
 
-		"mobloks5e-hasskills": (skills) => { // Check if the creature has any skill proficiencies
+		"moblok-hasskills": (skills) => { // Check if the creature has any skill proficiencies
 			for (let s in skills) {
 				if (skills[s].value) return true;
 			}
@@ -604,19 +609,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 			return false;
 		},
-		"islegendary": (item) => this.isLegendaryAction(item),
-		"islegresist": (item) => this.isLegendaryResistance(item),
-		"isspellcasting": (item) => this.isSpellcasting(item) || this.isInnateSpellcasting(item),
-		"islair": (item)=> this.isLairAction(item),
-		"isreaction": (item) => this.isReaction(item),
 		"invalidspelllevel": (level) => level < 0,	// Spell levels less than 0 mean sometihng special, and need checkd for
-		"notspecialaction": (item) => !(	// Used to ensure that actions that need seperated out aren't shown twice
-			   this.isMultiAttack(item) 
-			|| this.isLegendaryAction(item) 
-			|| this.isLairAction(item) 
-			|| this.isLegendaryResistance(item)
-			|| this.isReaction(item)
-		),
+		"isspellcasting": (item) => this.isSpellcasting(item) || this.isInnateSpellcasting(item),
+		
 		
 		// Feature type groups
 		"getattacks": (features) => {
@@ -653,19 +648,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			return actor.data.abilities[castingability].label;
 			 
 		},
-		"getchathtml": (item, actor) => {	// Finds the *real* instance of the actor and the item, and uses the .getChatData() method to get the the description with inline rolls and links properly formatted.
-			return game.actors.get(actor._id).getOwnedItem(item._id).getChatData().description.value;
-		},
-		"enrichhtml": (str) => { // Formats any text to include proper inline rolls and links.
+		"moblok-enrichhtml": (str) => { // Formats any text to include proper inline rolls and links.
 			return TextEditor.enrichHTML(str, {secrets: true});
 		},
-		"formatnumbercommas": (number) => {
+		"moblok-formatnumbercommas": (number) => {
 			return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");	// https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-		},
-		"toinlineroll": (flag, options) => { // Takes a roll formula, and runs it through the enrichHTML method to create an inline roll link.
-			if (!flag) return options.fn(this);
-			
-			return TextEditor.enrichHTML(`[[/gmr ${options.fn(this)}]]`);
 		},
 		"spelllevellocalization": (level) => { // Returns the localization string for a given spell level
 			return "DND5E.SpellLevel" + parseInt(level, 10); // Never allow this to be a fraction, the results aren't good.
@@ -675,9 +662,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				if (level.prop === "atwill") return level.spells;
 			}
 			return [];
-		},
-		"hasresource": (item) => {
-			return Boolean(item.data.consume.target);
 		},
 		"getresourcelimit": (item, actor) => {
 			let res = item.data.consume.target.match(/(.+)\.(.+)\.(.+)/);
@@ -717,21 +701,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				)	/ 2
 			);
 		},
-		// Logical operations
-		"not": (arg) => {
-			return !arg;
-		},
-		
-		"formatordinal": (number) => { // Format numbers like "1st", "2nd", "3rd", "4th", etc.
+		"moblok-formatordinal": (number) => { // Format numbers like "1st", "2nd", "3rd", "4th", etc.
 			if (number == 1) return number + "st";
 			if (number == 2) return number + "nd";
 			if (number == 3) return number + "rd";
 			return number + "th";
-		},
-		"getnumber": (number) => {
-			number = Number(number);
-			if (number > 9 || number < 0) return number.toString();
-			return "MOBLOKS5E."+["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"][number];
 		}
 	};
 }
@@ -956,7 +930,7 @@ Hooks.on("renderActorSheet5eNPC", (sheet, html, data) => {
 		<i class="fas fa-cog"></i>
 		<ul>
 			<li>
-				<a class="trigger" data-control="switchToMonsterBlock">Switch to Monster Blocks</a>
+				<a class="trigger" data-control="switchToMonsterBlock">${game.i18n.localize("MOBLOKS5E.SwitchToMobloks")}</a>
 			</li>
 		</ul>
 	`;

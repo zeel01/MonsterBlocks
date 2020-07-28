@@ -2,6 +2,7 @@
 	"MOBLOKS5E.MonsterBlocks": "Monster Blocks",
 	
 	"MOBLOKS5E.SwitchToDefault": "Switch to Default Sheet",
+	"MOBLOKS5E.SwitchToMobloks": "Switch to Monster Blocks",
 	"MOBLOKS5E.AttackDescriptions": "Attack descriptions",
 	
 	"MOBLOKS5E.ShowGenerated": "Show generated",
@@ -56,6 +57,16 @@
 	"MOBLOKS5E.NameDescriptionSep": ".",
 	"MOBLOKS5E.Comma": ",",
 	"MOBLOKS5E.Colon": ":",
+	
+	"MOBLOKS5E.CasterNameLevel": "The {name} is a {level}-level spellcaster.",
+	"MOBLOKS5E.CastingAbility": "Its spellcasting ability is {ability}",
+	"MOBLOKS5E.InnateCastingAbility": "The {name}'s innate spellcasting ability is {ability}",
+	"MOBLOKS5E.CastingStats": "(spell save DC {savedc}, {bonus} to hit with spell attacks).",
+	"MOBLOKS5E.CasterAtWill": " can cast {spells} at will and",
+	"MOBLOKS5E.CasterSpellsPreped": "The {name}{atwill} has the following spells prepared:",
+	"MOBLOKS5E.WarlockSpellsPreped": "It {name}{atwill} has the following warlock spells prepared:",
+	"MOBLOKS5E.InnateSpellsKnown": "The {actor.name} can innately cast the following spells, requiring no material components:",
+	"MOBLOKS5E.WarlockSlotRegain": "It regains its expended spell slots when it finishes a short or long rest.",
 	
 	"MOBLOKS5E.range": "range",
 	"MOBLOKS5E.reach": "reach",
