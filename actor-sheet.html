@@ -285,7 +285,7 @@
 							({{~getresourcelimit item actor}}/{{getresourcerefresh item actor~}}){{~" "~}}
 						</span>
 					{{~/if~}}
-				{{~/unless~}}.
+				{{~/unless~}}{{ localize "MOBLOKS5E.NameDescriptionSep" }}
 			{{~else~}}
 				<span class="item-name" data-item-id="{{item._id}}"></span>
 			{{~/unless}}
@@ -521,7 +521,9 @@
 	{{! Legendary Actions }}
 	{{#if (haslegendary features)}}
 		<h2 class="section-header">{{localize "DND5E.LegAct"}}</h2>
-		<p class="legendary-description">The {{actor.name}} can take 3 legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {{actor.name}} regains spent legendary actions at the start of its turn.</p>
+		<p class="legendary-description">
+			{{ localize "MOBLOKS5E.LegendaryText" name=actor.name }}
+		</p>
 		{{#each (getactions features) as |item iid|}}
 			{{#if (and (islegendary item) (not (islegresist item))) }}
 				{{> featureBlock item=item actor=../actor legendaryactions=true}}
@@ -532,7 +534,7 @@
 	{{#if (haslair features)}}
 	{{#if flags.show-lair-actions}}
 		<h2 class="section-header">{{ localize "MOBLOKS5E.Lair" }} {{localize "DND5E.ActionPl"}}</h2>
-		<p>On initiative count 20 (losing all initiative ties), the {{actor.name}} takes a lair action to cause one of the following effects; the {{actor.name}} can't use the same effect two rounds in a row:</p>
+		<p>{{ localize "MOBLOKS5E.LairText" name=actor.name }}</p>
 		<ul>
 		{{#each (getactions features) as |item iid|}}
 			{{#if (islair item)}}

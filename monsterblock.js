@@ -173,7 +173,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		console.debug(attacks);
 	}
 	updateFeaturessData(features) {
-		return;
+		for (let featureData of features.items) {
+			let feature = this.object.items.get(featureData._id);
+			
+			
+		}
 	}
 	getAttackDescription(attack) {
 		let atkd = attack.data.data;
@@ -198,8 +202,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 							atkd.target.value > 1 ?
 							game.i18n.localize("MOBLOKS5E.targetS") :
 							game.i18n.localize("MOBLOKS5E.target")
-						),
-							
+						),	
 			}),
 			damageFormula: this.damageFormula(attack),
 			damage: this.dealsDamage(attack) ? game.i18n.format("MOBLOKS5E.AttackDamageTemplate",  {
