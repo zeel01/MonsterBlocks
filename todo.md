@@ -21,6 +21,7 @@
 	- Indicate to new users that the menu in the corner exists
 	- Localize settings
 	- Ordinals?
+	- "Switch to Monster Blocks" trigger
 
 ## Fixes
 - ~~Hide the comma after creature type if there is no alignment specified.~~

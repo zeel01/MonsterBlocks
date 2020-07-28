@@ -465,7 +465,13 @@
 		<div class="attack-description inline-children">
 			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>{{ localize "MOBLOKS5E.NameDescriptionSep" }}
 			{{#if ../flags.attack-descriptions}}
-			
+			{{~#unless legendaryactions~}}
+				{{~#if (hasresource item)~}} 
+					<span class="name-extension">
+						({{~getresourcelimit item ../actor}}/{{getresourcerefresh item ../actor~}})
+					</span>
+				{{~/if~}}
+			{{~/unless}}
 			<span class="generated-text">			
 				<span class="attack-bonus" 
 					data-roll-flavor="{{localize 'DND5E.Attack'}}: {{item.name}}" 
@@ -473,13 +479,7 @@
 					<span class="attack-type">
 						{{~localize item.description.attackType~}}
 					</span>
-					{{~#unless legendaryactions~}}
-						{{~#if (hasresource item)~}} 
-							<span class="name-extension">
-								({{~getresourcelimit item ../actor}}/{{getresourcerefresh item ../actor~}})
-							</span>
-						{{~/if~}}
-					{{~/unless}}{{ localize "MOBLOKS5E.Colon" }}
+					{{ localize "MOBLOKS5E.Colon" }}
 					{{item.description.tohit~}}
 				</span>{{ localize "MOBLOKS5E.Comma" }}
 				<span>

@@ -15,6 +15,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	get template() {
 		return "modules/monsterblock/actor-sheet.html";
 	}
+	
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
 			classes: ["monsterblock", "sheet", "actor"],
@@ -73,23 +74,26 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}*/
 	get isSpellcaster () {	// Regular spellcaster with typical spell slots.
 		return this.actor.data.items.some((item) => {
-			return item.data.preparation && item.data.level > 0.5 && (item.data.preparation.mode === "prepared" || item.data.preparation.mode === "always");
+			return item.data.level > 0.5 && (
+				item.data.preparation?.mode === "prepared" || 
+				item.data.preparation?.mode === "always"
+			);
 		});
 	}
 	get isInnateSpellcaster() {	// Innate casters have lists of spells that can be cast a certain number of times per day
 		return this.actor.data.items.some((item) => {
-			return item.data.preparation && item.data.preparation.mode === "innate";
+			return item.data.preparation?.mode === "innate";
 		});
 	}
 	get isWarlock() {
 		return this.actor.data.items.some((item) => {
-			return item.data.preparation && item.data.preparation.mode === "pact";
+			return item.data.preparation?.mode === "pact";
 		});
 	}
 	get hasAtWillSpells() {	// Some normal casters also have a few spells that they can cast "At will"
-		for (let item of this.actor.items) {
-			if (item.data.data.preparation && item.data.data.preparation.mode === "atwill") return true;
-		}
+		return this.actor.data.items.some((item) => {
+			return item.data.preparation?.mode === "atwill";
+		});
 	}
 	
 	static themes = {
@@ -104,7 +108,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		if (this._themes) return this._themes;
 		
 		this._themes = MonsterBlock5e.themes;
-		this._themes.custom = { name: "Custom", class: this.actor.getFlag("monsterblock", "custom-theme-class") };
+		this._themes.custom = { name: "MOBLOKS5E.CustomThemeName", class: this.actor.getFlag("monsterblock", "custom-theme-class") };
 		return this._themes;
 	}
 	get currentTheme() {
@@ -118,8 +122,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		let oldTheme = this.themes[this.currentTheme];
 		let newTheme = this.themes[theme];
 			
-		this.element[0].classList.remove(oldTheme.class);
-		this.element[0].classList.add(newTheme.class);
+		this.element.removeClass(oldTheme.class);
+		this.element.addClass(newTheme.class);
 		
 		let classes = this.options.classes;
 		classes[classes.indexOf(oldTheme.class)] = newTheme.class;
@@ -210,20 +214,22 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	getAttackBonus(attack) {
 		let attr = attack.abilityMod;									// The ability the item says it uses
-		let attackBonus = attack.data.data.attackBonus;					// Magical item or other bonus
-		let abilityBonus = this.actor.data.data.abilities[attr].mod;	// The ability bonus of the actor
+		let attackBonus = attack.data.data?.attackBonus;					// Magical item or other bonus
+		let abilityBonus = this.actor.data.data.abilities[attr]?.mod;	// The ability bonus of the actor
 		let isProf = attack.data.data.proficient;						// Is the actor proficient with this item?
-		let profBonus = this.actor.data.data.attributes.prof;			// The actor's proficiency bonus
+		let profBonus = this.actor.data.data.attributes?.prof;			// The actor's proficiency bonus
 		
 		return abilityBonus + (isProf ? profBonus : 0) + attackBonus;
 	}
 	isRangedAttack(attack) {
-		return ["rwak", "rsak"].includes(attack.data.data.actionType);
+		return ["rwak", "rsak"].includes(attack.data.data?.actionType);
 	}
 	averageDamage(attack) {
-		let formula = attack.data.data.damage.parts[0][0];
+		let formula = 	attack.data.data.damage.parts.length > 0 ? 
+						attack.data.data.damage.parts[0][0] :
+						"0";	
 		let attr = attack.abilityMod;
-		let abilityBonus = this.actor.data.data.abilities[attr].mod;
+		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;
 		let roll = new Roll(formula, {mod: abilityBonus}).roll();
 		return Math.floor((											// The maximum roll plus the minimum roll, divided by two, rounded down.
 				Roll.maximize(roll.formula)._total + 
@@ -232,9 +238,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		);
 	}
 	damageFormula(attack) {	// Extract and re-format the damage formula
-		let formula = attack.data.data.damage.parts[0][0];				// This is the existing formula, typicallys contains a non-number like @mod
+		let formula = 	attack.data.data.damage.parts.length > 0 ? 
+						attack.data.data.damage.parts[0][0] :
+						"0";											// This is the existing formula, typicallys contains a non-number like @mod
 		let attr = attack.abilityMod;									// The ability used for this attack
-		let abilityBonus = this.actor.data.data.abilities[attr].mod;	// The ability bonus of the actor
+		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;	// The ability bonus of the actor
 		let roll = new Roll(formula, {mod: abilityBonus}).roll();		// Create a new Roll, giving the ability modifier to sub in for @mod
 		
 		let parts = [];
@@ -258,7 +266,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 	}
 	dealsDamage(item) {
-		return Boolean(item.data.data.damage.parts.length);
+		return Boolean(item.data.data?.damage?.parts?.length);
 	}
 	getNumberString(number) {
 		number = Number(number);
@@ -267,13 +275,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	getMultiattack(data) { // The Multiattack action is always first in the list, so we need to find it and seperate it out.
 		for (let item of data.items) {
-			if (MonsterBlock5e.isMultiAttack(item)) return item;
+			if (this.constructor.isMultiAttack(item)) return item;
 		}
 		return false;
 	}
 	getLegendaryResistance(data) {
 		for (let item of data.items) {
-			if (MonsterBlock5e.isLegendaryResistance(item)) return item;
+			if (this.constructor.isLegendaryResistance(item)) return item;
 		}
 		return false;
 	}
@@ -487,9 +495,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			event.preventDefault();
 			//this._onSubmit(event);
 			new ActorSheet5eNPC(this.object).render(true);
-			this._element[0].classList.remove("monsterblock");
-			this._element[0].classList.add("dnd5e");
-			this._element[0].classList.add("npc");
+			this._element.removeClass("monsterblock");
+			this._element.addClass("dnd5e");
+			this._element.addClass("npc");
 		});
 					
 		html.find('.hasinput').click((event) => {
@@ -520,21 +528,21 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	
 	static isLegendaryResistance(item) {
-		return item.data.consume.target === "resources.legres.value";
+		return item.data?.consume?.target === "resources.legres.value";
 	}
 	
 	// Item purpose checks
 	static isLegendaryAction(item) {
-		return item.data.activation.type === "legendary";
+		return item.data?.activation?.type === "legendary";
 	}
 	static isLairAction(item) {
-		return item.data.activation.type === "lair";
+		return item.data?.activation?.type === "lair";
 	}
 	static isReaction(item) {
-		return item.data.activation.type === "reaction";
+		return item.data?.activation?.type === "reaction";
 	}
 	static isSpellcasting(item) {
-		return item.name.toLowerCase().replace(/\s+/g, '') === "spellcasting";
+		return item.name?.toLowerCase().replace(/\s+/g, '') === "spellcasting";
 	}
 	static isInnateSpellcasting(item) {
 		return [
@@ -742,7 +750,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		},
 		"getresourcelimit": (item, actor) => {
 			let res = item.data.consume.target.match(/(.+)\.(.+)\.(.+)/);
-			return actor.data[res[1]][res[2]].max;
+			return res ? actor.data[res[1]][res[2]].max : "";
 		},
 		"getresourcerefresh": (item, actor) => {
 			return "Day";
@@ -927,14 +935,14 @@ class PopupHandler {
 	constructor(application, layoutselector, defaultWidth, defaultHeight, padding) {
 		this.application = application;
 		this.padding = padding;
-		this.element = application.element[0];
+		this.element = application.element;
 		this._height = defaultHeight;
 		this._width = defaultWidth;
 		
 		this.width = this._width;	// Actually set the width and height to the default values,
 		this.height = this._height;	// allowing the column layout to correctly set the number of columns needed.
 		
-		let flexcol = this.element.querySelector(layoutselector);
+		let flexcol = this.element.find(layoutselector)[0];
 		this.layout = Array.from(	// Converting to an array because it has so many useful methods.
 			flexcol.children		// All children of the column layout, which is the form.flexcol
 		);
@@ -943,12 +951,12 @@ class PopupHandler {
 	// These set both the real height of the element (adding the "px" unit because it's a CSS property) and the stored numeric value
 	set height(h) {
 		this._height = h;
-		this.element.style.height = h + "px";
+		this.element.css("height", h + "px");
 		this.position.height = h;
 	}
 	set width(w) {
 		this._width = w;
-		this.element.style.width = w + "px";
+		this.element.css("width", w + "px");
 		this.position.width = w;
 	}
 	
@@ -958,14 +966,14 @@ class PopupHandler {
 	
 	// Returns the largest offset from the left side of the layout that any element's right edge has (this is the maximum width of the layout).
 	get layoutWidth() {											
-		return this.layout.reduce((width, el) => {							// Iterate over all the children of the layout, searching for the one with a right edge furthest from 0
+		return this.layout.reduce((width, el) => {						// Iterate over all the children of the layout, searching for the one with a right edge furthest from 0
 			let right = el.offsetLeft + el.getBoundingClientRect().width;	// The left edge offset of the element, plus the width, is the right edge offset
 			return right > width ? right : width;							// If this element has a right side further from 0 than the previous record, its offset is the new record.
 		}, 391);
 	}
 	// Returns the greatest offset from the top of the layout of any element's bottom (this is the maximum height of the layout).
 	get layoutHeight() {													
-		let top = this.element.getBoundingClientRect().top;			// Find the offset of the top of the bounding element from the top of the displayport
+		let top = this.element[0].getBoundingClientRect().top;			// Find the offset of the top of the bounding element from the top of the displayport
 		return this.layout.reduce((height, el) => {					// Iterate over all the children, looking for the one with the lowest bottom
 			let bottom = el.getBoundingClientRect().bottom - top;	// The bottom of the bounding rectangle is the *real* lowest point of the rendered element, even if the element is split between multiple columns. This is relative to the displayport though, so it needs corrected by the offest of the wrapper's top.
 			return bottom > height ? bottom : height;				// If this element's bottom is lower than the record, the record is updated.
@@ -997,13 +1005,13 @@ class PopupHandler {
 		let dw = this.width - this.application.options.width;
 		let left = dw / 2;
 		this.position.left -= left;
-		this.element.style.left = this.position.left + "px";
+		this.element.css("left", this.position.left + "px");
 	}
 	fixTop() {
 		let dh = this.height - this.application.options.height;
 		let top = dh / 2;
 		this.position.top -= top;
-		this.element.style.top = this.position.top + "px";
+		this.element.css("top", this.position.top + "px");
 	}
 }
 
@@ -1020,11 +1028,6 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the she
 	);
 	
 	popup.fix();
-	
-//	let theme = monsterblock.actor.getFlag("monsterblock", "theme-choice");
-//	monsterblock
-	
-//	monsterblock.position.height = popup.height;
 });
 
 Hooks.on("renderActorSheet5eNPC", (sheet, html, data) => {
@@ -1040,7 +1043,7 @@ Hooks.on("renderActorSheet5eNPC", (sheet, html, data) => {
 	`;
 	nav.classList.add("switches");
 
-	$(sheet.element[0]).find('.window-content .editable')[0].appendChild(nav);
+	sheet.element.find('.window-content .editable').append(nav);
 	
 	nav.addEventListener("click", async (event) => {
 		await sheet.close();
@@ -1053,4 +1056,3 @@ Actors.registerSheet("dnd5e", MonsterBlock5e, {
     types: ["npc"],
     makeDefault: false
 });
-
