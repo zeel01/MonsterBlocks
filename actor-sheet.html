@@ -131,7 +131,7 @@
 	</nav>	
 	<header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
 		<section id="monster-identity">
-			<h1 class="charname" contenteditable="false" data-field-key="name">{{ localize "MOBLOKS5E.MonsterBlocks" }}{{actor.name}}</h1>
+			<h1 class="charname" contenteditable="false" data-field-key="name">{{actor.name}}</h1>
 			<p class="chartype">
 				<span contenteditable="false" data-field-key="">
 					{{~lookup config.actorSizes data.traits.size~}}

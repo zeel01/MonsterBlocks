@@ -95,6 +95,9 @@
 		"warlock",
 		"pactmagic"
 	],
+	"MOBLOKS5E.SpellcastingLocators": [
+		"spellcasting"
+	],
 	"MOBLOKS5E.InnateCastingLocators": [
 		"innatespellcasting",
 		"innatespellcasting(psionics)",
