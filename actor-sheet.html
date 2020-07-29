@@ -498,21 +498,21 @@
 		{{/if}}
 	{{/if}}
 	
-	{{#each (getfeatures features) as |item iid|}}
+	{{#each features.features.items as |item iid|}}
 		{{#unless item.is.specialAction}}
 		{{#unless (and ../flags.casting-feature (isspellcasting item))}}
 			{{> featureBlock item=item actor=../actor}}
 		{{/unless}}
 		{{/unless}}
 	{{/each}}
-	{{#if special.legresist}}
-		{{> featureBlock item=special.legresist actor=actor}}
+	{{#if features.legResist.items}}
+		{{> featureBlock item=features.legResist.items.[0] actor=actor}}
 	{{/if}}
 	<h2 class="section-header" >{{localize "DND5E.ActionPl"}}</h2>
-	{{#if special.multiattack}}
-		{{> featureBlock item=special.multiattack actor=actor}}
+	{{#if features.multiattack.items}}
+		{{> featureBlock item=features.multiattack.items.[0] actor=actor}}
 	{{/if}}
-	{{#each (getattacks features) as |item iid|}}
+	{{#each features.attacks.items as |item iid|}}
 	{{#unless item.is.specialAction}}
 	<section class="item monster-action">
 		<div class="attack-description inline-children">
@@ -557,7 +557,7 @@
 	</section>
 	{{/unless}}
 	{{/each}}
-	{{#each (getactions features) as |item iid|}}
+	{{#each features.actions.items as |item iid|}}
 		{{#unless item.is.specialAction}}
 			{{> featureBlock item=item actor=../actor}}
 		{{/unless}}
@@ -565,7 +565,7 @@
 	{{! Reactions }}
 	{{#if info.hasReactions}}
 		<h2 class="section-header">{{localize "MOBLOKS5E.Reactions"}}</h2>
-		{{#each (getactions features) as |item iid|}}
+		{{#each features.reactions.items as |item iid|}}
 			{{#if item.is.reaction}}
 				{{> featureBlock item=item actor=../actor}}
 			{{/if}}
@@ -577,7 +577,7 @@
 		<p class="legendary-description">
 			{{ localize "MOBLOKS5E.LegendaryText" name=actor.name }}
 		</p>
-		{{#each (getactions features) as |item iid|}}
+		{{#each features.legendary.items as |item iid|}}
 			{{#if item.is.legendary }}
 			{{#unless item.is.legResist}}
 				{{> featureBlock item=item actor=../actor legendaryactions=true}}
@@ -591,7 +591,7 @@
 		<h2 class="section-header">{{ localize "MOBLOKS5E.LairActionsHeading" }}</h2>
 		<p>{{ localize "MOBLOKS5E.LairText" name=actor.name }}</p>
 		<ul>
-		{{#each (getactions features) as |item iid|}}
+		{{#each features.lair.items as |item iid|}}
 			{{#if (islair item)}}
 			<li>
 				{{> featureBlock item=item actor=../actor lairactions=true}}

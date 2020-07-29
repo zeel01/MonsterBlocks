@@ -33,7 +33,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		console.debug(data);
 
-		this.updateItemsData(data);
+	//	this.updateItemsData(data);
 		
 		data.flags = this.actor.data.flags.monsterblock;	// Get the flags for this module, and make them available in the data
 		data.info = {										// A collection of extra information used mainly for conditionals
@@ -167,8 +167,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		// Categorize Items as Features and Spells
 		const features = {
-			legendary:	{ prep: this.prepAction.bind(this), filter: this.constructor.isLegendaryAction, label: game.i18n.localize("DND5E.LegAct"), items: [] , dataset: {type: "feat"} },
 			legResist:	{ prep: this.prepFeature.bind(this), filter: this.constructor.isLegendaryResistance, label: game.i18n.localize("MOBLOKS5E.LegendaryResistance"), items: [] , dataset: {type: "feat"} },
+			legendary:	{ prep: this.prepAction.bind(this), filter: this.constructor.isLegendaryAction, label: game.i18n.localize("DND5E.LegAct"), items: [] , dataset: {type: "feat"} },
 			lair:		{ prep: this.prepAction.bind(this), filter: this.constructor.isLairAction, label: game.i18n.localize("MOBLOKS5E.LairActionsHeading"), items: [] , dataset: {type: "feat"} },
 			multiattack:{ prep: this.prepAction.bind(this), filter: this.constructor.isMultiAttack, label: game.i18n.localize("MOBLOKS5E.Multiattack"), items: [] , dataset: {type: "feat"} },
 			casting:	{ prep: this.prepFeature.bind(this), filter: this.constructor.isCasting.bind(this.constructor), label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
@@ -214,14 +214,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		data.spellbook = spellbook;
 	}
 	
-	updateItemsData(data) {
-	//	for (let set of data.features) {
-	///		if (set.label == game.i18n.localize("DND5E.ActionPl")) this.updateActionsData(set);
-	//		if (set.label == game.i18n.localize("DND5E.AttackPl")) this.updateAttacksData(set);
-	//		if (set.label == game.i18n.localize("DND5E.Features")) this.updateFeaturessData(set);
-	//	}
+/*	updateItemsData(data) {
+		for (let set of data.features) {
+			if (set.label == game.i18n.localize("DND5E.ActionPl")) this.updateActionsData(set);
+			if (set.label == game.i18n.localize("DND5E.AttackPl")) this.updateAttacksData(set);
+			if (set.label == game.i18n.localize("DND5E.Features")) this.updateFeaturessData(set);
+		}
 	}
-	updateActionsData(actions) {
+*/	updateActionsData(actions) {
 		for (let actionData of actions.items) {
 			let action = this.object.items.get(actionData._id);
 			
@@ -256,7 +256,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			
 		featureData.hasresource = this.constructor.hasResource(feature.data);
 	}
-	updateAttacksData(attacks) {
+/*	updateAttacksData(attacks) {
 		let H = this.constructor.handlebarsHelpers;
 
 		for (let attackData of attacks.items) {
@@ -274,7 +274,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		console.debug(attacks);
 	}
-	prepAttack(attackData) {
+*/	prepAttack(attackData) {
 		let attack = this.object.items.get(attackData._id);
 			
 		attackData.hasresource = this.constructor.hasResource(attack.data);
@@ -286,14 +286,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		attackData.description = this.getAttackDescription(attack);
 		console.debug(attackData.description);
 	}
-	updateFeaturessData(features) {
+/*	updateFeaturessData(features) {
 		for (let featureData of features.items) {
 			let feature = this.object.items.get(featureData._id);
 			
 			featureData.hasresource = this.constructor.hasResource(feature.data);
 		}
 	}
-	getAttackDescription(attack) {
+*/	getAttackDescription(attack) {
 		let atkd = attack.data.data;
 		let tohit = this.getAttackBonus(attack);
 		
