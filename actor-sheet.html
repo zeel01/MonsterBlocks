@@ -131,7 +131,7 @@
 	</nav>	
 	<header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
 		<section id="monster-identity">
-			<h1 class="charname" contenteditable="false" data-field-key="name">{{actor.name}}</h1>
+			<h1 class="charname" contenteditable="false" data-field-key="name">{{ localize "MOBLOKS5E.MonsterBlocks" }}{{actor.name}}</h1>
 			<p class="chartype">
 				<span contenteditable="false" data-field-key="">
 					{{~lookup config.actorSizes data.traits.size~}}
@@ -565,7 +565,7 @@
 	{{! Reactions }}
 	{{#if info.hasReactions}}
 		<h2 class="section-header">{{localize "MOBLOKS5E.Reactions"}}</h2>
-		{{#each features.reactions.items as |item iid|}}
+		{{#each features.reaction.items as |item iid|}}
 			{{#if item.is.reaction}}
 				{{> featureBlock item=item actor=../actor}}
 			{{/if}}
@@ -592,7 +592,7 @@
 		<p>{{ localize "MOBLOKS5E.LairText" name=actor.name }}</p>
 		<ul>
 		{{#each features.lair.items as |item iid|}}
-			{{#if (islair item)}}
+			{{#if item.is.lair}}
 			<li>
 				{{> featureBlock item=item actor=../actor lairactions=true}}
 			</li>

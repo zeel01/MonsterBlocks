@@ -1,18 +1,10 @@
 # TODO:
 
 ## Additions
-- ~~Add hit point modification~~
-- ~~Add theme support~~
-- Add Themes:
-	- ~~Per monster selection~~
-	- ~~"Custom" option~~
-	- ~~"Clean" theme that's a white background.~~
-	- ~~"Dark" theme~~
-	- ~~"Ice" theme~~
-	- ~~"Red" theme~~
+- Editing (for version 2)
 
 ## Changes
-- ~~Section for reactions seperate from actions.~~
+- Compelte massive refactor
 - Convert static strings to language file references. (`game.i18n.format`) <sup>*in progress*</sup>
 	- Spell slots
 	- ~~Make legendary and lair action descriptions localizable~~
@@ -22,11 +14,9 @@
 	- Localize settings
 	- Ordinals?
 	- ~~"Switch to Monster Blocks" trigger~~
+- ~~Localize multiattack and spellcasting detection~~
 
 ## Fixes
-- ~~Hide the comma after creature type if there is no alignment specified.~~
-- ~~"Hit Points" not "Darkness"~~
-- ~~Handlebars "equals" conflics with another module~~
 - Missing action uses? Example: Aboleth.enslave
 
 ## Cleanup
@@ -35,8 +25,6 @@
 - Re-organize code a bit
 - Remove anything unused
 - Refactor away as many Handlebars helpers as possible.
-- Replace redundant helpers with ones from Core/just-handlebars-helpers
-- Add `mobloks5e-` to the names of remaining helpers to prevent name collisions with other modules.
 
 ## Back Burner
 - Rolls for saves/skills that aren't listed (not proficient) <sup>One can simply roll an ability check</sup>

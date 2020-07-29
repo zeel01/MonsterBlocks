@@ -37,21 +37,20 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		data.flags = this.actor.data.flags.monsterblock;	// Get the flags for this module, and make them available in the data
 		data.info = {										// A collection of extra information used mainly for conditionals
-			hasCastingFeature: (this.isSpellcaster() || this.isInnateSpellcaster()),
+			hasCastingFeature: Boolean(data.features.casting.items.length),
 			isSpellcaster: this.isSpellcaster(),
 			isInnateSpellcaster: this.isInnateSpellcaster(),
 			isWarlock: this.isWarlock(),
 			hasAtWillSpells: this.hasAtWillSpells(),
-			hasLegendaryActions: this.hasLegendaryActions(),
-			hasLair: this.hasLair(),
-			hasReactions: this.hasReactions()
+			hasLegendaryActions: Boolean(data.features.legendary.items.length),
+			hasLair: Boolean(data.features.lair.items),
+			hasReactions: Boolean(data.features.reaction.items.length)
 		}
 		data.special = {									// A collection of cherry-picked data used in special places.
 			multiattack: this.getMultiattack(data),
 			legresist: this.getLegendaryResistance(data)
 		}
-		data.innateSpellbook = this.prepareInnateSpellbook(data.spellbook); 
-		
+				
 		data.themes = this.themes;
 		
 		return data;
@@ -171,7 +170,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			legendary:	{ prep: this.prepAction.bind(this), filter: this.constructor.isLegendaryAction, label: game.i18n.localize("DND5E.LegAct"), items: [] , dataset: {type: "feat"} },
 			lair:		{ prep: this.prepAction.bind(this), filter: this.constructor.isLairAction, label: game.i18n.localize("MOBLOKS5E.LairActionsHeading"), items: [] , dataset: {type: "feat"} },
 			multiattack:{ prep: this.prepAction.bind(this), filter: this.constructor.isMultiAttack, label: game.i18n.localize("MOBLOKS5E.Multiattack"), items: [] , dataset: {type: "feat"} },
-			casting:	{ prep: this.prepFeature.bind(this), filter: this.constructor.isCasting.bind(this.constructor), label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
+			casting:	{ prep: this.prepCasting.bind(this), filter: this.constructor.isCasting.bind(this.constructor), label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
 			reaction:	{ prep: this.prepAction.bind(this), filter: this.constructor.isReaction, label: game.i18n.localize("MOBLOKS5E.Reactions"), items: [], dataset: {type: "feat"} },
 			attacks:	{ prep: this.prepAttack.bind(this), filter: item => item.type === "weapon", label: game.i18n.localize("DND5E.AttackPl"), items: [] , dataset: {type: "weapon"} },
 			actions:	{ prep: this.prepAction.bind(this), filter: item => Boolean(item.data.activation.type), label: game.i18n.localize("DND5E.ActionPl"), items: [] , dataset: {type: "feat"} },
@@ -193,35 +192,21 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		other = this._filterItems(other, this._filters.features);
 
 		// Organize Spellbook
-		const spellbook = this._prepareSpellbook(data, spells);
+		data.spellbook = this._prepareSpellbook(data, spells);
+		data.innateSpellbook = this.prepareInnateSpellbook(data.spellbook); 
 
 		// Organize Features
 		for ( let item of other ) {
 			let category = Object.values(features).find(cat => cat.filter(item));
-			category.prep(item);
+			category.prep(item, data);
 			category.items.push(item);
-			
-		//	if ( item.type === "weapon" ) features.weapons.items.push(item);
-		//	else if ( item.type === "feat" ) {
-		//		if ( item.data.activation.type ) features.actions.items.push(item);
-		//		else features.passive.items.push(item);
-		//	}
-		//	else features.equipment.items.push(item);
 		}
 
 		// Assign and return
 		data.features = features;
-		data.spellbook = spellbook;
 	}
 	
-/*	updateItemsData(data) {
-		for (let set of data.features) {
-			if (set.label == game.i18n.localize("DND5E.ActionPl")) this.updateActionsData(set);
-			if (set.label == game.i18n.localize("DND5E.AttackPl")) this.updateAttacksData(set);
-			if (set.label == game.i18n.localize("DND5E.Features")) this.updateFeaturessData(set);
-		}
-	}
-*/	updateActionsData(actions) {
+	updateActionsData(actions) {
 		for (let actionData of actions.items) {
 			let action = this.object.items.get(actionData._id);
 			
@@ -256,25 +241,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			
 		featureData.hasresource = this.constructor.hasResource(feature.data);
 	}
-/*	updateAttacksData(attacks) {
-		let H = this.constructor.handlebarsHelpers;
-
-		for (let attackData of attacks.items) {
-			let attack = this.object.items.get(attackData._id);
-			
-			attackData.hasresource = this.constructor.hasResource(attack.data);
-			attackData.resourcelimit = attack.hasresource ? H.getresourcelimit(attack, this.actor.data) : 0;
-			attackData.resourcerefresh = attack.hasresource ? H.getresourcerefresh(attack, this.actor.data) : "";
-
-			attackData.tohit = this.getAttackBonus(attack);
-			
-			attackData.description = this.getAttackDescription(attack);
-			console.debug(attackData.description);
-		}
-		
-		console.debug(attacks);
-	}
-*/	prepAttack(attackData) {
+	prepAttack(attackData) {
 		let attack = this.object.items.get(attackData._id);
 			
 		attackData.hasresource = this.constructor.hasResource(attack.data);
@@ -286,14 +253,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		attackData.description = this.getAttackDescription(attack);
 		console.debug(attackData.description);
 	}
-/*	updateFeaturessData(features) {
-		for (let featureData of features.items) {
-			let feature = this.object.items.get(featureData._id);
-			
-			featureData.hasresource = this.constructor.hasResource(feature.data);
-		}
+	prepCasting(featureData, data) {
+		featureData.castingType = this.constructor.isSpellcasting(featureData) ?
+			(this.constructor.isPactMagic(featureData) ? "pact" : "standard") : "innate";
 	}
-*/	getAttackDescription(attack) {
+	getAttackDescription(attack) {
 		let atkd = attack.data.data;
 		let tohit = this.getAttackBonus(attack);
 		
@@ -634,14 +598,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
 		let name = item.name.toLowerCase().replace(/\s+/g, '');	// Convert the name of the item to all lower case, and remove whitespace.
-		return [	// This is an array of possible names for the multiattack feature that seem likely to come up.
-			"multiattack",
-			"extraattack",
-			"extraattacks",
-			"multiattacks",
-			"multipleattacks",
-			"manyattacks"
-		].includes(name); // Array.includes() checks if any item in the array matches the value given. This will determin if the name of the item is one of the options in the array.
+		return game.i18n.localize("MOBLOKS5E.MultiattackLocators").includes(name); // Array.includes() checks if any item in the array matches the value given. This will determin if the name of the item is one of the options in the array.
 	}
 	
 	static isLegendaryResistance(item) {
@@ -661,14 +618,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return item.data?.activation?.type === "reaction";
 	}
 	static isSpellcasting(item) {
-		return item.name?.toLowerCase().replace(/\s+/g, '') === "spellcasting";
+		let name = item.name.toLowerCase().replace(/\s+/g, '');
+		return game.i18n.localize("MOBLOKS5E.SpellcastingLocators").includes(name);
 	}
 	static isInnateSpellcasting(item) {
-		return [
-			"innatespellcasting",
-			"innatespellcasting(psionics)",
-			"innatespellcastingpsionics"
-		].includes(item.name.toLowerCase().replace(/\s+/g, ''));
+		let name = item.name.toLowerCase().replace(/\s+/g, '');
+		return game.i18n.localize("MOBLOKS5E.InnateCastingLocators").includes(name);
+	}
+	static isPactMagic(item) {
+		let desc = item.data.description?.value?.toLowerCase().replace(/\s+/g, '');
+		return game.i18n.localize("MOBLOKS5E.WarlockLocators").some(
+			s => desc.indexOf(s) > -1
+		);
 	}
 	static isCasting(item) {
 		return this.isSpellcasting(item) || this.isInnateSpellcasting(item);
@@ -698,24 +659,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		},
 		"invalidspelllevel": (level) => level < 0,	// Spell levels less than 0 mean sometihng special, and need checkd for
 		"isspellcasting": (item) => this.isSpellcasting(item) || this.isInnateSpellcasting(item),
-		
-		
-		// Feature type groups
-		"getattacks": (features) => {
-			for (let feature of features) {
-				if (feature.label == game.i18n.localize("DND5E.AttackPl")) return feature.items;
-			}
-		},
-		"getactions": (features) => {
-			for (let feature of features) {
-				if (feature.label == game.i18n.localize("DND5E.ActionPl")) return feature.items;
-			}
-		},
-		"getfeatures": (features) => {
-			for (let feature of features) {
-				if (feature.label == game.i18n.localize("DND5E.Features")) return feature.items;
-			}
-		},
+
 		"getcastingability": (actor, spellbook, type) => {
 			let main = actor.data.attributes.spellcasting;
 			let castingability = main;
