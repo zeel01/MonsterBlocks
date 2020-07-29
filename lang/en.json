@@ -79,6 +79,10 @@
 	"MOBLOKS5E.AttackDamageTemplate": "{average} ({formula}) {type}",
 	"MOBLOKS5E.damage": "damage",
 	
+	"MOBLOKS5E.Reactions": "Reactions",
+	"MOBLOKS5E.Multiattack": "Multiattack",
+	"MOBLOKS5E.LegendaryResistance": "Legendary Resistance",
+	
 	"MOBLOKS5E.LegActionCost": "Costs {number} Actions",
 	"MOBLOKS5E.LegendaryText": "The {name} can take 3 legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {name} regains spent legendary actions at the start of its turn.",
 	

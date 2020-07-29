@@ -352,6 +352,12 @@
 		<div class="feature-description inline-children">
 			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>.
 			<span class="description">
+				{{ localize "MOBLOKS5E.CasterNameLevel" }}
+				{{ localize "MOBLOKS5E.CastingAbility" }}
+				{{ localize "MOBLOKS5E.CastingStats" }}
+				{{ localize "MOBLOKS5E.CasterSpellsPreped" }}
+				
+			
 				{{! Needs Localization }}
 				The {{actor.name}} is a {{moblok-formatordinal data.details.spellLevel}}-level spellcaster.
 				Its spellcasting ability is {{getcastingability actor spellbook castertype}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
@@ -558,9 +564,9 @@
 	{{/each}}
 	{{! Reactions }}
 	{{#if info.hasReactions}}
-		<h2 class="section-header">{{localize "DND5E.Reaction"}}s</h2>
+		<h2 class="section-header">{{localize "MOBLOKS5E.Reactions"}}</h2>
 		{{#each (getactions features) as |item iid|}}
-			{{#if (isreaction item)}}
+			{{#if item.is.reaction}}
 				{{> featureBlock item=item actor=../actor}}
 			{{/if}}
 		{{/each}}

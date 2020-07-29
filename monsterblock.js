@@ -31,6 +31,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		const data = super.getData();
 		data.master = this;
 		
+		console.debug(data);
+
 		this.updateItemsData(data);
 		
 		data.flags = this.actor.data.flags.monsterblock;	// Get the flags for this module, and make them available in the data
@@ -161,12 +163,63 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		this.setCurrentTheme(value);
 	}
 	
-	updateItemsData(data) {
-		for (let set of data.features) {
-			if (set.label == game.i18n.localize("DND5E.ActionPl")) this.updateActionsData(set);
-			if (set.label == game.i18n.localize("DND5E.AttackPl")) this.updateAttacksData(set);
-			if (set.label == game.i18n.localize("DND5E.Features")) this.updateFeaturessData(set);
+	_prepareItems(data) {
+
+		// Categorize Items as Features and Spells
+		const features = {
+			legendary:	{ prep: this.prepAction.bind(this), filter: this.constructor.isLegendaryAction, label: game.i18n.localize("DND5E.LegAct"), items: [] , dataset: {type: "feat"} },
+			legResist:	{ prep: this.prepFeature.bind(this), filter: this.constructor.isLegendaryResistance, label: game.i18n.localize("MOBLOKS5E.LegendaryResistance"), items: [] , dataset: {type: "feat"} },
+			lair:		{ prep: this.prepAction.bind(this), filter: this.constructor.isLairAction, label: game.i18n.localize("MOBLOKS5E.LairActionsHeading"), items: [] , dataset: {type: "feat"} },
+			multiattack:{ prep: this.prepAction.bind(this), filter: this.constructor.isMultiAttack, label: game.i18n.localize("MOBLOKS5E.Multiattack"), items: [] , dataset: {type: "feat"} },
+			casting:	{ prep: this.prepFeature.bind(this), filter: this.constructor.isCasting.bind(this.constructor), label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
+			reaction:	{ prep: this.prepAction.bind(this), filter: this.constructor.isReaction, label: game.i18n.localize("MOBLOKS5E.Reactions"), items: [], dataset: {type: "feat"} },
+			attacks:	{ prep: this.prepAttack.bind(this), filter: item => item.type === "weapon", label: game.i18n.localize("DND5E.AttackPl"), items: [] , dataset: {type: "weapon"} },
+			actions:	{ prep: this.prepAction.bind(this), filter: item => Boolean(item.data.activation.type), label: game.i18n.localize("DND5E.ActionPl"), items: [] , dataset: {type: "feat"} },
+			features:	{ prep: this.prepFeature.bind(this), filter: item => item.type === "feat", label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
+			equipment:	{ prep: ()=>{}, filter: i => true, label: game.i18n.localize("DND5E.Inventory"), items: [], dataset: {type: "loot"}}
+		};
+
+		// Start by classifying items into groups for rendering
+		let [spells, other] = data.items.reduce((arr, item) => {
+			
+			
+			if ( item.type === "spell" ) arr[0].push(item);
+			else arr[1].push(item);
+			return arr;
+		}, [[], []]);
+
+		// Apply item filters
+		spells = this._filterItems(spells, this._filters.spellbook);
+		other = this._filterItems(other, this._filters.features);
+
+		// Organize Spellbook
+		const spellbook = this._prepareSpellbook(data, spells);
+
+		// Organize Features
+		for ( let item of other ) {
+			let category = Object.values(features).find(cat => cat.filter(item));
+			category.prep(item);
+			category.items.push(item);
+			
+		//	if ( item.type === "weapon" ) features.weapons.items.push(item);
+		//	else if ( item.type === "feat" ) {
+		//		if ( item.data.activation.type ) features.actions.items.push(item);
+		//		else features.passive.items.push(item);
+		//	}
+		//	else features.equipment.items.push(item);
 		}
+
+		// Assign and return
+		data.features = features;
+		data.spellbook = spellbook;
+	}
+	
+	updateItemsData(data) {
+	//	for (let set of data.features) {
+	///		if (set.label == game.i18n.localize("DND5E.ActionPl")) this.updateActionsData(set);
+	//		if (set.label == game.i18n.localize("DND5E.AttackPl")) this.updateAttacksData(set);
+	//		if (set.label == game.i18n.localize("DND5E.Features")) this.updateFeaturessData(set);
+	//	}
 	}
 	updateActionsData(actions) {
 		for (let actionData of actions.items) {
@@ -183,6 +236,25 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			};
 			actionData.is.specialAction = Object.values(actionData.is).some(v => v == true);	// Used to ensure that actions that need seperated out aren't shown twice
 		}
+	}
+	prepAction(actionData) {
+		let action = this.object.items.get(actionData._id);
+			
+		actionData.hasResource = this.constructor.hasResource(action.data);
+		
+		actionData.is = { 
+			multiAttaack: this.constructor.isMultiAttack(action.data),
+			legendary: this.constructor.isLegendaryAction(action.data),
+			lair: this.constructor.isLairAction(action.data),
+			legResist: this.constructor.isLegendaryResistance(action.data),
+			reaction: this.constructor.isReaction(action.data)
+		};
+		actionData.is.specialAction = Object.values(actionData.is).some(v => v == true);	// Used to ensure that actions that need seperated out aren't shown twice
+	}
+	prepFeature(featureData) {
+		let feature = this.object.items.get(featureData._id);
+			
+		featureData.hasresource = this.constructor.hasResource(feature.data);
 	}
 	updateAttacksData(attacks) {
 		let H = this.constructor.handlebarsHelpers;
@@ -201,6 +273,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 		
 		console.debug(attacks);
+	}
+	prepAttack(attackData) {
+		let attack = this.object.items.get(attackData._id);
+			
+		attackData.hasresource = this.constructor.hasResource(attack.data);
+		attackData.resourcelimit = attack.hasresource ? H.getresourcelimit(attack, this.actor.data) : 0;
+		attackData.resourcerefresh = attack.hasresource ? H.getresourcerefresh(attack, this.actor.data) : "";
+
+		attackData.tohit = this.getAttackBonus(attack);
+		
+		attackData.description = this.getAttackDescription(attack);
+		console.debug(attackData.description);
 	}
 	updateFeaturessData(features) {
 		for (let featureData of features.items) {
@@ -585,6 +669,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			"innatespellcasting(psionics)",
 			"innatespellcastingpsionics"
 		].includes(item.name.toLowerCase().replace(/\s+/g, ''));
+	}
+	static isCasting(item) {
+		return this.isSpellcasting(item) || this.isInnateSpellcasting(item);
 	}
 	static getItemAbility(item, actor, master) {
 		return master.object.items.get(item._id).abilityMod;
