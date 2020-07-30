@@ -251,11 +251,66 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		attackData.tohit = this.getAttackBonus(attack);
 		
 		attackData.description = this.getAttackDescription(attack);
-		console.debug(attackData.description);
 	}
 	prepCasting(featureData, data) {
+		this.prepFeature(featureData);
+		
 		featureData.castingType = this.constructor.isSpellcasting(featureData) ?
 			(this.constructor.isPactMagic(featureData) ? "pact" : "standard") : "innate";
+		featureData.hasAtWill = true;
+		
+		let ct = featureData.castingType;
+		featureData.description = {
+			level: ct == "innate" ? "" : game.i18n.format("MOBLOKS5E.CasterNameLevel", {
+				name: this.actor.name,
+				level: this.constructor.formatOrdinal(this.actor.data.data?.details?.spellLevel ?? 1)
+			}),
+			ability: game.i18n.format(
+				ct == "innate" ? "MOBLOKS5E.InnateCastingAbility" : "MOBLOKS5E.CastingAbility", {
+					name: this.actor.name,
+					ability: this.getCastingAbility(
+						ct == "innate" ? data.innateSpellbook : data.spellbook, ct
+					)
+				}
+			),
+			stats: game.i18n.format("MOBLOKS5E.CastingStats", {
+				
+			}),
+			warlockRecharge: ct == "pact" ? game.i18n.localize("MOBLOKS5E.CasterAtWill") : "",
+			spellintro: game.i18n.format({	// Am I insane? Yes, yes I am.
+				"standard": "MOBLOKS5E.CasterSpellsPreped",
+				"pact": "MOBLOKS5E.WarlockSpellsPreped",
+				"innate": "MOBLOKS5E.InnateSpellsKnown"
+			}[ct], {
+				name: this.actor.name,
+				atwill: featureData.hasAtWill ? game.i18n.format("MOBLOKS5E.CasterAtWill", {
+					
+				}) : ""
+			})
+		}
+		
+		console.debug(featureData);
+	}
+	getCastingAbility(spellbook, type) {
+		let main = this.actor.data.data?.attributes?.spellcasting ?? "int";
+		let castingability = main;
+		
+		let types = {
+			"will": (l) => l.order == -20,
+			"innate": (l) => l.order == -10,
+			"pact": (l) => l.order == 0.5,
+			"cantrip": (l) => l.order == 0,
+			"standard": (l) => l.order > 0.5
+		}
+		let spelllevel = spellbook.find(types[type])
+		if (spelllevel !== undefined) {
+			let spell = spelllevel.spells.find((s) => 
+				s.data.ability && 
+				s.data.ability != main
+			);
+			castingability = spell?.data?.ability ?? main;
+		}
+		return this.actor.data.data?.abilities[castingability]?.label ?? game.i18n.localize("DND5E.AbilityInt");
 	}
 	getAttackDescription(attack) {
 		let atkd = attack.data.data;
@@ -639,6 +694,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	static hasResource(item) {
 		return Boolean(item.data.consume?.target);
+	}
+	static formatOrdinal(number) {
+		let suffixes = game.i18n.localize("MOBLOKS5E.OrdinalSuffixes");
+		if (number < 1 || suffixes.length < 1) return number.toString();
+		if (number <= suffixes.length) return number + suffixes[number - 1];
+		else return number + suffixes[suffixes.length - 1];
 	}
 	static handlebarsHelpers = {
 		"moblok-hascontents": (obj) => { // Check if an array is empty.
