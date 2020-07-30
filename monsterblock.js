@@ -257,12 +257,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		featureData.castingType = this.constructor.isSpellcasting(featureData) ?
 			(this.constructor.isPactMagic(featureData) ? "pact" : "standard") : "innate";
-		featureData.hasAtWill = true;
+		featureData.hasAtWill = this.hasAtWillSpells();
 		
 		let ct = featureData.castingType;
-		let [abilityTitle, castingAbility] = this.getCastingAbility(
-			ct == "innate" ? data.innateSpellbook : data.spellbook, ct, data
-		);
+		
+		//featureData.maxSpellLevel
+		featureData.spellbook = ct == "innate" ? data.innateSpellbook : data.spellbook;							
+		
+
+		let [abilityTitle, castingAbility] = this.getCastingAbility(featureData.spellbook, ct, data);
 		let tohit = this.getSpellAttackBonus(castingAbility);
 		
 		featureData.description = {
@@ -294,6 +297,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				}) : ""
 			})
 		}
+
 		
 		console.debug(featureData);
 	}
