@@ -1,4 +1,7 @@
-<form class="{{cssClass}} flexcol{{#if flags.inline-secrets}} inline-secrets{{/if}}{{#if flags.hidden-secrets}} hidden-secrets{{/if}}" autocomplete="off">
+<form	class="{{cssClass}} flexcol{{#if flags.inline-secrets}} inline-secrets{{/if}}{{#if flags.hidden-secrets}} hidden-secrets{{/if}}" 
+		autocomplete="off"
+		style="--list-seperator: '{{ localize 'MOBLOKS5E.Comma' }}'; --list-conjuntion: '{{ localize 'MOBLOKS5E.ListFinalConjunctionAnd' }}'; "
+	>
 	<nav class="switches">
 		<i class="fas fa-cog"></i>
 		<ul>
@@ -352,12 +355,6 @@
 		<div class="feature-description inline-children">
 			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>.
 			<span class="description">
-				{{ localize "MOBLOKS5E.CasterNameLevel" }}
-				{{ localize "MOBLOKS5E.CastingAbility" }}
-				{{ localize "MOBLOKS5E.CastingStats" }}
-				{{ localize "MOBLOKS5E.CasterSpellsPreped" }}
-				
-			
 				{{! Needs Localization }}
 				The {{actor.name}} is a {{moblok-formatordinal data.details.spellLevel}}-level spellcaster.
 				Its spellcasting ability is {{getcastingability actor spellbook castertype}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
@@ -485,6 +482,45 @@
 	</section>
 	{{/inline}}
 	
+	{{#each features.casting.items as |casting id|}}
+	<section class="monster-feature spellcasting-trait">
+		<div class="feature-description inline-children">
+			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>.
+			<span class="description">
+				{{{ casting.description.level }}}
+				{{{ casting.description.ability }}}
+				{{{ casting.description.stats }}}
+				{{{ casting.description.warlockRecharge }}}
+				{{{ casting.description.spellintro }}}
+			</span>
+			<ul class="spell-list">
+			{{#each spellbook as |spelllevel id|}}
+			{{#unless (or (invalidspelllevel spelllevel.dataset.level) (eq spelllevel.dataset.level 0.5))}}
+				<li>
+					<span class="spell-level-name">
+						{{localize (spelllevellocalization spelllevel.dataset.level)}}{{#unless spelllevel.dataset.level}}s{{/unless}}
+					</span>
+					<span class="spell-slots">
+						({{#if spelllevel.dataset.level~}}
+							{{spelllevel.slots}} slot{{#if (gt spelllevel.slots 1)}}s{{/if}}
+						{{~else~}}
+							at will
+						{{~/if~}}){{~" "~}}
+					</span>:
+					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
+					{{#each spelllevel.spells as |spell id|}}
+							<li class="spell" data-item-id="{{spell._id}}">
+								<span class="spell-name">{{spell.name}}</span>{{~" "~}}
+							</li>
+					{{/each}}
+					</ul>
+				</li>
+			{{/unless}}
+			{{/each}}
+			</ul>
+		</div>
+	</section>
+	{{/each}}
 	
 	{{#if (and info.hasCastingFeature flags.casting-feature)}}
 		{{#if info.isSpellcaster}}

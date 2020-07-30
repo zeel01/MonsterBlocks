@@ -260,6 +260,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		featureData.hasAtWill = true;
 		
 		let ct = featureData.castingType;
+		let [abilityTitle, castingAbility] = this.getCastingAbility(
+			ct == "innate" ? data.innateSpellbook : data.spellbook, ct, data
+		);
+		let tohit = this.getSpellAttackBonus(castingAbility);
+		
 		featureData.description = {
 			level: ct == "innate" ? "" : game.i18n.format("MOBLOKS5E.CasterNameLevel", {
 				name: this.actor.name,
@@ -268,15 +273,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			ability: game.i18n.format(
 				ct == "innate" ? "MOBLOKS5E.InnateCastingAbility" : "MOBLOKS5E.CastingAbility", {
 					name: this.actor.name,
-					ability: this.getCastingAbility(
-						ct == "innate" ? data.innateSpellbook : data.spellbook, ct
-					)
+					ability: abilityTitle
 				}
 			),
 			stats: game.i18n.format("MOBLOKS5E.CastingStats", {
-				
+				savedc: this.actor.data.data?.attributes?.spelldc,
+				bonus: `${tohit > -1 ? "+" : ""}${tohit}`
 			}),
-			warlockRecharge: ct == "pact" ? game.i18n.localize("MOBLOKS5E.CasterAtWill") : "",
+			warlockRecharge: ct == "pact" ? game.i18n.localize("MOBLOKS5E.WarlockSlotRegain") : "",
 			spellintro: game.i18n.format({	// Am I insane? Yes, yes I am.
 				"standard": "MOBLOKS5E.CasterSpellsPreped",
 				"pact": "MOBLOKS5E.WarlockSpellsPreped",
@@ -284,14 +288,23 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}[ct], {
 				name: this.actor.name,
 				atwill: featureData.hasAtWill ? game.i18n.format("MOBLOKS5E.CasterAtWill", {
-					
+					spells: data.spellbook.find(l => l.prop === "atwill")?.spells?.reduce((list, spell, i, a) => {
+						return `${list}<li class="spell at-will-spell" data-item-id="${spell._id}"><span class="spell-name">${spell.name}</span></li>`
+					}, `<ul class="at-will-spells">`) + "</ul>"
 				}) : ""
 			})
 		}
 		
 		console.debug(featureData);
 	}
-	getCastingAbility(spellbook, type) {
+	getSpellAttackBonus(attr) {
+		let data = this.actor.data.data;
+		let abilityBonus = data.abilities[attr]?.mod;
+		let profBonus = data.attributes?.prof;
+		
+		return abilityBonus + profBonus;
+	}
+	getCastingAbility(spellbook, type, data) {
 		let main = this.actor.data.data?.attributes?.spellcasting ?? "int";
 		let castingability = main;
 		
@@ -310,7 +323,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			);
 			castingability = spell?.data?.ability ?? main;
 		}
-		return this.actor.data.data?.abilities[castingability]?.label ?? game.i18n.localize("DND5E.AbilityInt");
+		return [data.actor.data?.abilities[castingability]?.label ?? game.i18n.localize("DND5E.AbilityInt"), castingability];
 	}
 	getAttackDescription(attack) {
 		let atkd = attack.data.data;

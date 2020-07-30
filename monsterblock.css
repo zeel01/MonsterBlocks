@@ -304,7 +304,9 @@
 	display: inline;
 }
 .monsterblock .inline-list li:after {
-    content: ', ';
+    content: var(--list-seperator) ' ';
+	text-shadow: none;
+	color: var(--main-text-color);
 }
 
 .monsterblock .inline-list li:last-of-type:after {
@@ -326,15 +328,17 @@
 	display: inline;
 }
 .monsterblock .at-will-spells li:after {
-	content: ', ';
+	content: var(--list-seperator) ' ';
+	text-shadow: none;
+	color: var(--main-text-color);
 }
 .monsterblock .at-will-spells 
 li:not(:first-of-type):nth-last-of-type(2):after {
-	content: ', and ';
+	content: var(--list-seperator) ' ' var(--list-conjuntion) ' ';
 }
 .monsterblock .at-will-spells 
 li:nth-last-of-type(2):after {
-	content: ' and ';
+	content: ' ' var(--list-conjuntion) '  ';
 }
 .monsterblock .at-will-spells li:last-of-type:after {
 	content: '';

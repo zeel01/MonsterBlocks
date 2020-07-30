@@ -84,6 +84,8 @@
 	"MOBLOKS5E.Multiattack": "Multiattack",
 	"MOBLOKS5E.LegendaryResistance": "Legendary Resistance",
 	
+	"MOBLOKS5E.OrdinalSuffixes": ["st", "nd", "rd", "th"],
+	
 	"MOBLOKS5E.MultiattackLocators": [
 		"multiattack",
 		"extraattack",
@@ -97,7 +99,8 @@
 		"pactmagic"
 	],
 	"MOBLOKS5E.SpellcastingLocators": [
-		"spellcasting"
+		"spellcasting",
+		"pactmagic"
 	],
 	"MOBLOKS5E.InnateCastingLocators": [
 		"innatespellcasting",
