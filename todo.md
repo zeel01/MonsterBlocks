@@ -4,20 +4,22 @@
 - Editing (for version 2)
 
 ## Changes
-- Compelte massive refactor
-- Convert static strings to language file references. (`game.i18n.format`) <sup>*in progress*</sup>
-	- Spell slots
+- Complete massive refactor
+- Convert static strings to language file references.<sup>*In progress*</sup>
+	- ~~Spell slots~~
 	- ~~Make legendary and lair action descriptions localizable~~
-	- Make spellcasting description localizable
+	- ~~Make spellcasting description localizable~~
 	- Replace use of commas and periods with localizable strings
 	- Indicate to new users that the menu in the corner exists
 	- Localize settings
-	- Ordinals?
+	- ~~Ordinals?~~
 	- ~~"Switch to Monster Blocks" trigger~~
 - ~~Localize multiattack and spellcasting detection~~
+- Reorganize language file
 
 ## Fixes
 - Missing action uses? Example: Aboleth.enslave
+- Comma color 
 
 ## Cleanup
 - Clean up classes from the template that aren't needed

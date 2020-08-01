@@ -141,7 +141,7 @@ This will show only icons, which should help as long as you remember what they a
 See [macros.js](macros.js)
 
 ### Toggle the selected token between the default 5e sheet, and MonsterBlock:
-```
+```javascript
 (async ()=> {
 	await token.actor.sheet.close();
 	if (token.actor.getFlag("core", "sheetClass") === "dnd5e.ActorSheet5eNPC") {

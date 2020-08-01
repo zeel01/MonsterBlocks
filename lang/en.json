@@ -58,6 +58,9 @@
 	"MOBLOKS5E.Comma": ",",
 	"MOBLOKS5E.Colon": ":",
 	
+	"MOBLOKS5E.Cantrips": "Cantrips",
+	"MOBLOKS5E.AtWill": "at will",
+
 	"MOBLOKS5E.CasterNameLevel": "The {name} is a {level}-level spellcaster.",
 	"MOBLOKS5E.CastingAbility": "Its spellcasting ability is {ability}",
 	"MOBLOKS5E.InnateCastingAbility": "The {name}'s innate spellcasting ability is {ability}",
@@ -68,6 +71,11 @@
 	"MOBLOKS5E.InnateSpellsKnown": "The {name} can innately cast the following spells, requiring no material components:",
 	"MOBLOKS5E.WarlockSlotRegain": "It regains its expended spell slots when it finishes a short or long rest.",
 	"MOBLOKS5E.ListFinalConjunctionAnd": "and",
+
+	"MOBLOCKS5E.SpellLevel": "{level} level",
+	"MOBLOCKS5E.SpellCost": "{cost} each",
+	"MOBLOCKS5E.SpellSlots": "{slots} slots",
+	"MOBLOCKS5E.SpellPactSlots": "{slots} {level}-level slots",
 	
 	"MOBLOKS5E.range": "range",
 	"MOBLOKS5E.reach": "reach",

@@ -344,144 +344,6 @@
 	</section>
 	{{/inline}}
 	
-	{{#*inline "atwillcasting"}}
-		{{#each spells as |spell id|}}
-			<li class="at-will-spell">{{spell.name}}</li>
-		{{/each}}
-	{{/inline}}
-	
-	{{#*inline "spellcasting"}}
-	<section class="monster-feature spellcasting-trait">
-		<div class="feature-description inline-children">
-			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>.
-			<span class="description">
-				{{! Needs Localization }}
-				The {{actor.name}} is a {{moblok-formatordinal data.details.spellLevel}}-level spellcaster.
-				Its spellcasting ability is {{getcastingability actor spellbook castertype}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
-				The {{actor.name}}
-				{{#if info.hasAtWillSpells}}
-					can cast 
-					<ul class="at-will-spells">
-						{{> atwillcasting spells=(getatwill spellbook)}}	
-					</ul>
-					at will and
-				{{/if}}
-				has the following {{! spell class is unavailable}} spells prepared:
-			</span>
-			<ul class="spell-list">
-			{{#each spellbook as |spelllevel id|}}
-			{{#unless (or (invalidspelllevel spelllevel.dataset.level) (eq spelllevel.dataset.level 0.5))}}
-				<li>
-					<span class="spell-level-name">
-						{{localize (spelllevellocalization spelllevel.dataset.level)}}{{#unless spelllevel.dataset.level}}s{{/unless}}
-					</span>
-					<span class="spell-slots">
-						({{#if spelllevel.dataset.level~}}
-							{{spelllevel.slots}} slot{{#if (gt spelllevel.slots 1)}}s{{/if}}
-						{{~else~}}
-							at will
-						{{~/if~}}){{~" "~}}
-					</span>:
-					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
-					{{#each spelllevel.spells as |spell id|}}
-							<li class="spell" data-item-id="{{spell._id}}">
-								<span class="spell-name">{{spell.name}}</span>{{~" "~}}
-							</li>
-					{{/each}}
-					</ul>
-				</li>
-			{{/unless}}
-			{{/each}}
-			</ul>
-		</div>
-	</section>
-	{{/inline}}
-	
-	{{#*inline "warlockcasting"}}
-	<section class="monster-feature spellcasting-trait">
-		<div class="feature-description inline-children">
-			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>.
-			<span class="description">
-				{{! Needs Localization }}
-				The {{actor.name}} is a {{moblok-formatordinal data.details.spellLevel}}-level spellcaster.
-				Its spellcasting ability is {{getcastingability actor spellbook castertype}} (spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
-				It regains its expended spell slots when it finishes a short or long rest.
-				It
-				{{#if info.hasAtWillSpells}}
-					can cast 
-					<ul class="at-will-spells">
-						{{> atwillcasting spells=(getatwill spellbook)}}	
-					</ul>
-					at will and
-				{{/if}}
-				has the following warlock spells prepared:
-			</span>
-			<ul class="spell-list">
-			{{#each spellbook as |spelllevel id|}}
-			{{#unless (or (invalidspelllevel spelllevel.dataset.level) (gt spelllevel.dataset.level 0.5))}}
-				<li>
-					<span class="spell-level-name">
-						{{#unless spelllevel.dataset.level}}
-							{{localize "DND5E.SpellLevel0"}}s
-						{{else}}
-							1st-{{localize (spelllevellocalization (warlockslotlevel spelllevel))}}
-						{{/unless}}
-					</span>
-					<span class="spell-slots">
-						({{#if (warlockslotlevel spelllevel)~}}
-							{{spelllevel.slots}} {{moblok-formatordinal (warlockslotlevel spelllevel)}}-level slot{{#if (gt spelllevel.slots 1)}}s{{/if}}
-						{{~else~}}
-							at will
-						{{~/if~}}){{~" "~}}
-					</span>:
-					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
-					{{#each spelllevel.spells as |spell id|}}
-						<li class="spell" data-item-id="{{spell._id}}">
-							<span class="spell-name">{{spell.name}}</span>{{~" "~}}
-						</li>
-					{{/each}}
-					</ul>
-				</li>
-			{{/unless}}
-			{{/each}}
-			</ul>
-		</div>
-	</section>
-	{{/inline}}
-	
-	{{#*inline "innatespellcasting"}}
-	<section class="monster-feature spellcasting-trait">
-		<div class="feature-description inline-children">
-			<span class="feature-name">{{localize "DND5E.SpellPrepInnate"}}</span>.
-			<span class="description">
-				{{! Needs Localization }}
-				The {{actor.name}}'s innate spellcasting ability is {{getcastingability actor spellbook castertype}}
-				(spell save DC {{data.attributes.spelldc}}, {{numberFormat (getspellattackbonus actor) decimals=0 sign=true}} to hit with spell attacks).
-				The {{actor.name}} can innately cast the following spells, requiring no material components:
-			</span>
-			<ul class="spell-list">
-			{{#each spellbook as |spelllevel id|}}
-				<li>
-					<span class="spell-level-name">
-						{{spelllevel.label}}
-						{{~#if (and (gt spelllevel.uses 0) (gt spelllevel.spells.length 1))}}
-							each
-						{{~/if}}:
-					</span>
-					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
-					{{#each spelllevel.spells as |spell id|}}
-						<li class="spell" data-item-id="{{spell._id}}">
-							<span class="spell-name">{{spell.name}}</span>{{~" "~}}
-						</li>
-					{{/each}}
-					</ul>
-				</li>
-			{{/each}}
-			</ul>
-		</div>
-	</section>
-	{{/inline}}
-	
 	{{#each features.casting.items as |casting id|}}
 	<section class="monster-feature spellcasting-trait">
 		<div class="feature-description inline-children">
@@ -494,45 +356,28 @@
 				{{{ casting.description.spellintro }}}
 			</span>
 			<ul class="spell-list">
-			{{#each spellbook as |spelllevel id|}}
-			{{#unless (or (invalidspelllevel spelllevel.dataset.level) (eq spelllevel.dataset.level 0.5))}}
+			{{#each casting.spellbook as |page id|}}
 				<li>
 					<span class="spell-level-name">
-						{{localize (spelllevellocalization spelllevel.dataset.level)}}{{#unless spelllevel.dataset.level}}s{{/unless}}
+						{{page.label~}}
 					</span>
-					<span class="spell-slots">
-						({{#if spelllevel.dataset.level~}}
-							{{spelllevel.slots}} slot{{#if (gt spelllevel.slots 1)}}s{{/if}}
-						{{~else~}}
-							at will
-						{{~/if~}}){{~" "~}}
-					</span>:
+					{{~#if page.slotLabel}}
+						<span class="spell-slots">({{page.slotLabel}})</span>
+					{{~/if~}}
+					{{~ localize "MOBLOKS5E.Colon" }}
 					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
-					{{#each spelllevel.spells as |spell id|}}
+					{{#each page.spells as |spell id|}}
 							<li class="spell" data-item-id="{{spell._id}}">
 								<span class="spell-name">{{spell.name}}</span>{{~" "~}}
 							</li>
 					{{/each}}
 					</ul>
 				</li>
-			{{/unless}}
 			{{/each}}
 			</ul>
 		</div>
 	</section>
 	{{/each}}
-	
-	{{#if (and info.hasCastingFeature flags.casting-feature)}}
-		{{#if info.isSpellcaster}}
-			{{> spellcasting spellbook=spellbook actor=actor info=info castertype="prepared"}}
-		{{/if}}
-		{{#if info.isWarlock}}		
-			{{> warlockcasting spellbook=spellbook actor=actor info=info castertype="pact"}}
-		{{/if}}	
-		{{#if info.isInnateSpellcaster}}
-			{{> innatespellcasting spellbook=innateSpellbook actor=actor info=info castertype="innate"}}
-		{{/if}}
-	{{/if}}
 	
 	{{#each features.features.items as |item iid|}}
 		{{#unless item.is.specialAction}}

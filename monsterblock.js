@@ -252,24 +252,54 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		attackData.description = this.getAttackDescription(attack);
 	}
+	castingTypes = {
+		standard: Symbol("Standard Spellcasting"),
+		innate: Symbol("Innate Spellcasting"),
+		pact: Symbol("Pact Macgic")
+	}
 	prepCasting(featureData, data) {
 		this.prepFeature(featureData);
-		
+		let cts = this.castingTypes;
+
 		featureData.castingType = this.constructor.isSpellcasting(featureData) ?
-			(this.constructor.isPactMagic(featureData) ? "pact" : "standard") : "innate";
+			(this.constructor.isPactMagic(featureData) ? cts.pact : cts.standard) : cts.innate;
 		featureData.hasAtWill = this.hasAtWillSpells();
 		
 		let ct = featureData.castingType;
 		
 		//featureData.maxSpellLevel
-		featureData.spellbook = ct == "innate" ? data.innateSpellbook : 
+		featureData.spellbook = ct == cts.innate ? 
+			data.innateSpellbook.filter(page => {
+				page.label = page.uses ? game.i18n.format("MOBLOCKS5E.SpellCost", {
+					cost: page.label
+				}) : page.label;
+				page.slotLabel = false;
+				return true;
+			}) : 
 			data.spellbook.filter(page => {
-				if (ct == "pact" && !(page.order == 0.5 || page.order == 0)) return false;
+				if ((ct == cts.pact && !(page.order == 0.5 || page.order == 0)) || page.order == -20) return false;
 				
 				page.maxSpellLevel = page.spells.reduce(
 					(max, spell) => spell.data.level > max ? spell.data.level : max
 				, 1);
-				page.label = "";
+
+				if (page.order == 0) {
+					page.label = game.i18n.localize("MOBLOKS5E.Cantrips");
+					page.slotLabel = game.i18n.localize("MOBLOKS5E.AtWill");
+				}
+				else {
+					page.label = game.i18n.format("MOBLOCKS5E.SpellLevel", {
+						level: ct == cts.pact ?
+							`${this.constructor.formatOrdinal(1)}-${this.constructor.formatOrdinal(page.maxSpellLevel)}` :
+							this.constructor.formatOrdinal(page.maxSpellLevel)
+					})
+					page.slotLabel = game.i18n.format(ct == cts.pact ?
+					  "MOBLOCKS5E.SpellPactSlots" : "MOBLOCKS5E.SpellSlots", {
+						slots: page.slots,
+						level: this.constructor.formatOrdinal(page.maxSpellLevel)
+					});
+				}
+				return true;
 			});
 		
 
@@ -277,12 +307,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		let tohit = this.getSpellAttackBonus(castingAbility);
 		
 		featureData.description = {
-			level: ct == "innate" ? "" : game.i18n.format("MOBLOKS5E.CasterNameLevel", {
+			level: ct == cts.innate ? "" : game.i18n.format("MOBLOKS5E.CasterNameLevel", {
 				name: this.actor.name,
 				level: this.constructor.formatOrdinal(this.actor.data.data?.details?.spellLevel ?? 1)
 			}),
 			ability: game.i18n.format(
-				ct == "innate" ? "MOBLOKS5E.InnateCastingAbility" : "MOBLOKS5E.CastingAbility", {
+				ct == cts.innate ? "MOBLOKS5E.InnateCastingAbility" : "MOBLOKS5E.CastingAbility", {
 					name: this.actor.name,
 					ability: abilityTitle
 				}
@@ -291,11 +321,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				savedc: this.actor.data.data?.attributes?.spelldc,
 				bonus: `${tohit > -1 ? "+" : ""}${tohit}`
 			}),
-			warlockRecharge: ct == "pact" ? game.i18n.localize("MOBLOKS5E.WarlockSlotRegain") : "",
+			warlockRecharge: ct == cts.pact ? game.i18n.localize("MOBLOKS5E.WarlockSlotRegain") : "",
 			spellintro: game.i18n.format({	// Am I insane? Yes, yes I am.
-				"standard": "MOBLOKS5E.CasterSpellsPreped",
-				"pact": "MOBLOKS5E.WarlockSpellsPreped",
-				"innate": "MOBLOKS5E.InnateSpellsKnown"
+				[cts.standard]: "MOBLOKS5E.CasterSpellsPreped",
+				[cts.pact]: "MOBLOKS5E.WarlockSpellsPreped",
+				[cts.innate]: "MOBLOKS5E.InnateSpellsKnown"
 			}[ct], {
 				name: this.actor.name,
 				atwill: featureData.hasAtWill ? game.i18n.format("MOBLOKS5E.CasterAtWill", {
@@ -322,10 +352,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		let types = {
 			"will": (l) => l.order == -20,
-			"innate": (l) => l.order == -10,
-			"pact": (l) => l.order == 0.5,
+			[this.castingTypes.innate]: (l) => l.order == -10,
+			[this.castingTypes.pact]: (l) => l.order == 0.5,
 			"cantrip": (l) => l.order == 0,
-			"standard": (l) => l.order > 0.5
+			[this.castingTypes.standard]: (l) => l.order > 0.5
 		}
 		let spelllevel = spellbook.find(types[type])
 		if (spelllevel !== undefined) {
