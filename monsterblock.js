@@ -262,7 +262,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		let ct = featureData.castingType;
 		
 		//featureData.maxSpellLevel
-		featureData.spellbook = ct == "innate" ? data.innateSpellbook : data.spellbook;							
+		featureData.spellbook = ct == "innate" ? data.innateSpellbook : 
+			data.spellbook.filter(page => {
+				if (ct == "pact" && !(page.order == 0.5 || page.order == 0)) return false;
+				
+				page.maxSpellLevel = page.spells.reduce(
+					(max, spell) => spell.data.level > max ? spell.data.level : max
+				, 1);
+				page.label = "";
+			});
 		
 
 		let [abilityTitle, castingAbility] = this.getCastingAbility(featureData.spellbook, ct, data);
