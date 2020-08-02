@@ -16,6 +16,7 @@
 	- ~~"Switch to Monster Blocks" trigger~~
 - ~~Localize multiattack and spellcasting detection~~
 - Reorganize language file
+- Specify psionics
 
 ## Fixes
 - Missing action uses? Example: Aboleth.enslave
