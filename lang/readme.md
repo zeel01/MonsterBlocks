@@ -25,3 +25,6 @@ and should not contain spaces. This means that "Multiattack" and "Multi Attack" 
 
 I recommend rather than replacing the English strings, you simple add as many options in the target language as seem appropriate.
 By keeping the English in addition to translated strings, untranslated creatures can still be filtered correctly.
+
+### Perception Locator
+`"MOBLOKS5E.PerceptionLocator"` is used to check whether or not the Senses string for the creature already mentions its passive perception, if this string isn't found, passive perception is added.
