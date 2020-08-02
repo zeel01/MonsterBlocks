@@ -178,9 +178,7 @@
 .secret > :first-child {
 	display: inline;
 }
-.monsterblock .hasinput {
-	
-}
+
 .monsterblock input.hp-input {
 	width: 4ch;
 	height: 1em;
@@ -263,8 +261,6 @@
 	color: var(--heading-color);
 	padding: 0;
 	margin: 0;
-}
-.monsterblock .monster-attributes1 .attributes {
 }
 
 .monsterblock .ability-scores .ability {
@@ -390,10 +386,6 @@ li:nth-last-of-type(2):after {
 
 .monsterblock .attack-type {
 	font-style: italic;
-}
-.monsterblock .attack-bonus {
-}
-.monsterblock .attack-bonus:after {
 }
 .monsterblock .hit-label {
 	font-style: italic;
