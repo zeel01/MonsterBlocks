@@ -790,13 +790,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		},
 		"moblok-enrichhtml": (str) => { // Formats any text to include proper inline rolls and links.
 			return TextEditor.enrichHTML(str, {secrets: true});
-		},
-		"getresourcelimit": (item, actor) => {
-			let res = item.data.consume.target.match(/(.+)\.(.+)\.(.+)/);
-			return res ? actor.data[res[1]][res[2]].max : "";
-		},
-		"getresourcerefresh": (item, actor) => {
-			return "Day";
 		}
 	};
 }

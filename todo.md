@@ -27,7 +27,7 @@
 - Add more comments to the code! <sup>much done!</sup>
 - Re-organize code a bit
 - Remove anything unused
-- Refactor away as many Handlebars helpers as possible.
+- ~~Refactor away as many Handlebars helpers as possible.~~
 
 ## Back Burner
 - Editing (for version 2)
