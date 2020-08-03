@@ -427,16 +427,16 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return ["rwak", "rsak"].includes(attack.data.data?.actionType);
 	}
 	averageDamage(attack) {
-		let formula = 	attack.data.data.damage.parts.length > 0 ? 
-						attack.data.data.damage.parts[0][0] :
+		let formula = 	attack.data.data?.damage?.parts?.length > 0 ? 
+						attack.data.data?.damage?.parts[0][0] :
 						"0";	
 		let attr = attack.abilityMod;
 		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;
 		return this.constructor.averageRoll(formula, {mod: abilityBonus});
 	}
 	damageFormula(attack) {	// Extract and re-format the damage formula
-		let formula = 	attack.data.data.damage.parts.length > 0 ? 
-						attack.data.data.damage.parts[0][0] :
+		let formula = 	attack.data.data?.damage?.parts?.length > 0 ? 
+						attack.data.data?.damage?.parts[0][0] :
 						"0";											// This is the existing formula, typicallys contains a non-number like @mod
 		let attr = attack.abilityMod;									// The ability used for this attack
 		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;	// The ability bonus of the actor
