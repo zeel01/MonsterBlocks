@@ -131,5 +131,28 @@
 	"MOBLOKS5E.LegendaryText": "The {name} can take 3 legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {name} regains spent legendary actions at the start of its turn.",
 	
 	"MOBLOKS5E.LairActionsHeading": "Lair Actions",
-	"MOBLOKS5E.LairText": "On initiative count 20 (losing all initiative ties), the {name} takes a lair action to cause one of the following effects; the {name} can't use the same effect two rounds in a row:"
+	"MOBLOKS5E.LairText": "On initiative count 20 (losing all initiative ties), the {name} takes a lair action to cause one of the following effects; the {name} can't use the same effect two rounds in a row:",
+
+	"MOBLOKS5E.attack-description-name": "Generated Attack Descriptions",
+	"MOBLOKS5E.attack-description-hint": "Show automatically generated attack descriptions by default.",
+	"MOBLOKS5E.casting-feature-name": "Generated Casting Features",
+	"MOBLOKS5E.casting-feature-hint": "Show automatically generated casting features by default.",
+	"MOBLOKS5E.inline-secrets-name": "Display Secrets Inline",
+	"MOBLOKS5E.inline-secrets-hint": "By default, display blocks of secret text inline like all other text? Otherwise, display inline blocks as styled blocks of text.",
+	"MOBLOKS5E.hidden-secrets-name": "Hide Secrets",
+	"MOBLOKS5E.hidden-secrets-hint": "By default, hide secret blocks of text from the sheet.",
+	"MOBLOKS5E.hide-profile-image-name": "Hide Image",
+	"MOBLOKS5E.hide-profile-image-hint": "By default, don't show the creature's image on the sheet (more accurate).",
+	"MOBLOKS5E.show-lair-actions-name": "Show Lair Actions",
+	"MOBLOKS5E.show-lair-actions-hint": "By default, show Lair Actions (not normally included in 5e monster stat-blocks).",
+	"MOBLOKS5E.current-hit-points-name": "Show Current Hit Points",
+	"MOBLOKS5E.current-hit-points-hint": "By default, display the current hit point in the hit points field. If neither maximum nor minimum Hit Points are shown, the average will be calculated and displayed.",
+	"MOBLOKS5E.maximum-hit-points-name": "Show Maximum Hit Points",
+	"MOBLOKS5E.maximum-hit-points-hint": "By default, display the current hit point in the hit points field. If neither maximum nor minimum Hit Points are shown, the average will be calculated and displayed.",
+	"MOBLOKS5E.max-height-offset-name": "Maximum Height Offset",
+	"MOBLOKS5E.max-height-offset-hint": "The maximum height of a Monster Blocks window is based on the height of the browser viewport, minus this offset. The default value of 72 is the height of the macro bar plus 10px of padding. If you prefer statblocks to be tall and narrow, reduce this value. If you prefer that stat blocks be wider (more columns) increase this value.",
+	"MOBLOKS5E.default-theme-name": "Default Theme",
+	"MOBLOKS5E.default-theme-hint": "Choose which theme applies by default.",
+	"MOBLOKS5E.custom-theme-class-name": "Default Custom Theme Class",
+	"MOBLOKS5E.custom-theme-class-hint": "The class name used for your default custom theme."
 }

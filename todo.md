@@ -12,7 +12,7 @@
 	- ~~Ordinals?~~
 	- ~~"Switch to Monster Blocks" trigger~~
 	- ~~passive Perception~~
-    - Localize settings
+    - ~~Localize settings~~
 - ~~Localize multiattack and spellcasting detection~~
 - Reorganize language file
 - ~~Specify psionics~~

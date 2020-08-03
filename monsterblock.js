@@ -804,72 +804,72 @@ Hooks.once('ready', () => {
 	MonsterBlock5e.getBetterRolls();
 	
 	game.settings.register("monsterblock", "attack-descriptions", {
-		name: "Generated Attack Descriptions",
-		hint: "Show automatically generated attack descriptions by default.",
+		name: game.i18n.localize("MOBLOKS5E.attack-description-name"),
+		hint: game.i18n.localize("MOBLOKS5E.attack-description-hint"),
 		scope: "world",
 		config: true,
 		type: Boolean,
 		default: true
 	});
 	game.settings.register("monsterblock", "casting-feature", {
-		name: "Generated Casting Features",
-		hint: "Show automatically generated casting features by default.",
+		name: game.i18n.localize("MOBLOKS5E.casting-feature-name"),
+		hint: game.i18n.localize("MOBLOKS5E.casting-feature-hint"),
 		scope: "world",
 		config: true,
 		type: Boolean,
 		default: true
 	});
 	game.settings.register("monsterblock", "inline-secrets", {
-		name: "Display Secrets Inline",
-		hint: "By default, display blocks of secret text inline like all other text? Otherwise, display inline blocks as styled blocks of text.",
+		name: game.i18n.localize("MOBLOKS5E.inline-secrets-name"),
+		hint: game.i18n.localize("MOBLOKS5E.inline-secrets-hint"),
 		scope: "world",
 		config: true,
 		type: Boolean,
 		default: false
 	});
 	game.settings.register("monsterblock", "hidden-secrets", {
-		name: "Hide Secrets",
-		hint: "By default, hide secret blocks of text from the sheet.",
+		name: game.i18n.localize("MOBLOKS5E.hidden-secrets-name"),
+		hint: game.i18n.localize("MOBLOKS5E.hidden-secrets-hint"),
 		scope: "world",
 		config: true,
 		type: Boolean,
 		default: false
 	});
 	game.settings.register("monsterblock", "hide-profile-image", {
-		name: "Hide Image",
-		hint: "By default, don't show the creature's image on the sheet (more accurate).",
+		name: game.i18n.localize("MOBLOKS5E.hide-profile-image-name"),
+		hint: game.i18n.localize("MOBLOKS5E.hide-profile-image-hint"),
 		scope: "world",
 		config: true,
 		type: Boolean,
 		default: false
 	});
 	game.settings.register("monsterblock", "show-lair-actions", {
-		name: "Show Lair Actions",
-		hint: "By default, show Lair Actions (not normally included in 5e monster stat-blocks).",
+		name: game.i18n.localize("MOBLOKS5E.show-lair-actions-name"),
+		hint: game.i18n.localize("MOBLOKS5E.show-lair-actions-hint"),
 		scope: "world",
 		config: true,
 		type: Boolean,
 		default: false
 	});
 	game.settings.register("monsterblock", "current-hit-points", {
-		name: "Show Current Hit Points",
-		hint: "By default, display the current hit point in the hit points field. If neither maximum nor minimum Hit Points are shown, the average will be calculated and displayed.",
+		name: game.i18n.localize("MOBLOKS5E.current-hit-points-name"),
+		hint: game.i18n.localize("MOBLOKS5E.current-hit-points-hint"),
 		scope: "world",
 		config: true,
 		type: Boolean,
 		default: true
 	});
 	game.settings.register("monsterblock", "maximum-hit-points", {
-		name: "Show Maximum Hit Points",
-		hint: "By default, display the current hit point in the hit points field. If neither maximum nor minimum Hit Points are shown, the average will be calculated and displayed.",
+		name: game.i18n.localize("MOBLOKS5E.maximum-hit-points-name"),
+		hint: game.i18n.localize("MOBLOKS5E.maximum-hit-points-hint"),
 		scope: "world",
 		config: true,
 		type: Boolean,
 		default: true
 	});
 	game.settings.register("monsterblock", "max-height-offset", {
-		name: "Maximum Height Offset",
-		hint: "The maximum height of a Monster Blocks window is based on the height of the browser viewport, minus this offset. The default value of 72 is the height of the macro bar plus 10px of padding. If you prefer statblocks to be tall and narrow, reduce this value. If you prefer that stat blocks be wider (more columns) increase this value.",
+		name: game.i18n.localize("MOBLOKS5E.max-height-offset-name"),
+		hint: game.i18n.localize("MOBLOKS5E.max-height-offset-hint"),
 		scope: "world",
 		config: true,
 		type: Number,
@@ -884,8 +884,8 @@ Hooks.once('ready', () => {
 	let themeChoices = {};
 	for (let theme in MonsterBlock5e.themes) themeChoices[theme] = game.i18n.localize(MonsterBlock5e.themes[theme].name);
 	game.settings.register("monsterblock", "default-theme", {
-		name: "Default Theme",
-		hint: "Choose which theme applies by default.",
+		name: game.i18n.localize("MOBLOKS5E.default-theme-name"),
+		hint: game.i18n.localize("MOBLOKS5E.default-theme-hint"),
 		scope: "world",
 		config: true,
 		type: String,
@@ -893,8 +893,8 @@ Hooks.once('ready', () => {
 		default: "default"
 	});
 	game.settings.register("monsterblock", "custom-theme-class", {
-		name: "Default Custom Theme Class",
-		hint: "The class name used for your default custom theme.",
+		name: game.i18n.localize("MOBLOKS5E.custom-theme-class-name"),
+		hint: game.i18n.localize("MOBLOKS5E.custom-theme-class-hint"),
 		scope: "world",
 		config: true,
 		type: String,
