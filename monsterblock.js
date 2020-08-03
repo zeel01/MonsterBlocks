@@ -29,14 +29,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	// getData() provides the data used in Handlebars for the sheet template.
 	getData() {	// Override and add to the getData() function
 		const data = super.getData();
-		data.master = this;
 		
 		console.debug(data);
 
-	//	this.updateItemsData(data);
-		
+		// Tweak a few properties to get a proper output
+		data.data.details.xp.label = this.constructor.formatNumberCommas(data.data.details.xp.value);
+		data.data.traits.senses = this.prepSenses(data.data.traits.senses);
+		this.prepAbilities(data);
+
 		data.flags = this.actor.data.flags.monsterblock;	// Get the flags for this module, and make them available in the data
-		data.info = {										// A collection of extra information used mainly for conditionals
+		data.info = {		// A collection of extra information used mainly for conditionals
+			hasSaveProfs: this.hasSaveProfs(),
+			hasSkills: this.hasSkills(),							
 			hasCastingFeature: Boolean(data.features.casting.items.length),
 			isSpellcaster: this.isSpellcaster(),
 			isInnateSpellcaster: this.isInnateSpellcaster(),
@@ -75,6 +79,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		formData._dtypes = dtypes;
 		return formData;
 	}*/
+	hasSaveProfs() {
+		return Object.values(this.actor.data?.data?.abilities)?.some(ability => ability.proficient);
+	}
+	hasSkills() {
+		return Object.values(this.actor.data?.data?.skills)?.some(skill => skill.value);
+	}
 	isSpellcaster () {	// Regular spellcaster with typical spell slots.
 		return this.actor.data.items.some((item) => {
 			return item.data.level > 0.5 && (
@@ -205,7 +215,19 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		// Assign and return
 		data.features = features;
 	}
-	
+	prepSenses(senses) {
+		if (senses.toLowerCase().indexOf(game.i18n.localize("MOBLOKS5E.PerceptionLocator")) > -1) return senses;
+
+		return senses + (senses ? `${game.i18n.localize("MOBLOKS5E.Comma")} ` : "") +
+			game.i18n.format("MOBLOKS5E.PassivePerception", {
+				pp: this.actor.data.data.skills.prc.passive
+			});
+	}
+	prepAbilities(data) {
+		Object.entries(data.data?.abilities)?.forEach(
+			([id, ability]) => ability.abbr = game.i18n.localize("MOBLOKS5E.Abbr" + id)
+		)
+	}
 	updateActionsData(actions) {
 		for (let actionData of actions.items) {
 			let action = this.object.items.get(actionData._id);
@@ -756,59 +778,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		if (number <= suffixes.length) return number + suffixes[number - 1];
 		else return number + suffixes[suffixes.length - 1];
 	}
+	static formatNumberCommas(number) {
+		return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");	// https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+	}
 	static handlebarsHelpers = {
 		"moblok-hascontents": (obj) => { // Check if an array is empty.
 			return Object.keys(obj).length > 0;
-		},
-
-		"moblok-hasskills": (skills) => { // Check if the creature has any skill proficiencies
-			for (let s in skills) {
-				if (skills[s].value) return true;
-			}
-			return false;
-		},
-		"hassave": (saves) => {	// Check if it has saving-throw proficiencies
-			for (let s in saves) {
-				if (saves[s].proficient) return true;
-			}
-			return false;
-		},
-		"invalidspelllevel": (level) => level < 0,	// Spell levels less than 0 mean sometihng special, and need checkd for
-		"isspellcasting": (item) => this.isSpellcasting(item) || this.isInnateSpellcasting(item),
-
-		"getcastingability": (actor, spellbook, type) => {
-			let main = actor.data.attributes.spellcasting;
-			let castingability = main;
-			
-			let types = {
-				"will": (l) => l.order == -20,
-				"innate": (l) => l.order == -10,
-				"pact": (l) => l.order == 0.5,
-				"cantrip": (l) => l.order == 0,
-				"prepared": (l) => l.order > 0.5
-			}
-			let spelllevel = spellbook.find(types[type])
-			if (spelllevel !== undefined) {
-				let spell = spelllevel.spells.find((s) => s.data.ability && s.data.ability != actor.data.attributes.spellcasting);
-				if (spell !== undefined) castingability = spell.data.ability;
-			}
-			return actor.data.abilities[castingability].label;
-			 
 		},
 		"moblok-enrichhtml": (str) => { // Formats any text to include proper inline rolls and links.
 			return TextEditor.enrichHTML(str, {secrets: true});
 		},
 		"moblok-formatnumbercommas": (number) => {
 			return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");	// https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-		},
-		"spelllevellocalization": (level) => { // Returns the localization string for a given spell level
-			return "DND5E.SpellLevel" + parseInt(level, 10); // Never allow this to be a fraction, the results aren't good.
-		},
-		"getatwill": (spellbook) => { // Retuns the spellbook section marked "atwill"
-			for (let level of spellbook) {
-				if (level.prop === "atwill") return level.spells;
-			}
-			return [];
 		},
 		"getresourcelimit": (item, actor) => {
 			let res = item.data.consume.target.match(/(.+)\.(.+)\.(.+)/);
@@ -817,27 +798,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"getresourcerefresh": (item, actor) => {
 			return "Day";
 		},
-		"warlockslotlevel": (spelllevel) => {
-			return spelllevel.spells.reduce((a, b) => a > b.data.level ? a : b.data.level, 0);
-		},
-		"getspellattackbonus": (actor)=> {	// Calculate the spell attack bonus
-			let data = actor.data;
-			let attr = data.attributes.spellcasting;
-			if (!attr) return 0;
-			let abilityBonus = data.abilities[attr].mod;
-			let profBonus = data.attributes.prof;
-			
-			return abilityBonus + profBonus;
-		},
 		"handlesenses": (senses, actor) => {
 			if (senses.toLowerCase().indexOf("perception") > -1) return senses;
 			
 			let perception = actor.data.skills.prc.passive;
 			
 			return `${senses}${senses ? ", " : ""}passive Perception ${perception}`
-		},
-		"isprepared": (item) => {
-			return item.data.preparation.mode === "prepared" || item.data.preparation.mode === "always";
 		},
 		"averageroll": (formula) => {			// Calculates the average of a roll
 			if (!formula) return 0;

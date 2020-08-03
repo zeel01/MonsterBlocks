@@ -1,7 +1,6 @@
 # TODO:
 
 ## Additions
-- Editing (for version 2)
 
 ## Changes
 - Complete massive refactor
@@ -9,18 +8,19 @@
 	- ~~Spell slots~~
 	- ~~Make legendary and lair action descriptions localizable~~
 	- ~~Make spellcasting description localizable~~
-	- Replace use of commas and periods with localizable strings
-	- Indicate to new users that the menu in the corner exists
+	- ~~Replace use of commas and periods with localizable strings~~	
 	- Localize settings
 	- ~~Ordinals?~~
 	- ~~"Switch to Monster Blocks" trigger~~
+	- ~~passive Perception~~
 - ~~Localize multiattack and spellcasting detection~~
 - Reorganize language file
 - Specify psionics
-
+- Indicate to new users that the menu in the corner exists
+  
 ## Fixes
 - Missing action uses? Example: Aboleth.enslave
-- Comma color 
+- ~~Comma color~~ 
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
@@ -30,6 +30,7 @@
 - Refactor away as many Handlebars helpers as possible.
 
 ## Back Burner
+- Editing (for version 2)
 - Rolls for saves/skills that aren't listed (not proficient) <sup>One can simply roll an ability check</sup>
 - Some creatures have "sub features" like breath weapns, the bodies of these are indented. <sup>unsure if this is possible to do correctly</sup>
 - Differentiate which cantrips belong to what casting feature. <sup>unsure how possible</sup>

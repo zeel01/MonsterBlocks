@@ -33,10 +33,20 @@
 	"MOBLOKS5E.Current": "Current",
 	"MOBLOKS5E.Maximum": "Maximum",
 	
+	"MOBLOKS5E.Abbrstr": "str",
+	"MOBLOKS5E.Abbrdex": "dex",
+	"MOBLOKS5E.Abbrcon": "con",
+	"MOBLOKS5E.Abbrint": "int",
+	"MOBLOKS5E.Abbrwis": "wis",
+	"MOBLOKS5E.Abbrcha": "cha",
+
 	"MOBLOKS5E.Score": "Score",
 	"MOBLOKS5E.Modifier": "Modifier",
 	"MOBLOKS5E.SavingThrowS": "Saving Throws",
+	"MOBLOKS5E.PassivePerception": "passive Perception {pp}",
+	"MOBLOKS5E.PerceptionLocator": "perception",
 	"MOBLOKS5E.SkillS": "Skills",
+	"MOBLOKS5E.XPLabel": "{xp} XP",
 	
 	"MOBLOKS5E.Recharge": "Recharge",
 	"MOBLOKS5E.NCharged": "Not charged",

@@ -143,7 +143,7 @@
 					{{~data.details.type~}}
 				</span>{{~" "~}}
 				{{~#if data.details.alignment~}}
-					<span class="sep">,</span>
+					<span class="sep">{{ localize "MOBLOKS5E.Comma" }}</span>
 				{{/if}}
 				<span contenteditable="false" data-field-key="data.details.alignment">
 					{{~data.details.alignment~}}
@@ -192,7 +192,7 @@
                     <h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }} </h4>
 					<span class="attr-value" contenteditable="false" data-field-key="data.attributes.speed.value">{{data.attributes.speed.value}}</span>
 					{{~#if data.attributes.speed.special~}}
-						<span class="sep">, </span>
+						<span class="sep">{{ localize "MOBLOKS5E.Comma" }} </span>
 						<span class="attr-value" contenteditable="false" data-field-key="data.attributes.speed.special">{{data.attributes.speed.special}}</span>
 					{{~/if~}}
                 </li>
@@ -202,7 +202,7 @@
 			<ul class="ability-scores flexrow">
             {{#each data.abilities as |ability id|}}
                 <li class="ability{{#if ability.proficient}} proficient{{/if}}" data-ability="{{id}}">
-                    <h4 class="ability-name box-title" title="{{ability.label}}">{{id}}</h4>
+                    <h4 class="ability-name box-title" title="{{ability.label}}">{{ability.abbr}}</h4>
 					<span class="attr-value" title="{{ localize 'MOBLOKS5E.Score' }}">{{ability.value}} </span>
 					<span class="ability-mod" title="{{ localize 'MOBLOKS5E.Modifier' }}">({{numberFormat ability.mod decimals=0 sign=true}})</span>
                 </li>
@@ -211,14 +211,14 @@
 		</section>
 		<section class="monster-attributes2">
 			<ul class="attributes">
-				{{#if (hassave data.abilities)}}
+				{{#if info.hasSaveProfs}}
 				<li class="monster-saves">
 					<h4 class="attribute-name">{{ localize "MOBLOKS5E.SavingThrowS" }}</h4>
 					<ul class="inline-list">
 					{{#each data.abilities as |ability id|}}
 					{{#if ability.proficient}}
 						<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}" title="{{ability.label}}">
-							<span class="ability-name">{{id}}</span>
+							<span class="ability-name">{{ability.abbr}}</span>
 							<span class="ability-save">{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
 						</li>
 					{{/if}}
@@ -226,7 +226,7 @@
 					</ul>
 				</li>
 				{{/if}}
-				{{#if (moblok-hasskills data.skills)}}
+				{{#if info.hasSkills}}
 				<li class="monster-skills">
 					<h4 class="attribute-name">{{ localize "MOBLOKS5E.SkillS" }}</h4>
 					<ul class="inline-list">
@@ -283,7 +283,7 @@
 				{{/if}}
 				<li class="attribute">
 					<h4 class="attribute-name">{{localize "DND5E.Senses"}}</h4>
-					<span class="trait-value">{{handlesenses data.traits.senses actor}}</span>
+					<span class="trait-value">{{data.traits.senses}}</span>
 				</li>
 				
 				<li class="attribute">
@@ -301,7 +301,7 @@
 				
 				<li class="attribute">
 					<h4 class="attribute-name">{{localize "DND5E.ChallengeRating"}}</h4>
-					<span class="trait-value">{{labels.cr}}</span> <span>({{moblok-formatnumbercommas data.details.xp.value}} XP)</span>
+					<span class="trait-value">{{labels.cr}}</span> <span>({{ localize "MOBLOKS5E.XPLabel" xp=data.details.xp.label }})</span>
 				</li>
 			</ul>
 		</section>
@@ -381,9 +381,7 @@
 	
 	{{#each features.features.items as |item iid|}}
 		{{#unless item.is.specialAction}}
-		{{#unless (and ../flags.casting-feature (isspellcasting item))}}
 			{{> featureBlock item=item actor=../actor}}
-		{{/unless}}
 		{{/unless}}
 	{{/each}}
 	{{#if features.legResist.items}}
