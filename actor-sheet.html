@@ -344,10 +344,12 @@
 	</section>
 	{{/inline}}
 	
+	
 	{{#each features.casting.items as |casting id|}}
-	<section class="monster-feature spellcasting-trait">
+	{{#if ../flags.casting-feature}}
+	<section class="item monster-feature spellcasting-trait">
 		<div class="feature-description inline-children">
-			<span class="feature-name">{{localize "DND5E.Spellcasting"}}</span>.
+			<span class="item-name" data-item-id="{{casting._id}}">{{casting.name}}</span>.
 			<span class="description">
 				{{{ casting.description.level }}}
 				{{{ casting.description.ability }}}
@@ -377,20 +379,28 @@
 			</ul>
 		</div>
 	</section>
+	{{else}}
+		{{> featureBlock item=casting actor=../actor}}
+	{{/if}}
 	{{/each}}
 	
+
 	{{#each features.features.items as |item iid|}}
 		{{#unless item.is.specialAction}}
 			{{> featureBlock item=item actor=../actor}}
 		{{/unless}}
 	{{/each}}
+
 	{{#if features.legResist.items}}
 		{{> featureBlock item=features.legResist.items.[0] actor=actor}}
 	{{/if}}
+
 	<h2 class="section-header" >{{localize "DND5E.ActionPl"}}</h2>
+	
 	{{#if features.multiattack.items}}
 		{{> featureBlock item=features.multiattack.items.[0] actor=actor}}
 	{{/if}}
+
 	{{#each features.attacks.items as |item iid|}}
 	{{#unless item.is.specialAction}}
 	<section class="item monster-action">
