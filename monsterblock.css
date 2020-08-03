@@ -364,7 +364,6 @@ li:nth-last-of-type(2):after {
 	margin-top: 1em;
 }
 .monsterblock .item-name,
-.monsterblock .feature-name,
 .monsterblock .name-extension {
 	font-weight: bold;
 	font-style: italic;
