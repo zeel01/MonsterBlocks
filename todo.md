@@ -1,6 +1,7 @@
 # TODO:
 
 ## Additions
+- Handle multiple damage
 
 ## Changes
 - ~~Complete massive refactor~~<sup>done for now!</sup>
