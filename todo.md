@@ -3,9 +3,9 @@
 ## Additions
 
 ## Changes
-- Complete massive refactor
-- Convert static strings to language file references.<sup>*In progress*</sup>
-	- ~~Spell slots~~
+- ~~Complete massive refactor~~<sup>done for now!</sup>
+- ~~Convert static strings to language file references.~~
+    - ~~Spell slots~~
 	- ~~Make legendary and lair action descriptions localizable~~
 	- ~~Make spellcasting description localizable~~
 	- ~~Replace use of commas and periods with localizable strings~~	
@@ -14,7 +14,7 @@
 	- ~~passive Perception~~
     - ~~Localize settings~~
 - ~~Localize multiattack and spellcasting detection~~
-- Reorganize language file
+- ~~Reorganize language file~~
 - ~~Specify psionics~~
 - Indicate to new users that the menu in the corner exists
   
