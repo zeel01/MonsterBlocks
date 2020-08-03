@@ -28,3 +28,17 @@ By keeping the English in addition to translated strings, untranslated creatures
 
 ### Perception Locator
 `"MOBLOKS5E.PerceptionLocator"` is used to check whether or not the Senses string for the creature already mentions its passive perception, if this string isn't found, passive perception is added.
+
+## Legendary and Lair actions, Spellcasting
+The large paragraphs of text for these items are based on the text found in the SRD
+and other 5e books. If an official translation of the SRD or Monster Manual is available
+it would be preferable that the official text be used, rather than translating the English seen here.
+
+## Ordinal Suffixes
+This array of suffixes is used to format ordinals like "5th level spellcaster"
+if the target language doesn't need these, make the array empty `[]`. 
+If you need more the code will handle that just fine, add as many as needed.
+
+If the sheet doens't seem to be able to handle the needs of the language,
+please post an issue on [Github](https://github.com/zeel01/MonsterBlocks/issues)
+I will see if there is a way to handle the need.
