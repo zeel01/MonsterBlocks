@@ -4,7 +4,7 @@ An NPC sheet for FoundryVTT designed to faithfully reproduce the apperance of D&
 
 Does not support editing directly except for Hit Points. You *can* edit features and other items by right clicking their descriptions. This sheet is intended for use as an in-game reference to a monster, *not* as a tool for building NPCs. See: [To Do List](todo.md)
 
-A few **quick settings** can be toggled from the sepcial **cog menu in the upper left corner**, including. This includes enabling and disabling certain features, themes, and a quick switch button to take back to the default sheet for editing.
+A few **quick settings** can be toggled from the special **cog menu in the upper left corner**, including. This includes enabling and disabling certain features, themes, and a quick switch button to take back to the default sheet for editing.
 
 ![Ancient Red Dragon](examples/ancientRedDragon_5.png)
 
