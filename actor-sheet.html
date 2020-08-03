@@ -104,6 +104,11 @@
 				</a>
 			</li>
 			{{/if}}
+			{{#if info.vttatokenizer}}
+			<li>
+				<a class="trigger" data-control="openTokenizer">Open VTTA Tokenizer</a>
+			</li>
+			{{/if}}
 			<li>
 				<a>{{ localize "MOBLOKS5E.Theme" }}</a>
 				<ul>
@@ -149,7 +154,7 @@
 					{{~data.details.alignment~}}
 				</span>
 			</p>
-			{{#unless flags.hide-profile-image}}<figure class="profile-image" style="background-image: url({{actor.img}});" title="{{actor.name}}" data-edit="img"/></figure>{{/unless}}
+			{{#unless flags.hide-profile-image}}<figure class="profile-image profile-img" style="background-image: url({{actor.img}});" title="{{actor.name}}" data-edit="img"/></figure>{{/unless}}
 		</section>
 		<section class="monster-attributes1">
 			<ul class="attributes">

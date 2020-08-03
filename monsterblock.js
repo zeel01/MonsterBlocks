@@ -1,4 +1,5 @@
 import ActorSheet5eNPC from "../../systems/dnd5e/module/actor/sheets/npc.js";
+import Tokenizer from "../vtta-tokenizer/src/tokenizer/index.js";
 
 export class MonsterBlock5e extends ActorSheet5eNPC {
 	constructor(...args) {
@@ -49,11 +50,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			hasAtWillSpells: this.hasAtWillSpells(),
 			hasLegendaryActions: Boolean(data.features.legendary.items.length),
 			hasLair: Boolean(data.features.lair.items),
-			hasReactions: Boolean(data.features.reaction.items.length)
-		}
-		data.special = {									// A collection of cherry-picked data used in special places.
-			multiattack: this.getMultiattack(data),
-			legresist: this.getLegendaryResistance(data)
+			hasReactions: Boolean(data.features.reaction.items.length),
+			vttatokenizer: Boolean(this.constructor.Tokenizer)
 		}
 				
 		data.themes = this.themes;
@@ -123,6 +121,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return this.actor.data.items.some((item) => {
 			return this.constructor.isLegendaryAction(item)
 		});
+	}
+	async openTokenizer() {
+		if (this.constructor.Tokenizer) {
+			new this.constructor.Tokenizer({}, this.entity).render(true);
+		}
 	}
 	
 	static themes = {
@@ -576,13 +579,22 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return changes;
 	}
 	static async getBetterRolls() {
-		if (typeof BetterRolls !== 'undefined') {
+		if (game.data.modules.find(m => m.id == "betterrolls5e")?.active) {
 			let { CustomItemRoll, CustomRoll } = await import("../betterrolls5e/scripts/custom-roll.js");
 			Object.assign(this, { CustomItemRoll, CustomRoll });
 		}
 		else {
 			this.CustomItemRoll = false;
 			this.CustomRoll = false;
+		}
+	}
+	static async getTokenizer() {
+		if (game.data.modules.find(m => m.id == "vtta-tokenizer")?.active) {
+			let Tokenizer = (await import("../vtta-tokenizer/src/tokenizer/index.js")).default;
+			Object.assign(this, { Tokenizer });
+		}
+		else {
+			this.Tokenizer = false;
 		}
 	}
 	async activateListeners(html) {	// We need listeners to provide interaction.
@@ -804,6 +816,7 @@ Hooks.once("init", () => {
 
 Hooks.once('ready', () => {
 	MonsterBlock5e.getBetterRolls();
+	MonsterBlock5e.getTokenizer();
 	
 	game.settings.register("monsterblock", "attack-descriptions", {
 		name: game.i18n.localize("MOBLOKS5E.attack-description-name"),
