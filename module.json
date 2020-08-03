@@ -13,17 +13,17 @@
 	"styles": [
 		"monsterblock.css"
 	],
-	"languages": [
+	"languages": [ 
 		{
 			"lang": "en",
 			"name": "English",
 			"path": "lang/en.json"
 		},
 		{
-            "lang": "ja",
-            "name": "日本語",
-            "path": "lang/ja.json"
-        }
+			"lang": "ja",
+			"name": "日本語",
+			"path": "lang/ja.json"
+		}
 	],
 	"manifest": "https://raw.githubusercontent.com/zeel01/MonsterBlocks/master/module.json",
 	"url": "https://github.com/zeel01/MonsterBlocks",
