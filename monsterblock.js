@@ -35,6 +35,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		// Tweak a few properties to get a proper output
 		data.data.details.xp.label = this.constructor.formatNumberCommas(data.data.details.xp.value);
 		data.data.traits.senses = this.prepSenses(data.data.traits.senses);
+		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula);
 		this.prepAbilities(data);
 
 		data.flags = this.actor.data.flags.monsterblock;	// Get the flags for this module, and make them available in the data
@@ -190,8 +191,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		// Start by classifying items into groups for rendering
 		let [spells, other] = data.items.reduce((arr, item) => {
-			
-			
 			if ( item.type === "spell" ) arr[0].push(item);
 			else arr[1].push(item);
 			return arr;
@@ -208,6 +207,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		// Organize Features
 		for ( let item of other ) {
 			let category = Object.values(features).find(cat => cat.filter(item));
+			
+
+
 			category.prep(item, data);
 			category.items.push(item);
 		}
@@ -228,26 +230,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			([id, ability]) => ability.abbr = game.i18n.localize("MOBLOKS5E.Abbr" + id)
 		)
 	}
-	updateActionsData(actions) {
-		for (let actionData of actions.items) {
-			let action = this.object.items.get(actionData._id);
-			
-			actionData.hasResource = this.constructor.hasResource(action.data);
-			
-			actionData.is = { 
-				multiAttaack: this.constructor.isMultiAttack(action.data),
-				legendary: this.constructor.isLegendaryAction(action.data),
-				lair: this.constructor.isLairAction(action.data),
-				legResist: this.constructor.isLegendaryResistance(action.data),
-				reaction: this.constructor.isReaction(action.data)
-			};
-			actionData.is.specialAction = Object.values(actionData.is).some(v => v == true);	// Used to ensure that actions that need seperated out aren't shown twice
-		}
+	prepResources(data, item) {
+		data.hasresource = this.constructor.hasResource(item.data);
+		data.resourcelimit = data.hasresource ? this.getResourceLimit(item) : 0;
+		data.resourcerefresh = data.hasresource ? this.getResourceRefresh(item) : "";
 	}
 	prepAction(actionData) {
 		let action = this.object.items.get(actionData._id);
 			
-		actionData.hasResource = this.constructor.hasResource(action.data);
+		this.prepResources(actionData, action);
 		
 		actionData.is = { 
 			multiAttaack: this.constructor.isMultiAttack(action.data),
@@ -260,15 +251,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	prepFeature(featureData) {
 		let feature = this.object.items.get(featureData._id);
-			
-		featureData.hasresource = this.constructor.hasResource(feature.data);
+
+		this.prepResources(featureData, feature)
 	}
 	prepAttack(attackData) {
 		let attack = this.object.items.get(attackData._id);
-			
-		attackData.hasresource = this.constructor.hasResource(attack.data);
-		attackData.resourcelimit = attack.hasresource ? H.getresourcelimit(attack, this.actor.data) : 0;
-		attackData.resourcerefresh = attack.hasresource ? H.getresourcerefresh(attack, this.actor.data) : "";
+		
+		this.prepResources(attackData, attack);
 
 		attackData.tohit = this.getAttackBonus(attack);
 		
@@ -443,12 +432,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 						"0";	
 		let attr = attack.abilityMod;
 		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;
-		let roll = new Roll(formula, {mod: abilityBonus}).roll();
-		return Math.floor((											// The maximum roll plus the minimum roll, divided by two, rounded down.
-				Roll.maximize(roll.formula)._total + 
-				Roll.minimize(roll.formula)._total 
-			)	/ 2
-		);
+		return this.constructor.averageRoll(formula, {mod: abilityBonus});
 	}
 	damageFormula(attack) {	// Extract and re-format the damage formula
 		let formula = 	attack.data.data.damage.parts.length > 0 ? 
@@ -497,6 +481,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			if (this.constructor.isLegendaryResistance(item)) return item;
 		}
 		return false;
+	}
+	getResourceLimit(item) {
+		let res = item.data.data.consume.target.match(/(.+)\.(.+)\.(.+)/);
+		return res ? this.actor.data?.data[res[1]][res[2]]?.max : item.data.data?.uses?.max;
+	}
+	// Is this information actually defined somewhere?
+	getResourceRefresh(item) {
+		// It just says "Day" becaause thats typically the deal, and I don't see any other option
+		return game.i18n.localize("MOBLOKS5E.ResourceRefresh");
 	}
 	prepareInnateSpellbook(spellbook) { // We need to completely re-organize the spellbook for an innate spellcaster
 		let innateSpellbook = [];
@@ -783,6 +776,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static formatNumberCommas(number) {
 		return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");	// https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
 	}
+	static averageRoll(formula, mods) {
+		if (!formula) return 0;
+		let roll = new Roll(formula, mods).roll();
+		return Math.floor((		// The maximum roll plus the minimum roll, divided by two, rounded down.
+			Roll.maximize(roll.formula)._total +
+			Roll.minimize(roll.formula)._total
+		) / 2);
+	}
 	static handlebarsHelpers = {
 		"moblok-hascontents": (obj) => { // Check if an array is empty.
 			return Object.keys(obj).length > 0;
@@ -790,37 +791,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"moblok-enrichhtml": (str) => { // Formats any text to include proper inline rolls and links.
 			return TextEditor.enrichHTML(str, {secrets: true});
 		},
-		"moblok-formatnumbercommas": (number) => {
-			return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");	// https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-		},
 		"getresourcelimit": (item, actor) => {
 			let res = item.data.consume.target.match(/(.+)\.(.+)\.(.+)/);
 			return res ? actor.data[res[1]][res[2]].max : "";
 		},
 		"getresourcerefresh": (item, actor) => {
 			return "Day";
-		},
-		"handlesenses": (senses, actor) => {
-			if (senses.toLowerCase().indexOf("perception") > -1) return senses;
-			
-			let perception = actor.data.skills.prc.passive;
-			
-			return `${senses}${senses ? ", " : ""}passive Perception ${perception}`
-		},
-		"averageroll": (formula) => {			// Calculates the average of a roll
-			if (!formula) return 0;
-			let roll = new Roll(formula).roll();
-			return Math.floor((											// The maximum roll plus the minimum roll, divided by two, rounded down.
-					Roll.maximize(roll.formula)._total + 
-					Roll.minimize(roll.formula)._total 
-				)	/ 2
-			);
-		},
-		"moblok-formatordinal": (number) => { // Format numbers like "1st", "2nd", "3rd", "4th", etc.
-			if (number == 1) return number + "st";
-			if (number == 2) return number + "nd";
-			if (number == 3) return number + "rd";
-			return number + "th";
 		}
 	};
 }

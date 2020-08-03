@@ -160,7 +160,7 @@
 				<li class="attribute health">
 					<h4 class="attribute-name box-title">{{localize "DND5E.HitPoints" }} </h4>
 					{{~#unless (or flags.current-hit-points flags.maximum-hit-points)~}}
-						<span title="{{ localize 'MOBLOKS5E.Average' }}" class="attr-value">{{averageroll data.attributes.hp.formula}}</span>
+						<span title="{{ localize 'MOBLOKS5E.Average' }}" class="attr-value">{{data.attributes.hp.average}}</span>
 					{{~/unless~}}
 					{{#if flags.current-hit-points}}
 						<span title="{{ localize 'MOBLOKS5E.Current' }}" data-field-key="data.attributes.hp.value" class="attr-value hasinput">
@@ -186,7 +186,7 @@
 						<input title="{{ localize 'MOBLOKS5E.Maximum' }}" data-dtype="Number" name="data.attributes.hp.max" class="attr-value hiddeninput hidden hp-input" value="{{data.attributes.hp.max}}">
 					{{/if}}
 					
-					<span class="sep">(</span><span title="Average: {{averageroll data.attributes.hp.formula}}" class="attr-value">{{data.attributes.hp.formula}}</span><span class="sep">)</span>
+					<span class="sep">(</span><span title="Average: {{data.attributes.hp.average}}" class="attr-value">{{data.attributes.hp.formula}}</span><span class="sep">)</span>
 				</li>
 				<li class="attribute">
                     <h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }} </h4>
@@ -330,9 +330,9 @@
 					</span>
 				{{~/if~}}
 				{{~#unless legendaryactions~}}
-					{{~#if item.hasResource~}}
+					{{~#if item.hasresource~}}
 						<span class="name-extension">
-							({{~getresourcelimit item actor}}/{{getresourcerefresh item actor~}}){{~" "~}}
+							({{~item.resourcelimit}}/{{item.resourcerefresh}}){{~" "~}}
 						</span>
 					{{~/if~}}
 				{{~/unless~}}{{ localize "MOBLOKS5E.NameDescriptionSep" }}
@@ -350,6 +350,11 @@
 	<section class="item monster-feature spellcasting-trait">
 		<div class="feature-description inline-children">
 			<span class="item-name" data-item-id="{{casting._id}}">{{casting.name}}</span>.
+			{{~#if item.hasresource~}}
+			<span class="name-extension">
+				({{~item.resourcelimit}}/{{item.resourcerefresh}}){{~" "~}}
+			</span>
+			{{~/if~}}
 			<span class="description">
 				{{{ casting.description.level }}}
 				{{{ casting.description.ability }}}
@@ -406,6 +411,11 @@
 	<section class="item monster-action">
 		<div class="attack-description inline-children">
 			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>{{ localize "MOBLOKS5E.NameDescriptionSep" }}
+			{{~#if item.hasresource~}}
+			<span class="name-extension">
+				({{~item.resourcelimit}}/{{item.resourcerefresh}}){{~" "~}}
+			</span>
+			{{~/if~}}
 			{{#if ../flags.attack-descriptions}}
 			{{~#unless legendaryactions~}}
 				{{~#if item.hasResource~}} 

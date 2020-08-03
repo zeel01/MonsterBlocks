@@ -19,7 +19,7 @@
 - Indicate to new users that the menu in the corner exists
   
 ## Fixes
-- Missing action uses? Example: Aboleth.enslave
+- ~~Missing action uses? Example: Aboleth.enslave~~
 - ~~Comma color~~ 
 
 ## Cleanup
