@@ -240,7 +240,7 @@
 }
 .monsterblock .profile-image {
 	background-size: contain;
-	background-position: right;
+	background-position: center;
 	background-repeat: no-repeat;
 	border: none;
 	position: absolute;
@@ -301,8 +301,11 @@
 }
 .monsterblock .inline-list li:after {
     content: var(--list-seperator) ' ';
-	text-shadow: none;
+    text-shadow: none;
 	color: var(--main-text-color);
+}
+.monsterblock header .inline-list li:after {
+	color: var(--heading-color);
 }
 
 .monsterblock .inline-list li:last-of-type:after {
