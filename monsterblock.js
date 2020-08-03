@@ -1,7 +1,4 @@
 import ActorSheet5eNPC from "../../systems/dnd5e/module/actor/sheets/npc.js";
-import Tokenizer from "../vtta-tokenizer/src/tokenizer/index.js";
-
-// A totally different comment
 
 export class MonsterBlock5e extends ActorSheet5eNPC {
 	constructor(...args) {
