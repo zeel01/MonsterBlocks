@@ -28,3 +28,14 @@
 	console.timeEnd("Macro | Sheet conversion completed in");
 	return true;
 })();
+
+// Changes the theme of all actors in the Actor Directory to your default setting
+// This will not effect unlinked actors in any scene
+Actor.update([...game.actors].reduce((acc, a) => {
+	if (a.data?.flags?.monsterblock) {
+		let act = duplicate(a);
+		act.flags.monsterblock["theme-choice"] = game.settings.get("monsterblock", "default-theme");
+		acc.push(act);
+	}
+	return acc;
+}, []))
