@@ -2,24 +2,24 @@
 	"MOBLOKS5E.MonsterBlocks": "モンスターデータブロック",
 	
 	"MOBLOKS5E.SwitchToDefault": "デフォルトシートに切り替える",
+	"MOBLOKS5E.SwitchToMobloks": "データブロックシートに切り替える",	
 	"MOBLOKS5E.AttackDescriptions": "攻撃詳細",
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	"MOBLOKS5E.ShowGenerated": "自動生成を表示",
+	"MOBLOKS5E.HideGenerated": "自動生成を非表示",
+	"MOBLOKS5E.DescriptionS": "説明文",
+	"MOBLOKS5E.EnableInlSecr": "インライン秘密の説明文を表示",
+	"MOBLOKS5E.DisableInlSecr": "インライン秘密の説明文を非表示",
+	"MOBLOKS5E.ShowSecrets": "秘密の説明文を表示",
+	"MOBLOKS5E.HideSecrets": "秘密の説明文を非表示",
+	"MOBLOKS5E.ShowMaxHP": "最大HPを表示",
+	"MOBLOKS5E.HideMaxHP": "最大HPを非表示",
+	"MOBLOKS5E.ShowCurrentHP": "現在HPを表示",
+	"MOBLOKS5E.HideCurrentHP": "現在HPを非表示",
+	"MOBLOKS5E.ShowProfileImage": "画像を表示",
+	"MOBLOKS5E.HideProfileImage": "画像を非表示",
+	"MOBLOKS5E.ShowLair": "住処アクションを表示",
+	"MOBLOKS5E.HideLair": "住処アクションを非表示",
 
 	"MOBLOKS5E.Theme": "テーマ",
 	"MOBLOKS5E.CustomThemeName": "カスタム",
@@ -33,26 +33,26 @@
 	"MOBLOKS5E.Current": "現在",
 	"MOBLOKS5E.Maximum": "最大",
 	
-
-
-
-
-
-
+	"MOBLOKS5E.Abbrstr": "【筋】",
+	"MOBLOKS5E.Abbrdex": "【敏】",
+	"MOBLOKS5E.Abbrcon": "【耐】",
+	"MOBLOKS5E.Abbrint": "【知】",
+	"MOBLOKS5E.Abbrwis": "【判】",
+	"MOBLOKS5E.Abbrcha": "【魅】",
 
 	"MOBLOKS5E.Score": "現在値",
 	"MOBLOKS5E.Modifier": "修正値",
 	"MOBLOKS5E.SavingThrowS": "セーヴィング・スロー",
+	"MOBLOKS5E.PassivePerception": "受動〈知覚〉{pp}",
+	"MOBLOKS5E.PerceptionLocator": "〈知覚〉",
 	"MOBLOKS5E.SkillS": "技能",
-	
-
-
+	"MOBLOKS5E.XPLabel": "{xp}XP",	
 
 	"MOBLOKS5E.Recharge": "再チャージ",
 	"MOBLOKS5E.NCharged": "チャージ失敗",
-	"MOBLOKS5E.Costs": "Costs",
+	"MOBLOKS5E.Costs": "コスト",
+	"MOBLOKS5E.ResourceRefresh": "日",
 	
-
 	"MOBLOKS5E.zero": "0つ",
 	"MOBLOKS5E.one": "1つ",
 	"MOBLOKS5E.two": "2つ",
@@ -69,29 +69,29 @@
 	"MOBLOKS5E.Comma": "、",
 	"MOBLOKS5E.Colon": "：",
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	"MOBLOKS5E.Cantrips": "初級呪文",
+	"MOBLOKS5E.AtWill": "生得呪文",
 
+	"MOBLOKS5E.CasterNameLevel": "この{name}は{level}レベルの術者である。",
+	"MOBLOKS5E.CastingAbility": "呪文発動能力値は【{ability}】である。",
+	"MOBLOKS5E.InnateCastingAbility": "この{name}の生得呪文発動能力値は【{ability}】である",
+	"MOBLOKS5E.CastingStats": "(呪文セーヴ難易度{savedc}、呪文攻撃{bonus})。",
+	"MOBLOKS5E.CasterAtWill": "{spells}の呪文を任意に発動することが可能であり、",
+	"MOBLOKS5E.CasterSpellsPreped": "以下の{name}{atwill}呪文を準備している。",
+	"MOBLOKS5E.WarlockSpellsPreped": "以下の{atwill}ウォーロック呪文を準備している。",
+	"MOBLOKS5E.InnateSpellsKnown": "{name}は生来、以下の呪文を物質要素なしで発動できる。",
+	"MOBLOKS5E.WarlockSlotRegain": "小休憩または大休憩終了後に使用済みの呪文スロットを回復する。",
+	"MOBLOKS5E.ListFinalConjunctionAnd": "",
 
-
-
-
-
-
-
+	"MOBLOCKS5E.SpellLevel": "{level}レベル",
+	"MOBLOCKS5E.SpellCost": "{cost} each",
+	"MOBLOCKS5E.SpellSlots": "{slots}スロット",
+	"MOBLOCKS5E.SpellPactSlots": "{slots}{level}-level slots",
+	
 	"MOBLOKS5E.range": "射程",
 	"MOBLOKS5E.reach": "間合い",
 	"MOBLOKS5E.target": "目標",
-	
+	"MOBLOKS5E.targetS": "目標",	
 	"MOBLOKS5E.AttackToHit": "攻撃{bonus}",
 	"MOBLOKS5E.AttackRange": "{reachRange} {range}{sep}{max}{units}.",
 	"MOBLOKS5E.AttackTarget": "{type}{quantity}",
@@ -99,60 +99,60 @@
 	"MOBLOKS5E.AttackDamageTemplate": "{average} ({formula}) {type}",
 	"MOBLOKS5E.damage": "ダメージ",
 	
+	"MOBLOKS5E.Reactions": "リアクション",
+	"MOBLOKS5E.Multiattack": "追加攻撃",
+	"MOBLOKS5E.LegendaryResistance": "伝説的抵抗",
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	"MOBLOKS5E.LegendaryText": "{name}は以下の伝説的アクションを合計3回行なうことができる。1度に使用できる伝説的アクションはいずれか1つだけであり、行なえるのは他のクリーチヤーのターンの終了時である。{name} は消費した伝説的アクションの回数を自身のターンの開始時に回復する。"
+	"MOBLOKS5E.OrdinalSuffixes": ["", "", "", ""],
 	
+	"MOBLOKS5E.MultiattackLocators": [
+		"追加攻撃",
+		"複数回攻撃",
+		"マルチアタック",
+		"追加の攻撃",
+		"連続攻撃",
+		"メニーアタック"
+	],
+	"MOBLOKS5E.WarlockLocators": [
+		"ウォーロック",
+		"契約呪文"
+	],
+	"MOBLOKS5E.SpellcastingLocators": [
+		"呪文発動能力",
+		"契約魔法"
+	],
+	"MOBLOKS5E.InnateCastingLocators": [
+		"生得呪文",
+		"生得呪文(サイオニック)",
+		"生得呪文(サイオニック)"
+	],
 	
+	"MOBLOKS5E.LegActionCost": "{number}伝説的アクション消費",
+	"MOBLOKS5E.LegendaryText": "{name}は以下の伝説的アクションを合計3回行なうことができる。1度に使用できる伝説的アクションはいずれか1つだけであり、行なえるのは他のクリーチヤーのターンの終了時である。{name} は消費した伝説的アクションの回数を自身のターンの開始時に回復する。",
+	
+	"MOBLOKS5E.LairActionsHeading": "住処アクション",
+	"MOBLOKS5E.LairText": "イニシアチブ20の時点で(同値の場合は常に後)、この{name}は住処アクションを行ない､以下のうち任意の1つの効果を生み出せる。同一の効果を2ラウンド連続で使用することはできない。",
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
+	"MOBLOKS5E.attack-description-name": "攻撃詳細を自動生成",
+	"MOBLOKS5E.attack-description-hint": "デフォルトで（攻撃＋12、間合い5フィート、クリーチヤー1体。ヒット:10(3d6)[冷気]ダメージ）のような攻撃の詳細を自動的に表示する。",
+	"MOBLOKS5E.casting-feature-name": "呪文発動能力の詳細を表示",
+	"MOBLOKS5E.casting-feature-hint": "自動的に呪文発動能力を持ったモンスターの特徴を表示する。",
+	"MOBLOKS5E.inline-secrets-name": "インラインの秘密の文を表示",
+	"MOBLOKS5E.inline-secrets-hint": "デフォルトとして攻撃等の中に記述されている秘密の文（テキストエディターの秘密）をおなじ行間で表示するか、別途のブロックとして表示するかを設定します。",
+	"MOBLOKS5E.hidden-secrets-name": "秘密の文を非表示",
+	"MOBLOKS5E.hidden-secrets-hint": "デフォルトとしてデータブロックからすべての秘密の文を非表示にします。",
+	"MOBLOKS5E.hide-profile-image-name": "画像を非表示",
+	"MOBLOKS5E.hide-profile-image-hint": "デフォルトとしてデータブロックにそのモンスターの画像を表示しなくします。",
+	"MOBLOKS5E.show-lair-actions-name": "住処アクション",
+	"MOBLOKS5E.show-lair-actions-hint": "住処アクションを表示する。",
+	"MOBLOKS5E.current-hit-points-name": "現在のヒットポイントを表示する。",
+	"MOBLOKS5E.current-hit-points-hint": "現在のヒットポイントを計算して表示します。最大と最低HPが表示されていない場合は平均を使用します。",
+	"MOBLOKS5E.maximum-hit-points-name": "最大ヒットポイントを表示する",
+	"MOBLOKS5E.maximum-hit-points-hint": "最大ヒットポイントを計算して表示します。最大と最低HPが表示されていない場合は平均を使用します。",
+	"MOBLOKS5E.max-height-offset-name": "ウィンドウの最大の長さオフセット",
+	"MOBLOKS5E.max-height-offset-hint": "データブロックのウィンドウの最大の長さは現在使用している画面の大きさからこのオフセットを引いたものになります。デフォルトが72はマクロのバーと同等の長さのオフセットとなり10ピクセルのパディングも含みます。データブロックを細く・長くしたい場合はこの数値を減らしてください。広くしたい場合はこの数値を増やしてください。",
+	"MOBLOKS5E.default-theme-name": "デフォルトテーマ",
+	"MOBLOKS5E.default-theme-hint": "データブロックに適用されるデフォルトのテーマを設定します。",
+	"MOBLOKS5E.custom-theme-class-name": "デフォルトのカスタムテーマのクラス名",
+	"MOBLOKS5E.custom-theme-class-hint": "（プログラマー用）デフォルトのカスタムテーマに使用されるクラス名を定義できます。"
+	}
