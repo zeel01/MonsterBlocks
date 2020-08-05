@@ -140,17 +140,15 @@
 	<header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
 		<section id="monster-identity">
 			<h1 class="charname" contenteditable="true" data-field-key="name" placeholder="{{ localize 'DND5E.Name' }}">{{actor.name}}</h1>
-			<p class="chartype">
-				<span>{{! This is going to require special care}}
-					{{~lookup config.actorSizes data.traits.size~}}
-				</span>
-				<select class="actor-size" name="data.traits.size">
-					{{#select data.traits.size}}
+			<div class="chartype">
+				<div class="select-field" data-select-key="data.traits.size" data-selected-value="{{data.traits.size}}">
+					<label class="select-label">{{ lookup config.actorSizes data.traits.size}}</label>
+					<ul class="actor-size select-list">
 						{{#each config.actorSizes as |label size|}}
-							<option value="{{size}}">{{label}}</option>
+							<li data-selection-value="{{size}}">{{label}}</li>
 						{{/each}}
-					{{/select}}
-				</select>
+					</ul>
+				</div>
 				<span contenteditable="true" data-field-key="data.details.type" placeholder="{{ localize 'DND5E.Type' }}">
 					{{~data.details.type~}}
 				</span>{{~" "~}}
@@ -160,7 +158,7 @@
 				<span contenteditable="true" placeholder="{{ localize 'DND5E.Alignment' }}" data-field-key="data.details.alignment">
 					{{~data.details.alignment~}}
 				</span>
-			</p>
+			</div>
 			{{#unless flags.hide-profile-image}}<figure class="profile-image profile-img" style="background-image: url({{actor.img}});" title="{{actor.name}}" data-edit="img"/></figure>{{/unless}}
 		</section>
 		<section class="monster-attributes1">

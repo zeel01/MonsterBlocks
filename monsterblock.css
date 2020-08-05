@@ -418,23 +418,35 @@ li:nth-last-of-type(2):after {
 	outline: none;
 	text-decoration: dotted underline;
 }
-.monsterblock select {
-	appearance: none;
-	display: inline;
-	border: none;
-	background: none;
-	font-style: inherit;
-	font-family: inherit;
-	padding: 0;
-}
-.monsterblock select option {
-	background: var(--menu-background);
+.monsterblock .select-field:hover,
+.monsterblock .select-list li:hover {
+	text-decoration: dotted underline;
 }
 
-.monsterblock select:active,
-.monsterblock select:focus,
-.monsterblock select:hover {
-	box-shadow: none;
-	outline: none;
-	text-decoration: dotted underline;
+.monsterblock .select-field {
+	display: inline;
+	position: relative;
+	cursor: pointer;
+}
+.monsterblock .select-label {
+	cursor: pointer;
+}
+.monsterblock .select-list {
+	visibility: hidden;
+	display: block;
+	position: absolute;
+	top: .7em;
+	left: -.3em;
+	list-style: none;
+	background: url(/ui/parchment.jpg), var(--background-filter);
+	background-repeat: repeat;
+	background-blend-mode: var(--background-blend);
+	padding: .3em;
+	box-shadow: 0px 0px 1px 0px black;
+}
+.monsterblock .select-list li {
+	cursor: pointer;
+}
+.monsterblock .select-field:hover .select-list {
+	visibility: visible;
 }

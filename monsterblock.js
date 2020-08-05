@@ -64,7 +64,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		let dtypes = {};
 		
 		let fields = form.querySelectorAll('[data-field-key]');
-		
 		for (let field of fields) {
 			let key = field.dataset.fieldKey;
 			let type = field.dataset.dtype;
@@ -72,6 +71,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			
 			formData.append(key, value);
 			if (type) dtypes[key] = type;
+		}
+		
+		let selects = form.querySelectorAll('[data-select-key]');
+		for (let select of selects) {
+			let key = select.dataset.selectKey;
+			let value = select.dataset.selectedValue;
+
+			formData.append(key, value);
 		}
 		
 		formData._dtypes = dtypes;
@@ -731,6 +738,19 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			event.currentTarget.previousElementSibling.classList.remove("hidden");
 		});
 		
+		html.find('.select-field').click((event) => {
+			let control = event.currentTarget;
+			let selection = event.target;
+			let value = selection.dataset.selectionValue;
+			if (!value) return false;
+			let label = control.querySelector(".select-label");
+
+			label.innerText = CONFIG.DND5E.actorSizes[value];
+			control.dataset.selectedValue = value;
+
+			this._onChangeInput(event);
+		});
+
 		html.find('[contenteditable=true]').keydown((event) => {
 			let el = event.currentTarget;
 
