@@ -272,7 +272,7 @@
 				</li>
 				{{/if}}
 				{{#if (moblok-hascontents data.traits.dv.selected)}}
-				<li class="attribute">
+				<li class="attribute trait-selector" data-options="damageTypes" data-target="data.traits.dv" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 					<h4 class="attribute-name">{{localize "DND5E.DamVuln"}}</h4>
 					<ul class="traits-list inline-list">
 					{{#each data.traits.dv.selected as |v k|}}
@@ -282,7 +282,7 @@
 				</li>
 				{{/if}}
 				{{#if (moblok-hascontents data.traits.dr.selected)}}
-				<li class="attribute">
+				<li class="attribute trait-selector" data-options="damageTypes" data-target="data.traits.dr" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 					<h4 class="attribute-name">{{localize "DND5E.DamRes"}}</h4>
 					<ul class="traits-list inline-list">
 					{{#each data.traits.dr.selected as |v k|}}
@@ -292,7 +292,7 @@
 				</li>
 				{{/if}}
 				{{#if (moblok-hascontents data.traits.di.selected)}}
-				<li class="attribute">
+				<li class="attribute trait-selector" data-options="damageTypes" data-target="data.traits.di" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 					<h4 class="attribute-name">{{localize "DND5E.DamImm"}}</h4>
 					<ul class="traits-list inline-list">
 					{{#each data.traits.di.selected as |v k|}}
@@ -302,7 +302,7 @@
 				</li>
 				{{/if}}
 				{{#if (moblok-hascontents data.traits.ci.selected)}}
-				<li class="attribute">
+				<li class="attribute trait-selector" data-options="conditionTypes" data-target="data.traits.ci" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 					<h4 class="attribute-name">{{localize "DND5E.ConImm"}}</h4>
 					<ul class="traits-list inline-list">
 					{{#each data.traits.ci.selected as |v k|}}
@@ -313,10 +313,14 @@
 				{{/if}}
 				<li class="attribute">
 					<h4 class="attribute-name">{{localize "DND5E.Senses"}}</h4>
-					<span class="trait-value">{{data.traits.senses}}</span>
+					<span 
+						placeholder="{{ localize 'DND5E.Senses' }}"
+						contenteditable="true"
+						data-field-key="data.traits.senses"
+						class="trait-value">{{data.traits.senses}}</span>
 				</li>
 				
-				<li class="attribute">
+				<li class="attribute trait-selector" data-options="languages" data-target="data.traits.languages" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 					<h4 class="attribute-name">{{localize "DND5E.Languages"}}</h4>
 					<ul class="traits-list inline-list">
 					{{#if (moblok-hascontents data.traits.languages.selected)}}
@@ -342,7 +346,7 @@
 		</section>
     </header>
 	{{#*inline "featureBlock"}}
-	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}{{#if lairactions}} lair-actions{{/if}}">
+	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}{{#if lairactions}} lair-actions{{/if}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="feature-description inline-children">
 			{{#unless lairactions}}
 				<span class="item-name" data-item-id="{{item._id}}">
@@ -382,7 +386,7 @@
 	
 	{{#each features.casting.items as |casting id|}}
 	{{#if ../flags.casting-feature}}
-	<section class="item monster-feature spellcasting-trait">
+	<section class="item monster-feature spellcasting-trait" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="feature-description inline-children">
 			<span class="item-name" data-item-id="{{casting._id}}">{{casting.name}}</span>.
 			{{~#if item.hasresource~}}
@@ -443,7 +447,7 @@
 
 	{{#each features.attacks.items as |item iid|}}
 	{{#unless item.is.specialAction}}
-	<section class="item monster-action">
+	<section class="item monster-action" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="attack-description inline-children">
 			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>{{ localize "MOBLOKS5E.NameDescriptionSep" }}
 			{{~#if item.hasresource~}}

@@ -1,4 +1,5 @@
 import ActorSheet5eNPC from "../../systems/dnd5e/module/actor/sheets/npc.js";
+import TraitSelector from "../../systems/dnd5e/module/apps/trait-selector.js";
 
 export class MonsterBlock5e extends ActorSheet5eNPC {
 	constructor(...args) {
@@ -740,6 +741,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			//if (el.innerText == "") el.innerText = "-";
 		});
 		html.find('[contenteditable=true]').focusout(this._onChangeInput.bind(this));
+		html.find('.trait-selector').contextmenu(this._onTraitSelector.bind(this));
 	
 		this._dragDrop.forEach(d => d.bind(html[0]));
 		html.on("change", "input,select,textarea", this._onChangeInput.bind(this));
@@ -769,6 +771,17 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 
 		super._onChangeInput(event);
+	}
+	_onTraitSelector(event) {
+		event.preventDefault();
+		const a = event.currentTarget;
+		const label = $(a).find(".attribute-name");
+		const options = {
+			name: a.dataset.target,
+			title: label.innerText,
+			choices: CONFIG.DND5E[a.dataset.options]
+		};
+		new TraitSelector(this.actor, options).render(true)
 	}
 	
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
