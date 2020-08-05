@@ -38,4 +38,18 @@ Actor.update([...game.actors].reduce((acc, a) => {
 		acc.push(act);
 	}
 	return acc;
-}, []))
+}, []));
+
+(async () => {
+	console.log("Macro | Setting all Monster Block token themes to ", game.settings.get("monsterblock", "default-theme"));
+	console.time("Macro | Theme conversion completed in");
+	for (let tkn of canvas.tokens.objects.children) {
+		if (tkn.actor.getFlag("monsterblock", "theme-choice")) {
+			await tkn.actor.sheet.close();
+			await tkn.actor.setFlag("monsterblock", "theme-choice", game.settings.get("monsterblock", "default-theme"))
+		}
+	}
+	console.log("Macro | ...Complete");
+	console.timeEnd("Macro | Theme conversion completed in");
+	return true;
+})();
