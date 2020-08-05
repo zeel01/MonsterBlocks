@@ -2,25 +2,22 @@
 
 ## Additions
 - Handle multiple damage
+- Editing (for version 2)
 
 ## Changes
-- ~~Complete massive refactor~~<sup>done for now!</sup>
-- ~~Convert static strings to language file references.~~
 - Indicate to new users that the menu in the corner exists
   
 ## Fixes
-- ~~Missing action uses? Example: Aboleth.enslave~~
-- ~~Comma color~~ 
+- Passive perception needs different handling for editable sheet
+- The CSS that allows for reverse indentation doesn't play nicely with `inline-block` and needs to be corrected.
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
 - Add more comments to the code! <sup>much done!</sup>
 - Re-organize code a bit
 - Remove anything unused
-- ~~Refactor away as many Handlebars helpers as possible.~~
 
 ## Back Burner
-- Editing (for version 2)
 - Rolls for saves/skills that aren't listed (not proficient) <sup>One can simply roll an ability check</sup>
 - Some creatures have "sub features" like breath weapns, the bodies of these are indented. <sup>unsure if this is possible to do correctly</sup>
 - Differentiate which cantrips belong to what casting feature. <sup>unsure how possible</sup>
