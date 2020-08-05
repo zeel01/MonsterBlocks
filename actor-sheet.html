@@ -139,18 +139,18 @@
 	</nav>	
 	<header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
 		<section id="monster-identity">
-			<h1 class="charname" contenteditable="false" data-field-key="name">{{actor.name}}</h1>
+			<h1 class="charname" contenteditable="true" data-field-key="name" placeholder="{{ localize 'DND5E.Name' }}">{{actor.name}}</h1>
 			<p class="chartype">
-				<span contenteditable="false" data-field-key="">
+				<span>{{! This is going to require special care}}
 					{{~lookup config.actorSizes data.traits.size~}}
 				</span>
-				<span contenteditable="false" data-field-key="data.details.type">
+				<span contenteditable="true" data-field-key="data.details.type" placeholder="{{ localize 'DND5E.Type' }}">
 					{{~data.details.type~}}
 				</span>{{~" "~}}
 				{{~#if data.details.alignment~}}
 					<span class="sep">{{ localize "MOBLOKS5E.Comma" }}</span>
 				{{/if}}
-				<span contenteditable="false" data-field-key="data.details.alignment">
+				<span contenteditable="true" placeholder="{{ localize 'DND5E.Alignment' }}" data-field-key="data.details.alignment">
 					{{~data.details.alignment~}}
 				</span>
 			</p>
@@ -159,8 +159,8 @@
 		<section class="monster-attributes1">
 			<ul class="attributes">
 				<li class="attribute">
-					<h4 class="attribute-name box-title">{{ localize "DND5E.ArmorClass" }} </h4>
-					<span class="attr-value">{{data.attributes.ac.value}}</span>
+					<h4 class="attribute-name box-title">{{ localize "DND5E.ArmorClass" }}</h4>
+					<span class="attr-value" data-field-key="data.attributes.ac.value" data-dtype="Number" placeholder="{{ localize 'DND5E.ArmorClass' }}" contenteditable="true">{{data.attributes.ac.value}}</span>
 				</li>
 				<li class="attribute health">
 					<h4 class="attribute-name box-title">{{localize "DND5E.HitPoints" }} </h4>
@@ -168,30 +168,45 @@
 						<span title="{{ localize 'MOBLOKS5E.Average' }}" class="attr-value">{{data.attributes.hp.average}}</span>
 					{{~/unless~}}
 					{{#if flags.current-hit-points}}
-						<span title="{{ localize 'MOBLOKS5E.Current' }}" data-field-key="data.attributes.hp.value" class="attr-value hasinput">
-						{{#if data.attributes.hp.value}}
-							{{data.attributes.hp.value}}
-						{{else}}
-							0
-						{{/if}}
+						<span title="{{ localize 'MOBLOKS5E.Current' }}" 
+							placeholder="0" 
+							data-field-key="data.attributes.hp.value" 
+							data-dtype="Number" 
+							class="attr-value" 
+							contenteditable="true">
+							{{~#if data.attributes.hp.value~}}
+								{{~data.attributes.hp.value~}}
+							{{~else~}}
+								0
+							{{~/if~}}
 						</span>
-						<input title="{{ localize 'MOBLOKS5E.Current' }}" data-dtype="Number" name="data.attributes.hp.value" class="attr-value hiddeninput hidden hp-input" value="{{data.attributes.hp.value}}">
 					{{~/if~}}
 					{{~#if (and flags.current-hit-points flags.maximum-hit-points)~}}
 						<span class="sep"> / </span>
 					{{~/if~}}
 					{{~#if flags.maximum-hit-points~}}
-						<span title="{{ localize 'MOBLOKS5E.Maximum' }}" data-field-key="data.attributes.hp.max" class="attr-value hasinput">
-						{{#if data.attributes.hp.max}}
-							{{data.attributes.hp.max}}
-						{{else}}
-							0
-						{{/if}}
+						<span title="{{ localize 'MOBLOKS5E.Maximum' }}" 
+							placeholder="0" 
+							data-field-key="data.attributes.hp.max" 
+							data-dtype="Number"
+							class="attr-value" 
+							contenteditable="true">
+							{{~#if data.attributes.hp.max~}}
+								{{data.attributes.hp.max~}}
+							{{~else~}}
+								0
+							{{~/if~}}
 						</span>
-						<input title="{{ localize 'MOBLOKS5E.Maximum' }}" data-dtype="Number" name="data.attributes.hp.max" class="attr-value hiddeninput hidden hp-input" value="{{data.attributes.hp.max}}">
 					{{/if}}
 					
-					<span class="sep">(</span><span title="Average: {{data.attributes.hp.average}}" class="attr-value">{{data.attributes.hp.formula}}</span><span class="sep">)</span>
+					(<span title="Average: {{data.attributes.hp.average}}"
+						placeholder="1d6"
+						data-field-key="data.attributes.hp.formula"
+						data-dtype="Roll"
+						class="attr-value"
+						contenteditable="true">
+							{{~data.attributes.hp.formula~}}
+					</span>)
 				</li>
 				<li class="attribute">
                     <h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }} </h4>

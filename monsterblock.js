@@ -57,9 +57,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		return data;
 	}
-	
-/*	_getFormData(form) {	// Work in progress, might not use.
-		console.debug("_getFormData!");
+	_getFormData(form) {	// Work in progress, might not use.
+		//console.debug("_getFormData!");
 		let formData = new FormData();
 		let dtypes = {};
 		
@@ -67,7 +66,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		for (let field of fields) {
 			let key = field.dataset.fieldKey;
-			let type = field.dataset.fieldType;
+			let type = field.dataset.dtype;
 			let value = field.innerText;
 			
 			formData.append(key, value);
@@ -76,7 +75,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		formData._dtypes = dtypes;
 		return formData;
-	}*/
+	}
 	hasSaveProfs() {
 		return Object.values(this.actor.data?.data?.abilities)?.some(ability => ability.proficient);
 	}
@@ -731,9 +730,45 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			event.currentTarget.previousElementSibling.classList.remove("hidden");
 		});
 		
+		html.find('[contenteditable=true]').keydown((event) => {
+			let el = event.currentTarget;
+
+			switch (event.key) {
+				case "Enter": this._onChangeInput(event); break;
+				default: console.debug(event.key);
+			}
+			//if (el.innerText == "") el.innerText = "-";
+		});
+		html.find('[contenteditable=true]').focusout(this._onChangeInput.bind(this));
+	
 		this._dragDrop.forEach(d => d.bind(html[0]));
 		html.on("change", "input,select,textarea", this._onChangeInput.bind(this));
 		html.find('input[data-dtype="Number"]').change(this._onChangeInputDelta.bind(this));
+		
+	}
+	_onChangeInput(event) {
+		const input = event.currentTarget;
+		const value = input.innerText;
+
+		if (input.dataset.dtype == "Number") {
+			if (["+", "-"].includes(value[0])) {
+				let delta = parseFloat(value);
+				input.innerText = getProperty(this.actor.data, input.dataset.fieldKey) + delta;
+			} 
+			else if (value[0] === "=") {
+				input.innerText = value.slice(1);
+			}
+		}
+		else if(input.dataset.dtype == "Roll") {
+			try { new Roll(value).roll(); }
+			catch (e) {
+				console.error(e);
+				ui.notifications.error(e);
+				input.innerText = getProperty(this.actor.data, input.dataset.fieldKey);
+			}
+		}
+
+		super._onChangeInput(event);
 	}
 	
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.

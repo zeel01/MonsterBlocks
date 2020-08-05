@@ -23,6 +23,7 @@
 	--menu-background: #f7e2ac;
 	--main-text-color: black;
 	--inline-link-color: #ff6400;
+	--faded-text: #80808080;
 }
 .monsterblock.dark-theme {
 	font-size: 14px;
@@ -400,4 +401,21 @@ li:nth-last-of-type(2):after {
 }
 .monsterblock .description {
 	line-height: 1.3em;
+}
+
+.monsterblock [contenteditable=true] {
+	min-width: 1ch;
+	display: inline-block;
+	text-indent: 0;
+}
+.monsterblock [contenteditable=true]:empty:after {
+	content: attr(placeholder);
+	color: var(--faded-text);
+}
+.monsterblock [contenteditable=true]:active,
+.monsterblock [contenteditable=true]:focus, 
+.monsterblock [contenteditable=true]:hover {
+	border: none;
+	outline: none;
+	text-decoration: dotted underline;
 }
