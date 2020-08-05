@@ -209,12 +209,22 @@
 					</span>)
 				</li>
 				<li class="attribute">
-                    <h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }} </h4>
-					<span class="attr-value" contenteditable="false" data-field-key="data.attributes.speed.value">{{data.attributes.speed.value}}</span>
+                    <h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }}</h4>
+					<span class="attr-value" 
+						contenteditable="true"
+						placeholder="{{ localize 'DND5E.Speed' }}"
+						data-field-key="data.attributes.speed.value"
+						>{{data.attributes.speed.value}}</span>
+
 					{{~#if data.attributes.speed.special~}}
-						<span class="sep">{{ localize "MOBLOKS5E.Comma" }} </span>
-						<span class="attr-value" contenteditable="false" data-field-key="data.attributes.speed.special">{{data.attributes.speed.special}}</span>
-					{{~/if~}}
+						<span class="sep">{{ localize "MOBLOKS5E.Comma" }}</span>
+					{{~/if}}
+					<span class="attr-value"
+						contenteditable="true"
+						placeholder="{{ localize 'DND5E.SpeedSpecial' }}"
+						data-field-key="data.attributes.speed.special"
+						>{{data.attributes.speed.special}}</span>
+					
                 </li>
 			</ul>
 		</section>
@@ -321,7 +331,12 @@
 				
 				<li class="attribute">
 					<h4 class="attribute-name">{{localize "DND5E.ChallengeRating"}}</h4>
-					<span class="trait-value">{{labels.cr}}</span> <span>({{ localize "MOBLOKS5E.XPLabel" xp=data.details.xp.label }})</span>
+					<span class="trait-value"
+						placeholder="0"
+						contenteditable="true"
+						data-dtype="Number"
+						data-field-key="data.details.cr"
+						>{{labels.cr}}</span> <span>({{ localize "MOBLOKS5E.XPLabel" xp=data.details.xp.label }})</span>
 				</li>
 			</ul>
 		</section>
