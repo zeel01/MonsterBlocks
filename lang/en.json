@@ -47,6 +47,8 @@
 	"MOBLOKS5E.PerceptionLocator": "perception",
 	"MOBLOKS5E.SkillS": "Skills",
 	"MOBLOKS5E.XPLabel": "{xp} XP",
+
+	"MOBLOKS5E.EditHint": "Right-click to edit",
 	
 	"MOBLOKS5E.Recharge": "Recharge",
 	"MOBLOKS5E.NCharged": "Not charged",

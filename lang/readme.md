@@ -42,3 +42,18 @@ If you need more the code will handle that just fine, add as many as needed.
 If the sheet doens't seem to be able to handle the needs of the language,
 please post an issue on [Github](https://github.com/zeel01/MonsterBlocks/issues)
 I will see if there is a way to handle the need.
+
+# Changelog
+## Version: 2.x
+### Added 1 strings:
+```json
+"MOBLOKS5E.EditHint": "Right-click to edit"
+```
+### Edited 0 Strings:
+```json
+
+```
+### Removed 0 Strings:
+```json
+
+```
