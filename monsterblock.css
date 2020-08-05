@@ -415,7 +415,26 @@ li:nth-last-of-type(2):after {
 .monsterblock [contenteditable=true]:active,
 .monsterblock [contenteditable=true]:focus, 
 .monsterblock [contenteditable=true]:hover {
+	outline: none;
+	text-decoration: dotted underline;
+}
+.monsterblock select {
+	appearance: none;
+	display: inline;
 	border: none;
+	background: none;
+	font-style: inherit;
+	font-family: inherit;
+	padding: 0;
+}
+.monsterblock select option {
+	background: var(--menu-background);
+}
+
+.monsterblock select:active,
+.monsterblock select:focus,
+.monsterblock select:hover {
+	box-shadow: none;
 	outline: none;
 	text-decoration: dotted underline;
 }

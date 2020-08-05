@@ -144,6 +144,13 @@
 				<span>{{! This is going to require special care}}
 					{{~lookup config.actorSizes data.traits.size~}}
 				</span>
+				<select class="actor-size" name="data.traits.size">
+					{{#select data.traits.size}}
+						{{#each config.actorSizes as |label size|}}
+							<option value="{{size}}">{{label}}</option>
+						{{/each}}
+					{{/select}}
+				</select>
 				<span contenteditable="true" data-field-key="data.details.type" placeholder="{{ localize 'DND5E.Type' }}">
 					{{~data.details.type~}}
 				</span>{{~" "~}}
