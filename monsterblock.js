@@ -193,7 +193,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			casting:	{ prep: this.prepCasting.bind(this), filter: this.constructor.isCasting.bind(this.constructor), label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
 			reaction:	{ prep: this.prepAction.bind(this), filter: this.constructor.isReaction, label: game.i18n.localize("MOBLOKS5E.Reactions"), items: [], dataset: {type: "feat"} },
 			attacks:	{ prep: this.prepAttack.bind(this), filter: item => item.type === "weapon", label: game.i18n.localize("DND5E.AttackPl"), items: [] , dataset: {type: "weapon"} },
-			actions:	{ prep: this.prepAction.bind(this), filter: item => Boolean(item.data.activation.type), label: game.i18n.localize("DND5E.ActionPl"), items: [] , dataset: {type: "feat"} },
+			actions:	{ prep: this.prepAction.bind(this), filter: item => Boolean(item.data?.activation?.type), label: game.i18n.localize("DND5E.ActionPl"), items: [] , dataset: {type: "feat"} },
 			features:	{ prep: this.prepFeature.bind(this), filter: item => item.type === "feat", label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
 			equipment:	{ prep: ()=>{}, filter: i => true, label: game.i18n.localize("DND5E.Inventory"), items: [], dataset: {type: "loot"}}
 		};
@@ -762,6 +762,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		html.find('[contenteditable=true]').focusout(this._onChangeInput.bind(this));
 		html.find('.trait-selector').contextmenu(this._onTraitSelector.bind(this));
+		html.find('.trait-selector-add').click(this._onTraitSelector.bind(this));
 	
 		this._dragDrop.forEach(d => d.bind(html[0]));
 		html.on("change", "input,select,textarea", this._onChangeInput.bind(this));

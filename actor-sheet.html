@@ -245,6 +245,30 @@
             </ul>
 		</section>
 		<section class="monster-attributes2">
+			<figure class="plus-button">
+				<label>+</label>
+				<ul>
+					<li class="attribute trait-selector-add" data-options="skills" data-target="">
+						{{ localize "MOBLOKS5E.SkillS" }}
+					</li>
+					<li class="attribute trait-selector-add" data-options="damageTypes" data-target="data.traits.dv">
+						{{localize "DND5E.DamVuln"}}
+					</li>
+					<li class="attribute trait-selector-add" data-options="damageTypes" data-target="data.traits.dr">
+						{{localize "DND5E.DamRes"}}
+					</li>
+					<li class="attribute trait-selector-add" data-options="damageTypes" data-target="data.traits.di">
+						{{localize "DND5E.DamImm"}}
+					</li>
+					<li class="attribute trait-selector-add" data-options="damageTypes" data-target="data.traits.ci">
+						{{localize "DND5E.ConImm"}}
+					</li>
+					<li class="attribute trait-selector-add" data-options="languages" data-target="data.traits.languages">
+						{{localize "DND5E.Languages"}}
+					</li>
+				</ul>
+			</figure>
+
 			<ul class="attributes">
 				{{#if info.hasSaveProfs}}
 				<li class="monster-saves">
@@ -350,6 +374,12 @@
 			</ul>
 		</section>
     </header>
+
+	<main>
+	<figure class="plus-button">
+		<label>+</label>
+	</figure>
+	
 	{{#*inline "featureBlock"}}
 	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}{{#if lairactions}} lair-actions{{/if}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="feature-description inline-children">
@@ -544,4 +574,5 @@
 		</ul>
 	{{/if}}
 	{{/if}}
+	</main>
 </form>

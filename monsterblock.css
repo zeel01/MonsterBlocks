@@ -24,6 +24,7 @@
 	--main-text-color: black;
 	--inline-link-color: #ff6400;
 	--faded-text: #80808080;
+	--column-width: 390px;
 }
 .monsterblock.dark-theme {
 	font-size: 14px;
@@ -70,6 +71,11 @@
 	user-select: text;
 	overflow-wrap: break-word;
 }
+.monsterblock main {
+	display: block;
+	break-inside: auto;
+	position: relative;
+}
 .monsterblock .hidden {
 	display: none;
 }
@@ -96,6 +102,12 @@
 	left: 2px;
 	color: #aaa;
 }
+.window-app.dnd5e .switches {
+	--background-filter: rgba(0, 0, 0, 0);
+	--background-blend: none;
+	--heading-color: black;
+	--divider-color: gray;
+}
 .window-app .switches a {
 	width: 100%;
 	height: 100%;
@@ -109,7 +121,9 @@
 	top: 0;
 	display: none;
 	position: absolute;
-	background-color: var(--menu-background);
+	background: url(/ui/parchment.jpg), var(--background-filter);
+	background-repeat: repeat;
+	background-blend-mode: var(--background-blend);
 	color: var(--heading-color);
 	padding: 0;
 	left: 100%;
@@ -200,29 +214,79 @@
 .monsterblock .flexcol {
     display: block;
     height: 100%;
-    /* width: 390px; */
-    column-width: 390px;
+    /* width: var(--column-width); */
+    column-width: var(--column-width);
     column-gap: 35px;
     column-fill: balance;
     /* border: 1px solid red; */
 }
 
+.monsterblock .monster-attributes2 {
+	position: relative;
+}
 .monsterblock .sheet-header {
 	display: block;
 	position: relative;
 }
-.monsterblock .sheet-header section::after {
+.monsterblock .sheet-header section:not(:first-of-type)::before,
+.monsterblock main::before {
 	margin-top: .5em;
 	margin-bottom: .5em;
 	display: block;
-	/* width: 390px; */
+	/* width: var(--column-width); */
 	content: "";
 	border: none;
 	border-top: .2em solid transparent;
 	border-bottom: .2em solid transparent;
-	border-left: 390px solid var(--divider-color);
+	border-left: var(--column-width) solid var(--divider-color);
+}
+.monsterblock .sheet-header section.monster-attributes2:hover::before,
+.monsterblock main:hover::before {
+	border-left: calc(var(--column-width) - 2.5ch) solid var(--divider-color);
+}
+.monsterblock .plus-button {
+	color: var(--divider-color);
+	display: block;
+	width: 1ch;
+	height: 1em;
+	position: absolute;
+	right: 0px;
+	top: -.56em;
+	margin: 0;
+	font-size: 2em;
+	text-align: center;
+	visibility: hidden;
+	cursor: pointer;
+}
+.monsterblock .plus-button ul {
+	text-align: left;
+	display: block;
+	width: 25ch;
+	position: absolute;
+	right: 0px;
+	top: 1.2em;
+	visibility: hidden;
+	list-style: none;
+	font-size: .5em;
+	padding: 1ch;
+	color: var(--main-text-color);
+	box-shadow: 0px 0px 1px 0px black;
+	background: url(/ui/parchment.jpg), var(--background-filter);
+	background-repeat: repeat;
+	background-blend-mode: var(--background-blend);
+	z-index: 1;
+}
+.monsterblock .plus-button:hover ul {
+	visibility: visible;
+}
+.monsterblock .plus-button ul li:hover {
+	text-decoration: dotted underline;
 }
 
+.monsterblock main:hover .plus-button,
+.monsterblock .monster-attributes2:hover .plus-button {
+	visibility: visible;
+}
 .monsterblock .charname {
 	font-size: 2em;
 	color: var(--heading-color);
@@ -405,8 +469,6 @@ li:nth-last-of-type(2):after {
 
 .monsterblock [contenteditable=true] {
 	min-width: 1ch;
-	display: inline-block;
-	text-indent: 0;
 }
 .monsterblock [contenteditable=true]:empty:after {
 	content: attr(placeholder);
@@ -443,6 +505,7 @@ li:nth-last-of-type(2):after {
 	background-blend-mode: var(--background-blend);
 	padding: .3em;
 	box-shadow: 0px 0px 1px 0px black;
+	z-index: 1;
 }
 .monsterblock .select-list li {
 	cursor: pointer;
