@@ -9,7 +9,8 @@
   
 ## Fixes
 - Passive perception needs different handling for editable sheet
-- The CSS that allows for reverse indentation doesn't play nicely with `inline-block` and needs to be corrected.
+- ~~The CSS that allows for reverse indentation doesn't play nicely with `inline-block` and needs to be corrected.~~
+- Handle fractional challenge ratings
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
