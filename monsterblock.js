@@ -800,9 +800,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		const options = {
 			name: a.dataset.target,
 			title: label.innerText,
-			choices: CONFIG.DND5E[a.dataset.options]
+			choices: CONFIG.DND5E[a.dataset.options],
+			allowCustom: a.dataset.mode ? false : true,
+			mode: a.dataset.mode ? AdvancedTrraitSelector.modes[a.dataset.mode] : undefined
 		};
-		new TraitSelector(this.actor, options).render(true)
+		new AdvancedTrraitSelector(this.actor, options).render(true)
 	}
 	
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
@@ -874,6 +876,47 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			return TextEditor.enrichHTML(str, {secrets: true});
 		}
 	};
+}
+
+class AdvancedTrraitSelector extends TraitSelector {
+	static modes = {
+		default: Symbol("Default Mode"),
+		skills: Symbol("Skills Mode")
+	}
+	get mode() { 
+		return this.options.mode || this.constructor.modes.default; 
+	}
+	get isDefault() { return this.mode == this.constructor.modes.default; }
+	
+	_updateObject(event, formData) {
+		const updateData = {};
+		if (this.isDefault) return super._updateObject(event, formData);
+
+		// Obtain choices
+		const chosen = [];
+		for (let [k, v] of Object.entries(formData)) {
+			if ((k !== "custom") && v) chosen.push(k);
+		}
+		
+		
+		updateData[`${this.attribute}.value`] = chosen;
+
+		// Validate the number chosen
+		if (this.options.minimum && (chosen.length < this.options.minimum)) {
+			return ui.notifications.error(`You must choose at least ${this.options.minimum} options`);
+		}
+		if (this.options.maximum && (chosen.length > this.options.maximum)) {
+			return ui.notifications.error(`You may choose no more than ${this.options.maximum} options`);
+		}
+
+		// Include custom
+		if (this.options.allowCustom) {
+			updateData[`${this.attribute}.custom`] = formData.custom;
+		}
+
+		// Update the object
+		this.object.update(updateData);
+	}
 }
 
 Hooks.once("init", () => {
