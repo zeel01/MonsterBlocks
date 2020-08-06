@@ -245,26 +245,32 @@
             </ul>
 		</section>
 		<section class="monster-attributes2">
-			<figure class="plus-button">
-				<label>+</label>
+			<figure class="tweak-menu{{#if menus.[monster-attributes].state}} menu-open{{/if}}">
+				<label class="menu-toggle" data-menu-id="monster-attributes">+</label>
 				<ul>
-					<li class="attribute trait-selector-add" data-options="skills" data-target="">
-						{{ localize "MOBLOKS5E.SkillS" }}
+					<li class="attribute{{#if menus.[skills].state}} menu-open{{/if}}">
+						<label class="menu-toggle" data-menu-id="skills">{{ localize "MOBLOKS5E.SkillS" }}</label>
+						<ul>
+							{{#each data.skills as |skill s|}}
+								<input type="hidden" name="data.skills.{{s}}.value" value="{{skill.value}}" data-dtype="Number" />
+								<li><a class="proficiency-toggle skill-proficiency" title="{{skill.hover}}">{{{skill.icon}}}</a> {{skill.label}}</li>
+							{{/each}}
+						</ul>
 					</li>
-					<li class="attribute trait-selector-add" data-options="damageTypes" data-target="data.traits.dv">
-						{{localize "DND5E.DamVuln"}}
+					<li class="attribute trait-selector-add{{#if menus.[dv].state}} menu-open{{/if}}" data-options="damageTypes" data-target="data.traits.dv">
+						<label  class="menu-toggle" data-menu-id="dv">{{localize "DND5E.DamVuln"}}</label>
 					</li>
-					<li class="attribute trait-selector-add" data-options="damageTypes" data-target="data.traits.dr">
-						{{localize "DND5E.DamRes"}}
+					<li class="attribute trait-selector-add{{#if menus.[dr].state}} menu-open{{/if}}" data-options="damageTypes" data-target="data.traits.dr">
+						<label  class="menu-toggle" data-menu-id="dr">{{localize "DND5E.DamRes"}}</label>
 					</li>
-					<li class="attribute trait-selector-add" data-options="damageTypes" data-target="data.traits.di">
-						{{localize "DND5E.DamImm"}}
+					<li class="attribute trait-selector-add{{#if menus.[di].state}} menu-open{{/if}}" data-options="damageTypes" data-target="data.traits.di">
+						<label  class="menu-toggle" data-menu-id="dr">{{localize "DND5E.DamImm"}}</label>
 					</li>
-					<li class="attribute trait-selector-add" data-options="damageTypes" data-target="data.traits.ci">
-						{{localize "DND5E.ConImm"}}
+					<li class="attribute trait-selector-add{{#if menus.[ci].state}} menu-open{{/if}}" data-options="damageTypes" data-target="data.traits.ci">
+						<label  class="menu-toggle" data-menu-id="ci">{{localize "DND5E.ConImm"}}</label>
 					</li>
-					<li class="attribute trait-selector-add" data-options="languages" data-target="data.traits.languages">
-						{{localize "DND5E.Languages"}}
+					<li class="attribute trait-selector-add{{#if menus.[languages].state}} menu-open{{/if}}" data-options="languages" data-target="data.traits.languages">
+						<label  class="menu-toggle" data-menu-id="languages">{{localize "DND5E.Languages"}}</label>
 					</li>
 				</ul>
 			</figure>
@@ -376,7 +382,7 @@
     </header>
 
 	<main>
-	<figure class="plus-button">
+	<figure class="tweak-menu">
 		<label>+</label>
 	</figure>
 	

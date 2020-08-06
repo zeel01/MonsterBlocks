@@ -244,7 +244,7 @@
 .monsterblock main:hover::before {
 	border-left: calc(var(--column-width) - 2.5ch) solid var(--divider-color);
 }
-.monsterblock .plus-button {
+.monsterblock .tweak-menu {
 	color: var(--divider-color);
 	display: block;
 	width: 1ch;
@@ -258,16 +258,24 @@
 	visibility: hidden;
 	cursor: pointer;
 }
-.monsterblock .plus-button ul {
-	text-align: left;
-	display: block;
-	width: 25ch;
-	position: absolute;
+.monsterblock .tweak-menu > ul {
 	right: 0px;
 	top: 1.2em;
+	font-size: .5em;
+}
+.monsterblock .tweak-menu > ul > li {
+	padding-left: 2ch;
+}
+.monsterblock .tweak-menu li > ul {
+	right: 24ch;
+	top: calc(-.5em - 1ch);
+}
+.monsterblock .tweak-menu ul {
+	text-align: left;
+	display: block;
+	position: absolute;
 	visibility: hidden;
 	list-style: none;
-	font-size: .5em;
 	padding: 1ch;
 	color: var(--main-text-color);
 	box-shadow: 0px 0px 1px 0px black;
@@ -275,16 +283,41 @@
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
 	z-index: 1;
+	width: 25ch;
 }
-.monsterblock .plus-button:hover ul {
+.monsterblock .tweak-menu li {
+	white-space: nowrap;
+	position: relative;
+}
+.monsterblock .tweak-menu label {
+	display: inline-block;
+	width: 100%;
+	cursor: pointer;
+	user-select: none;
+}
+.monsterblock .tweak-menu li label:not(:only-child):before {
+	position: absolute;
+	left: 0ch;
+	content: '<';
+}
+/*.monsterblock .tweak-menu:hover > ul {
 	visibility: visible;
 }
-.monsterblock .plus-button ul li:hover {
+.monsterblock .tweak-menu li:hover > ul {
+	visibility: visible;
+}*/
+.monsterblock .monster-attributes2:hover .tweak-menu.menu-open > ul {
+	visibility: visible;
+}
+.monsterblock .monster-attributes2:hover .tweak-menu li.menu-open > ul {
+	visibility: visible;
+}
+.monsterblock .tweak-menu ul label:hover {
 	text-decoration: dotted underline;
 }
 
-.monsterblock main:hover .plus-button,
-.monsterblock .monster-attributes2:hover .plus-button {
+.monsterblock main:hover .tweak-menu,
+.monsterblock .monster-attributes2:hover .tweak-menu {
 	visibility: visible;
 }
 .monsterblock .charname {

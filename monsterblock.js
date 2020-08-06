@@ -53,6 +53,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			hasReactions: Boolean(data.features.reaction.items.length),
 			vttatokenizer: Boolean(this.constructor.Tokenizer)
 		}
+		data.menus = this.menuStates ?? {};
 				
 		data.themes = this.themes;
 		
@@ -604,6 +605,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 	}
 	async activateListeners(html) {	// We need listeners to provide interaction.
+		this.menuStates = this.menuStates ?? {};
+		
 		html.find('.switch').click((event) => {							// Switches are the primary way that settings are applied per-actor.
 			event.preventDefault();
 			let control = event.currentTarget.dataset.control;			// A data attribute is used on an element with the class .switch, and it contains the name of the switch to toggle.
@@ -763,11 +766,39 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		html.find('[contenteditable=true]').focusout(this._onChangeInput.bind(this));
 		html.find('.trait-selector').contextmenu(this._onTraitSelector.bind(this));
 		html.find('.trait-selector-add').click(this._onTraitSelector.bind(this));
-	
+
+		html.find('.menu-toggle').click((event) => {
+			let el = event.currentTarget;
+			let id = el.dataset.menuId;
+			let state = this.menuStates[id]?.state ?? false;
+			let newState = !state;
+			this.menuStates[id] = { el: el, state: newState };
+
+			if (newState) this.openMenu(id);
+			else this.closeMenu(id);
+		});
+
 		this._dragDrop.forEach(d => d.bind(html[0]));
 		html.on("change", "input,select,textarea", this._onChangeInput.bind(this));
 		html.find('input[data-dtype="Number"]').change(this._onChangeInputDelta.bind(this));
-		
+		html.find('.skill-proficiency').on("click contextmenu", this._onCycleSkillProficiency.bind(this));
+	}
+	closeMenu(menu) {
+		let el = this.menuStates[menu].el;
+		el.parentElement.classList.remove("menu-open");
+		let closer = el => {
+			let id = el.dataset?.menuId;
+			if (this.menuStates[id]?.state) {
+				this.menuStates[id].state = false;
+				this.closeMenu(id);
+			}
+			else el.childNodes.forEach(closer);
+		}
+		el.parentElement.childNodes.forEach(closer);
+	}
+	openMenu(menu) {
+		let el = this.menuStates[menu].el;
+		el.parentElement.classList.add("menu-open");
 	}
 	_onChangeInput(event) {
 		const input = event.currentTarget;
@@ -984,6 +1015,12 @@ Hooks.once('ready', () => {
 		default: ""
 	});
 });
+
+class AbilityTool extends FormApplication {
+	constructor() {
+		super();
+	}
+}
 
 Hooks.on("renderActorSheet", () => {	// This is just for debugging, it prevents this sheet's template from being cached.
 	let template = "modules/monsterblock/actor-sheet.html";
