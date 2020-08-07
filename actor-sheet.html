@@ -244,8 +244,41 @@
             {{/each}}
             </ul>
 		</section>
+		{{#*inline "menuItem"}}
+		{{#with item}}
+			{{#if (or (eq type "root-menu") (eq type "sub-menu"))}}
+				{{! If this is a root-menu, wrap it with a figure, otherwise it's a sub-menu so it's wrapped with an li}}
+				<{{#if (eq type "root-menu")~}}
+					figure class="tweak-menu
+				{{~else~}}
+					li class="sub-menu
+				{{~/if}}
+					{{~#if visible}} menu-open{{/if}}">
+					<label class="menu-toggle" data-menu-id="{{id}}">{{label}}</label>
+					<ul>
+						{{#each children}}
+							{{> menuItem item=this}}
+						{{/each}}
+					</ul>
+				</{{#if (eq type "root-menu")}}figure{{else}}li{{/if}}>
+			{{/if}}
+			{{#if (eq type "skill")}}
+				<li>
+					<labal title="">
+						<a class="proficiency-toggle skill-proficiency" data-skill-id="{{id}}" data-skill-value="{{skill.value}}" title="{{skill.hover}}">{{{skill.icon}}}</a>
+						{{skill.label}}
+					</label>
+				</li>
+			{{/if}}
+			{{!--<li class="attribute trait-selector-add{{#if menus.[dv].state}} menu-open{{/if}}" data-options="damageTypes"
+				data-target="data.traits.dv">
+				<label class="menu-toggle" data-menu-id="dv">{{localize "DND5E.DamVuln"}}</label>
+			</li>--}}
+		{{/with}}
+		{{/inline}}
 		<section class="monster-attributes2">
-			<figure class="tweak-menu{{#if menus.[monster-attributes].state}} menu-open{{/if}}">
+			{{> menuItem item=menus.attributes}}
+			{{!--<figure class="tweak-menu{{#if menus.[monster-attributes].state}} menu-open{{/if}}">
 				<label class="menu-toggle" data-menu-id="monster-attributes">+</label>
 				<ul>
 					<li class="attribute{{#if menus.[skills].state}} menu-open{{/if}}">
@@ -264,7 +297,7 @@
 						<label  class="menu-toggle" data-menu-id="dr">{{localize "DND5E.DamRes"}}</label>
 					</li>
 					<li class="attribute trait-selector-add{{#if menus.[di].state}} menu-open{{/if}}" data-options="damageTypes" data-target="data.traits.di">
-						<label  class="menu-toggle" data-menu-id="dr">{{localize "DND5E.DamImm"}}</label>
+						<label  class="menu-toggle" data-menu-id="di">{{localize "DND5E.DamImm"}}</label>
 					</li>
 					<li class="attribute trait-selector-add{{#if menus.[ci].state}} menu-open{{/if}}" data-options="damageTypes" data-target="data.traits.ci">
 						<label  class="menu-toggle" data-menu-id="ci">{{localize "DND5E.ConImm"}}</label>
@@ -273,7 +306,7 @@
 						<label  class="menu-toggle" data-menu-id="languages">{{localize "DND5E.Languages"}}</label>
 					</li>
 				</ul>
-			</figure>
+			</figure>--}}
 
 			<ul class="attributes">
 				{{#if info.hasSaveProfs}}

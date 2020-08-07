@@ -11,6 +11,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			this.options.classes.push(this.themes[this.currentTheme].class);
 			if (p) this.setCurrentTheme(this.currentTheme);
 		});
+		this.prepMenus();
 	}
 
 	get template() {
@@ -53,7 +54,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			hasReactions: Boolean(data.features.reaction.items.length),
 			vttatokenizer: Boolean(this.constructor.Tokenizer)
 		}
-		data.menus = this.menuStates ?? {};
+		data.menus = this.menuTrees;
 				
 		data.themes = this.themes;
 		
@@ -84,6 +85,41 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		formData._dtypes = dtypes;
 		return formData;
+	}
+	prepMenus() {
+		this.menuTrees = {
+			attributes: this.prepAttributeMenu()
+		};
+	}
+	addMenu(...args) {
+		let menuTree = new MenuTree(this, ...args);
+		if (!(this.menus)) this.menus = [];
+		this.menus.push(menuTree);
+		return menuTree;
+	}
+	prepAttributeMenu() {
+		let attrMenu = this.addMenu("monster-attributes", "+");
+		
+		attrMenu.add(this.prepSkillsMenu(attrMenu));
+		attrMenu.add(this.addMenu("dr", game.i18n.localize("DND5E.DamRes"), attrMenu));
+		attrMenu.add(this.addMenu("di", game.i18n.localize("DND5E.DamImm"), attrMenu));
+		attrMenu.add(this.addMenu("ci", game.i18n.localize("DND5E.ConImm"), attrMenu));
+		attrMenu.add(this.addMenu("dv", game.i18n.localize("DND5E.DamVuln"), attrMenu));
+		attrMenu.add(this.addMenu("languages", game.i18n.localize("DND5E.Languages"), attrMenu));
+
+		return attrMenu;
+	}
+	prepSkillsMenu(attrMenu) {
+		let menu = this.addMenu("skills", game.i18n.localize("DND5E.Skills"), attrMenu);
+
+		Object.entries(this.actor.data.data.skills).forEach(([id, skill]) => {
+			skill.icon = this._getProficiencyIcon(skill.value);
+			skill.hover = CONFIG.DND5E.proficiencyLevels[skill.value];
+			skill.label = CONFIG.DND5E.skills[id];
+			menu.add(new MenuItem("skill", { id, skill }));
+		});
+			
+		return menu;
 	}
 	hasSaveProfs() {
 		return Object.values(this.actor.data?.data?.abilities)?.some(ability => ability.proficient);
@@ -605,7 +641,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 	}
 	async activateListeners(html) {	// We need listeners to provide interaction.
-		this.menuStates = this.menuStates ?? {};
+	//	this.menuStates = this.menuStates ?? {};
 		
 		html.find('.switch').click((event) => {							// Switches are the primary way that settings are applied per-actor.
 			event.preventDefault();
@@ -767,7 +803,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		html.find('.trait-selector').contextmenu(this._onTraitSelector.bind(this));
 		html.find('.trait-selector-add').click(this._onTraitSelector.bind(this));
 
-		html.find('.menu-toggle').click((event) => {
+	/*	html.find('.menu-toggle').click((event) => {
 			let el = event.currentTarget;
 			let id = el.dataset.menuId;
 			let state = this.menuStates[id]?.state ?? false;
@@ -777,6 +813,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			if (newState) this.openMenu(id);
 			else this.closeMenu(id);
 		});
+	*/
+		this.menus.forEach(m => m.attachHandler());
 
 		this._dragDrop.forEach(d => d.bind(html[0]));
 		html.on("change", "input,select,textarea", this._onChangeInput.bind(this));
@@ -905,6 +943,57 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			return TextEditor.enrichHTML(str, {secrets: true});
 		}
 	};
+}
+class MenuItem {
+	constructor(type, data = {}) {
+		this.type = type;
+		Object.assign(this, data);
+	}
+}
+class MenuTree extends MenuItem {
+	constructor(monsterblock, id, label, parent, visible, element, children) {
+		super(parent ? "sub-menu" : "root-menu");
+
+		this.id = id;
+		this.monsterblock = monsterblock;
+		this.parent = parent ?? false;
+		this.label = label;
+		this.visible = visible ?? false;
+		this._element = element ?? false;
+		this.children = children ?? [];
+	}
+	get element() {
+		if (!(this._element)) this._element = this.button.parent();
+		return this._element;
+	}
+	get button() {
+		if (!(this._button)) this._button = this.monsterblock._element.find(`[data-menu-id=${this.id}]`);
+		return this._button;
+	}
+	attachHandler() {
+		this.button.click((event) => {
+			if (!this.visible) this.open();
+			else this.close();
+		});
+	}
+	open() {
+		if (this.visible) return;
+		if (this.parent) this.parent.closeChildren();
+		this.element.addClass("menu-open");
+		this.visible = true;
+	}
+	close() {
+		if (!this.visible) return;
+		this.element.removeClass("menu-open");
+		this.visible = false;
+		this.closeChildren();
+	}
+	closeChildren() {
+		this.children.forEach(m => { if (m.type == "sub-menu") m.close() });
+	}
+	add(item) {
+		this.children.push(item);
+	}
 }
 
 Hooks.once("init", () => {
