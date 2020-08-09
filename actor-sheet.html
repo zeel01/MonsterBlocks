@@ -142,20 +142,17 @@
 			<h1 class="charname" contenteditable="true" data-field-key="name" placeholder="{{ localize 'DND5E.Name' }}">{{actor.name}}</h1>
 			<div class="chartype">
 				<div class="select-field" data-select-key="data.traits.size" data-selected-value="{{data.traits.size}}">
-					<label class="select-label">{{ lookup config.actorSizes data.traits.size}}</label>
+					<label class="select-label">{{ lookup config.actorSizes data.traits.size}}</label>{{~" "~}}
 					<ul class="actor-size select-list">
 						{{#each config.actorSizes as |label size|}}
 							<li data-selection-value="{{size}}">{{label}}</li>
-						{{/each}}
-					</ul>
-				</div>
-				<span contenteditable="true" data-field-key="data.details.type" placeholder="{{ localize 'DND5E.Type' }}">
+						{{~/each~}}
+					</ul>{{~" "~}}
+				</div>{{~" "~}}
+				<span class="optional-space" contenteditable="true" data-field-key="data.details.type" placeholder="{{ localize 'DND5E.Type' }}">
 					{{~data.details.type~}}
 				</span>{{~" "~}}
-				{{~#if data.details.alignment~}}
-					<span class="sep">{{ localize "MOBLOKS5E.Comma" }}</span>
-				{{/if}}
-				<span contenteditable="true" placeholder="{{ localize 'DND5E.Alignment' }}" data-field-key="data.details.alignment">
+				<span class="optional-comma" contenteditable="true" placeholder="{{ localize 'DND5E.Alignment' }}" data-field-key="data.details.alignment">
 					{{~data.details.alignment~}}
 				</span>
 			</div>
@@ -218,18 +215,15 @@
 					<span class="attr-value" 
 						contenteditable="true"
 						placeholder="{{ localize 'DND5E.Speed' }}"
-						data-field-key="data.attributes.speed.value"
-						>{{data.attributes.speed.value}}</span>
-
-					{{~#if data.attributes.speed.special~}}
-						<span class="sep">{{ localize "MOBLOKS5E.Comma" }}</span>
-					{{~/if}}
-					<span class="attr-value"
+						data-field-key="data.attributes.speed.value">
+						{{~data.attributes.speed.value~}}
+					</span>{{~" "~}}
+					<span class="attr-value optional-comma"
 						contenteditable="true"
 						placeholder="{{ localize 'DND5E.SpeedSpecial' }}"
-						data-field-key="data.attributes.speed.special"
-						>{{data.attributes.speed.special}}</span>
-					
+						data-field-key="data.attributes.speed.special">
+						{{~data.attributes.speed.special~}}
+					</span>
                 </li>
 			</ul>
 		</section>
