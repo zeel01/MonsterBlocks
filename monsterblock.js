@@ -992,12 +992,10 @@ class MenuTree extends MenuItem {
 		this.children = children ?? [];
 	}
 	get element() {
-		if (!(this._element)) this._element = this.button.parent();
-		return this._element;
+		return this.button.parent();
 	}
 	get button() {
-		if (!(this._button)) this._button = this.monsterblock._element.find(`[data-menu-id=${this.id}]`);
-		return this._button;
+		return this.monsterblock._element.find(`[data-menu-id=${this.id}]`);
 	}
 	attachHandler() {
 		this.button.click((event) => {
@@ -1133,12 +1131,6 @@ Hooks.once('ready', () => {
 		default: ""
 	});
 });
-
-class AbilityTool extends FormApplication {
-	constructor() {
-		super();
-	}
-}
 
 Hooks.on("renderActorSheet", () => {	// This is just for debugging, it prevents this sheet's template from being cached.
 	let template = "modules/monsterblock/actor-sheet.html";
