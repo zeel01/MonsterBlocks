@@ -55,6 +55,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			vttatokenizer: Boolean(this.constructor.Tokenizer)
 		}
 		data.menus = this.menuTrees;
+		this._skillMenu.children.forEach(m => m.skill.icon = data.data.skills[m.id].icon);
 				
 		data.themes = this.themes;
 		
@@ -81,6 +82,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			let value = select.dataset.selectedValue;
 
 			formData.append(key, value);
+		}
+
+		let skillCycles = form.querySelectorAll('[data-skill-id]');
+		for (let skill of skillCycles) {
+			let key = `data.skills.${skill.dataset.skillId}.value`;
+			let value = skill.dataset.skillValue;
+
+			formData.append(key, value);
+			dtypes[key] = "Number";
 		}
 		
 		formData._dtypes = dtypes;
@@ -119,6 +129,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			menu.add(new MenuItem("skill", { id, skill }));
 		});
 			
+		this._skillMenu = menu;
 		return menu;
 	}
 	hasSaveProfs() {
@@ -802,6 +813,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		html.find('[contenteditable=true]').focusout(this._onChangeInput.bind(this));
 		html.find('.trait-selector').contextmenu(this._onTraitSelector.bind(this));
 		html.find('.trait-selector-add').click(this._onTraitSelector.bind(this));
+		html.find('[data-skill-id]').contextmenu(this._onCycleSkillProficiency.bind(this));
+		html.find('[data-skill-id]').click(this._onCycleSkillProficiency.bind(this));
 
 	/*	html.find('.menu-toggle').click((event) => {
 			let el = event.currentTarget;
@@ -817,9 +830,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		this.menus.forEach(m => m.attachHandler());
 
 		this._dragDrop.forEach(d => d.bind(html[0]));
-		html.on("change", "input,select,textarea", this._onChangeInput.bind(this));
-		html.find('input[data-dtype="Number"]').change(this._onChangeInputDelta.bind(this));
-		html.find('.skill-proficiency').on("click contextmenu", this._onCycleSkillProficiency.bind(this));
 	}
 	closeMenu(menu) {
 		let el = this.menuStates[menu].el;
@@ -873,7 +883,26 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		};
 		new TraitSelector(this.actor, options).render(true)
 	}
-	
+	_onCycleSkillProficiency(event) {
+		event.preventDefault();
+		let elem = event.currentTarget;
+		let value = elem.dataset.skillValue;
+
+		// Get the current level and the array of levels
+		const level = parseFloat(value);
+		const levels = [0, 1, 0.5, 2];
+		let idx = levels.indexOf(level);
+
+		// Toggle next level - forward on click, backwards on right
+		if (event.type === "click") {
+			elem.dataset.skillValue = levels[(idx === levels.length - 1) ? 0 : idx + 1];
+		} else if (event.type === "contextmenu") {
+			elem.dataset.skillValue = levels[(idx === 0) ? levels.length - 1 : idx - 1];
+		}
+
+		// Update the field value and save the form
+		this._onSubmit(event);
+	}
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
 		let name = item.name.toLowerCase().replace(/\s+/g, '');	// Convert the name of the item to all lower case, and remove whitespace.
 		return game.i18n.localize("MOBLOKS5E.MultiattackLocators").includes(name); // Array.includes() checks if any item in the array matches the value given. This will determin if the name of the item is one of the options in the array.

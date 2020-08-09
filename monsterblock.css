@@ -255,7 +255,7 @@
 	margin: 0;
 	font-size: 2em;
 	text-align: center;
-	/* visibility: hidden; */
+	visibility: hidden;
 	cursor: pointer;
 }
 .monsterblock .tweak-menu > ul {
@@ -306,10 +306,9 @@
 .monsterblock .tweak-menu li:hover > ul {
 	visibility: visible;
 }*/
-.monsterblock .monster-attributes2:hover .tweak-menu.menu-open > ul {
-	visibility: visible;
-}
-.monsterblock .monster-attributes2:hover .tweak-menu li.menu-open > ul {
+.monsterblock .tweak-menu.menu-open label,
+.monsterblock .tweak-menu.menu-open > ul,
+.monsterblock .tweak-menu li.menu-open > ul {
 	visibility: visible;
 }
 .monsterblock .tweak-menu ul label:hover {
