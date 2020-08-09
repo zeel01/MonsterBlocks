@@ -496,11 +496,16 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	damageFormula(attack) {	// Extract and re-format the damage formula
 		let formula = 	attack.data.data?.damage?.parts?.length > 0 ? 
 						attack.data.data?.damage?.parts[0][0] :
-						"0";											// This is the existing formula, typicallys contains a non-number like @mod
-		let attr = attack.abilityMod;									// The ability used for this attack
-		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;	// The ability bonus of the actor
-		let roll = new Roll(formula, {mod: abilityBonus}).roll();		// Create a new Roll, giving the ability modifier to sub in for @mod
-		
+						"0";												// This is the existing formula, typicallys contains a non-number like @mod
+		let attr = attack.abilityMod;										// The ability used for this attack
+		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;		// The ability bonus of the actor
+		let roll;
+		try { roll = new Roll(formula, {mod: abilityBonus}).roll();	}	// Create a new Roll, giving the ability modifier to sub in for @mod
+		catch (e) {
+			console.error(e);
+			ui.notifications.error(e);
+			let roll = new Roll("0").roll();
+		}
 		let parts = [];
 		let bonus = 0;
 		let op = "+";
@@ -700,7 +705,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			let success = event.currentTarget.dataset.rollSuccess;
 			let failure = event.currentTarget.dataset.rollFailure;
 			
-			let roll = new Roll(formula).roll();
+			let roll;
+			try { roll = new Roll(formula).roll(); }
+			catch (e) {
+				console.error(e);
+				ui.notifications.error(e);
+				let roll = new Roll("0").roll();
+			}
 			
 			if (target) {
 				let s = roll._total >= parseInt(target, 10);
@@ -816,17 +827,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		html.find('[data-skill-id]').contextmenu(this._onCycleSkillProficiency.bind(this));
 		html.find('[data-skill-id]').click(this._onCycleSkillProficiency.bind(this));
 
-	/*	html.find('.menu-toggle').click((event) => {
-			let el = event.currentTarget;
-			let id = el.dataset.menuId;
-			let state = this.menuStates[id]?.state ?? false;
-			let newState = !state;
-			this.menuStates[id] = { el: el, state: newState };
-
-			if (newState) this.openMenu(id);
-			else this.closeMenu(id);
-		});
-	*/
 		this.menus.forEach(m => m.attachHandler());
 
 		this._dragDrop.forEach(d => d.bind(html[0]));
@@ -958,7 +958,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	static averageRoll(formula, mods) {
 		if (!formula) return 0;
-		let roll = new Roll(formula, mods).roll();
+		let roll;
+		try { roll = new Roll(formula, mods).roll(); }
+		catch (e) {
+			console.error(e);
+			ui.notifications.error(e);
+			return 0;
+		}
 		return Math.floor((		// The maximum roll plus the minimum roll, divided by two, rounded down.
 			Roll.maximize(roll.formula)._total +
 			Roll.minimize(roll.formula)._total
