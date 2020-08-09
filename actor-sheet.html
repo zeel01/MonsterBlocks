@@ -243,9 +243,9 @@
 			{{#if (or (eq type "root-menu") (eq type "sub-menu"))}}
 				{{! If this is a root-menu, wrap it with a figure, otherwise it's a sub-menu so it's wrapped with an li}}
 				<{{#if (eq type "root-menu")~}}
-					figure class="tweak-menu
+					figure class="menu tweak-menu
 				{{~else~}}
-					li class="sub-menu
+					li class="menu sub-menu
 				{{~/if}}
 					{{~#if visible}} menu-open{{/if}}">
 					<label class="menu-toggle" data-menu-id="{{id}}">{{label}}</label>

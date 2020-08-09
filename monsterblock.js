@@ -829,6 +829,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		this.menus.forEach(m => m.attachHandler());
 
+		html.find('.menu').click(e => e.stopPropagation());
+		html.click((event) => {
+			Object.values(this.menuTrees).forEach(m => m.close());
+		});
+
 		this._dragDrop.forEach(d => d.bind(html[0]));
 	}
 	closeMenu(menu) {
