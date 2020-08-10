@@ -10,8 +10,10 @@
 	right: 9px;
 	height: 30px !important;	/* Prevents other modules that might try 100% from messing this up now that it's an absolute element. */
 }
-
-.monsterblock, .switches {
+.switches, .monsterblock {
+	--column-width: 390px;
+}
+.monsterblock {
 	width: 100%;
 	font-size: 14px;
 	--heading-color: rgb(89 23 13);
@@ -24,7 +26,6 @@
 	--main-text-color: black;
 	--inline-link-color: #ff6400;
 	--faded-text: #80808080;
-	--column-width: 390px;
 }
 .monsterblock.dark-theme {
 	font-size: 14px;
@@ -152,7 +153,7 @@
 }
 .window-app .switches li {
 	margin: 0;
-	width: 200px;
+	width: calc(var(--column-width) / 2);
 	position: relative;
 	display: inline-block;
 	padding: 2px;
@@ -205,7 +206,9 @@
 .monsterblock .item-name:hover,
 .monsterblock .spell:hover,
 .monsterblock a.inline-roll:hover,
-.monsterblock [data-roll-formula]:hover {
+.monsterblock [data-roll-formula]:hover,
+.monsterblock a:hover,
+.monsterblock .tweak-menu ul label:hover {
 	text-shadow: 0px 0px .05em var(--roll-hover-color);
 	cursor: pointer;
 	color: var(--roll-hover-color);
@@ -245,30 +248,33 @@
 	border-left: calc(var(--column-width) - 2.5ch) solid var(--divider-color);
 }
 .monsterblock .tweak-menu {
-	color: var(--divider-color);
 	display: block;
 	width: 1ch;
-	height: 1em;
+	height: 2em;
 	position: absolute;
-	right: 0px;
-	top: -.56em;
+	right: .5em;
+	top: -1.11em;
 	margin: 0;
-	font-size: 2em;
 	text-align: center;
 	visibility: hidden;
 	cursor: pointer;
 }
-.monsterblock .tweak-menu > ul {
-	right: 0px;
-	top: 1.2em;
-	font-size: .5em;
+.monsterblock .tweak-menu .overflow-fix {
+	position: fixed;
+	margin: 0;
+	z-index: 10;
 }
-.monsterblock .tweak-menu > ul > li {
+.monsterblock .tweak-menu > label {
+	color: var(--divider-color);
+	font-size: 2em;
+}
+.monsterblock .tweak-menu .overflow-fix > ul > li {
 	padding-left: 2ch;
 }
 .monsterblock .tweak-menu li > ul {
-	right: 24ch;
-	top: calc(-.5em - 1ch);
+	right: 100%;
+	top: calc(-.5em - 66px);
+	top: -.5em;
 }
 .monsterblock .tweak-menu ul {
 	text-align: left;
@@ -276,18 +282,30 @@
 	position: absolute;
 	visibility: hidden;
 	list-style: none;
-	padding: 1ch;
-	color: var(--main-text-color);
-	box-shadow: 0px 0px 1px 0px black;
+	padding: 0;
+	color: var(--heading-color);
+	box-shadow: 1px 1px 5px 0px black;
 	background: url(/ui/parchment.jpg), var(--background-filter);
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
 	z-index: 1;
-	width: 25ch;
+	width: calc(var(--column-width) / 2);
+}
+.monsterblock .tweak-menu .overflow-fix > ul {
+	right: -9px;
+	top: -0.9em;
 }
 .monsterblock .tweak-menu li {
-	white-space: nowrap;
 	position: relative;
+	margin: 0;
+	width: calc(var(--column-width) / 2);
+	position: relative;
+	display: inline-block;
+	padding: 2px;
+	padding-left: 2ch;
+	padding-right: 1ch;
+	border-right: 3px solid var(--divider-color);
+	border-bottom: 1px dashed gray;
 }
 .monsterblock .tweak-menu label {
 	display: inline-block;
@@ -296,9 +314,11 @@
 	user-select: none;
 }
 .monsterblock .tweak-menu li label:not(:only-child):before {
+	display: block;
 	position: absolute;
-	left: 0ch;
+	left: .2em;
 	content: '<';
+	top: 0;
 }
 /*.monsterblock .tweak-menu:hover > ul {
 	visibility: visible;
@@ -307,17 +327,31 @@
 	visibility: visible;
 }*/
 .monsterblock .tweak-menu.menu-open label,
-.monsterblock .tweak-menu.menu-open > ul,
+.monsterblock .tweak-menu.menu-open .overflow-fix > ul,
 .monsterblock .tweak-menu li.menu-open > ul {
 	visibility: visible;
 }
-.monsterblock .tweak-menu ul label:hover {
-	text-decoration: dotted underline;
+.monsterblock .menu-open > label {
+	font-weight: bold;
 }
-
+.monsterblock .tweak-menu li a {
+	display: inline-block;
+	width: 100%;
+}
 .monsterblock main:hover .tweak-menu,
 .monsterblock .monster-attributes2:hover .tweak-menu {
 	visibility: visible;
+}
+.monsterblock .skill-ability {
+	text-transform: capitalize;
+	float: right;
+	width: 5ch;
+	text-align: center;
+	color: var(--main-text-color)
+}
+.monsterblock .check-icon {
+	display: inline-block;
+	margin-right: 2ch;
 }
 .monsterblock .charname {
 	font-size: 2em;
