@@ -136,7 +136,7 @@
 				</ul>
 			</li>
 		</ul>
-	</nav>	
+	</nav>
 	<header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
 		<section id="monster-identity">
 			<h1 class="charname" contenteditable="true" data-field-key="name" placeholder="{{ localize 'DND5E.Name' }}">{{actor.name}}</h1>
@@ -242,26 +242,41 @@
 		{{#with item}}
 			{{#if (or (eq type "root-menu") (eq type "sub-menu"))}}
 				{{! If this is a root-menu, wrap it with a figure, otherwise it's a sub-menu so it's wrapped with an li}}
-				<{{#if (eq type "root-menu")~}}
+				< {{~#if (eq type "root-menu")~}}
 					figure class="menu tweak-menu
 				{{~else~}}
 					li class="menu sub-menu
 				{{~/if}}
 					{{~#if visible}} menu-open{{/if}}">
 					<label class="menu-toggle" data-menu-id="{{id}}">{{label}}</label>
-					<ul>
-						{{#each children}}
-							{{> menuItem item=this}}
-						{{/each}}
-					</ul>
+					{{~#if (eq type "root-menu")}}<div class="overflow-fix">{{/if}}
+						<ul>
+							{{~#each children~}}
+								{{> menuItem item=this}}
+							{{~/each~}}
+						</ul>
+					{{~#if (eq type "root-menu")}}</div>{{/if}}
 				</{{#if (eq type "root-menu")}}figure{{else}}li{{/if}}>
 			{{/if}}
 			{{#if (eq type "skill")}}
 				<li>
-					<labal title="">
-						<a class="proficiency-toggle skill-proficiency" data-skill-id="{{id}}" data-skill-value="{{skill.value}}" title="{{skill.hover}}">{{{skill.icon}}}</a>
-						{{skill.label}}
+					<labal title="{{skill.hover}}">
+						<a class="proficiency-toggle skill-proficiency" data-skill-id="{{id}}" data-skill-value="{{skill.value}}">
+							<span class="check-icon">{{{skill.icon}}}</span>{{~" "~}}
+							<span class="skill-label">{{skill.label}}</span>
+							<span class="skill-ability">{{skill.abilityAbbr}}</span>
+						</a>
 					</label>
+				</li>
+			{{/if}}
+			{{#if (eq type "damage-type")}}
+				<li>
+					<a data-option="{{dt}}"
+						data-damage-target="{{target}}"
+						data-flag="{{flag}}">
+						<span class="check-icon">{{{icon}}}</span>{{~" "~}}
+						<span class="dam-label">{{name}}</span>
+					</a>
 				</li>
 			{{/if}}
 			{{!--<li class="attribute trait-selector-add{{#if menus.[dv].state}} menu-open{{/if}}" data-options="damageTypes"

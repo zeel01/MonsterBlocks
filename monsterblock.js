@@ -133,10 +133,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		let attrMenu = this.addMenu("monster-attributes", "+");
 		
 		attrMenu.add(this.prepSkillsMenu(attrMenu));
-		attrMenu.add(this.addMenu("dr", game.i18n.localize("DND5E.DamRes"), attrMenu));
-		attrMenu.add(this.addMenu("di", game.i18n.localize("DND5E.DamImm"), attrMenu));
-		attrMenu.add(this.addMenu("ci", game.i18n.localize("DND5E.ConImm"), attrMenu));
-		attrMenu.add(this.addMenu("dv", game.i18n.localize("DND5E.DamVuln"), attrMenu));
+		attrMenu.add(this.prepDamageTypeMenu("di", "DND5E.DamImm", attrMenu));
+		attrMenu.add(this.prepDamageTypeMenu("ci", "DND5E.ConImm", attrMenu));
+		attrMenu.add(this.prepDamageTypeMenu("dr", "DND5E.DamRes", attrMenu));
+		attrMenu.add(this.prepDamageTypeMenu("dv", "DND5E.DamVuln", attrMenu));
 		attrMenu.add(this.addMenu("languages", game.i18n.localize("DND5E.Languages"), attrMenu));
 
 		return attrMenu;
@@ -145,6 +145,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		let menu = this.addMenu("skills", game.i18n.localize("DND5E.Skills"), attrMenu);
 
 		Object.entries(this.actor.data.data.skills).forEach(([id, skill]) => {
+			skill.abilityAbbr = game.i18n.localize(`MOBLOKS5E.Abbr${skill.ability}`);
 			skill.icon = this._getProficiencyIcon(skill.value);
 			skill.hover = CONFIG.DND5E.proficiencyLevels[skill.value];
 			skill.label = CONFIG.DND5E.skills[id];
@@ -152,6 +153,20 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 			
 		this._skillMenu = menu;
+		return menu;
+	}
+	prepDamageTypeMenu(id, label, attrMenu) {
+		let menu = this.addMenu(id, game.i18n.localize(label), attrMenu);
+
+		Object.entries(CONFIG.DND5E.damageTypes).forEach(([dt, name]) => {
+			let flag = this.actor.data.data.traits[id].value.includes(dt);
+			menu.add(new MenuItem("damage-type", { 
+				dt, name, flag, 
+				target: `data.traits.${id}`,
+				icon: flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
+			}));
+		});
+
 		return menu;
 	}
 	hasSaveProfs() {
@@ -1102,6 +1117,22 @@ class MenuTree extends MenuItem {
 		if (this.parent) this.parent.closeChildren();
 		this.element.addClass("menu-open");
 		this.visible = true;
+		this.fixYoffset();
+	}
+	fixYoffset() {
+		return;
+		if (!this.visible) return;
+		let container = this.monsterblock.form;
+		let list = this.element.find('ul')[0];
+		let floor = container.getBoundingClientRect().bottom;
+		let bottom = list.getClientRects()[0].top + list.offsetHeight;
+		let offset = floor - bottom;
+		if (offset < 0) {
+			let comp = Math.ceil(-offset / 22) * 22;
+			let ssTop = getComputedStyle(list).top;
+			list.style.top = `calc(${ssTop} - ${comp}px)`;
+		}
+		this.fixChildrenY();
 	}
 	close() {
 		if (!this.visible) return;
@@ -1111,6 +1142,9 @@ class MenuTree extends MenuItem {
 	}
 	closeChildren() {
 		this.children.forEach(m => { if (m.type == "sub-menu") m.close() });
+	}
+	fixChildrenY() {
+		this.children.forEach(m => { if (m.type == "sub-menu") m.fixYoffset() });
 	}
 	add(item) {
 		this.children.push(item);
@@ -1354,8 +1388,8 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the she
 		window.innerHeight - game.settings.get("monsterblock", "max-height-offset"),	// Configurable offset, default is 72 to give space for the macro bar and 10px of padding.
 		8																				// The margins on the window content are 8px
 	);
-	
 	popup.fix();
+	Object.values(monsterblock.menuTrees).forEach(m => m.fixYoffset());
 });
 
 Hooks.on("renderActorSheet5eNPC", (sheet, html, data) => {
