@@ -1,6 +1,13 @@
 import ActorSheet5eNPC from "../../systems/dnd5e/module/actor/sheets/npc.js";
 import TraitSelector from "../../systems/dnd5e/module/apps/trait-selector.js";
 
+/**
+ * Main class for the Monster Blocks module
+ *
+ * @export
+ * @class MonsterBlock5e
+ * @extends {ActorSheet5eNPC}
+ */
 export class MonsterBlock5e extends ActorSheet5eNPC {
 	constructor(...args) {
 		super(...args);
@@ -28,7 +35,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 	}
 	
-	// getData() provides the data used in Handlebars for the sheet template.
+	/**
+	 * Provides the data used in Handlebars for the sheet template.
+	 *
+	 * @return {object} 
+	 * @memberof MonsterBlock5e
+	 */
 	getData() {	// Override and add to the getData() function
 		const data = super.getData();
 		
@@ -61,6 +73,16 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		return data;
 	}
+	/**
+	 * Constructs a FormData object using data from the sheet,
+	 * this version gets data from `contenteditable` and other 
+	 * custom fields rather than standard HTML form elements.
+	 *
+	 * @param {HTMLFormElement} form - The HTML form element being submitted
+	 * @return {FormData} 
+	 * @memberof MonsterBlock5e
+	 * @override
+	 */
 	_getFormData(form) {	// Work in progress, might not use.
 		//console.debug("_getFormData!");
 		let formData = new FormData();
@@ -325,6 +347,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		innate: Symbol("Innate Spellcasting"),
 		pact: Symbol("Pact Macgic")
 	}
+	/**
+	 * Prepares the data for a spellcasting feature
+	 *
+	 * @param {Object} featureData
+	 * @param {Object} data
+	 * @memberof MonsterBlock5e
+	 */
 	prepCasting(featureData, data) {
 		this.prepFeature(featureData);
 		let cts = this.castingTypes;
@@ -335,62 +364,118 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		let ct = featureData.castingType;
 		
-		//featureData.maxSpellLevel
-		featureData.spellbook = ct == cts.innate ? 
-			data.innateSpellbook.filter(page => {
-				page.label = page.uses ? game.i18n.format("MOBLOCKS5E.SpellCost", {
-					cost: page.label
-				}) : page.label;
-				page.slotLabel = false;
-				return true;
-			}) : 
-			data.spellbook.filter(page => {
-				if ((ct == cts.pact && !(page.order == 0.5 || page.order == 0)) || page.order == -20) return false;
-				
-				page.maxSpellLevel = page.spells.reduce(
-					(max, spell) => spell.data.level > max ? spell.data.level : max
-				, 1);
-
-				if (page.order == 0) {
-					page.label = game.i18n.localize("MOBLOKS5E.Cantrips");
-					page.slotLabel = game.i18n.localize("MOBLOKS5E.AtWill");
-				}
-				else {
-					page.label = game.i18n.format("MOBLOCKS5E.SpellLevel", {
-						level: ct == cts.pact ?
-							`${this.constructor.formatOrdinal(1)}-${this.constructor.formatOrdinal(page.maxSpellLevel)}` :
-							this.constructor.formatOrdinal(page.maxSpellLevel)
-					})
-					page.slotLabel = game.i18n.format(ct == cts.pact ?
-					  "MOBLOCKS5E.SpellPactSlots" : "MOBLOCKS5E.SpellSlots", {
-						slots: page.slots,
-						level: this.constructor.formatOrdinal(page.maxSpellLevel)
-					});
-				}
-				return true;
-			});
+		featureData.spellbook = this.reformatSpellbook(ct, cts, data);
 		
 
 		let [abilityTitle, castingAbility] = this.getCastingAbility(featureData.spellbook, ct, data);
 		let tohit = this.getSpellAttackBonus(castingAbility);
 		
-		featureData.description = {
+		featureData.description = this.getCastingFeatureDescription(ct, cts, abilityTitle, tohit, featureData, data)
+
+		
+		console.debug(featureData);
+	}
+	/**
+	 * Retuns the formatted spellbook data for the associated casting feature
+	 *
+	 * @param {Symbol} ct - The type of casting feature
+	 * @param {Object} cts - The set of casting feature types
+	 * @param {Object} data - The Handlebars data object
+	 * @return {Object} The spellbook object
+	 * @memberof MonsterBlock5e
+	 */
+	reformatSpellbook(ct, cts, data) {
+		return ct == cts.innate ?
+			this.filterInnateSpellbook(data) :
+			this.filterSpellbook(data, ct, cts);
+	}
+
+	/**
+	 * Filters and adds additional data for displaying the spellbook
+	 *
+	 * @param {Object} data - The Handlebars data object
+	 * @param {Symbol} ct - The type of casting feature
+	 * @param {Object} cts - The set of casting feature types
+	 * @return {Object} The spellbook object
+	 * @memberof MonsterBlock5e
+	 */
+	filterSpellbook(data, ct, cts) {
+		return data.spellbook.filter(page => {
+			if ((ct == cts.pact && !(page.order == 0.5 || page.order == 0)) || page.order == -20)
+				return false;
+
+			page.maxSpellLevel = page.spells.reduce(
+				(max, spell) => spell.data.level > max ? spell.data.level : max,
+				1);
+
+			if (page.order == 0) {
+				page.label = game.i18n.localize("MOBLOKS5E.Cantrips");
+				page.slotLabel = game.i18n.localize("MOBLOKS5E.AtWill");
+			}
+			else {
+				page.label = game.i18n.format("MOBLOCKS5E.SpellLevel", {
+					level: ct == cts.pact ?
+						`${this.constructor.formatOrdinal(1)}-${this.constructor.formatOrdinal(page.maxSpellLevel)}` :
+						this.constructor.formatOrdinal(page.maxSpellLevel)
+				});
+				page.slotLabel = game.i18n.format(ct == cts.pact ?
+					"MOBLOCKS5E.SpellPactSlots" : "MOBLOCKS5E.SpellSlots", {
+					slots: page.slots,
+					level: this.constructor.formatOrdinal(page.maxSpellLevel)
+				});
+			}
+			return true;
+		});
+	}
+
+	/**
+	 * Filters and adds additional data for displaying the spellbook
+	 *
+	 * @param {Object} data - The Handlebars data object
+	 * @return {Object} The spellbook object
+	 * @memberof MonsterBlock5e
+	 */
+	filterInnateSpellbook(data) {
+		return data.innateSpellbook.filter(page => {
+			page.label = page.uses ? game.i18n.format("MOBLOCKS5E.SpellCost", {
+				cost: page.label
+			}) : page.label;
+			page.slotLabel = false;
+			return true;
+		});
+	}
+
+	/**
+	 * Compiles the data needed to display the text description of a spellcasting feature
+	 * including appropriate transaltion.
+	 *
+	 * @param {Symbol} ct - The type of casting feature
+	 * @param {Object} cts - The set of casting feature types
+	 * @param {string} abilityTitle - The name of the casting ability for this feature
+	 * @param {number} tohit - The spell-attack bonus for this casting ability
+	 * @param {Object} featureData - The data object for this feature
+	 * @param {Object} data - The Handlebars data object
+	 * @return {Object} An object containing translated and filled sections of the casting feature description
+	 * @memberof MonsterBlock5e
+	 */
+	getCastingFeatureDescription(ct, cts, abilityTitle, tohit, featureData, data) {
+		return {
 			level: ct == cts.innate ? "" : game.i18n.format("MOBLOKS5E.CasterNameLevel", {
 				name: this.actor.name,
 				level: this.constructor.formatOrdinal(this.actor.data.data?.details?.spellLevel ?? 1)
 			}),
 			ability: game.i18n.format(
 				ct == cts.innate ? "MOBLOKS5E.InnateCastingAbility" : "MOBLOKS5E.CastingAbility", {
-					name: this.actor.name,
-					ability: abilityTitle
-				}
+				name: this.actor.name,
+				ability: abilityTitle
+			}
 			),
 			stats: game.i18n.format("MOBLOKS5E.CastingStats", {
 				savedc: this.actor.data.data?.attributes?.spelldc,
 				bonus: `${tohit > -1 ? "+" : ""}${tohit}`
 			}),
 			warlockRecharge: ct == cts.pact ? game.i18n.localize("MOBLOKS5E.WarlockSlotRegain") : "",
-			spellintro: game.i18n.format({	// Am I insane? Yes, yes I am.
+			spellintro: game.i18n.format({
 				[cts.standard]: "MOBLOKS5E.CasterSpellsPreped",
 				[cts.pact]: "MOBLOKS5E.WarlockSpellsPreped",
 				[cts.innate]: "MOBLOKS5E.InnateSpellsKnown"
@@ -398,15 +483,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				name: this.actor.name,
 				atwill: featureData.hasAtWill ? game.i18n.format("MOBLOKS5E.CasterAtWill", {
 					spells: data.spellbook.find(l => l.prop === "atwill")?.spells?.reduce((list, spell, i, a) => {
-						return `${list}<li class="spell at-will-spell" data-item-id="${spell._id}"><span class="spell-name">${spell.name}</span></li>`
+						return `${list}<li class="spell at-will-spell" data-item-id="${spell._id}"><span class="spell-name">${spell.name}</span></li>`;
 					}, `<ul class="at-will-spells">`) + "</ul>"
 				}) : ""
 			})
-		}
-
-		
-		console.debug(featureData);
+		};
 	}
+
 	getSpellAttackBonus(attr) {
 		let data = this.actor.data.data;
 		let abilityBonus = data.abilities[attr]?.mod;
@@ -836,23 +919,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		this._dragDrop.forEach(d => d.bind(html[0]));
 	}
-	closeMenu(menu) {
-		let el = this.menuStates[menu].el;
-		el.parentElement.classList.remove("menu-open");
-		let closer = el => {
-			let id = el.dataset?.menuId;
-			if (this.menuStates[id]?.state) {
-				this.menuStates[id].state = false;
-				this.closeMenu(id);
-			}
-			else el.childNodes.forEach(closer);
-		}
-		el.parentElement.childNodes.forEach(closer);
-	}
-	openMenu(menu) {
-		let el = this.menuStates[menu].el;
-		el.parentElement.classList.add("menu-open");
-	}
 	_onChangeInput(event) {
 		const input = event.currentTarget;
 		const value = input.innerText;
@@ -990,7 +1056,24 @@ class MenuItem {
 		Object.assign(this, data);
 	}
 }
+/**
+ * A class to handle interactve menus
+ *
+ * @class MenuTree
+ * @extends {MenuItem}
+ */
 class MenuTree extends MenuItem {
+	/**
+	 * Creates an instance of MenuTree.
+	 * @param {MonsterBlock5e} monsterblock - The object representing the sheet itseld
+	 * @param {string} id - A unique identifier for this menu
+	 * @param {string} label - The text of the label, doubles as the button for open/close clicks
+	 * @param {MenuTree|false} parent - A reference to the parent menu, or false if this menu is the root
+	 * @param {Boolean} visible - Set the initial state of visible or not
+	 * @param {jQuery} element - Set the jQuery object for the HTML element associated with this menu
+	 * @param {MenuItem[]} children - An array of items in this menu
+	 * @memberof MenuTree
+	 */
 	constructor(monsterblock, id, label, parent, visible, element, children) {
 		super(parent ? "sub-menu" : "root-menu");
 
@@ -1149,7 +1232,21 @@ Hooks.on("renderActorSheet", () => {	// This is just for debugging, it prevents 
     console.debug(`Monster Block | removed "${template}" from _templateCache.`);
 })
 
+/**
+ * A class to handle the sizing of a popup box like a character sheet.
+ *
+ * @class PopupHandler
+ */
 class PopupHandler {
+	/**
+	 * Creates an instance of PopupHandler.
+	 * @param {Application} application - A reference to an application such as a character sheet
+	 * @param {string} layoutselector - A CSS style selector that selects the main container for the layout
+	 * @param {number} defaultWidth - The starting width of the popup
+	 * @param {number} defaultHeight - The starting height of the popup
+	 * @param {number} padding - The padding around the popup content
+	 * @memberof PopupHandler
+	 */
 	constructor(application, layoutselector, defaultWidth, defaultHeight, padding) {
 		this.application = application;
 		this.padding = padding;
@@ -1182,14 +1279,27 @@ class PopupHandler {
 	get width() { return this._width; }
 	get position() { return this.application.position; }
 	
-	// Returns the largest offset from the left side of the layout that any element's right edge has (this is the maximum width of the layout).
+
+	/**
+	 * Returns the largest offset from the left side of the layout 
+	 * that any element's right edge has (this is the maximum width of the layout).
+	 * 
+	 * @readonly
+	 * @memberof PopupHandler
+	 */
 	get layoutWidth() {											
 		return this.layout.reduce((width, el) => {						// Iterate over all the children of the layout, searching for the one with a right edge furthest from 0
 			let right = el.offsetLeft + el.getBoundingClientRect().width;	// The left edge offset of the element, plus the width, is the right edge offset
 			return right > width ? right : width;							// If this element has a right side further from 0 than the previous record, its offset is the new record.
 		}, 391);
 	}
-	// Returns the greatest offset from the top of the layout of any element's bottom (this is the maximum height of the layout).
+	/**
+	 * Returns the greatest offset from the top of the layout
+	 * of any element's bottom (this is the maximum height of the layout).
+	 *
+	 * @readonly
+	 * @memberof PopupHandler
+	 */
 	get layoutHeight() {													
 		let top = this.element[0].getBoundingClientRect().top;			// Find the offset of the top of the bounding element from the top of the displayport
 		return this.layout.reduce((height, el) => {					// Iterate over all the children, looking for the one with the lowest bottom
