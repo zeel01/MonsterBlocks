@@ -40,6 +40,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	 *
 	 * @return {object} 
 	 * @memberof MonsterBlock5e
+	 * @override
 	 */
 	getData() {	// Override and add to the getData() function
 		const data = super.getData();
@@ -67,7 +68,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			vttatokenizer: Boolean(this.constructor.Tokenizer)
 		}
 		data.menus = this.menuTrees;
-		this._skillMenu.children.forEach(m => m.skill.icon = data.data.skills[m.id].icon);
+		Object.values(this.menuTrees).forEach(m => m.update(m, data));
 				
 		data.themes = this.themes;
 		
@@ -130,13 +131,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return menuTree;
 	}
 	prepAttributeMenu() {
-		let attrMenu = this.addMenu("monster-attributes", "+");
+		let attrMenu = this.addMenu("monster-attributes", `<i class="fa fa-pencil"></i>`);
 		
 		attrMenu.add(this.prepSkillsMenu(attrMenu));
 		attrMenu.add(this.prepDamageTypeMenu("di", "DND5E.DamImm", attrMenu));
-		attrMenu.add(this.prepDamageTypeMenu("ci", "DND5E.ConImm", attrMenu));
 		attrMenu.add(this.prepDamageTypeMenu("dr", "DND5E.DamRes", attrMenu));
 		attrMenu.add(this.prepDamageTypeMenu("dv", "DND5E.DamVuln", attrMenu));
+	//	attrMenu.add(this. ("ci", "DND5E.ConImm", attrMenu)); // Condition immunities, not damage types.
 		attrMenu.add(this.addMenu("languages", game.i18n.localize("DND5E.Languages"), attrMenu));
 
 		return attrMenu;
@@ -149,7 +150,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			skill.icon = this._getProficiencyIcon(skill.value);
 			skill.hover = CONFIG.DND5E.proficiencyLevels[skill.value];
 			skill.label = CONFIG.DND5E.skills[id];
-			menu.add(new MenuItem("skill", { id, skill }));
+			menu.add(new MenuItem("skill", { id, skill }, (m, data) => {
+				m.skill.icon = data.data.skills[m.id].icon
+			}));
 		});
 			
 		this._skillMenu = menu;
@@ -164,6 +167,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				dt, name, flag, 
 				target: `data.traits.${id}`,
 				icon: flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
+			}, (m, data) => {
+				m.flag = this.actor.data.data.traits[id].value.includes(dt);
+				m.icon = m.flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
 			}));
 		});
 
@@ -919,6 +925,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 			//if (el.innerText == "") el.innerText = "-";
 		});
+
+		html.find('[data-damage-target]').click((event) => {
+			let el = event.currentTarget;
+			let state = (el.dataset.flag == "true");
+			el.dataset.flag = !state;
+
+			this._onSubmit(event, { updateData: this.getTogglesData(html) });
+		});
 		html.find('[contenteditable=true]').focusout(this._onChangeInput.bind(this));
 		html.find('.trait-selector').contextmenu(this._onTraitSelector.bind(this));
 		html.find('.trait-selector-add').click(this._onTraitSelector.bind(this));
@@ -933,6 +947,21 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 
 		this._dragDrop.forEach(d => d.bind(html[0]));
+	}
+	getTogglesData(html) {
+		let data = {};
+
+		["dv", "dr", "di"].forEach(dg => {
+			let damageTypes = html.find(`[data-damage-target="data.traits.${dg}"]`);
+			let key = `data.traits.${dg}.value`;
+			let value = [];
+			for (let dt of damageTypes) {
+				let state = (dt.dataset.flag == 'true');
+				if (state) value.push(dt.dataset.option);
+			}
+			data[key] = value;
+		});
+		return data;
 	}
 	_onChangeInput(event) {
 		const input = event.currentTarget;
@@ -1065,10 +1094,25 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 	};
 }
+/**
+ * A base class for items that might be in a menu
+ * 
+ * @class MenuItem
+ */
 class MenuItem {
-	constructor(type, data = {}) {
+	/**
+	 * Creates an instance of MenuItem.
+	 *
+	 * @param {String} type - The type of item
+	 * @param {Object} [data={}] - An object of data maintained by the menu item.
+	 * @param {function} updateFn  - A function used to update any data that might need changed on render
+	 * @memberof MenuItem
+	 */
+	constructor(type, data = {}, updateFn) {
 		this.type = type;
 		Object.assign(this, data);
+
+		this.update = updateFn ?? (a => false);
 	}
 }
 /**
@@ -1084,13 +1128,18 @@ class MenuTree extends MenuItem {
 	 * @param {string} id - A unique identifier for this menu
 	 * @param {string} label - The text of the label, doubles as the button for open/close clicks
 	 * @param {MenuTree|false} parent - A reference to the parent menu, or false if this menu is the root
+	 * @param {function} updateFn - A function used to update any data that might need changed on render
 	 * @param {Boolean} visible - Set the initial state of visible or not
 	 * @param {jQuery} element - Set the jQuery object for the HTML element associated with this menu
 	 * @param {MenuItem[]} children - An array of items in this menu
 	 * @memberof MenuTree
 	 */
-	constructor(monsterblock, id, label, parent, visible, element, children) {
-		super(parent ? "sub-menu" : "root-menu");
+	constructor(monsterblock, id, label, parent, updateFn, visible, element, children) {
+		let fn = updateFn ?? (a => false);
+		super(parent ? "sub-menu" : "root-menu", {}, (m, ...args) => {
+			fn(m, ...args);
+			this.children.forEach(c => c.update(c, ...args));
+		});
 
 		this.id = id;
 		this.monsterblock = monsterblock;
@@ -1117,22 +1166,6 @@ class MenuTree extends MenuItem {
 		if (this.parent) this.parent.closeChildren();
 		this.element.addClass("menu-open");
 		this.visible = true;
-		this.fixYoffset();
-	}
-	fixYoffset() {
-		return;
-		if (!this.visible) return;
-		let container = this.monsterblock.form;
-		let list = this.element.find('ul')[0];
-		let floor = container.getBoundingClientRect().bottom;
-		let bottom = list.getClientRects()[0].top + list.offsetHeight;
-		let offset = floor - bottom;
-		if (offset < 0) {
-			let comp = Math.ceil(-offset / 22) * 22;
-			let ssTop = getComputedStyle(list).top;
-			list.style.top = `calc(${ssTop} - ${comp}px)`;
-		}
-		this.fixChildrenY();
 	}
 	close() {
 		if (!this.visible) return;
@@ -1142,9 +1175,6 @@ class MenuTree extends MenuItem {
 	}
 	closeChildren() {
 		this.children.forEach(m => { if (m.type == "sub-menu") m.close() });
-	}
-	fixChildrenY() {
-		this.children.forEach(m => { if (m.type == "sub-menu") m.fixYoffset() });
 	}
 	add(item) {
 		this.children.push(item);
@@ -1389,7 +1419,6 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the she
 		8																				// The margins on the window content are 8px
 	);
 	popup.fix();
-	Object.values(monsterblock.menuTrees).forEach(m => m.fixYoffset());
 });
 
 Hooks.on("renderActorSheet5eNPC", (sheet, html, data) => {
