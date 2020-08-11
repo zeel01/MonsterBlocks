@@ -124,22 +124,32 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			attributes: this.prepAttributeMenu()
 		};
 	}
+	/**
+	 * @param {*} args - Array of arguments
+	 * @return {MenuTree} 
+	 * @memberof MonsterBlock5e
+	 */
 	addMenu(...args) {
 		let menuTree = new MenuTree(this, ...args);
 		if (!(this.menus)) this.menus = [];
 		this.menus.push(menuTree);
 		return menuTree;
 	}
+	/**
+	 * @return {MenuTree} 
+	 * @memberof MonsterBlock5e
+	 */
 	prepAttributeMenu() {
 		let attrMenu = this.addMenu("monster-attributes", `<i class="fa fa-edit"></i>`, undefined, undefined, ".monster-attributes2", "menu-active");
 		
+		/* Saving throws menu! */
 		attrMenu.add(this.prepSkillsMenu(attrMenu));
-		attrMenu.add(this.prepDamageTypeMenu("di", "DND5E.DamImm", attrMenu));
-		attrMenu.add(this.prepDamageTypeMenu("dr", "DND5E.DamRes", attrMenu));
 		attrMenu.add(this.prepDamageTypeMenu("dv", "DND5E.DamVuln", attrMenu));
-	//	attrMenu.add(this. ("ci", "DND5E.ConImm", attrMenu)); // Condition immunities, not damage types.
-		attrMenu.add(this.addMenu("languages", game.i18n.localize("DND5E.Languages"), attrMenu));
-
+		attrMenu.add(this.prepDamageTypeMenu("dr", "DND5E.DamRes", attrMenu));
+		attrMenu.add(this.prepDamageTypeMenu("di", "DND5E.DamImm", attrMenu));
+		attrMenu.add(this.prepConditionTypeMenu("ci", "DND5E.ConImm", attrMenu));
+		attrMenu.add(this.prepLanguageMenu("languages", "DND5E.Languages", attrMenu));
+		
 		return attrMenu;
 	}
 	prepSkillsMenu(attrMenu) {
@@ -158,23 +168,45 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		this._skillMenu = menu;
 		return menu;
 	}
-	prepDamageTypeMenu(id, label, attrMenu) {
-		let menu = this.addMenu(id, game.i18n.localize(label), attrMenu);
-
-		Object.entries(CONFIG.DND5E.damageTypes).forEach(([dt, name]) => {
-			let flag = this.actor.data.data.traits[id].value.includes(dt);
-			menu.add(new MenuItem("damage-type", { 
-				dt, name, flag, 
-				target: `data.traits.${id}`,
-				icon: flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
-			}, (m, data) => {
-				m.flag = this.actor.data.data.traits[id].value.includes(dt);
-				m.icon = m.flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
-			}));
-		});
-
+	prepLanguageMenu(id, label, attrMenu) {
+		let menu = this.addMenu("languages", game.i18n.localize(label), attrMenu);
+		this.getTraitChecklist(id, menu, "languages", "language-opt", CONFIG.DND5E.languages);
 		return menu;
 	}
+	prepDamageTypeMenu(id, label, attrMenu) {
+		let menu = this.addMenu(id, game.i18n.localize(label), attrMenu);
+		this.getTraitChecklist(id, menu, `data.traits.${id}`, "damage-type", CONFIG.DND5E.damageTypes);
+		return menu;
+	}
+	prepConditionTypeMenu(id, label, attrMenu) {
+		let menu = this.addMenu(id, game.i18n.localize(label), attrMenu);
+		this.getTraitChecklist(id, menu, `data.traits.${id}`, "condition-type", CONFIG.DND5E.conditionTypes);
+		return menu;
+	}
+	/**
+	 * This method creates MenuItems and populates the target menu for trait lists.
+	 *
+	 * @param {String} id - The id of the data attribute
+	 * @param {MenuTree} menu - The parent menu
+	 * @param {String} target - The data attribute target
+	 * @param {String} itemType - The type of item
+	 * @param {Object} traitList - The CONFIG.System.List of trait options.
+	 * @memberof MonsterBlock5e
+	 */
+	getTraitChecklist(id, menu, target, itemType, traitList) {
+		Object.entries(traitList).forEach(([d, name]) => {
+			let flag = this.actor.data.data.traits[id].value.includes(d);
+			menu.add(new MenuItem(itemType, {
+				d, name, flag,
+				target: target,
+				icon: flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
+			}, (m, data) => {
+				m.flag = this.actor.data.data.traits[id].value.includes(d);
+				m.icon = m.flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>';
+			}));
+		});
+	}
+
 	hasSaveProfs() {
 		return Object.values(this.actor.data?.data?.abilities)?.some(ability => ability.proficient);
 	}
@@ -926,7 +958,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			//if (el.innerText == "") el.innerText = "-";
 		});
 
-		html.find('[data-damage-target]').click((event) => {
+		html.find('[data-damage-type], [data-condition-type], [data-language-opt]').click((event) => {
 			let el = event.currentTarget;
 			let state = (el.dataset.flag == "true");
 			el.dataset.flag = !state;
@@ -952,7 +984,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		let data = {};
 
 		["dv", "dr", "di"].forEach(dg => {
-			let damageTypes = html.find(`[data-damage-target="data.traits.${dg}"]`);
+			let damageTypes = html.find(`[data-damage-type="data.traits.${dg}"]`);
 			let key = `data.traits.${dg}.value`;
 			let value = [];
 			for (let dt of damageTypes) {
@@ -961,6 +993,17 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 			data[key] = value;
 		});
+
+		const traitReducer = (acc, n) => {
+			if (n.dataset.flag == 'true') acc.push(n.dataset.option);
+			return acc; 
+		}
+		data["data.traits.languages.value"] =
+		[...html.find(`[data-language-opt]`)].reduce(traitReducer, []);
+
+		data["data.traits.ci.value"] =
+		[...html.find(`[data-condition-type]`)].reduce(traitReducer, []);
+
 		return data;
 	}
 	_onChangeInput(event) {

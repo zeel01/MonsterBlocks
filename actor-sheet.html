@@ -269,13 +269,13 @@
 					</label>
 				</li>
 			{{/if}}
-			{{#if (eq type "damage-type")}}
+			{{#if (or (eq type "damage-type") (eq type "condition-type") (eq type "language-opt"))}}
 				<li>
-					<a data-option="{{dt}}"
-						data-damage-target="{{target}}"
+					<a data-option="{{d}}"
+						data-{{type}}="{{target}}"
 						data-flag="{{flag}}">
 						<span class="check-icon">{{{icon}}}</span>{{~" "~}}
-						<span class="dam-label">{{name}}</span>
+						<span class="trait-sel-label">{{name}}</span>
 					</a>
 				</li>
 			{{/if}}
@@ -285,7 +285,7 @@
 			</li>--}}
 		{{/with}}
 		{{/inline}}
-		<section class="monster-attributes2">
+		<section class="monster-attributes2{{#if menus.attributes.visible}} menu-active{{/if}}">
 			{{> menuItem item=menus.attributes}}
 
 			<ul class="attributes">
@@ -396,7 +396,7 @@
 
 	<main>
 	<figure class="tweak-menu">
-		<label>+</label>
+		<label><i class="fa fa-plus"></i></label>
 	</figure>
 	
 	{{#*inline "featureBlock"}}

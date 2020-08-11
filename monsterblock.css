@@ -274,7 +274,8 @@
 .monsterblock .tweak-menu li > ul {
 	right: 100%;
 	top: calc(-.5em - 66px);
-	top: -.5em;
+	top: 0px;
+	transform: translateY(-40%);
 }
 
 .monsterblock .tweak-menu ul {
@@ -291,6 +292,9 @@
 	background-blend-mode: var(--background-blend);
 	z-index: 1;
 	width: calc(var(--column-width) / 2);
+	/* max-height: 220px; */
+	/* overflow-y: scroll; */
+	/* overflow-x: hidden; */
 }
 .monsterblock .tweak-menu .overflow-fix > ul {
 	right: -8px;
@@ -319,7 +323,7 @@
 	position: absolute;
 	left: .2em;
 	content: '<';
-	top: 0;
+	top: 1px;
 }
 /*.monsterblock .tweak-menu:hover > ul {
 	visibility: visible;
