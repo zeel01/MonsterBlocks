@@ -119,9 +119,26 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		formData._dtypes = dtypes;
 		return formData;
 	}
-	prepMenus() {
+	addFeature(event) {
+		console.debug("Adding a feature!");
+		this._onItemCreate(event);//, "feature")
+	}
+/*	_onItemCreate(event) {
+		event.preventDefault();
+		const header = event.currentTarget;
+		const type = header.dataset.type;
+		const itemData = {
+			name: game.i18n.format("DND5E.ItemNew", { type: type.capitalize() }),
+			type: type,
+			data: duplicate(header.dataset)
+		};
+		delete itemData.data["type"];
+		return this.actor.createOwnedItem(itemData);
+	}
+*/	prepMenus() {
 		this.menuTrees = {
-			attributes: this.prepAttributeMenu()
+			attributes: this.prepAttributeMenu(),
+			features: this.prepFeaturesMenu()
 		};
 	}
 	/**
@@ -135,6 +152,37 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		this.menus.push(menuTree);
 		return menuTree;
 	}
+	/**
+	* @return {MenuTree}
+	* @memberof MonsterBlock5e
+	*/
+	prepFeaturesMenu() {
+		let featMenu = this.addMenu("monster-features", `<i class="fa fa-plus"></i>`, undefined, undefined, ".main-section", "menu-active");
+
+		featMenu.add(this.createFeatureAdder({ type: "feat" }, "MOBLOKS5E.AddFeat"));
+		featMenu.add(this.createFeatureAdder({ 
+			"type": "weapon",
+			"activation.type": "action",
+			"weapon-type": "natural",
+			"action-type": "mwak",
+			"target.value": "1",
+			"range.value": "5",
+			"range.units": "ft"
+		}, "MOBLOKS5E.AddAttack"));
+		featMenu.add(this.createFeatureAdder({ type: "feat", "activation.type": "action" }, "MOBLOKS5E.AddAct"));
+	//	featMenu.add(this.createFeatureAdder({ type: "loot" }, "MOBLOKS5E.AddInventory"));
+
+		return featMenu;
+	}
+	createFeatureAdder(data, label) {
+		return new MenuItem("trigger", {
+			control: "addFeature",
+			data: data,
+			icon: `<i class="fa fa-plus"></i>`,
+			label: game.i18n.localize(label)
+		});
+	}
+
 	/**
 	 * @return {MenuTree} 
 	 * @memberof MonsterBlock5e

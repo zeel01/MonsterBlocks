@@ -45,9 +45,14 @@ I will see if there is a way to handle the need.
 
 # Changelog
 ## Version: 2.x
-### Added 9 strings:
+### Added 13 strings:
 ```json
 "MOBLOKS5E.EditHint": "Right-click to edit",
+
+"MOBLOKS5E.AddFeat": "Create feature",
+"MOBLOKS5E.AddAttack": "Create Attack",
+"MOBLOKS5E.AddAct": "Create Action",
+"MOBLOKS5E.AddInventory": "Create Loot",
 
 "MOBLOKS5E.EnableEdit": "Enable editing",
 "MOBLOKS5E.DisableEdit": "Disable editing",

@@ -53,6 +53,11 @@
 	"MOBLOKS5E.XPLabel": "{xp} XP",
 
 	"MOBLOKS5E.EditHint": "Right-click to edit",
+
+	"MOBLOKS5E.AddFeat": "Create feature",
+	"MOBLOKS5E.AddAttack": "Create Attack",
+	"MOBLOKS5E.AddAct": "Create Action",
+	"MOBLOKS5E.AddInventory": "Create Loot",
 	
 	"MOBLOKS5E.Recharge": "Recharge",
 	"MOBLOKS5E.NCharged": "Not charged",

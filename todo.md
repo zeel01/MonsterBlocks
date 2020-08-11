@@ -13,6 +13,8 @@
 		- ~~Languages~~
 	- ~~Abilities~~
 	- Features
+    	- ~~Add~~
+    	- Remove
 	- Bio
 - Biography
 - Loot section

@@ -361,9 +361,11 @@
 	text-align: center;
 	color: var(--main-text-color)
 }
-.monsterblock .check-icon {
+.monsterblock .menu-item-icon {
+	position: relative;
 	display: inline-block;
 	margin-right: 2ch;
+	top: 1px;
 }
 .monsterblock .charname {
 	font-size: 2em;
