@@ -45,9 +45,11 @@ I will see if there is a way to handle the need.
 
 # Changelog
 ## Version: 2.x
-### Added 1 strings:
+### Added 3 strings:
 ```json
-"MOBLOKS5E.EditHint": "Right-click to edit"
+"MOBLOKS5E.EditHint": "Right-click to edit",
+"MOBLOKS5E.EnableEdit": "Enable editing",
+"MOBLOKS5E.DisableEdit": "Disable editing",
 ```
 ### Edited 0 Strings:
 ```json

@@ -1,4 +1,4 @@
-<form	class="{{cssClass}} flexcol{{#if flags.inline-secrets}} inline-secrets{{/if}}{{#if flags.hidden-secrets}} hidden-secrets{{/if}}" 
+<form	class="{{cssClass}} flexcol{{#if flags.inline-secrets}} inline-secrets{{/if}}{{#if flags.hidden-secrets}} hidden-secrets{{/if}}{{#if flags.editing}} editing{{/if}}" 
 		autocomplete="off"
 		style="--list-seperator: '{{ localize 'MOBLOKS5E.Comma' }}'; --list-conjuntion: '{{ localize 'MOBLOKS5E.ListFinalConjunctionAnd' }}'; "
 	>
@@ -7,6 +7,15 @@
 		<ul>
 			<li>
 				<a class="trigger" data-control="switchToDefault">{{ localize "MOBLOKS5E.SwitchToDefault" }}</a>
+			</li>
+			<li>
+				<a class="switch" data-control="editing">
+					{{~#if flags.editing}}
+						{{~ localize "MOBLOKS5E.DisableEdit" ~}}
+					{{~else}}
+						{{~ localize "MOBLOKS5E.EnableEdit" ~}}
+					{{~/if~}}
+				</a>
 			</li>
 			<li>
 				<a class="switch" data-control="attack-descriptions">{{ localize "MOBLOKS5E.AttackDescriptions" }}</a>
@@ -139,20 +148,22 @@
 	</nav>
 	<header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
 		<section id="monster-identity">
-			<h1 class="charname" contenteditable="true" data-field-key="name" placeholder="{{ localize 'DND5E.Name' }}">{{actor.name}}</h1>
+			<h1 class="charname" contenteditable="{{flags.editing}}" data-field-key="name" placeholder="{{ localize 'DND5E.Name' }}">{{actor.name}}</h1>
 			<div class="chartype">
 				<div class="select-field" data-select-key="data.traits.size" data-selected-value="{{data.traits.size}}">
-					<label class="select-label">{{ lookup config.actorSizes data.traits.size}}</label>{{~" "~}}
-					<ul class="actor-size select-list">
-						{{#each config.actorSizes as |label size|}}
-							<li data-selection-value="{{size}}">{{label}}</li>
-						{{~/each~}}
-					</ul>{{~" "~}}
+					<label class="{{#if flags.editing}}select-label{{/if}}">{{ lookup config.actorSizes data.traits.size}}</label>{{~" "~}}
+					{{#if flags.editing~}}
+						<ul class="actor-size select-list">
+							{{#each config.actorSizes as |label size|}}
+								<li data-selection-value="{{size}}">{{label}}</li>
+							{{~/each~}}
+						</ul>
+					{{~/if~}}
 				</div>{{~" "~}}
-				<span class="optional-space" contenteditable="true" data-field-key="data.details.type" placeholder="{{ localize 'DND5E.Type' }}">
+				<span class="optional-space" contenteditable="{{flags.editing}}" data-field-key="data.details.type" placeholder="{{ localize 'DND5E.Type' }}">
 					{{~data.details.type~}}
 				</span>{{~" "~}}
-				<span class="optional-comma" contenteditable="true" placeholder="{{ localize 'DND5E.Alignment' }}" data-field-key="data.details.alignment">
+				<span class="optional-comma" contenteditable="{{flags.editing}}" placeholder="{{ localize 'DND5E.Alignment' }}" data-field-key="data.details.alignment">
 					{{~data.details.alignment~}}
 				</span>
 			</div>
@@ -162,7 +173,7 @@
 			<ul class="attributes">
 				<li class="attribute">
 					<h4 class="attribute-name box-title">{{ localize "DND5E.ArmorClass" }}</h4>
-					<span class="attr-value" data-field-key="data.attributes.ac.value" data-dtype="Number" placeholder="{{ localize 'DND5E.ArmorClass' }}" contenteditable="true">{{data.attributes.ac.value}}</span>
+					<span class="attr-value" data-field-key="data.attributes.ac.value" data-dtype="Number" placeholder="{{ localize 'DND5E.ArmorClass' }}" contenteditable="{{flags.editing}}">{{data.attributes.ac.value}}</span>
 				</li>
 				<li class="attribute health">
 					<h4 class="attribute-name box-title">{{localize "DND5E.HitPoints" }} </h4>
@@ -206,20 +217,20 @@
 						data-field-key="data.attributes.hp.formula"
 						data-dtype="Roll"
 						class="attr-value"
-						contenteditable="true">
+						contenteditable="{{flags.editing}}">
 							{{~data.attributes.hp.formula~}}
 					</span>)
 				</li>
 				<li class="attribute">
                     <h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }}</h4>
 					<span class="attr-value" 
-						contenteditable="true"
+						contenteditable="{{flags.editing}}"
 						placeholder="{{ localize 'DND5E.Speed' }}"
 						data-field-key="data.attributes.speed.value">
 						{{~data.attributes.speed.value~}}
 					</span>{{~" "~}}
 					<span class="attr-value optional-comma"
-						contenteditable="true"
+						contenteditable="{{flags.editing}}"
 						placeholder="{{ localize 'DND5E.SpeedSpecial' }}"
 						data-field-key="data.attributes.speed.special">
 						{{~data.attributes.speed.special~}}
@@ -232,7 +243,14 @@
             {{#each data.abilities as |ability id|}}
                 <li class="ability{{#if ability.proficient}} proficient{{/if}}" data-ability="{{id}}">
                     <h4 class="ability-name box-title" title="{{ability.label}}">{{ability.abbr}}</h4>
-					<span class="attr-value" title="{{ localize 'MOBLOKS5E.Score' }}">{{ability.value}} </span>
+					<span class="attr-value"
+						contenteditable="{{../flags.editing}}"
+						placeholder="0"
+						data-field-key="data.abilities.{{id}}.value"
+						data-dtype="Number"
+						title="{{ localize 'MOBLOKS5E.Score' }}">
+						{{~ability.value~}}
+					</span>
 					<span class="ability-mod" title="{{ localize 'MOBLOKS5E.Modifier' }}">({{numberFormat ability.mod decimals=0 sign=true}})</span>
                 </li>
             {{/each}}
@@ -297,7 +315,9 @@
 		{{/with}}
 		{{/inline}}
 		<section class="monster-attributes2{{#if menus.attributes.visible}} menu-active{{/if}}">
-			{{> menuItem item=menus.attributes}}
+			{{#if flags.editing}}
+				{{> menuItem item=menus.attributes}}
+			{{/if}}
 
 			<ul class="attributes">
 				{{#if info.hasSaveProfs}}
@@ -374,7 +394,7 @@
 					<h4 class="attribute-name">{{localize "DND5E.Senses"}}</h4>
 					<span 
 						placeholder="{{ localize 'DND5E.Senses' }}"
-						contenteditable="true"
+						contenteditable="{{flags.editing}}"
 						data-field-key="data.traits.senses"
 						class="trait-value">{{data.traits.senses}}</span>
 				</li>
@@ -396,7 +416,7 @@
 					<h4 class="attribute-name">{{localize "DND5E.ChallengeRating"}}</h4>
 					<span class="trait-value"
 						placeholder="0"
-						contenteditable="true"
+						contenteditable="{{flags.editing}}"
 						data-dtype="Number"
 						data-field-key="data.details.cr"
 						>{{labels.cr}}</span> <span>({{ localize "MOBLOKS5E.XPLabel" xp=data.details.xp.label }})</span>
@@ -406,9 +426,11 @@
     </header>
 
 	<main>
-	<figure class="tweak-menu">
-		<label><i class="fa fa-plus"></i></label>
-	</figure>
+		{{#if flags.editing}}
+			<figure class="tweak-menu">
+				<label><i class="fa fa-plus"></i></label>
+			</figure>
+		{{/if}}
 	
 	{{#*inline "featureBlock"}}
 	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}{{#if lairactions}} lair-actions{{/if}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">

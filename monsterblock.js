@@ -761,7 +761,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"hide-profile-image": game.settings.get("monsterblock", "hide-profile-image"),
 		"show-lair-actions": game.settings.get("monsterblock", "show-lair-actions"),
 		"theme-choice": game.settings.get("monsterblock", "default-theme"),
-		"custom-theme-class": game.settings.get("monsterblock", "custom-theme-class")
+		"custom-theme-class": game.settings.get("monsterblock", "custom-theme-class"),
+		"editing": game.settings.get("monsterblock", "editing")
 	}
 	async prepFlags() {
 		if (!this.actor.getFlag("monsterblock", "initialized")) {
@@ -956,7 +957,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 			this._onChangeInput(event);
 		});
-
+		html.find('[contenteditable=true]').click((event) => {
+			event.stopPropagation();
+		})
 		html.find('[contenteditable=true]').keydown((event) => {
 			let el = event.currentTarget;
 
@@ -1321,6 +1324,14 @@ Hooks.once('ready', () => {
 	game.settings.register("monsterblock", "maximum-hit-points", {
 		name: game.i18n.localize("MOBLOKS5E.maximum-hit-points-name"),
 		hint: game.i18n.localize("MOBLOKS5E.maximum-hit-points-hint"),
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: true
+	});
+	game.settings.register("monsterblock", "editing", {
+		name: game.i18n.localize("MOBLOKS5E.editing-name"),
+		hint: game.i18n.localize("MOBLOKS5E.editing-hint"),
 		scope: "world",
 		config: true,
 		type: Boolean,

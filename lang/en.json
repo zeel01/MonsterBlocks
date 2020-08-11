@@ -5,6 +5,8 @@
 	"MOBLOKS5E.SwitchToMobloks": "Switch to Monster Blocks",
 	"MOBLOKS5E.AttackDescriptions": "Attack descriptions",
 	
+	"MOBLOKS5E.EnableEdit": "Enable editing",
+	"MOBLOKS5E.DisableEdit": "Disable editing",
 	"MOBLOKS5E.ShowGenerated": "Show generated",
 	"MOBLOKS5E.HideGenerated": "Hide generated",
 	"MOBLOKS5E.DescriptionS": "Descriptions",
@@ -156,5 +158,7 @@
 	"MOBLOKS5E.default-theme-name": "Default Theme",
 	"MOBLOKS5E.default-theme-hint": "Choose which theme applies by default.",
 	"MOBLOKS5E.custom-theme-class-name": "Default Custom Theme Class",
-	"MOBLOKS5E.custom-theme-class-hint": "The class name used for your default custom theme."
+	"MOBLOKS5E.custom-theme-class-hint": "The class name used for your default custom theme.",
+	"MOBLOKS5E.editing-name": "Editing Enabled",
+	"MOBLOKS5E.editing-hint": "Choose whether or not editing is enabled by default."
 }
