@@ -170,7 +170,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	prepLanguageMenu(id, label, attrMenu) {
 		let menu = this.addMenu("languages", game.i18n.localize(label), attrMenu);
-		this.getTraitChecklist(id, menu, "languages", "language-opt", CONFIG.DND5E.languages);
+		this.getTraitChecklist(id, menu, "data.traits.languages", "language-opt", CONFIG.DND5E.languages);
 		return menu;
 	}
 	prepDamageTypeMenu(id, label, attrMenu) {
@@ -205,6 +205,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				m.icon = m.flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>';
 			}));
 		});
+		menu.add(new MenuItem("custom-val", {
+			d: "custom",
+			name: game.i18n.localize("DND5E.TraitSelectorSpecial"),
+			target: target + ".custom",
+			icon: "",
+			value: this.actor.data.data.traits[id].custom
+		}, (m, data) => {
+				m.value = this.actor.data.data.traits[id].custom;
+		}));
 	}
 
 	hasSaveProfs() {
@@ -965,6 +974,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 			this._onSubmit(event, { updateData: this.getTogglesData(html) });
 		});
+		html.find('.custom-trait input').blur(this.onCustomTraitChange.bind(this));
+		html.find('.custom-trait input').keydown((event) => {
+			if (event.key == "Enter") this.onCustomTraitChange(event);
+		});
 		html.find('[contenteditable=true]').focusout(this._onChangeInput.bind(this));
 		html.find('.trait-selector').contextmenu(this._onTraitSelector.bind(this));
 		html.find('.trait-selector-add').click(this._onTraitSelector.bind(this));
@@ -979,6 +992,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 
 		this._dragDrop.forEach(d => d.bind(html[0]));
+	}
+	onCustomTraitChange(event) {
+		let input = event.currentTarget;
+		let target = input.name
+		let value = input.value;
+
+		this._onSubmit(event, { updateData: { [target]: value } })
 	}
 	getTogglesData(html) {
 		let data = {};

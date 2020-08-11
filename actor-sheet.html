@@ -279,6 +279,17 @@
 					</a>
 				</li>
 			{{/if}}
+			{{#if (eq type "custom-val")}}
+				<li class="custom-trait">
+					<label for="{{target}}">
+						<span class="trait-sel-label">{{name}}</span>
+						<input 
+							type="text" 
+							name="{{target}}"
+							value="{{value}}">
+					</label>
+				</li>
+			{{/if}}
 			{{!--<li class="attribute trait-selector-add{{#if menus.[dv].state}} menu-open{{/if}}" data-options="damageTypes"
 				data-target="data.traits.dv">
 				<label class="menu-toggle" data-menu-id="dv">{{localize "DND5E.DamVuln"}}</label>

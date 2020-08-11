@@ -325,13 +325,19 @@
 	content: '<';
 	top: 1px;
 }
-/*.monsterblock .tweak-menu:hover > ul {
-	visibility: visible;
+.monsterblock .tweak-menu li.custom-trait {
+	padding: 4px;
 }
-.monsterblock .tweak-menu li:hover > ul {
-	visibility: visible;
-}*/
-.monsterblock .tweak-menu.menu-open label,
+.monsterblock .custom-trait input {
+	width: 100%
+}
+.monsterblock .custom-trait .trait-sel-label {
+	font-size: .8em;
+}
+.monsterblock .tweak-menu .custom-trait > label:hover {
+	text-shadow: none;
+}
+.monsterblock .tweak-menu.menu-open > label,
 .monsterblock .tweak-menu.menu-open .overflow-fix > ul,
 .monsterblock .tweak-menu li.menu-open > ul {
 	visibility: visible;
