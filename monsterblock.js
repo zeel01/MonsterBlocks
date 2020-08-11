@@ -829,7 +829,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"theme-choice": game.settings.get("monsterblock", "default-theme"),
 		"custom-theme-class": game.settings.get("monsterblock", "custom-theme-class"),
 		"editing": game.settings.get("monsterblock", "editing"),
-		"show-not-prof": game.settings.get("monsterblock", "show-not-prof")
+		"show-not-prof": game.settings.get("monsterblock", "show-not-prof"),
+		"show-delete": true
 	}
 	async prepFlags() {
 		if (!this.actor.getFlag("monsterblock", "initialized")) {
@@ -1065,6 +1066,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		html.find('.menu').click(e => e.stopPropagation());
 		html.click((event) => {
 			Object.values(this.menuTrees).forEach(m => m.close());
+		});
+
+		html.find('.delete-item').click((event) => {
+			event.preventDefault();
+			const el = event.currentTarget;
+			this.actor.deleteOwnedItem(el.dataset.itemId);
 		});
 
 		this._dragDrop.forEach(d => d.bind(html[0]));

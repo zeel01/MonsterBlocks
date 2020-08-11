@@ -451,6 +451,11 @@
 	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}{{#if lairactions}} lair-actions{{/if}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="feature-description inline-children">
 			{{#unless lairactions}}
+				{{#if flags.show-delete}}
+					<a class="delete-item" data-item-id="{{item._id}}">
+						<i class="fa fa-trash"></i>
+					</a>
+				{{/if}}
 				<span class="item-name" data-item-id="{{item._id}}">
 					{{~item.name~}} 
 				</span>
@@ -490,6 +495,11 @@
 	{{#if ../flags.casting-feature}}
 	<section class="item monster-feature spellcasting-trait" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="feature-description inline-children">
+			{{#if ../flags.show-delete}}
+				<a class="delete-item" data-item-id="{{casting._id}}">
+					<i class="fa fa-trash"></i>
+				</a>
+			{{/if}}
 			<span class="item-name" data-item-id="{{casting._id}}">{{casting.name}}</span>.
 			{{~#if item.hasresource~}}
 			<span class="name-extension">
@@ -533,24 +543,29 @@
 
 	{{#each features.features.items as |item iid|}}
 		{{#unless item.is.specialAction}}
-			{{> featureBlock item=item actor=../actor}}
+			{{> featureBlock item=item actor=../actor flags=../flags}}
 		{{/unless}}
 	{{/each}}
 
 	{{#if features.legResist.items}}
-		{{> featureBlock item=features.legResist.items.[0] actor=actor}}
+		{{> featureBlock item=features.legResist.items.[0] actor=actor flags=flags}}
 	{{/if}}
 
 	<h2 class="section-header" >{{localize "DND5E.ActionPl"}}</h2>
 	
 	{{#if features.multiattack.items}}
-		{{> featureBlock item=features.multiattack.items.[0] actor=actor}}
+		{{> featureBlock item=features.multiattack.items.[0] actor=actor flags=flags}}
 	{{/if}}
 
 	{{#each features.attacks.items as |item iid|}}
 	{{#unless item.is.specialAction}}
 	<section class="item monster-action" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="attack-description inline-children">
+			{{#if ../flags.show-delete}}
+				<a class="delete-item" data-item-id="{{item._id}}">
+					<i class="fa fa-trash"></i>
+				</a>
+			{{/if}}
 			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>{{ localize "MOBLOKS5E.NameDescriptionSep" }}
 			{{~#if item.hasresource~}}
 			<span class="name-extension">
@@ -599,7 +614,7 @@
 	{{/each}}
 	{{#each features.actions.items as |item iid|}}
 		{{#unless item.is.specialAction}}
-			{{> featureBlock item=item actor=../actor}}
+			{{> featureBlock item=item actor=../actor flags=../flags}}
 		{{/unless}}
 	{{/each}}
 	{{! Reactions }}
@@ -607,7 +622,7 @@
 		<h2 class="section-header">{{localize "MOBLOKS5E.Reactions"}}</h2>
 		{{#each features.reaction.items as |item iid|}}
 			{{#if item.is.reaction}}
-				{{> featureBlock item=item actor=../actor}}
+				{{> featureBlock item=item actor=../actor flags=../flags}}
 			{{/if}}
 		{{/each}}
 	{{/if}}
@@ -620,7 +635,7 @@
 		{{#each features.legendary.items as |item iid|}}
 			{{#if item.is.legendary }}
 			{{#unless item.is.legResist}}
-				{{> featureBlock item=item actor=../actor legendaryactions=true}}
+				{{> featureBlock item=item actor=../actor legendaryactions=true flags=../flags}}
 			{{/unless}}
 			{{/if}}
 		{{/each}}
@@ -634,7 +649,7 @@
 		{{#each features.lair.items as |item iid|}}
 			{{#if item.is.lair}}
 			<li>
-				{{> featureBlock item=item actor=../actor lairactions=true}}
+				{{> featureBlock item=item actor=../actor lairactions=true flags=../flags}}
 			</li>
 			{{/if}}
 		{{/each}}

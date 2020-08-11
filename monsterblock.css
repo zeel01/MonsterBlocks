@@ -354,6 +354,22 @@
 .monsterblock .monster-attributes2:hover .tweak-menu {
 	visibility: visible;
 }
+
+.monsterblock .delete-item {
+	display: none;
+	/* visibility: hidden; */
+	font-size: .75em;
+	/* position: relative; */
+}
+.monsterblock .delete-item i {
+	/* position: absolute; */
+	/* left: -6px; */
+	/* top: -2px; */
+}
+.monsterblock *:hover > .delete-item {
+	/* visibility: visible; */
+	display: inline;
+}
 .monsterblock .skill-ability {
 	text-transform: capitalize;
 	float: right;
