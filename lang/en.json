@@ -7,6 +7,8 @@
 	
 	"MOBLOKS5E.EnableEdit": "Enable editing",
 	"MOBLOKS5E.DisableEdit": "Disable editing",
+	"MOBLOKS5E.ShowNotProf": "Show not-proficient checks",
+	"MOBLOKS5E.HideNotProf": "Hide not-proficient checks",
 	"MOBLOKS5E.ShowGenerated": "Show generated",
 	"MOBLOKS5E.HideGenerated": "Hide generated",
 	"MOBLOKS5E.DescriptionS": "Descriptions",
@@ -160,5 +162,7 @@
 	"MOBLOKS5E.custom-theme-class-name": "Default Custom Theme Class",
 	"MOBLOKS5E.custom-theme-class-hint": "The class name used for your default custom theme.",
 	"MOBLOKS5E.editing-name": "Editing Enabled",
-	"MOBLOKS5E.editing-hint": "Choose whether or not editing is enabled by default."
+	"MOBLOKS5E.editing-hint": "Choose whether or not editing is enabled by default.",
+	"MOBLOKS5E.show-not-prof-name": "Show Non-Proficient Skills and Saves",
+	"MOBLOKS5E.show-not-prof-hint": "Choose whether or not showing not-proficient skills and saves is enabled by default."
 }

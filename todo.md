@@ -5,8 +5,8 @@
 - **Editing (for version 2)**
 	- ~~Actor Info~~
 	- ~~Attributes~~
-	- Traits
-    	- Saving Throws
+	- ~~Traits~~
+    	- ~~Saving Throws~~
 		- ~~Skills~~
 		- ~~Damage Types~~
 		- ~~Conditions~~

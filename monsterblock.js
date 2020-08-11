@@ -142,7 +142,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	prepAttributeMenu() {
 		let attrMenu = this.addMenu("monster-attributes", `<i class="fa fa-edit"></i>`, undefined, undefined, ".monster-attributes2", "menu-active");
 		
-		/* Saving throws menu! */
+		attrMenu.add(this.prepareSavingThrowsMenu(attrMenu));
 		attrMenu.add(this.prepSkillsMenu(attrMenu));
 		attrMenu.add(this.prepDamageTypeMenu("dv", "DND5E.DamVuln", attrMenu));
 		attrMenu.add(this.prepDamageTypeMenu("dr", "DND5E.DamRes", attrMenu));
@@ -151,6 +151,24 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		attrMenu.add(this.prepLanguageMenu("languages", "DND5E.Languages", attrMenu));
 		
 		return attrMenu;
+	}
+	prepareSavingThrowsMenu(attrMenu) {
+		let menu = this.addMenu("saves", game.i18n.localize("MOBLOKS5E.SavingThrowS"), attrMenu);
+
+		Object.entries(this.actor.data.data.abilities).forEach(([ab, ability]) => {
+			let flag = Boolean(ability.proficient);
+			menu.add(new MenuItem("save-toggle", {
+				name: CONFIG.DND5E.abilities[ab], 
+				flag, d: ab,
+				target: `data.abilities.${ab}.proficient`,
+				icon: flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
+			}, (m, data) => {
+				m.flag = Boolean(ability.proficient);
+				m.icon = m.flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>';
+			}));
+		});
+
+		return menu;
 	}
 	prepSkillsMenu(attrMenu) {
 		let menu = this.addMenu("skills", game.i18n.localize("DND5E.Skills"), attrMenu);
@@ -762,7 +780,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"show-lair-actions": game.settings.get("monsterblock", "show-lair-actions"),
 		"theme-choice": game.settings.get("monsterblock", "default-theme"),
 		"custom-theme-class": game.settings.get("monsterblock", "custom-theme-class"),
-		"editing": game.settings.get("monsterblock", "editing")
+		"editing": game.settings.get("monsterblock", "editing"),
+		"show-not-prof": game.settings.get("monsterblock", "show-not-prof")
 	}
 	async prepFlags() {
 		if (!this.actor.getFlag("monsterblock", "initialized")) {
@@ -970,12 +989,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			//if (el.innerText == "") el.innerText = "-";
 		});
 
-		html.find('[data-damage-type], [data-condition-type], [data-language-opt]').click((event) => {
+		html.find('[data-save-toggle], [data-damage-type], [data-condition-type], [data-language-opt]').click((event) => {
 			let el = event.currentTarget;
 			let state = (el.dataset.flag == "true");
 			el.dataset.flag = !state;
+			let updateData;
 
-			this._onSubmit(event, { updateData: this.getTogglesData(html) });
+			if (el.dataset.saveToggle) {
+				updateData = { [el.dataset.saveToggle]: !state ? 1 : 0 };
+			}
+			else updateData = this.getTogglesData(html);
+
+			this._onSubmit(event, { updateData });
 		});
 		html.find('.custom-trait input').blur(this.onCustomTraitChange.bind(this));
 		html.find('.custom-trait input').keydown((event) => {
@@ -1336,6 +1361,14 @@ Hooks.once('ready', () => {
 		config: true,
 		type: Boolean,
 		default: true
+	});
+	game.settings.register("monsterblock", "show-not-prof", {
+		name: game.i18n.localize("MOBLOKS5E.show-not-prof-name"),
+		hint: game.i18n.localize("MOBLOKS5E.show-not-prof-hint"),
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: false
 	});
 	game.settings.register("monsterblock", "max-height-offset", {
 		name: game.i18n.localize("MOBLOKS5E.max-height-offset-name"),

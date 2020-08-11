@@ -18,6 +18,15 @@
 				</a>
 			</li>
 			<li>
+				<a class="switch" data-control="show-not-prof">
+					{{~#if flags.show-not-prof}}
+						{{~ localize "MOBLOKS5E.HideNotProf" ~}}
+					{{~else}}
+						{{~ localize "MOBLOKS5E.ShowNotProf" ~}}
+					{{~/if~}}
+				</a>
+			</li>
+			<li>
 				<a class="switch" data-control="attack-descriptions">{{ localize "MOBLOKS5E.AttackDescriptions" }}</a>
 				<ul>
 					<li>
@@ -287,7 +296,7 @@
 					</label>
 				</li>
 			{{/if}}
-			{{#if (or (eq type "damage-type") (eq type "condition-type") (eq type "language-opt"))}}
+			{{#if (or (eq type "save-toggle") (eq type "damage-type") (eq type "condition-type") (eq type "language-opt"))}}
 				<li>
 					<a data-option="{{d}}"
 						data-{{type}}="{{target}}"
@@ -308,10 +317,6 @@
 					</label>
 				</li>
 			{{/if}}
-			{{!--<li class="attribute trait-selector-add{{#if menus.[dv].state}} menu-open{{/if}}" data-options="damageTypes"
-				data-target="data.traits.dv">
-				<label class="menu-toggle" data-menu-id="dv">{{localize "DND5E.DamVuln"}}</label>
-			</li>--}}
 		{{/with}}
 		{{/inline}}
 		<section class="monster-attributes2{{#if menus.attributes.visible}} menu-active{{/if}}">
@@ -320,12 +325,12 @@
 			{{/if}}
 
 			<ul class="attributes">
-				{{#if info.hasSaveProfs}}
-				<li class="monster-saves">
+				{{#if (or info.hasSaveProfs flags.show-not-prof)}}
+				<li class="monster-saves attribute">
 					<h4 class="attribute-name">{{ localize "MOBLOKS5E.SavingThrowS" }}</h4>
 					<ul class="inline-list">
 					{{#each data.abilities as |ability id|}}
-					{{#if ability.proficient}}
+					{{#if (or ability.proficient ../flags.show-not-prof)}}
 						<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}" title="{{ability.label}}">
 							<span class="ability-name">{{ability.abbr}}</span>
 							<span class="ability-save">{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
@@ -335,12 +340,12 @@
 					</ul>
 				</li>
 				{{/if}}
-				{{#if info.hasSkills}}
-				<li class="monster-skills">
+				{{#if (or info.hasSkills flags.show-not-prof)}}
+				<li class="monster-skills attribute">
 					<h4 class="attribute-name">{{ localize "MOBLOKS5E.SkillS" }}</h4>
 					<ul class="inline-list">
 					{{#each data.skills as |skill s|}}
-					{{#if skill.value}}
+					{{#if (or skill.value ../flags.show-not-prof)}}
 						<li class="skill {{#if skill.value}}proficient{{/if}}"  title="{{skill.ability}}" data-skill="{{s}}">
 							<span class="skill-name">{{skill.label}}</span>
 							<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>{{~" "~}}
