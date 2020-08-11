@@ -360,7 +360,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return abilityBonus + profBonus;
 	}
 	getCastingAbility(spellbook, type, data) {
-		let main = this.actor.data.data?.attributes?.spellcasting ?? "int";
+		let main = this.actor.data.data?.attributes?.spellcasting || "int";
 		let castingability = main;
 		
 		let types = {
