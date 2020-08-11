@@ -2,14 +2,27 @@
 
 ## Additions
 - Handle multiple damage
-- Editing (for version 2)
+- **Editing (for version 2)**
+	- ~~Actor Info~~
+	- ~~Attributes~~
+	- Traits
+    	- Saving Throws
+		- ~~Skills~~
+		- ~~Damage Types~~
+		- ~~Conditions~~
+		- ~~Languages~~
+	- ~~Abilities~~
+	- Features
+	- Bio
+- Biography
 
 ## Changes
 - Indicate to new users that the menu in the corner exists
+- Rolls for saves/skills that aren't listed (not proficient) <sup>One can simply roll an ability check</sup>
+- Support viewing permissions other than "owner"
   
 ## Fixes
 - Passive perception needs different handling for editable sheet
-- ~~The CSS that allows for reverse indentation doesn't play nicely with `inline-block` and needs to be corrected.~~
 - Handle fractional challenge ratings
 
 ## Cleanup
@@ -19,7 +32,6 @@
 - Remove anything unused
 
 ## Back Burner
-- Rolls for saves/skills that aren't listed (not proficient) <sup>One can simply roll an ability check</sup>
 - Some creatures have "sub features" like breath weapns, the bodies of these are indented. <sup>unsure if this is possible to do correctly</sup>
 - Differentiate which cantrips belong to what casting feature. <sup>unsure how possible</sup>
 - Unique target types should be formatted as so: <sup>This is not currently supported by the system.</sup>
