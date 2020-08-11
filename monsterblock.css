@@ -27,6 +27,7 @@
 	--main-text-color: black;
 	--inline-link-color: #ff6400;
 	--faded-text: #80808080;
+	--shadow-color: var(--main-text-color);
 }
 .monsterblock.dark-theme {
 	font-size: 14px;
@@ -38,6 +39,7 @@
 	--background-blend: darken;
 	--main-text-color: #aaa;
 	--inline-link-color: #879ba9;
+	--shadow-color: var(--divider-color);
 }
 .monsterblock.srd-theme {
 	font-size: 14px;
@@ -49,6 +51,7 @@
 	--background-blend: color;
 	--main-text-color: #000;
 	--inline-link-color: #808080;
+	--shadow-color: var(--main-text-color);
 }
 .monsterblock.cool-theme {
 	--heading-color: rgb(0 37 93);
@@ -58,6 +61,7 @@
 	--background-blend: hard-light;
 	--main-text-color: #000000;
 	--inline-link-color: #246094;
+	--shadow-color: var(--main-text-color);
 }
 .monsterblock.hot-theme {
 	--heading-color: rgb(123 28 0);
@@ -67,6 +71,7 @@
 	--background-blend: darken;
 	--main-text-color: #a7a1a1;
 	--inline-link-color: #ab4b2e;
+	--shadow-color: var(--divider-color);
 }
 
 .monsterblock * {
@@ -130,7 +135,7 @@
 	padding: 0;
 	left: 100%;
 	z-index: 100;
-	box-shadow: -1px 1px 5px 0px black;
+	box-shadow: -1px 1px 5px 0px var(--shadow-color);
 }
 .window-app .switches > ul {
 	top: 23px;
@@ -280,7 +285,7 @@
 	list-style: none;
 	padding: 0;
 	color: var(--heading-color);
-	box-shadow: 1px 1px 5px 0px black;
+	box-shadow: 1px 1px 5px 0px var(--shadow-color);
 	background: url(/ui/parchment.jpg), var(--background-filter);
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
@@ -323,12 +328,14 @@
 	padding: 4px;
 }
 .monsterblock .custom-trait input {
-	width: 100%
+	width: 100%;
+	color: var(--main-text-color);
 }
 .monsterblock .custom-trait .trait-sel-label {
 	font-size: .8em;
 }
 .monsterblock .tweak-menu .custom-trait > label:hover {
+	color: currentColor;
 	text-shadow: none;
 }
 .monsterblock .tweak-menu.menu-open > label,
@@ -589,7 +596,7 @@ li:nth-last-of-type(2):after {
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
 	padding: .3em;
-	box-shadow: 0px 0px 1px 0px black;
+	box-shadow: 0px 0px 1px 0px var(--shadow-color);
 	z-index: 1;
 }
 .monsterblock .select-list li {
