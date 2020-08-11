@@ -244,6 +244,7 @@
 	border-left: var(--column-width) solid var(--divider-color);
 }
 .monsterblock .sheet-header section.monster-attributes2:hover::before,
+.monsterblock .sheet-header section.monster-attributes2.menu-active::before,
 .monsterblock main:hover::before {
 	border-left: calc(var(--column-width) - 2.5ch) solid var(--divider-color);
 }

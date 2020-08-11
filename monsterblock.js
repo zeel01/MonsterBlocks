@@ -131,7 +131,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return menuTree;
 	}
 	prepAttributeMenu() {
-		let attrMenu = this.addMenu("monster-attributes", `<i class="fa fa-pencil"></i>`);
+		let attrMenu = this.addMenu("monster-attributes", `<i class="fa fa-edit"></i>`, undefined, undefined, ".monster-attributes2", "menu-active");
 		
 		attrMenu.add(this.prepSkillsMenu(attrMenu));
 		attrMenu.add(this.prepDamageTypeMenu("di", "DND5E.DamImm", attrMenu));
@@ -1134,13 +1134,15 @@ class MenuTree extends MenuItem {
 	 * @param {MenuItem[]} children - An array of items in this menu
 	 * @memberof MenuTree
 	 */
-	constructor(monsterblock, id, label, parent, updateFn, visible, element, children) {
+	constructor(monsterblock, id, label, parent, updateFn, auxSelect, auxClass, visible, element, children) {
 		let fn = updateFn ?? (a => false);
 		super(parent ? "sub-menu" : "root-menu", {}, (m, ...args) => {
 			fn(m, ...args);
 			this.children.forEach(c => c.update(c, ...args));
 		});
 
+		this.auxSelect = auxSelect ?? false;
+		this.auxClass = auxClass ?? "";
 		this.id = id;
 		this.monsterblock = monsterblock;
 		this.parent = parent ?? false;
@@ -1155,6 +1157,10 @@ class MenuTree extends MenuItem {
 	get button() {
 		return this.monsterblock._element.find(`[data-menu-id=${this.id}]`);
 	}
+	get auxElement() {
+		if (!this.auxSelect) return false;
+		return this.monsterblock._element.find(this.auxSelect);
+	}
 	attachHandler() {
 		this.button.click((event) => {
 			if (!this.visible) this.open();
@@ -1165,11 +1171,13 @@ class MenuTree extends MenuItem {
 		if (this.visible) return;
 		if (this.parent) this.parent.closeChildren();
 		this.element.addClass("menu-open");
+		if (this.auxElement) this.auxElement.addClass(this.auxClass);
 		this.visible = true;
 	}
 	close() {
 		if (!this.visible) return;
 		this.element.removeClass("menu-open");
+		if (this.auxElement) this.auxElement.removeClass(this.auxClass);
 		this.visible = false;
 		this.closeChildren();
 	}
