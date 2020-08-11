@@ -1,11 +1,12 @@
-.window-app .window-header {
-	padding-right: 8ch;
-}
+
 .monsterblock .window-header,
 .dnd5e.npc .window-header {
 	padding-left: 30px;
 }
-.window-app .window-header a.close {
+.monsterblock .window-header {
+	padding-right: 8ch;
+}
+.monsterblock .window-header a.close {
 	position: absolute;
 	right: 9px;
 	height: 30px !important;	/* Prevents other modules that might try 100% from messing this up now that it's an absolute element. */

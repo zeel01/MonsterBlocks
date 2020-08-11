@@ -28,3 +28,28 @@
 	console.timeEnd("Macro | Sheet conversion completed in");
 	return true;
 })();
+
+// Changes the theme of all actors in the Actor Directory to your default setting
+// This will not effect unlinked actors in any scene
+Actor.update([...game.actors].reduce((acc, a) => {
+	if (a.data?.flags?.monsterblock) {
+		let act = duplicate(a);
+		act.flags.monsterblock["theme-choice"] = game.settings.get("monsterblock", "default-theme");
+		acc.push(act);
+	}
+	return acc;
+}, []));
+
+(async () => {
+	console.log("Macro | Setting all Monster Block token themes to ", game.settings.get("monsterblock", "default-theme"));
+	console.time("Macro | Theme conversion completed in");
+	for (let tkn of canvas.tokens.objects.children) {
+		if (tkn.actor.getFlag("monsterblock", "theme-choice")) {
+			await tkn.actor.sheet.close();
+			await tkn.actor.setFlag("monsterblock", "theme-choice", game.settings.get("monsterblock", "default-theme"))
+		}
+	}
+	console.log("Macro | ...Complete");
+	console.timeEnd("Macro | Theme conversion completed in");
+	return true;
+})();
