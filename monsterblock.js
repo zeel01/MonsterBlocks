@@ -585,10 +585,17 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	 * @memberof MonsterBlock5e
 	 */
 	getCastingFeatureDescription(ct, cts, abilityTitle, tohit, featureData, data) {
+		const casterLevel = this.actor.data.data?.details?.spellLevel ?? 0;
+		const suffix = this.constructor.getOrdinalSuffix(casterLevel);
 		return {
 			level: ct == cts.innate ? "" : game.i18n.format("MOBLOKS5E.CasterNameLevel", {
 				name: this.actor.name,
-				level: this.constructor.formatOrdinal(this.actor.data.data?.details?.spellLevel ?? 1)
+				level: `<span class="caster-level"
+							contenteditable="${this.flags.editing}"
+							data-field-key="data.details.spellLevel"
+							data-dtype="Number"
+							placeholder="0"
+							>${casterLevel}</span>${suffix}`
 			}),
 			ability: game.i18n.format(
 				ct == cts.innate ? "MOBLOKS5E.InnateCastingAbility" : "MOBLOKS5E.CastingAbility", {
@@ -1216,11 +1223,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static hasResource(item) {
 		return Boolean(item.data.consume?.target);
 	}
-	static formatOrdinal(number) {
+	static getOrdinalSuffix(number) {
 		let suffixes = game.i18n.localize("MOBLOKS5E.OrdinalSuffixes");
 		if (number < 1 || suffixes.length < 1) return number.toString();
-		if (number <= suffixes.length) return number + suffixes[number - 1];
-		else return number + suffixes[suffixes.length - 1];
+		if (number <= suffixes.length) return suffixes[number - 1];
+		else return suffixes[suffixes.length - 1];
+	}
+	static formatOrdinal(number) {
+		return number + this.getOrdinalSuffix(number);		
 	}
 	static formatNumberCommas(number) {
 		return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");	// https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
