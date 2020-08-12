@@ -56,10 +56,10 @@
 
 	"MOBLOKS5E.EditHint": "Right-click to edit",
 
-	"MOBLOKS5E.AddFeat": "Create Feature",
-	"MOBLOKS5E.AddAttack": "Create Attack",
-	"MOBLOKS5E.AddAct": "Create Action",
-	"MOBLOKS5E.AddInventory": "Create Loot",
+	"MOBLOKS5E.AddFeat": "Feature",
+	"MOBLOKS5E.AddAttack": "Attack",
+	"MOBLOKS5E.AddAct": "Action",
+	"MOBLOKS5E.AddInventory": "Loot",
 	
 	"MOBLOKS5E.Recharge": "Recharge",
 	"MOBLOKS5E.NCharged": "Not charged",
