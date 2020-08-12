@@ -12,12 +12,20 @@
 		- ~~Conditions~~
 		- ~~Languages~~
 	- ~~Abilities~~
-	- Features
+	- ~~Features~~
     	- ~~Add~~
     	- ~~Remove~~
+	- Spellcasting
+    	- Add / Remove spells
+    	- Edit caster level
+    	- Edit casting ability
+    	- Edit spell slots
 	- Bio
 - Biography
 - Loot section
+- Resource tracking
+  - Spell slots
+  - Limited uses
 
 ## Changes
 - Indicate to new users that the menu in the corner exists
