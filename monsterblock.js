@@ -53,7 +53,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula);
 		this.prepAbilities(data);
 
-		data.flags = duplicate(this.actor.data.flags.monsterblock);	// Get the flags for this module, and make them available in the data
+		data.flags = duplicate(this.flags);	// Get the flags for this module, and make them available in the data
 		if (!data.flags.editing) data.flags["show-delete"] = false;
 		
 		data.info = {		// A collection of extra information used mainly for conditionals
@@ -75,6 +75,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		data.themes = this.themes;
 		
 		return data;
+	}
+	get flags() {
+		return this.actor.data.flags.monsterblock;
 	}
 	/**
 	 * Constructs a FormData object using data from the sheet,
@@ -121,23 +124,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		formData._dtypes = dtypes;
 		return formData;
 	}
-	addFeature(event) {
-		console.debug("Adding a feature!");
-		this._onItemCreate(event);//, "feature")
+	async addFeature(event) {
+	//	let type = event.currentTarget.dataset.type == "spell" ? "spell" : "item";
+		this._onItemCreate(event);
+	//	let item = await this._onItemCreate(event);
+	//	let id = item.data._id;
+	//	if (type == "item") this.openItemEditor(event, id);
+	//	else this.openSpellEditor(event, id);
 	}
-/*	_onItemCreate(event) {
-		event.preventDefault();
-		const header = event.currentTarget;
-		const type = header.dataset.type;
-		const itemData = {
-			name: game.i18n.format("DND5E.ItemNew", { type: type.capitalize() }),
-			type: type,
-			data: duplicate(header.dataset)
-		};
-		delete itemData.data["type"];
-		return this.actor.createOwnedItem(itemData);
-	}
-*/	prepMenus() {
+	prepMenus() {
 		this.menuTrees = {
 			attributes: this.prepAttributeMenu(),
 			features: this.prepFeaturesMenu()
@@ -172,6 +167,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			"range.units": "ft"
 		}, "MOBLOKS5E.AddAttack"));
 		featMenu.add(this.createFeatureAdder({ type: "feat", "activation.type": "action" }, "MOBLOKS5E.AddAct"));
+		featMenu.add(this.createFeatureAdder({ type: "spell", "level": "0" }, "MOBLOKS5E.AddSpell"));
 	//	featMenu.add(this.createFeatureAdder({ type: "loot" }, "MOBLOKS5E.AddInventory"));
 
 		return featMenu;
@@ -613,7 +609,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				name: this.actor.name,
 				atwill: featureData.hasAtWill ? game.i18n.format("MOBLOKS5E.CasterAtWill", {
 					spells: data.spellbook.find(l => l.prop === "atwill")?.spells?.reduce((list, spell, i, a) => {
-						return `${list}<li class="spell at-will-spell" data-item-id="${spell._id}"><span class="spell-name">${spell.name}</span></li>`;
+						return `${list}
+							<li class="spell at-will-spell" data-item-id="${spell._id}">
+								${this.flags["show-delete"] && this.flags["editing"] ?
+								`<a class="delete-item" data-item-id="${spell._id}">
+									<i class="fa fa-trash"></i>
+								</a>` : ""}
+								<span class="spell-name">${spell.name}</span></li>`;
 					}, `<ul class="at-will-spells">`) + "</ul>"
 				}) : ""
 			})
@@ -980,21 +982,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		
 		// Item editing handlers. Allows right clicking on the description of any item (features, action, etc.) to open its own sheet to edit.
-		html.find('.item').contextmenu((event) => {
-			event.preventDefault();
-			event.stopPropagation();
-			let nameEl = event.currentTarget.querySelector('.item-name');
-			const item = this.actor.getOwnedItem(nameEl.dataset.itemId);
-			item.sheet.render(true);
-		});
-		html.find('.spell').contextmenu((event) => {	// Spells are done slightly differently
-			event.preventDefault();
-			event.stopPropagation();
-			console.log("Double Click!", event.currentTarget);
-			let id = event.currentTarget.dataset.itemId;
-			const item = this.actor.getOwnedItem(id);
-			item.sheet.render(true);
-		});
+		html.find('.item').contextmenu(this.openItemEditor.bind(this));
+		html.find('.spell').contextmenu(this.openSpellEditor.bind(this));
 		
 		html.find('.big-red-button').click((event) => {
 			event.preventDefault();
@@ -1079,6 +1068,22 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		this._dragDrop.forEach(d => d.bind(html[0]));
 	}
+	openItemEditor(event, d) {
+		event.preventDefault();
+		event.stopPropagation();
+		let id = d ?? event.currentTarget.querySelector('.item-name').dataset.itemId;
+		const item = this.actor.getOwnedItem(id);
+		item.sheet.render(true);
+	}
+
+	openSpellEditor(event, d) {
+		event.preventDefault();
+		event.stopPropagation();
+		let id = d ?? event.currentTarget.dataset.itemId;
+		const item = this.actor.getOwnedItem(id);
+		item.sheet.render(true);
+	}
+
 	onCustomTraitChange(event) {
 		let input = event.currentTarget;
 		let target = input.name

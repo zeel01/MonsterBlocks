@@ -537,7 +537,6 @@
 					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
 					{{#each page.spells as |spell id|}}
 							<li class="spell" data-item-id="{{spell._id}}">
-								{{log @root.flags.show-delete}}
 								{{#if @root.flags.show-delete}}
 									<a class="delete-item" data-item-id="{{spell._id}}">
 										<i class="fa fa-trash"></i>

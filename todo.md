@@ -16,7 +16,7 @@
     	- ~~Add~~
     	- ~~Remove~~
 	- Spellcasting
-    	- Add / Remove spells
+    	- ~~Add / Remove spells~~
     	- Edit caster level
     	- Edit casting ability
     	- Edit spell slots
