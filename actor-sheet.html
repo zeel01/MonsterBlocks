@@ -17,6 +17,17 @@
 					{{~/if~}}
 				</a>
 			</li>
+			{{#if flags.editing}}
+			<li>
+				<a class="switch" data-control="show-delete">
+					{{~#if flags.show-delete}}
+						{{~ localize "MOBLOKS5E.DisableDelete" ~}}
+					{{~else}}
+						{{~ localize "MOBLOKS5E.EnableDelete" ~}}
+					{{~/if~}}
+				</a>
+			</li>
+			{{/if}}
 			<li>
 				<a class="switch" data-control="show-not-prof">
 					{{~#if flags.show-not-prof}}
@@ -450,12 +461,12 @@
 	{{#*inline "featureBlock"}}
 	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}{{#if lairactions}} lair-actions{{/if}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="feature-description inline-children">
+			{{#if flags.show-delete}}
+				<a class="delete-item" data-item-id="{{item._id}}">
+					<i class="fa fa-trash"></i>
+				</a>
+			{{/if}}
 			{{#unless lairactions}}
-				{{#if flags.show-delete}}
-					<a class="delete-item" data-item-id="{{item._id}}">
-						<i class="fa fa-trash"></i>
-					</a>
-				{{/if}}
 				<span class="item-name" data-item-id="{{item._id}}">
 					{{~item.name~}} 
 				</span>

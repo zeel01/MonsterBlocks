@@ -14,7 +14,7 @@
 	- ~~Abilities~~
 	- Features
     	- ~~Add~~
-    	- Remove
+    	- ~~Remove~~
 	- Bio
 - Biography
 - Loot section

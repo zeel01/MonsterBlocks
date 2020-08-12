@@ -356,19 +356,43 @@
 }
 
 .monsterblock .delete-item {
-	display: none;
-	/* visibility: hidden; */
+	/* display: none; */
+	visibility: hidden;
 	font-size: .75em;
-	/* position: relative; */
+	position: fixed;
+	/* border: red 1px solid; */
+	/* width: 3em; */
+	/* height: 2em; */
+	padding-right: 5px;
+}
+.monsterblock .delete-item:before {
+	position: absolute;
+	width: 2em;
+	height: 2em;
+	/* border: 1px solid green; */
+	content: ' ';
+	left: -2em;
+	top: -2px;
 }
 .monsterblock .delete-item i {
-	/* position: absolute; */
-	/* left: -6px; */
-	/* top: -2px; */
+	background: url(/ui/parchment.jpg), var(--background-filter);
+	background-repeat: repeat;
+	background-blend-mode: var(--background-blend);
+	box-shadow: 0px 0px 5px 0px var(
+	--shadow-color);
+	width: 1.5em;
+	position: absolute;
+	left: -20px;
+	top: 1px;
+	height: 1.5em;
+	text-align: center;
+	padding-top: .25em;
+	border-radius: .75em;
+	text-indent: 0;
 }
 .monsterblock *:hover > .delete-item {
-	/* visibility: visible; */
-	display: inline;
+	visibility: visible;
+	/* display: inline; */
 }
 .monsterblock .skill-ability {
 	text-transform: capitalize;

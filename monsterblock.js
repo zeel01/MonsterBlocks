@@ -53,7 +53,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula);
 		this.prepAbilities(data);
 
-		data.flags = this.actor.data.flags.monsterblock;	// Get the flags for this module, and make them available in the data
+		data.flags = duplicate(this.actor.data.flags.monsterblock);	// Get the flags for this module, and make them available in the data
+		if (!data.flags.editing) data.flags["show-delete"] = false;
+		
 		data.info = {		// A collection of extra information used mainly for conditionals
 			hasSaveProfs: this.hasSaveProfs(),
 			hasSkills: this.hasSkills(),							
@@ -830,7 +832,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"custom-theme-class": game.settings.get("monsterblock", "custom-theme-class"),
 		"editing": game.settings.get("monsterblock", "editing"),
 		"show-not-prof": game.settings.get("monsterblock", "show-not-prof"),
-		"show-delete": true
+		"show-delete": false
 	}
 	async prepFlags() {
 		if (!this.actor.getFlag("monsterblock", "initialized")) {
