@@ -1072,6 +1072,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		html.find('.delete-item').click((event) => {
 			event.preventDefault();
+			event.stopPropagation();
 			const el = event.currentTarget;
 			this.actor.deleteOwnedItem(el.dataset.itemId);
 		});

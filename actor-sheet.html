@@ -144,7 +144,7 @@
 				{{#each themes as |theme id|}}
 				{{#unless (eq id "custom")}}
 					<li>
-						<a	class="trigger{{#if (eq ../flags.theme-choice id)}} selected{{/if}}"
+						<a	class="trigger{{#if (eq @root.flags.theme-choice id)}} selected{{/if}}"
 							data-control="pickTheme" 
 							data-value="{{id}}">
 							{{~ localize theme.name ~}}
@@ -264,7 +264,7 @@
                 <li class="ability{{#if ability.proficient}} proficient{{/if}}" data-ability="{{id}}">
                     <h4 class="ability-name box-title" title="{{ability.label}}">{{ability.abbr}}</h4>
 					<span class="attr-value"
-						contenteditable="{{../flags.editing}}"
+						contenteditable="{{@root.flags.editing}}"
 						placeholder="0"
 						data-field-key="data.abilities.{{id}}.value"
 						data-dtype="Number"
@@ -353,7 +353,7 @@
 					<h4 class="attribute-name">{{ localize "MOBLOKS5E.SavingThrowS" }}</h4>
 					<ul class="inline-list">
 					{{#each data.abilities as |ability id|}}
-					{{#if (or ability.proficient ../flags.show-not-prof)}}
+					{{#if (or ability.proficient @root.flags.show-not-prof)}}
 						<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}" title="{{ability.label}}">
 							<span class="ability-name">{{ability.abbr}}</span>
 							<span class="ability-save">{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
@@ -368,7 +368,7 @@
 					<h4 class="attribute-name">{{ localize "MOBLOKS5E.SkillS" }}</h4>
 					<ul class="inline-list">
 					{{#each data.skills as |skill s|}}
-					{{#if (or skill.value ../flags.show-not-prof)}}
+					{{#if (or skill.value @root.flags.show-not-prof)}}
 						<li class="skill {{#if skill.value}}proficient{{/if}}"  title="{{skill.ability}}" data-skill="{{s}}">
 							<span class="skill-name">{{skill.label}}</span>
 							<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>{{~" "~}}
@@ -503,10 +503,10 @@
 	
 	
 	{{#each features.casting.items as |casting id|}}
-	{{#if ../flags.casting-feature}}
+	{{#if @root.flags.casting-feature}}
 	<section class="item monster-feature spellcasting-trait" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="feature-description inline-children">
-			{{#if ../flags.show-delete}}
+			{{#if @root.flags.show-delete}}
 				<a class="delete-item" data-item-id="{{casting._id}}">
 					<i class="fa fa-trash"></i>
 				</a>
@@ -537,6 +537,12 @@
 					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
 					{{#each page.spells as |spell id|}}
 							<li class="spell" data-item-id="{{spell._id}}">
+								{{log @root.flags.show-delete}}
+								{{#if @root.flags.show-delete}}
+									<a class="delete-item" data-item-id="{{spell._id}}">
+										<i class="fa fa-trash"></i>
+									</a>
+								{{/if}}
 								<span class="spell-name">{{spell.name}}</span>{{~" "~}}
 							</li>
 					{{/each}}
@@ -547,14 +553,14 @@
 		</div>
 	</section>
 	{{else}}
-		{{> featureBlock item=casting actor=../actor}}
+		{{> featureBlock item=casting actor=@root.actor}}
 	{{/if}}
 	{{/each}}
 	
 
 	{{#each features.features.items as |item iid|}}
 		{{#unless item.is.specialAction}}
-			{{> featureBlock item=item actor=../actor flags=../flags}}
+			{{> featureBlock item=item actor=@root.actor flags=@root.flags}}
 		{{/unless}}
 	{{/each}}
 
@@ -572,7 +578,7 @@
 	{{#unless item.is.specialAction}}
 	<section class="item monster-action" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="attack-description inline-children">
-			{{#if ../flags.show-delete}}
+			{{#if @root.flags.show-delete}}
 				<a class="delete-item" data-item-id="{{item._id}}">
 					<i class="fa fa-trash"></i>
 				</a>
@@ -583,11 +589,11 @@
 				({{~item.resourcelimit}}/{{item.resourcerefresh}}){{~" "~}}
 			</span>
 			{{~/if~}}
-			{{#if ../flags.attack-descriptions}}
+			{{#if @root.flags.attack-descriptions}}
 			{{~#unless legendaryactions~}}
 				{{~#if item.hasResource~}} 
 					<span class="name-extension">
-						({{~getresourcelimit item ../actor}}/{{getresourcerefresh item ../actor~}})
+						({{~getresourcelimit item @root.actor}}/{{getresourcerefresh item @root.actor~}})
 					</span>
 				{{~/if~}}
 			{{~/unless}}
@@ -625,7 +631,7 @@
 	{{/each}}
 	{{#each features.actions.items as |item iid|}}
 		{{#unless item.is.specialAction}}
-			{{> featureBlock item=item actor=../actor flags=../flags}}
+			{{> featureBlock item=item actor=@root.actor flags=@root.flags}}
 		{{/unless}}
 	{{/each}}
 	{{! Reactions }}
@@ -633,7 +639,7 @@
 		<h2 class="section-header">{{localize "MOBLOKS5E.Reactions"}}</h2>
 		{{#each features.reaction.items as |item iid|}}
 			{{#if item.is.reaction}}
-				{{> featureBlock item=item actor=../actor flags=../flags}}
+				{{> featureBlock item=item actor=@root.actor flags=@root.flags}}
 			{{/if}}
 		{{/each}}
 	{{/if}}
@@ -646,7 +652,7 @@
 		{{#each features.legendary.items as |item iid|}}
 			{{#if item.is.legendary }}
 			{{#unless item.is.legResist}}
-				{{> featureBlock item=item actor=../actor legendaryactions=true flags=../flags}}
+				{{> featureBlock item=item actor=@root.actor legendaryactions=true flags=@root.flags}}
 			{{/unless}}
 			{{/if}}
 		{{/each}}
@@ -660,7 +666,7 @@
 		{{#each features.lair.items as |item iid|}}
 			{{#if item.is.lair}}
 			<li>
-				{{> featureBlock item=item actor=../actor lairactions=true flags=../flags}}
+				{{> featureBlock item=item actor=@root.actor lairactions=true flags=@root.flags}}
 			</li>
 			{{/if}}
 		{{/each}}
