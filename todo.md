@@ -22,10 +22,11 @@
     	- ~~Edit spell slots~~
 	- Bio
 - Biography
-- Loot section
+- ~~Loot section~~
 - Resource tracking
   - Spell slots
   - Limited uses
+
 
 ## Changes
 - Indicate to new users that the menu in the corner exists
@@ -43,6 +44,7 @@
 - Remove anything unused
 
 ## Back Burner
+- Toggle "Uses Lair Actions" when showing/hiding lair actions.<sup>The system doesn't seem to use this for anything yet.</sup>
 - Some creatures have "sub features" like breath weapns, the bodies of these are indented. <sup>unsure if this is possible to do correctly</sup>
 - Differentiate which cantrips belong to what casting feature. <sup>unsure how possible</sup>
 - Unique target types should be formatted as so: <sup>This is not currently supported by the system.</sup>

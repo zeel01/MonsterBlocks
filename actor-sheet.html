@@ -662,6 +662,12 @@
 			{{/if}}
 		{{/each}}
 	{{/if}}
+	{{#if info.hasLoot}}
+		<h2 class="section-header">{{localize "DND5E.Inventory"}}</h2>
+		{{#each features.equipment.items as |item iid|}}
+			{{> featureBlock item=item actor=@root.actor flags=@root.flags}}
+		{{/each}}
+	{{/if}}
 	{{! Lair Actions }}
 	{{#if info.hasLair}}
 	{{#if flags.show-lair-actions}}

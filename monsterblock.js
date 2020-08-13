@@ -67,6 +67,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			hasLegendaryActions: Boolean(data.features.legendary.items.length),
 			hasLair: Boolean(data.features.lair.items),
 			hasReactions: Boolean(data.features.reaction.items.length),
+			hasLoot: Boolean(data.features.equipment.items.length),
 			vttatokenizer: Boolean(this.constructor.Tokenizer)
 		}
 		data.menus = this.menuTrees;
@@ -170,7 +171,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}, "MOBLOKS5E.AddAttack"));
 		featMenu.add(this.createFeatureAdder({ type: "feat", "activation.type": "action" }, "MOBLOKS5E.AddAct"));
 		featMenu.add(this.createFeatureAdder({ type: "spell", "level": "0" }, "MOBLOKS5E.AddSpell"));
-	//	featMenu.add(this.createFeatureAdder({ type: "loot" }, "MOBLOKS5E.AddInventory"));
+		featMenu.add(this.createFeatureAdder({ type: "loot" }, "MOBLOKS5E.AddInventory"));
 
 		return featMenu;
 	}
