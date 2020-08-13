@@ -133,6 +133,15 @@
 				</a>
 			</li>
 			{{/if}}
+			<li>
+				<a class="switch" data-control="show-bio">
+					{{~#if flags.show-bio~}}
+						{{ localize "MOBLOKS5E.HideBio" ~}}
+					{{~else~}}
+						{{ localize "MOBLOKS5E.ShowBio" ~}}
+					{{~/if~}}
+				</a>
+			</li>
 			{{#if info.vttatokenizer}}
 			<li>
 				<a class="trigger" data-control="openTokenizer">Open VTTA Tokenizer</a>
@@ -651,16 +660,18 @@
 	{{! Legendary Actions }}
 	{{#if info.hasLegendaryActions}}
 		<h2 class="section-header">{{localize "DND5E.LegAct"}}</h2>
-		<p class="legendary-description">
-			{{ localize "MOBLOKS5E.LegendaryText" name=actor.name }}
-		</p>
-		{{#each features.legendary.items as |item iid|}}
-			{{#if item.is.legendary }}
-			{{#unless item.is.legResist}}
-				{{> featureBlock item=item actor=@root.actor legendaryactions=true flags=@root.flags}}
-			{{/unless}}
-			{{/if}}
-		{{/each}}
+		<section>
+			<p class="legendary-description">
+				{{ localize "MOBLOKS5E.LegendaryText" name=actor.name }}
+			</p>
+			{{#each features.legendary.items as |item iid|}}
+				{{#if item.is.legendary }}
+				{{#unless item.is.legResist}}
+					{{> featureBlock item=item actor=@root.actor legendaryactions=true flags=@root.flags}}
+				{{/unless}}
+				{{/if}}
+			{{/each}}
+		</section>
 	{{/if}}
 	{{#if info.hasLoot}}
 		<h2 class="section-header">{{localize "DND5E.Inventory"}}</h2>
@@ -672,17 +683,25 @@
 	{{#if info.hasLair}}
 	{{#if flags.show-lair-actions}}
 		<h2 class="section-header">{{ localize "MOBLOKS5E.LairActionsHeading" }}</h2>
-		<p>{{ localize "MOBLOKS5E.LairText" name=actor.name }}</p>
-		<ul>
-		{{#each features.lair.items as |item iid|}}
-			{{#if item.is.lair}}
-			<li>
-				{{> featureBlock item=item actor=@root.actor lairactions=true flags=@root.flags}}
-			</li>
-			{{/if}}
-		{{/each}}
-		</ul>
+		<section>
+			<p>{{ localize "MOBLOKS5E.LairText" name=actor.name }}</p>
+			<ul>
+			{{#each features.lair.items as |item iid|}}
+				{{#if item.is.lair}}
+				<li>
+					{{> featureBlock item=item actor=@root.actor lairactions=true flags=@root.flags}}
+				</li>
+				{{/if}}
+			{{/each}}
+			</ul>
+		</section>
 	{{/if}}
 	{{/if}}
-	</main>
+	{{#if flags.show-bio}}
+		<h2 class="section-header">{{ localize "DND5E.Biography" }}</h2>
+		<section class="biography active">
+			{{editor content=data.details.biography.value target="data.details.biography.value" button=true owner=owner editable=editable}}
+		</section>
+		</main>
+	{{/if}}
 </form>

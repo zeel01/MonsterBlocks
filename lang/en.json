@@ -11,6 +11,8 @@
 	"MOBLOKS5E.DisableDelete": "Disable delete",
 	"MOBLOKS5E.ShowNotProf": "Show not-proficient checks",
 	"MOBLOKS5E.HideNotProf": "Hide not-proficient checks",
+	"MOBLOKS5E.ShowBio": "Show Biography",
+	"MOBLOKS5E.HideBio": "Hide Biography",
 	"MOBLOKS5E.ShowGenerated": "Show generated",
 	"MOBLOKS5E.HideGenerated": "Hide generated",
 	"MOBLOKS5E.DescriptionS": "Descriptions",

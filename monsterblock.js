@@ -859,7 +859,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"custom-theme-class": game.settings.get("monsterblock", "custom-theme-class"),
 		"editing": game.settings.get("monsterblock", "editing"),
 		"show-not-prof": game.settings.get("monsterblock", "show-not-prof"),
-		"show-delete": false
+		"show-delete": false,
+		"show-bio": true
 	}
 	async prepFlags() {
 		if (!this.actor.getFlag("monsterblock", "initialized")) {
@@ -1092,6 +1093,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 
 		this._dragDrop.forEach(d => d.bind(html[0]));
+
+		// Detect and activate TinyMCE rich text editors
+		html.find('.editor-content[data-edit]').each((i, div) => this._activateEditor(div));
 	}
 	openItemEditor(event, d) {
 		event.preventDefault();

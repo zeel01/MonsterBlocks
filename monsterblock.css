@@ -648,3 +648,26 @@ li:nth-last-of-type(2):after {
 .monsterblock .select-field:hover .select-list {
 	visibility: visible;
 }
+.monsterblock .editor {
+	height: 100%;
+}
+.monsterblock .biography {
+	--min-height: 10em;
+	max-height: var(--column-width);
+	margin-top: .5em;
+	height: fit-content;
+	min-height: var(--min-height);
+	overflow-y: auto;
+	align-content: flex-start;
+	display: block;
+	break-inside: auto;
+	flex-direction: column;
+	flex-wrap: nowrap;
+}
+.monsterblock .biography .editor-content {
+	min-height: var(--min-height);
+}
+.monsterblock .biography .tox-tbtn--select.tox-tbtn--bespoke {
+	font-size: .7em;
+	width: 10ch;
+}
