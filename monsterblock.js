@@ -125,12 +125,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return formData;
 	}
 	async addFeature(event) {
-	//	let type = event.currentTarget.dataset.type == "spell" ? "spell" : "item";
-		this._onItemCreate(event);
-	//	let item = await this._onItemCreate(event);
-	//	let id = item.data._id;
-	//	if (type == "item") this.openItemEditor(event, id);
-	//	else this.openSpellEditor(event, id);
+		let type = event.currentTarget.dataset.type == "spell" ? "spell" : "item";
+		let items = [...this.actor.items].map(i => i.id);
+		await this._onItemCreate(event);
+		let item = [...this.actor.items].find(i => !items.includes(i.id));
+
+		let id = item.id;
+		if (type == "item") this.openItemEditor(event, id);
+		else this.openSpellEditor(event, id);
 	}
 	prepMenus() {
 		this.menuTrees = {
