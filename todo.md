@@ -17,8 +17,8 @@
     	- ~~Remove~~
 	- Spellcasting
     	- ~~Add / Remove spells~~
-    	- Edit caster level
-    	- Edit casting ability
+    	- ~~Edit caster level~~
+    	- ~~Edit casting ability~~
     	- Edit spell slots
 	- Bio
 - Biography

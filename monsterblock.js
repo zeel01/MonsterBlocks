@@ -498,7 +498,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		let [abilityTitle, castingAbility] = this.getCastingAbility(featureData.spellbook, ct, data);
 		let tohit = this.getSpellAttackBonus(castingAbility);
 		
-		featureData.description = this.getCastingFeatureDescription(ct, cts, abilityTitle, tohit, featureData, data)
+		featureData.description = this.getCastingFeatureDescription(ct, cts, castingAbility, abilityTitle, tohit, featureData, data)
 
 		
 		console.debug(featureData);
@@ -579,6 +579,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	 *
 	 * @param {Symbol} ct - The type of casting feature
 	 * @param {Object} cts - The set of casting feature types
+	 * @param {string} castingAbility - The id of the casting ability for this feature
 	 * @param {string} abilityTitle - The name of the casting ability for this feature
 	 * @param {number} tohit - The spell-attack bonus for this casting ability
 	 * @param {Object} featureData - The data object for this feature
@@ -586,9 +587,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	 * @return {Object} An object containing translated and filled sections of the casting feature description
 	 * @memberof MonsterBlock5e
 	 */
-	getCastingFeatureDescription(ct, cts, abilityTitle, tohit, featureData, data) {
+	getCastingFeatureDescription(ct, cts, castingAbility, abilityTitle, tohit, featureData, data) {
 		const casterLevel = this.actor.data.data?.details?.spellLevel ?? 0;
 		const suffix = this.constructor.getOrdinalSuffix(casterLevel);
+		let abilityOptions = Object.entries(CONFIG.DND5E.abilities).reduce((acc, [key, value]) => {
+			if (!["int", "wis", "cha"].includes(key) || key == castingAbility) return acc;
+			return acc + `<li data-selection-value="${key}">${value}</li>`
+		}, "")
+
 		return {
 			level: ct == cts.innate ? "" : game.i18n.format("MOBLOKS5E.CasterNameLevel", {
 				name: this.actor.name,
@@ -602,7 +608,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			ability: game.i18n.format(
 				ct == cts.innate ? "MOBLOKS5E.InnateCastingAbility" : "MOBLOKS5E.CastingAbility", {
 				name: this.actor.name,
-				ability: abilityTitle
+				ability: `
+				<div class="select-field" data-select-key="data.attributes.spellcasting" data-selected-value="${castingAbility}">
+					<label class="${this.flags.editing ? "select-label" : ""}">${abilityTitle}</label>
+					${this.flags.editing ? `<ul class="actor-size select-list">${abilityOptions}</ul>`: ""}
+				</div>`
 			}
 			),
 			stats: game.i18n.format("MOBLOKS5E.CastingStats", {
@@ -1020,7 +1030,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			if (!value) return false;
 			let label = control.querySelector(".select-label");
 
-			label.innerText = CONFIG.DND5E.actorSizes[value];
+			label.innerText = selection.innerText;
 			control.dataset.selectedValue = value;
 
 			this._onChangeInput(event);

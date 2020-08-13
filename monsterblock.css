@@ -637,7 +637,8 @@ li:nth-last-of-type(2):after {
 	background: url(/ui/parchment.jpg), var(--background-filter);
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
-	padding: .3em;
+	padding-left: .3em;
+	padding-right: .4em;
 	box-shadow: 0px 0px 1px 0px var(--shadow-color);
 	z-index: 1;
 }

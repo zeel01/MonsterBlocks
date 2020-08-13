@@ -175,7 +175,9 @@
 					{{#if flags.editing~}}
 						<ul class="actor-size select-list">
 							{{#each config.actorSizes as |label size|}}
+							{{#unless (eq size ../data.traits.size)}}
 								<li data-selection-value="{{size}}">{{label}}</li>
+							{{/unless}}
 							{{~/each~}}
 						</ul>
 					{{~/if~}}
