@@ -528,15 +528,17 @@
 			</span>
 			<ul class="spell-list">
 			{{#each casting.spellbook as |page id|}}
+			{{#if page.spells}}
 				<li>
 					<span class="spell-level-name">
 						{{page.label~}}
 					</span>
 					{{~#if page.slotLabel}}
-						<span class="spell-slots">({{page.slotLabel}})</span>
+						<span class="spell-slots">({{{page.slotLabel}}})</span>
 					{{~/if~}}
 					{{~ localize "MOBLOKS5E.Colon" }}
 					<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
+					
 					{{#each page.spells as |spell id|}}
 							<li class="spell" data-item-id="{{spell._id}}">
 								{{#if @root.flags.show-delete}}
@@ -547,8 +549,10 @@
 								<span class="spell-name">{{spell.name}}</span>{{~" "~}}
 							</li>
 					{{/each}}
+					
 					</ul>
 				</li>
+			{{/if}}
 			{{/each}}
 			</ul>
 		</div>

@@ -15,11 +15,11 @@
 	- ~~Features~~
     	- ~~Add~~
     	- ~~Remove~~
-	- Spellcasting
+	- ~~Spellcasting~~
     	- ~~Add / Remove spells~~
     	- ~~Edit caster level~~
     	- ~~Edit casting ability~~
-    	- Edit spell slots
+    	- ~~Edit spell slots~~
 	- Bio
 - Biography
 - Loot section

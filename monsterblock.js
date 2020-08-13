@@ -548,7 +548,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				});
 				page.slotLabel = game.i18n.format(ct == cts.pact ?
 					"MOBLOCKS5E.SpellPactSlots" : "MOBLOCKS5E.SpellSlots", {
-					slots: page.slots,
+					slots: `<span class="slot-count"
+								contenteditable="${this.flags.editing}"
+								data-field-key="data.spells.spell${page.maxSpellLevel}.override"
+								data-dtype="Number"
+								placeholder="0"
+							>${page.slots}</span>`,
 					level: this.constructor.formatOrdinal(page.maxSpellLevel)
 				});
 			}
