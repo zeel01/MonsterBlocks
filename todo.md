@@ -20,8 +20,8 @@
     	- ~~Edit caster level~~
     	- ~~Edit casting ability~~
     	- ~~Edit spell slots~~
-	- Bio
-- Biography
+	- ~~Bio~~
+- ~~Biography~~
 - ~~Loot section~~
 - Resource tracking
   - Spell slots

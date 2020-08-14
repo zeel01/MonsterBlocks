@@ -1094,8 +1094,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		this._dragDrop.forEach(d => d.bind(html[0]));
 
-		// Detect and activate TinyMCE rich text editors
-		html.find('.editor-content[data-edit]').each((i, div) => this._activateEditor(div));
+		if (this.isEditable && this.flags.editing) {
+			// Detect and activate TinyMCE rich text editors
+			html.find('.editor-content[data-edit]').each((i, div) => this._activateEditor(div));
+		}
 	}
 	openItemEditor(event, d) {
 		event.preventDefault();
