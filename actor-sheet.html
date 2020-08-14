@@ -187,7 +187,7 @@
 	<main class="bio-box">
 		<h2 class="section-header">{{ localize "DND5E.Biography" }}</h2>
 		<section class="biography active">
-			{{editor content=data.details.biography.value target="data.details.biography.value" button=true owner=owner editable=editable}}
+			{{editor content=data.details.biography.value target="data.details.biography.value" button=true owner=owner editable=flags.editing}}
 		</section>
 	</main>
 {{else}}

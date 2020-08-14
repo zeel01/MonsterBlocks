@@ -29,6 +29,7 @@
 
 
 ## Changes
+- The way secrets are hidden needs to be corrected in JS rather than CSS.
 - Indicate to new users that the menu in the corner exists
 - Rolls for saves/skills that aren't listed (not proficient) <sup>One can simply roll an ability check</sup>
 - Support viewing permissions other than "owner"
