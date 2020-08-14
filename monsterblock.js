@@ -860,7 +860,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"editing": game.settings.get("monsterblock", "editing"),
 		"show-not-prof": game.settings.get("monsterblock", "show-not-prof"),
 		"show-delete": false,
-		"show-bio": true
+		"show-bio": false
 	}
 	async prepFlags() {
 		if (!this.actor.getFlag("monsterblock", "initialized")) {

@@ -175,8 +175,24 @@
 			</li>
 		</ul>
 	</nav>
+{{#if flags.show-bio}}
+	<header class="sheet-header">
+		<h1 class="charname" contenteditable="{{flags.editing}}" data-field-key="name"
+			placeholder="{{ localize 'DND5E.Name' }}">{{actor.name}}</h1>
+		{{#unless flags.hide-profile-image}}
+			<figure class="profile-image profile-img" style="background-image: url({{actor.img}});" title="{{actor.name}}"
+				data-edit="img" />
+			</figure>{{/unless}}
+	</header>
+	<main class="bio-box">
+		<h2 class="section-header">{{ localize "DND5E.Biography" }}</h2>
+		<section class="biography active">
+			{{editor content=data.details.biography.value target="data.details.biography.value" button=true owner=owner editable=editable}}
+		</section>
+	</main>
+{{else}}
 	<header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
-		<section id="monster-identity">
+		<section class="monster-identity">
 			<h1 class="charname" contenteditable="{{flags.editing}}" data-field-key="name" placeholder="{{ localize 'DND5E.Name' }}">{{actor.name}}</h1>
 			<div class="chartype">
 				<div class="select-field" data-select-key="data.traits.size" data-selected-value="{{data.traits.size}}">
@@ -697,11 +713,6 @@
 		</section>
 	{{/if}}
 	{{/if}}
-	{{#if flags.show-bio}}
-		<h2 class="section-header">{{ localize "DND5E.Biography" }}</h2>
-		<section class="biography active">
-			{{editor content=data.details.biography.value target="data.details.biography.value" button=true owner=owner editable=editable}}
-		</section>
-		</main>
-	{{/if}}
+	</main>
+{{/if}}
 </form>
