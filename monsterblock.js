@@ -701,13 +701,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 						),	
 			}),
 			damageFormula: this.damageFormula(attack),
-			damage: this.dealsDamage(attack) ? game.i18n.format("MOBLOKS5E.AttackDamageTemplate",  {
-				average: this.averageDamage(attack),
-				formula: this.damageFormula(attack),
-				type: game.i18n.localize(
-					"DND5E.Damage" + atkd.damage.parts[0][1].replace(/./, l => l.toUpperCase())
-				).toLowerCase()
-			}) : false
+			damage: this.dealsDamage(attack) ? atkd.damage.parts.map((part, i) => {
+				return game.i18n.format("MOBLOKS5E.AttackDamageTemplate",  {
+					average: this.averageDamage(attack, i),
+					formula: this.damageFormula(attack, i),
+					type: game.i18n.localize(
+						"DND5E.Damage" + part[1].replace(/./, l => l.toUpperCase())
+					).toLowerCase()
+				})
+			}) : []
 		}
 	}
 	getAttackType(attack) {
@@ -725,17 +727,26 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	isRangedAttack(attack) {
 		return ["rwak", "rsak"].includes(attack.data.data?.actionType);
 	}
-	averageDamage(attack) {
+	averageDamage(attack, index=0) {
 		let formula = 	attack.data.data?.damage?.parts?.length > 0 ? 
-						attack.data.data?.damage?.parts[0][0] :
+						attack.data.data?.damage?.parts[index][0] :
 						"0";	
 		let attr = attack.abilityMod;
 		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;
 		return this.constructor.averageRoll(formula, {mod: abilityBonus});
 	}
-	damageFormula(attack) {	// Extract and re-format the damage formula
+
+	damageFormula(attack, index) {
+		if (index != undefined) return this.singleDamageFormula(attack);
+		else {
+			return attack.data.data?.damage?.parts.reduce((acc, part, i) => {
+				return acc + (i > 0 ? "+" : "") + this.singleDamageFormula(attack, i);
+			}, "");
+		}
+	}
+	singleDamageFormula(attack, index=0) {	// Extract and re-format the damage formula
 		let formula = 	attack.data.data?.damage?.parts?.length > 0 ? 
-						attack.data.data?.damage?.parts[0][0] :
+						attack.data.data?.damage?.parts[index][0] :
 						"0";												// This is the existing formula, typicallys contains a non-number like @mod
 		let attr = attack.abilityMod;										// The ability used for this attack
 		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;		// The ability bonus of the actor

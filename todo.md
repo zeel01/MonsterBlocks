@@ -1,7 +1,9 @@
 # TODO:
 
 ## Additions
-- Handle multiple damage
+- ~~Handle multiple damage~~
+- Handle versitile damage
+- Handle "other" damage
 - **Editing (for version 2)**
 	- ~~Actor Info~~
 	- ~~Attributes~~
