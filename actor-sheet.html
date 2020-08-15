@@ -603,7 +603,13 @@
 	{{#if features.multiattack.items}}
 		{{> featureBlock item=features.multiattack.items.[0] actor=actor flags=flags}}
 	{{/if}}
-
+	{{#*inline "damageRoll"~}}
+		<span class="attack-damage" 
+			data-roll-flavor="{{localize 'DND5E.Damage'}}: {{name}}"
+			data-roll-formula="{{formula}}">
+			{{~text~}}
+		</span>
+	{{~/inline}}
 	{{#each features.attacks.items as |item iid|}}
 	{{#unless item.is.specialAction}}
 	<section class="item monster-action" title="{{ localize 'MOBLOKS5E.EditHint' }}">
@@ -642,21 +648,28 @@
 					{{ item.description.target }}{{ localize "MOBLOKS5E.FullStop" }}
 				</span>
 				{{#if item.description.damage.length }}
-				
-					<span class="attack-damage" 
-						data-roll-flavor="{{localize 'DND5E.Damage'}}: {{item.name}}" 
-						data-roll-formula="{{item.description.damageFormula}}">
-						<span class="hit-label">
-							{{ localize "MOBLOKS5E.AttackHitLabel" }}
-						</span>
-						{{#each item.description.damage as |part|}}
-							{{#unless @first}}{{ localize "plus" }}{{/unless}}
-							<span>{{part}}</span>
-							{{ localize "MOBLOKS5E.damage" }}{{#if @last}}{{ localize "MOBLOKS5E.FullStop" }}{{/if}}
-						{{/each}}
-						
+					<span class="hit-label">
+						{{ localize "MOBLOKS5E.AttackHitLabel" }}
 					</span>
-				
+					{{#each item.description.damage as |part|}}
+						{{#unless @first}}
+							{{ localize "MOBLOKS5E.MultiDamageAttackConjunctionPlus" }}						
+						{{/unless}}
+						{{> damageRoll text=part.text name=item.name formula=part.formula}}
+						{{ localize "MOBLOKS5E.damage" }}
+						{{~#if (and @first item.description.versatile)~}}
+							{{ localize "MOBLOKS5E.Comma" }}
+							{{> damageRoll 
+								name=item.name 
+								formula=item.description.versatile.formula
+								text=(	localize "MOBLOKS5E.AttackVersatile"
+										damage=item.description.versatile.text
+								)
+							}}
+							{{~#unless @last}}{{ localize "MOBLOKS5E.Comma" }}{{/unless}}
+						{{/if}}
+						{{#if @last}}{{ localize "MOBLOKS5E.FullStop" }}{{/if}}
+					{{/each}}			
 				{{/if}}
 			</span>
 			{{/if}}

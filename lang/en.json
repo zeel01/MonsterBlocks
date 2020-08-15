@@ -98,6 +98,7 @@
 	"MOBLOKS5E.InnateSpellsKnown": "The {name} can innately cast the following spells, requiring no material components:",
 	"MOBLOKS5E.WarlockSlotRegain": "It regains its expended spell slots when it finishes a short or long rest.",
 	"MOBLOKS5E.ListFinalConjunctionAnd": "and",
+	"MOBLOKS5E.MultiDamageAttackConjunctionPlus": "plus",
 
 	"MOBLOCKS5E.SpellLevel": "{level} level",
 	"MOBLOCKS5E.SpellCost": "{cost} each",
@@ -113,6 +114,7 @@
 	"MOBLOKS5E.AttackTarget": "{quantity} {type}",
 	"MOBLOKS5E.AttackHitLabel": "Hit:",
 	"MOBLOKS5E.AttackDamageTemplate": "{average} ({formula}) {type}",
+	"MOBLOKS5E.AttackVersatile": "or {damage} damage if used with two hands",
 	"MOBLOKS5E.damage": "damage",
 	
 	"MOBLOKS5E.Reactions": "Reactions",

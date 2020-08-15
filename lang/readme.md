@@ -45,7 +45,7 @@ I will see if there is a way to handle the need.
 
 # Changelog
 ## Version: 2.x
-### Added 16 strings:
+### Added 18 strings:
 ```json
 "MOBLOKS5E.EditHint": "Right-click to edit",
 
@@ -61,6 +61,10 @@ I will see if there is a way to handle the need.
 "MOBLOKS5E.DisableDelete": "Disable delete",
 "MOBLOKS5E.ShowNotProf": "Show not-proficient checks",
 "MOBLOKS5E.HideNotProf": "Hide not-proficient checks",
+
+"MOBLOKS5E.MultiDamageAttackConjunctionPlus": "plus",
+
+"MOBLOKS5E.AttackVersatile": "or {damage} damage if used with two hands",
 
 "MOBLOKS5E.editing-name": "Editing Enabled",
 "MOBLOKS5E.editing-hint": "Choose whether or not editing is enabled by default.",

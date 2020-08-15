@@ -701,16 +701,26 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 						),	
 			}),
 			damageFormula: this.damageFormula(attack),
+			versatile: atkd.damage.versatile ? {
+				text: this.formatAttackAndDamage(attack, "v", atkd.damage.parts[0]),
+				formula: this.damageFormula(attack, "v")
+			} : false,
 			damage: this.dealsDamage(attack) ? atkd.damage.parts.map((part, i) => {
-				return game.i18n.format("MOBLOKS5E.AttackDamageTemplate",  {
-					average: this.averageDamage(attack, i),
-					formula: this.damageFormula(attack, i),
-					type: game.i18n.localize(
-						"DND5E.Damage" + part[1].replace(/./, l => l.toUpperCase())
-					).toLowerCase()
-				})
+				return {
+					text: this.formatAttackAndDamage(attack, i, part),
+					formula: this.damageFormula(attack, i)
+				}
 			}) : []
 		}
+	}
+	formatAttackAndDamage(attack, i, part) {
+		return game.i18n.format("MOBLOKS5E.AttackDamageTemplate", {
+			average: this.averageDamage(attack, i),
+			formula: this.damageFormula(attack, i),
+			type: game.i18n.localize(
+				"DND5E.Damage" + part[1].replace(/./, l => l.toUpperCase())
+			).toLowerCase()
+		});
 	}
 	getAttackType(attack) {
 		return "DND5E.Action" + attack?.data?.data?.actionType?.toUpperCase();
@@ -728,15 +738,17 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return ["rwak", "rsak"].includes(attack.data.data?.actionType);
 	}
 	averageDamage(attack, index=0) {
-		let formula = 	attack.data.data?.damage?.parts?.length > 0 ? 
-						attack.data.data?.damage?.parts[index][0] :
-						"0";	
+		let atkd = attack.data.data;
+		let formula = index == "v" ? atkd?.damage?.versatile :
+					atkd?.damage?.parts?.length > 0 ?
+					atkd?.damage?.parts[index][0] :
+					"0";	
 		let attr = attack.abilityMod;
 		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;
 		return this.constructor.averageRoll(formula, {mod: abilityBonus});
 	}
 
-	damageFormula(attack, index) {
+/*	damageFormula(attack, index) {
 		if (index != undefined) return this.singleDamageFormula(attack);
 		else {
 			return attack.data.data?.damage?.parts.reduce((acc, part, i) => {
@@ -744,10 +756,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}, "");
 		}
 	}
-	singleDamageFormula(attack, index=0) {	// Extract and re-format the damage formula
-		let formula = 	attack.data.data?.damage?.parts?.length > 0 ? 
-						attack.data.data?.damage?.parts[index][0] :
-						"0";												// This is the existing formula, typicallys contains a non-number like @mod
+*/	damageFormula(attack, index=0) {	// Extract and re-format the damage formula
+		let atkd = attack.data.data;
+		let formula =	index == "v" ? atkd?.damage?.versatile : (
+						atkd?.damage?.parts?.length > 0 ? 
+						atkd?.damage?.parts[index][0] :
+						"0");												// This is the existing formula, typicallys contains a non-number like @mod
 		let attr = attack.abilityMod;										// The ability used for this attack
 		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;		// The ability bonus of the actor
 		let roll;
@@ -755,11 +769,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		catch (e) {
 			console.error(e);
 			ui.notifications.error(e);
-			let roll = new Roll("0").roll();
+			roll = new Roll("0").roll();
 		}
-		let parts = [];
-		let bonus = 0;
-		let op = "+";
+		let parts = [], bonus = 0, op = "+";
 		
 		for (let part of roll.parts) {	// Now the formula from Roll is broken down, and re-constructed to combine all the constants.
 			if (typeof part == "object") parts.push(part.formula);
