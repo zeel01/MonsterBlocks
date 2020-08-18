@@ -3,7 +3,6 @@
 ## Additions
 - ~~Handle multiple damage~~
 - ~~Handle versitile damage~~
-- Handle "other" damage?
 - **Editing (for version 2)**
 	- ~~Actor Info~~
 	- ~~Attributes~~
@@ -47,6 +46,7 @@
 - Remove anything unused
 
 ## Back Burner
+- Handle "other" damage?
 - Toggle "Uses Lair Actions" when showing/hiding lair actions.<sup>The system doesn't seem to use this for anything yet.</sup>
 - Some creatures have "sub features" like breath weapns, the bodies of these are indented. <sup>unsure if this is possible to do correctly</sup>
 - Differentiate which cantrips belong to what casting feature. <sup>unsure how possible</sup>
