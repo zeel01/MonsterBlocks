@@ -37,7 +37,7 @@
   
 ## Fixes
 - ~~Passive perception needs different handling for editable sheet~~
-- Handle fractional challenge ratings
+- ~~Handle fractional challenge ratings~~
 
 ## Cleanup
 - Clean up classes from the template that aren't needed

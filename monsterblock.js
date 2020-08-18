@@ -102,6 +102,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			let type = field.dataset.dtype;
 			let value = field.innerText;
 			
+			value = this.handleSpecial(key, value);
+
 			formData.append(key, value);
 			if (type) dtypes[key] = type;
 		}
@@ -125,6 +127,19 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		formData._dtypes = dtypes;
 		return formData;
+	}
+	handleSpecial(key, value) {
+		switch (key) {
+			case "data.details.cr": {
+				if (value.indexOf("/") > -1) {
+					let cr = { "1/8": 0.125, "1/4": 0.25, "1/2": 0.5 }[value];
+					return cr != undefined ? cr : value;
+				}
+				break;
+			}
+		}
+
+		return value;
 	}
 	async addFeature(event) {
 		let type = event.currentTarget.dataset.type == "spell" ? "spell" : "item";
@@ -1074,7 +1089,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 			switch (event.key) {
 				case "Enter": this._onChangeInput(event); break;
-				default: console.debug(event.key);
 			}
 			//if (el.innerText == "") el.innerText = "-";
 		});
