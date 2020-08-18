@@ -448,10 +448,16 @@
 				<li class="attribute">
 					<h4 class="attribute-name">{{localize "DND5E.Senses"}}</h4>
 					<span 
-						placeholder="{{ localize 'DND5E.Senses' }}"
+						placeholder="{{ localize 'DND5E.Senses' }}{{localize "MOBLOKS5E.Comma"}} "
 						contenteditable="{{flags.editing}}"
 						data-field-key="data.traits.senses"
 						class="trait-value">{{data.traits.senses}}</span>
+					{{~#if data.traits.passivePerception~}}
+						{{#if data.traits.senses}}{{localize "MOBLOKS5E.Comma"}} {{/if~}}
+						<span>
+							{{~data.traits.passivePerception}}
+						</span>
+					{{/if}}
 				</li>
 				
 				<li class="attribute">

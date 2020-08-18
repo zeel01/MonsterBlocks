@@ -49,7 +49,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		// Tweak a few properties to get a proper output
 		data.data.details.xp.label = this.constructor.formatNumberCommas(data.data.details.xp.value);
-		data.data.traits.senses = this.prepSenses(data.data.traits.senses);
+	//	data.data.traits.senses = this.prepSenses(data.data.traits.senses);
+		data.data.traits.passivePerception = !this.listsPassPercept(data.data.traits.senses) ? this.getPassivePerception() : false,
 		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula);
 		this.prepAbilities(data);
 
@@ -425,13 +426,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		// Assign and return
 		data.features = features;
 	}
-	prepSenses(senses) {
-		if (senses.toLowerCase().indexOf(game.i18n.localize("MOBLOKS5E.PerceptionLocator")) > -1) return senses;
-
-		return senses + (senses ? `${game.i18n.localize("MOBLOKS5E.Comma")} ` : "") +
-			game.i18n.format("MOBLOKS5E.PassivePerception", {
-				pp: this.actor.data.data.skills.prc.passive
-			});
+	listsPassPercept(senses) {
+		return senses.toLowerCase().indexOf(game.i18n.localize("MOBLOKS5E.PerceptionLocator")) > -1;
+	}
+	getPassivePerception() {
+		return game.i18n.format("MOBLOKS5E.PassivePerception", {
+			pp: this.actor.data.data.skills.prc.passive
+		});
 	}
 	prepAbilities(data) {
 		Object.entries(data.data?.abilities)?.forEach(

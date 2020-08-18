@@ -36,7 +36,7 @@
 - Support viewing permissions other than "owner"
   
 ## Fixes
-- Passive perception needs different handling for editable sheet
+- ~~Passive perception needs different handling for editable sheet~~
 - Handle fractional challenge ratings
 
 ## Cleanup
