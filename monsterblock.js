@@ -47,6 +47,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		console.debug(data);
 
+		data.notOwner = !data.owner;
+		data.limited = this.actor.limited;
+
 		// Tweak a few properties to get a proper output
 		data.data.details.xp.label = this.constructor.formatNumberCommas(data.data.details.xp.value);
 	//	data.data.traits.senses = this.prepSenses(data.data.traits.senses);
@@ -55,7 +58,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		this.prepAbilities(data);
 
 		data.flags = duplicate(this.flags);	// Get the flags for this module, and make them available in the data
+		if (data.notOwner) data.flags.editing = false;
 		if (!data.flags.editing) data.flags["show-delete"] = false;
+		if (this.actor.limited) data.flags["show-bio"] = true;
 		
 		data.info = {		// A collection of extra information used mainly for conditionals
 			hasSaveProfs: this.hasSaveProfs(),
@@ -1315,8 +1320,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"moblok-hascontents": (obj) => { // Check if an array is empty.
 			return Object.keys(obj).length > 0;
 		},
-		"moblok-enrichhtml": (str) => { // Formats any text to include proper inline rolls and links.
-			return TextEditor.enrichHTML(str, {secrets: true});
+		"moblok-enrichhtml": (str, owner, flags) => { // Formats any text to include proper inline rolls and links.
+			return TextEditor.enrichHTML(str, { secrets: (owner && !flags["hidden-secrets"]) });
 		}
 	};
 }

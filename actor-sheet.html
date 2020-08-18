@@ -2,6 +2,7 @@
 		autocomplete="off"
 		style="--list-seperator: '{{ localize 'MOBLOKS5E.Comma' }}'; --list-conjuntion: '{{ localize 'MOBLOKS5E.ListFinalConjunctionAnd' }}'; "
 	>
+	{{#if owner}}
 	<nav class="switches">
 		<i class="fas fa-cog"></i>
 		<ul>
@@ -175,6 +176,7 @@
 			</li>
 		</ul>
 	</nav>
+	{{/if}}
 {{#if flags.show-bio}}
 	<header class="sheet-header">
 		<h1 class="charname" contenteditable="{{flags.editing}}" data-field-key="name"
@@ -187,7 +189,7 @@
 	<main class="bio-box">
 		<h2 class="section-header">{{ localize "DND5E.Biography" }}</h2>
 		<section class="biography active">
-			{{editor content=data.details.biography.value target="data.details.biography.value" button=true owner=owner editable=flags.editing}}
+			{{editor content=data.details.biography.value target="data.details.biography.value" button=(and owner flags.editing) owner=owner editable=flags.editing}}
 		</section>
 	</main>
 {{else}}
@@ -529,7 +531,7 @@
 			{{~else~}}
 				<span class="item-name" data-item-id="{{item._id}}"></span>
 			{{~/unless}}
-			<span class="description">{{{moblok-enrichhtml item.data.description.value}}}</span>
+			<span class="description">{{{moblok-enrichhtml item.data.description.value @root.owner @root.flags}}}</span>
 		</div>
 	</section>
 	{{/inline}}
@@ -679,7 +681,7 @@
 				{{/if}}
 			</span>
 			{{/if}}
-			<span class="description">{{{moblok-enrichhtml item.data.description.value}}}</span>
+			<span class="description">{{{moblok-enrichhtml item.data.description.value @root.owner @root.flags}}}</span>
 		</div>
 	</section>
 	{{/unless}}

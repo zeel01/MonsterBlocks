@@ -30,10 +30,11 @@
 
 
 ## Changes
-- The way secrets are hidden needs to be corrected in JS rather than CSS.
+- ~~The way secrets are hidden needs to be corrected in JS rather than CSS.~~
+- ~~Support viewing permissions other than "owner"~~
 - Indicate to new users that the menu in the corner exists
 - Rolls for saves/skills that aren't listed (not proficient) <sup>One can simply roll an ability check</sup>
-- Support viewing permissions other than "owner"
+
   
 ## Fixes
 - ~~Passive perception needs different handling for editable sheet~~
@@ -46,7 +47,7 @@
 - Remove anything unused
 
 ## Back Burner
-- Handle "other" damage?
+- Handle "other" damage? <sup>May not be consistant enough to implement.</sup>
 - Toggle "Uses Lair Actions" when showing/hiding lair actions.<sup>The system doesn't seem to use this for anything yet.</sup>
 - Some creatures have "sub features" like breath weapns, the bodies of these are indented. <sup>unsure if this is possible to do correctly</sup>
 - Differentiate which cantrips belong to what casting feature. <sup>unsure how possible</sup>
