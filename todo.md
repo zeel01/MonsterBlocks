@@ -30,6 +30,7 @@
 
 
 ## Changes
+- Item uses per short/long rest
 - ~~The way secrets are hidden needs to be corrected in JS rather than CSS.~~
 - ~~Support viewing permissions other than "owner"~~
 - Indicate to new users that the menu in the corner exists
