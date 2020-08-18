@@ -492,7 +492,37 @@
 		{{#if flags.editing}}
 			{{> menuItem item=menus.features}}
 		{{/if}}
-	
+	{{#*inline "resource"~}}
+		<span class="name-extension">{{~" "~}}
+			({{#if @root.flags.show-resources~}}
+				<span class="resource-value" 
+					placeholder="0" 
+					contenteditable="{{@root.flags.editing}}" 
+					data-dtype="Number"
+					{{#if resource.entity}}
+						data-entity="{{resource.entity}}"
+					{{/if}}
+					data-field-key="{{resource.target}}">{{resource.current}}</span>
+				{{~#if resource.limit}}{{localize "MOBLOKS5E.Comma"}} {{/if}}
+			{{~/if~}}
+			{{~#if resource.limit~}}
+				{{#if (eq resource.type "charges")}}
+					<span class="resource-value" 
+						placeholder="0"
+						contenteditable="{{@root.flags.editing}}"
+						data-dtype="Number"
+						{{#if resource.entity}}
+							data-entity="{{resource.entity}}"
+						{{/if}}
+						data-field-key="{{resource.limTarget}}">{{resource.limit}}</span>
+				{{~else~}}
+					{{resource.limit}}
+				{{~/if~}}
+				/{{resource.refresh}}
+			{{~/if~}}
+			){{~" "~}}
+		</span>
+	{{~/inline}}
 	{{#*inline "featureBlock"}}
 	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}{{#if lairactions}} lair-actions{{/if}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="feature-description inline-children">
@@ -523,9 +553,7 @@
 				{{~/if~}}
 				{{~#unless legendaryactions~}}
 					{{~#if item.hasresource~}}
-						<span class="name-extension">
-							({{~item.resourcelimit}}/{{item.resourcerefresh}}){{~" "~}}
-						</span>
+						{{> resource resource=item.resource}}
 					{{~/if~}}
 				{{~/unless~}}{{ localize "MOBLOKS5E.NameDescriptionSep" }}
 			{{~else~}}
@@ -548,9 +576,7 @@
 			{{/if}}
 			<span class="item-name" data-item-id="{{casting._id}}">{{casting.name}}</span>.
 			{{~#if item.hasresource~}}
-			<span class="name-extension">
-				({{~item.resourcelimit}}/{{item.resourcerefresh}}){{~" "~}}
-			</span>
+				{{> resource resource=item.resource}}
 			{{~/if~}}
 			<span class="description">
 				{{{ casting.description.level }}}
@@ -627,20 +653,12 @@
 					<i class="fa fa-trash"></i>
 				</a>
 			{{/if}}
-			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>{{ localize "MOBLOKS5E.NameDescriptionSep" }}
+			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>
 			{{~#if item.hasresource~}}
-			<span class="name-extension">
-				({{~item.resourcelimit}}/{{item.resourcerefresh}}){{~" "~}}
-			</span>
+				{{> resource resource=item.resource}}
 			{{~/if~}}
+			{{ localize "MOBLOKS5E.NameDescriptionSep" }}
 			{{#if @root.flags.attack-descriptions}}
-			{{~#unless legendaryactions~}}
-				{{~#if item.hasResource~}} 
-					<span class="name-extension">
-						({{~getresourcelimit item @root.actor}}/{{getresourcerefresh item @root.actor~}})
-					</span>
-				{{~/if~}}
-			{{~/unless}}
 			<span class="generated-text">			
 				<span class="attack-bonus" 
 					data-roll-flavor="{{localize 'DND5E.Attack'}}: {{item.name}}" 

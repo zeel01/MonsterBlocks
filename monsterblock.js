@@ -112,7 +112,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			formData.append(key, value);
 			if (type) dtypes[key] = type;
 		}
-		
+
 		let selects = form.querySelectorAll('[data-select-key]');
 		for (let select of selects) {
 			let key = select.dataset.selectKey;
@@ -460,9 +460,52 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		)
 	}
 	prepResources(data, item) {
-		data.hasresource = this.constructor.hasResource(item.data);
-		data.resourcelimit = data.hasresource ? this.getResourceLimit(item) : 0;
-		data.resourcerefresh = data.hasresource ? this.getResourceRefresh(item) : "";
+		data.hasresource = Boolean(item.data.data.consume?.target);
+		if (!data.hasresource) return;
+
+		let res = data.resource = {};
+
+		res.type = item.data.data.consume.type;
+
+		switch (res.type) {
+			case "attribute": {
+				let t = item.data.data.consume.target;
+				let r = t.match(/(.+)\.(.+)\.(.+)/);
+				let max = `data.${r[1]}.${r[2]}.max`;
+				
+				res.target = "data." + t;
+				res.current = getProperty(this.actor.data, res.target);
+				res.limit = getProperty(this.actor.data, max);
+				res.refresh = game.i18n.localize("MOBLOKS5E.ResourceRefresh"); // It just says "Day" becaause thats typically the deal, and I don't see any other option.
+				break;
+			}
+			case "charges": {
+				res.target = "data.uses.value";
+				res.entity = item.data.data.consume.target;
+				res.current = item.data.data.uses.value;
+				res.limit = item.data.data.uses.max;
+				res.limTarget = "data.uses.max";
+				res.refresh = CONFIG.DND5E.limitedUsePeriods[item.data.data.uses.per];
+				break;
+			}
+			case "ammo": {
+				res.entity = item.data.data.consume.target;
+				let ammo = this.actor.getEmbeddedEntity("OwnedItem", res.entity);
+
+				res.limit = false;
+				res.current = ammo.data.quantity;
+				res.target = "data.quantity";
+				break;
+			}
+			case "material": {
+				// Unsure how to track
+				break;
+			}
+		}
+	//	data.resourcelimit = data.hasresource ? this.getResourceLimit(item) : 0;
+	//	data.resourceTarget = item.data.consume?.target;
+	//	data.resourceCurrent = this.actor.data.data
+	//	data.resourcerefresh = data.hasresource ? this.getResourceRefresh(item) : "";
 	}
 	prepAction(actionData) {
 		let action = this.object.items.get(actionData._id);
@@ -830,15 +873,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 		return false;
 	}
-	getResourceLimit(item) {
-		let res = item.data.data.consume.target.match(/(.+)\.(.+)\.(.+)/);
-		return res ? this.actor.data?.data[res[1]][res[2]]?.max : item.data.data?.uses?.max;
-	}
-	// Is this information actually defined somewhere?
-	getResourceRefresh(item) {
-		// It just says "Day" becaause thats typically the deal, and I don't see any other option
-		return game.i18n.localize("MOBLOKS5E.ResourceRefresh");
-	}
+	
 	prepareInnateSpellbook(spellbook) { // We need to completely re-organize the spellbook for an innate spellcaster
 		let innateSpellbook = [];
 
@@ -904,7 +939,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"editing": game.settings.get("monsterblock", "editing"),
 		"show-not-prof": game.settings.get("monsterblock", "show-not-prof"),
 		"show-delete": false,
-		"show-bio": false
+		"show-bio": false,
+		"show-resources": true
 	}
 	async prepFlags() {
 		if (!this.actor.getFlag("monsterblock", "initialized")) {
@@ -1064,16 +1100,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			this._element.addClass("npc");
 		});
 					
-		html.find('.hasinput').click((event) => {
-			event.currentTarget.classList.add("hidden");
-			event.currentTarget.nextElementSibling.classList.remove("hidden");
-			event.currentTarget.nextElementSibling.select();
-		});
-		html.find('.hiddeninput').blur((event) => {
-			event.currentTarget.classList.add("hidden");
-			event.currentTarget.previousElementSibling.classList.remove("hidden");
-		});
-		
 		html.find('.select-field').click((event) => {
 			let control = event.currentTarget;
 			let selection = event.target;
@@ -1093,7 +1119,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			let el = event.currentTarget;
 
 			switch (event.key) {
-				case "Enter": this._onChangeInput(event); break;
+				case "Enter": {
+					event.preventDefault();
+					this._onChangeInput(event);
+					break;
+				}
 			}
 			//if (el.innerText == "") el.innerText = "-";
 		});
@@ -1193,24 +1223,50 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	_onChangeInput(event) {
 		const input = event.currentTarget;
-		const value = input.innerText;
+		let value = input.innerText;
+		
+		let entity = input.dataset.entity ? 
+			this.actor.getEmbeddedEntity("OwnedItem", input.dataset.entity) : 
+			this.actor.data;
+		let key = input.dataset.fieldKey
+		let dtype = input.dataset.dtype;
 
-		if (input.dataset.dtype == "Number") {
-			if (["+", "-"].includes(value[0])) {
-				let delta = parseFloat(value);
-				input.innerText = getProperty(this.actor.data, input.dataset.fieldKey) + delta;
-			} 
-			else if (value[0] === "=") {
-				input.innerText = value.slice(1);
+		switch (dtype) {
+			case "Number": {
+				let current = getProperty(entity, key);
+				if (!/^\d/.test(value)) value = current + value;
+				try {
+					let evaluated = Number(eval(value));
+					if (isNaN(evaluated)) throw Error("The expressions did not have a numeric result.")
+					input.innerText = evaluated;
+				}
+				catch(e) {
+					console.error(e);
+					ui.notifications.error(e);
+					return
+				}
+				break;
+			}
+			case "Roll": {
+				try { new Roll(value).roll(); }
+				catch (e) {
+					console.error(e);
+					ui.notifications.error(e);
+					input.innerText = getProperty(entity, key);
+				}
+				break;
 			}
 		}
-		else if(input.dataset.dtype == "Roll") {
-			try { new Roll(value).roll(); }
-			catch (e) {
-				console.error(e);
-				ui.notifications.error(e);
-				input.innerText = getProperty(this.actor.data, input.dataset.fieldKey);
-			}
+
+		if (input.dataset.entity) {
+			let value = input.innerText;
+			if (dtype == "Number") value = Number(value);
+			
+			this.actor.updateEmbeddedEntity("OwnedItem", {
+				_id: input.dataset.entity,
+				[key]: value
+			}).then(()=> { super._onChangeInput(event); });
+			return;
 		}
 
 		super._onChangeInput(event);
@@ -1286,9 +1342,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	static getItemAbility(item, actor, master) {
 		return master.object.items.get(item._id).abilityMod;
-	}
-	static hasResource(item) {
-		return Boolean(item.data.consume?.target);
 	}
 	static getOrdinalSuffix(number) {
 		let suffixes = game.i18n.localize("MOBLOKS5E.OrdinalSuffixes");

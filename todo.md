@@ -27,10 +27,15 @@
 - Resource tracking
   - Spell slots
   - Limited uses
+    - ~~Attribute~~
+    - ~~Charges~~
+    - ~~Ammo?~~
+    - Material?
+  - Legendary Actions
 
 
 ## Changes
-- Item uses per short/long rest
+- ~~Item uses per short/long rest~~
 - ~~The way secrets are hidden needs to be corrected in JS rather than CSS.~~
 - ~~Support viewing permissions other than "owner"~~
 - Indicate to new users that the menu in the corner exists
