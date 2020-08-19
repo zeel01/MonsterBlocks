@@ -1244,6 +1244,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		switch (dtype) {
 			case "Number": {
+				// Helpers
+				function roll(...args) {
+					return new Roll(...args).roll().total;
+				}
+
 				let current = getProperty(entity, key);
 				if (/^[\+\-\/\*]/.test(value)) value = current + value;
 				try {
