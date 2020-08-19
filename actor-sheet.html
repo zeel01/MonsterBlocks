@@ -244,7 +244,7 @@
 							data-field-key="data.attributes.hp.value" 
 							data-dtype="Number" 
 							class="attr-value" 
-							contenteditable="true">
+							contenteditable="{{owner}}">
 							{{~#if data.attributes.hp.value~}}
 								{{~data.attributes.hp.value~}}
 							{{~else~}}
@@ -261,7 +261,7 @@
 							data-field-key="data.attributes.hp.max" 
 							data-dtype="Number"
 							class="attr-value" 
-							contenteditable="true">
+							contenteditable="{{owner}}">
 							{{~#if data.attributes.hp.max~}}
 								{{data.attributes.hp.max~}}
 							{{~else~}}
@@ -507,7 +507,7 @@
 			({{#if @root.flags.show-resources~}}
 				<span class="resource-value" 
 					placeholder="0" 
-					contenteditable="{{@root.flags.editing}}" 
+					contenteditable="{{@root.owner}}" 
 					data-dtype="Number"
 					{{#if resource.entity}}
 						data-entity="{{resource.entity}}"
@@ -519,7 +519,7 @@
 				{{#if (eq resource.type "charges")}}
 					<span class="resource-value" 
 						placeholder="0"
-						contenteditable="{{@root.flags.editing}}"
+						contenteditable="{{@root.owner}}"
 						data-dtype="Number"
 						{{#if resource.entity}}
 							data-entity="{{resource.entity}}"
