@@ -32,6 +32,7 @@
     - ~~Ammo?~~
     - ~~Material?~~
   - Legendary Actions
+  - Input sanitization
 
 
 ## Changes
