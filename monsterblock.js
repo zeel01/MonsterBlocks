@@ -1244,22 +1244,26 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		switch (dtype) {
 			case "Number": {
-				// Helpers
-				function roll(...args) {
-					return new Roll(...args).roll().total;
-				}
-
-				let current = getProperty(entity, key);
-				if (/^[\+\-\/\*]/.test(value)) value = current + value;
-				try {
-					let evaluated = Number(eval(value));
-					if (isNaN(evaluated)) throw Error("The expressions did not have a numeric result.")
-					input.innerText = evaluated;
-				}
-				catch(e) {
-					console.error(e);
-					ui.notifications.error(e);
-					return
+				if (value != "") {
+					let current = getProperty(entity, key);
+					if (window.math?.roll) {
+						if (/^[\+\-\/\*]/.test(value)) value = current + value;
+						try {
+							let evaluated = Number(math.evaluate(value, {
+								entity: this.actor,
+								data: this.actor.data.data,
+								abilities: this.actor.data.data.abilities,
+								attributes: this.actor.data.data.attributes
+							}));
+							if (isNaN(evaluated)) throw Error("The expression did not have a numeric result.")
+							input.innerText = evaluated;
+						}
+						catch(e) {
+							console.error(e);
+							ui.notifications.error(e);
+							return
+						}
+					}
 				}
 				break;
 			}
@@ -1496,6 +1500,36 @@ Hooks.once("init", () => {
 });
 
 Hooks.once('ready', () => {
+	// Require Input Expressions
+	(async () => {
+		const moduleName = "input-expressions";
+		const moduleManifest = "https://raw.githubusercontent.com/zeel01/input-expressions/master/module.json";
+
+		const dependency = game.data.modules.find(m => m.id == moduleName);
+		if (!dependency) {
+			var message = `Monster Blocks requires Input Expressions, installing it now, then returning you to the setup screen.`;
+			ui.notifications.error(message);
+			console.warn(message);
+			await SetupConfiguration.installPackage({ manifest: moduleManifest });
+
+			ui.notifications.warn("Installation complete, returning to setup screen...")
+			window.setTimeout(()=> {
+				game.shutDown();
+			}, 1000);
+		}
+		else {
+			const enabled = game.settings.get("core", "moduleConfiguration")[moduleName];
+			if (!enabled) {
+				var message = `Monster Blocks requires Input Expressions, enabling it now.`;
+				ui.notifications.warn(message);
+				console.warn(message);
+				let settings = duplicate(game.settings.get('core', "moduleConfiguration"));
+				settings[moduleName] = true;
+				game.settings.set("core", "moduleConfiguration", settings)
+			}
+		}
+	})();
+
 	MonsterBlock5e.getBetterRolls();
 	MonsterBlock5e.getTokenizer();
 	
