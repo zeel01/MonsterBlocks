@@ -1500,7 +1500,13 @@ Hooks.once("init", () => {
 });
 
 Hooks.once('ready', () => {
-	// Require Input Expressions
+	/**
+	 * Require Input Expressions:
+	 * This function checks if "Input Expressions" is installed, and if not it installs it.
+	 * It then checks if it is enabled, and if not enables it.
+	 *
+	 * Based on [FoundryGet](https://github.com/cswendrowski/foundryget) by cswendrowski.
+	 */
 	(async () => {
 		const moduleName = "input-expressions";
 		const moduleManifest = "https://raw.githubusercontent.com/zeel01/input-expressions/master/module.json";
