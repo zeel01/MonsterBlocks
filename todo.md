@@ -32,7 +32,9 @@
     - ~~Ammo?~~
     - ~~Material?~~
   - Legendary Actions
-  - Input sanitization
+- Input sanitization
+- Descide what to do about Input Expressions (include or not?)
+  - If I require IE, I should maybe have it "disabled" for everything but MB unelss the user manually enables it.
 
 
 ## Changes
