@@ -26,11 +26,11 @@
 - ~~Loot section~~
 - Resource tracking
   - Spell slots
-  - Limited uses
+  - ~~Limited uses~~
     - ~~Attribute~~
     - ~~Charges~~
     - ~~Ammo?~~
-    - Material?
+    - ~~Material?~~
   - Legendary Actions
 
 

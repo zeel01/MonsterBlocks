@@ -459,15 +459,16 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		)
 	}
 	prepResources(data, item) {
-		data.hasresource = 
-			Boolean(item.data.data.consume?.target) ||
-			Boolean(item.type == "consumable");
+		data.hasresource 
+			 = Boolean(item.data.data.consume?.target)
+			|| item.type == "consumable"
+			|| item.type == "loot";
 
 		if (!data.hasresource) return;
 
 		let res = data.resource = {};
 
-		if (item.type == "consumable") res.type = "consume";
+		if (item.type == "consumable" || item.type == "loot") res.type = "consume";
 		else res.type = item.data.data.consume.type;
 
 		switch (res.type) {
@@ -491,6 +492,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				res.refresh = CONFIG.DND5E.limitedUsePeriods[item.data.data.uses.per];
 				break;
 			}
+			case "material":
 			case "ammo": {
 				res.entity = item.data.data.consume.target;
 				let ammo = this.actor.getEmbeddedEntity("OwnedItem", res.entity);
@@ -499,10 +501,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				res.current = ammo.data.quantity;
 				res.target = "data.quantity";
 				res.name = ammo.name;
-				break;
-			}
-			case "material": {
-				// Unsure how to track
 				break;
 			}
 			case "consume": {
