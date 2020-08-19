@@ -1245,7 +1245,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		switch (dtype) {
 			case "Number": {
 				let current = getProperty(entity, key);
-				if (!/^\d/.test(value)) value = current + value;
+				if (/^[\+\-\/\*]/.test(value)) value = current + value;
 				try {
 					let evaluated = Number(eval(value));
 					if (isNaN(evaluated)) throw Error("The expressions did not have a numeric result.")
