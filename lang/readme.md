@@ -45,7 +45,7 @@ I will see if there is a way to handle the need.
 
 # Changelog
 ## Version: 2.x
-### Added 18 strings:
+### Added 23 strings:
 ```json
 "MOBLOKS5E.EditHint": "Right-click to edit",
 
@@ -54,6 +54,7 @@ I will see if there is a way to handle the need.
 "MOBLOKS5E.AddAct": "Action",
 "MOBLOKS5E.AddSpell": "Spell",
 "MOBLOKS5E.AddInventory": "Loot",
+"MOBLOKS5E.AddConsumable": "Consumable",
 
 "MOBLOKS5E.EnableEdit": "Enable editing",
 "MOBLOKS5E.DisableEdit": "Disable editing",
@@ -61,6 +62,8 @@ I will see if there is a way to handle the need.
 "MOBLOKS5E.DisableDelete": "Disable delete",
 "MOBLOKS5E.ShowNotProf": "Show not-proficient checks",
 "MOBLOKS5E.HideNotProf": "Hide not-proficient checks",
+"MOBLOKS5E.ShowResources": "Show Resource Values",
+"MOBLOKS5E.HideResources": "Hide Resource Values",
 
 "MOBLOKS5E.MultiDamageAttackConjunctionPlus": "plus",
 
@@ -70,6 +73,9 @@ I will see if there is a way to handle the need.
 "MOBLOKS5E.editing-hint": "Choose whether or not editing is enabled by default.",
 "MOBLOKS5E.show-not-prof-name": "Show Non-Proficient Skills and Saves",
 "MOBLOKS5E.show-not-prof-hint": "Choose whether or not showing not-proficient skills and saves is enabled by default."
+"MOBLOKS5E.show-resources-name": "Show resource values",
+"MOBLOKS5E.show-resources-hint": "Choose whether or not showing resource values by default."
+
 ```
 ### Edited 0 Strings:
 ```json

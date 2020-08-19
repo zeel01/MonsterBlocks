@@ -30,6 +30,15 @@
 			</li>
 			{{/if}}
 			<li>
+				<a class="switch" data-control="show-resources">
+					{{~#if flags.show-resources}}
+						{{~ localize "MOBLOKS5E.HideResources" ~}}
+					{{~else}}
+						{{~ localize "MOBLOKS5E.ShowResources" ~}}
+					{{~/if~}}
+				</a>
+			</li>
+			<li>
 				<a class="switch" data-control="show-not-prof">
 					{{~#if flags.show-not-prof}}
 						{{~ localize "MOBLOKS5E.HideNotProf" ~}}
@@ -493,6 +502,7 @@
 			{{> menuItem item=menus.features}}
 		{{/if}}
 	{{#*inline "resource"~}}
+		{{#if (or @root.flags.show-resources resource.limit)}}
 		<span class="name-extension">{{~" "~}}
 			({{#if @root.flags.show-resources~}}
 				<span class="resource-value" 
@@ -520,8 +530,10 @@
 				{{~/if~}}
 				/{{resource.refresh}}
 			{{~/if~}}
+			{{#if resource.name}} {{resource.name}}{{/if~}}
 			){{~" "~}}
 		</span>
+		{{/if}}
 	{{~/inline}}
 	{{#*inline "featureBlock"}}
 	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}{{#if lairactions}} lair-actions{{/if}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">

@@ -193,6 +193,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		featMenu.add(this.createFeatureAdder({ type: "feat", "activation.type": "action" }, "MOBLOKS5E.AddAct"));
 		featMenu.add(this.createFeatureAdder({ type: "spell", "level": "0" }, "MOBLOKS5E.AddSpell"));
 		featMenu.add(this.createFeatureAdder({ type: "loot" }, "MOBLOKS5E.AddInventory"));
+		featMenu.add(this.createFeatureAdder({ type: "consumable" }, "MOBLOKS5E.AddConsumable"));
 
 		return featMenu;
 	}
@@ -415,7 +416,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			attacks:	{ prep: this.prepAttack.bind(this), filter: item => item.type === "weapon", label: game.i18n.localize("DND5E.AttackPl"), items: [] , dataset: {type: "weapon"} },
 			actions:	{ prep: this.prepAction.bind(this), filter: item => Boolean(item.data?.activation?.type), label: game.i18n.localize("DND5E.ActionPl"), items: [] , dataset: {type: "feat"} },
 			features:	{ prep: this.prepFeature.bind(this), filter: item => item.type === "feat", label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
-			equipment:	{ prep: ()=>{}, filter: i => true, label: game.i18n.localize("DND5E.Inventory"), items: [], dataset: {type: "loot"}}
+			equipment:	{ prep: this.prepEquipment.bind(this), filter: i => true, label: game.i18n.localize("DND5E.Inventory"), items: [], dataset: {type: "loot"}}
 		};
 
 		// Start by classifying items into groups for rendering
@@ -437,8 +438,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		for ( let item of other ) {
 			let category = Object.values(features).find(cat => cat.filter(item));
 			
-
-
 			category.prep(item, data);
 			category.items.push(item);
 		}
@@ -460,12 +459,16 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		)
 	}
 	prepResources(data, item) {
-		data.hasresource = Boolean(item.data.data.consume?.target);
+		data.hasresource = 
+			Boolean(item.data.data.consume?.target) ||
+			Boolean(item.type == "consumable");
+
 		if (!data.hasresource) return;
 
 		let res = data.resource = {};
 
-		res.type = item.data.data.consume.type;
+		if (item.type == "consumable") res.type = "consume";
+		else res.type = item.data.data.consume.type;
 
 		switch (res.type) {
 			case "attribute": {
@@ -495,17 +498,26 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				res.limit = false;
 				res.current = ammo.data.quantity;
 				res.target = "data.quantity";
+				res.name = ammo.name;
 				break;
 			}
 			case "material": {
 				// Unsure how to track
 				break;
 			}
+			case "consume": {
+				res.entity = item._id;
+				res.limit = false;
+				res.current = item.data.data.quantity;
+				res.target = "data.quantity";
+				break;
+			}
 		}
-	//	data.resourcelimit = data.hasresource ? this.getResourceLimit(item) : 0;
-	//	data.resourceTarget = item.data.consume?.target;
-	//	data.resourceCurrent = this.actor.data.data
-	//	data.resourcerefresh = data.hasresource ? this.getResourceRefresh(item) : "";
+	}
+	prepEquipment(equipData) {
+		let item = this.object.items.get(equipData._id);
+
+		this.prepResources(equipData, item);
 	}
 	prepAction(actionData) {
 		let action = this.object.items.get(actionData._id);
@@ -938,9 +950,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"custom-theme-class": game.settings.get("monsterblock", "custom-theme-class"),
 		"editing": game.settings.get("monsterblock", "editing"),
 		"show-not-prof": game.settings.get("monsterblock", "show-not-prof"),
+		"show-resources": game.settings.get("monsterblock", "show-resources"),
 		"show-delete": false,
-		"show-bio": false,
-		"show-resources": true
+		"show-bio": false
+		
 	}
 	async prepFlags() {
 		if (!this.actor.getFlag("monsterblock", "initialized")) {
@@ -1562,6 +1575,14 @@ Hooks.once('ready', () => {
 		config: true,
 		type: Boolean,
 		default: false
+	});
+	game.settings.register("monsterblock", "show-resources", {
+		name: game.i18n.localize("MOBLOKS5E.show-resources-name"),
+		hint: game.i18n.localize("MOBLOKS5E.show-resources-hint"),
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: true
 	});
 	game.settings.register("monsterblock", "max-height-offset", {
 		name: game.i18n.localize("MOBLOKS5E.max-height-offset-name"),

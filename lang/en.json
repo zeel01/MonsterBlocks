@@ -13,6 +13,8 @@
 	"MOBLOKS5E.HideNotProf": "Hide not-proficient checks",
 	"MOBLOKS5E.ShowBio": "Show Biography",
 	"MOBLOKS5E.HideBio": "Hide Biography",
+	"MOBLOKS5E.ShowResources": "Show Resource Values",
+	"MOBLOKS5E.HideResources": "Hide Resource Values",
 	"MOBLOKS5E.ShowGenerated": "Show generated",
 	"MOBLOKS5E.HideGenerated": "Hide generated",
 	"MOBLOKS5E.DescriptionS": "Descriptions",
@@ -63,6 +65,7 @@
 	"MOBLOKS5E.AddAct": "Action",
 	"MOBLOKS5E.AddSpell": "Spell",
 	"MOBLOKS5E.AddInventory": "Loot",
+	"MOBLOKS5E.AddConsumable": "Consumable",
 	
 	"MOBLOKS5E.Recharge": "Recharge",
 	"MOBLOKS5E.NCharged": "Not charged",
@@ -176,5 +179,7 @@
 	"MOBLOKS5E.editing-name": "Editing Enabled",
 	"MOBLOKS5E.editing-hint": "Choose whether or not editing is enabled by default.",
 	"MOBLOKS5E.show-not-prof-name": "Show Non-Proficient Skills and Saves",
-	"MOBLOKS5E.show-not-prof-hint": "Choose whether or not showing not-proficient skills and saves is enabled by default."
+	"MOBLOKS5E.show-not-prof-hint": "Choose whether or not showing not-proficient skills and saves is enabled by default.",
+	"MOBLOKS5E.show-resources-name": "Show resource values",
+	"MOBLOKS5E.show-resources-hint": "Choose whether or not showing resource values by default."
 }
