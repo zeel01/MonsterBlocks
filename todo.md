@@ -4,36 +4,22 @@
 - ~~Handle multiple damage~~
 - ~~Handle versitile damage~~
 - **Editing (for version 2)**
-	- ~~Actor Info~~
-	- ~~Attributes~~
-	- ~~Traits~~
-    	- ~~Saving Throws~~
-		- ~~Skills~~
-		- ~~Damage Types~~
-		- ~~Conditions~~
-		- ~~Languages~~
-	- ~~Abilities~~
-	- ~~Features~~
-    	- ~~Add~~
-    	- ~~Remove~~
-	- ~~Spellcasting~~
-    	- ~~Add / Remove spells~~
-    	- ~~Edit caster level~~
-    	- ~~Edit casting ability~~
-    	- ~~Edit spell slots~~
-	- ~~Bio~~
+  - Artwork
+  - ~~Actor Info~~
+  - ~~Attributes~~
+  - ~~Traits~~
+  - ~~Abilities~~
+  - ~~Features~~
+  - ~~Spellcasting~~
+  - ~~Bio~~
 - ~~Biography~~
 - ~~Loot section~~
 - ~~Resource tracking~~
   - ~~Spell slots~~
   - ~~Limited uses~~
-    - ~~Attribute~~
-    - ~~Charges~~
-    - ~~Ammo?~~
-    - ~~Material?~~
   - ~~Legendary Actions~~
 - Input sanitization
-- Descide what to do about Input Expressions (include or not?)
+- Decide what to do about Input Expressions (include or not?)
   - If I require IE, I should maybe have it "disabled" for everything but MB unelss the user manually enables it.
 
 
