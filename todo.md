@@ -25,7 +25,7 @@
 - ~~Biography~~
 - ~~Loot section~~
 - Resource tracking
-  - Spell slots
+  - ~~Spell slots~~
   - ~~Limited uses~~
     - ~~Attribute~~
     - ~~Charges~~

@@ -487,7 +487,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				res.target = "data.uses.value";
 				res.entity = item.data.data.consume.target;
 				res.current = item.data.data.uses.value;
-				res.limit = item.data.data.uses.max;
+				res.limit = item.type == "spell" ? false : item.data.data.uses.max;
 				res.limTarget = "data.uses.max";
 				res.refresh = CONFIG.DND5E.limitedUsePeriods[item.data.data.uses.per];
 				break;
@@ -496,7 +496,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			case "ammo": {
 				res.entity = item.data.data.consume.target;
 				let ammo = this.actor.getEmbeddedEntity("OwnedItem", res.entity);
-
+				if (!Boolean(ammo)) break;
+				
 				res.limit = false;
 				res.current = ammo.data.quantity;
 				res.target = "data.quantity";
@@ -604,8 +605,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	 */
 	filterSpellbook(data, ct, cts) {
 		return data.spellbook.filter(page => {
-			if ((ct == cts.pact && !(page.order == 0.5 || page.order == 0)) || page.order == -20)
-				return false;
+			if ((ct == cts.pact && !(page.order == 0.5 || page.order == 0))	// Pact magic is only "0.5" and cantrips
+			 || (page.order == -20)											// Don't bother with at-will.
+			 || (ct != cts.innate && page.order == -10)						// Only innate has -10
+			) return false;
 
 			page.maxSpellLevel = page.spells.reduce(
 				(max, spell) => spell.data.level > max ? spell.data.level : max,
@@ -621,16 +624,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 						`${this.constructor.formatOrdinal(1)}-${this.constructor.formatOrdinal(page.maxSpellLevel)}` :
 						this.constructor.formatOrdinal(page.maxSpellLevel)
 				});
+				page.slotKey = `data.spells.${ct == cts.pact ? "pact" : `spell${page.maxSpellLevel}`}`
 				page.slotLabel = game.i18n.format(ct == cts.pact ?
 					"MOBLOCKS5E.SpellPactSlots" : "MOBLOCKS5E.SpellSlots", {
 					slots: `<span class="slot-count"
 								contenteditable="${this.flags.editing}"
-								data-field-key="data.spells.spell${page.maxSpellLevel}.override"
+								data-field-key="${page.slotKey}.override"
 								data-dtype="Number"
 								placeholder="0"
 							>${page.slots}</span>`,
 					level: this.constructor.formatOrdinal(page.maxSpellLevel)
 				});
+				
 			}
 			return true;
 		});
@@ -909,7 +914,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 						usesSlots: false
 					});
 				}
-				
+				this.prepResources(spell, this.object.items.get(spell._id));
 				innateSpellbook.find(finder).spells.push(spell);	// We can use the same condition as above, this time to lacate the item that satisfies the condition. We then insert the current spell into that section.
 			}
 		}
