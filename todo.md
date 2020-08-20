@@ -24,14 +24,14 @@
 	- ~~Bio~~
 - ~~Biography~~
 - ~~Loot section~~
-- Resource tracking
+- ~~Resource tracking~~
   - ~~Spell slots~~
   - ~~Limited uses~~
     - ~~Attribute~~
     - ~~Charges~~
     - ~~Ammo?~~
     - ~~Material?~~
-  - Legendary Actions
+  - ~~Legendary Actions~~
 - Input sanitization
 - Descide what to do about Input Expressions (include or not?)
   - If I require IE, I should maybe have it "disabled" for everything but MB unelss the user manually enables it.
