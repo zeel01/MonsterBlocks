@@ -77,8 +77,9 @@ I will see if there is a way to handle the need.
 "MOBLOKS5E.show-resources-hint": "Choose whether or not showing resource values by default."
 
 ```
-### Edited 0 Strings:
+### Edited 1 Strings:
 ```json
+"MOBLOKS5E.LegendaryText": "The {name} can take {number} legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {name} regains spent legendary actions at the start of its turn.",
 
 ```
 ### Removed 0 Strings:

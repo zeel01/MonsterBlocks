@@ -746,10 +746,30 @@
 	{{/if}}
 	{{! Legendary Actions }}
 	{{#if info.hasLegendaryActions}}
-		<h2 class="section-header">{{localize "DND5E.LegAct"}}</h2>
+		<h2 class="section-header">
+			{{localize "DND5E.LegAct"}}
+			{{#if flags.show-resources}}
+			<span class="header-resource">
+				<span class="resource-value"
+					placeholder="0"
+					contenteditable="{{@root.owner}}"
+					data-dtype="Number"
+					data-field-key="data.resources.legact.value">
+					{{~data.resources.legact.value~}}
+				</span> /
+				<span class="resource-value"
+					placeholder="0"
+					contenteditable="{{@root.flags.editing}}"
+					data-dtype="Number"
+					data-field-key="data.resources.legact.max">
+					{{~data.resources.legact.max~}}
+				</span>
+			</span>
+			{{/if}}
+		</h2>
 		<section>
 			<p class="legendary-description">
-				{{ localize "MOBLOKS5E.LegendaryText" name=actor.name }}
+				{{ localize "MOBLOKS5E.LegendaryText" name=actor.name number=data.resources.legact.max}}
 			</p>
 			{{#each features.legendary.items as |item iid|}}
 				{{#if item.is.legendary }}

@@ -149,7 +149,7 @@
 	],
 	
 	"MOBLOKS5E.LegActionCost": "Costs {number} Actions",
-	"MOBLOKS5E.LegendaryText": "The {name} can take 3 legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {name} regains spent legendary actions at the start of its turn.",
+	"MOBLOKS5E.LegendaryText": "The {name} can take {number} legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {name} regains spent legendary actions at the start of its turn.",
 	
 	"MOBLOKS5E.LairActionsHeading": "Lair Actions",
 	"MOBLOKS5E.LairText": "On initiative count 20 (losing all initiative ties), the {name} takes a lair action to cause one of the following effects; the {name} can't use the same effect two rounds in a row:",
