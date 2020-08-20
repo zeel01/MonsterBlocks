@@ -1,0 +1,19 @@
+{
+    "env": {
+        "browser": true,
+        "es2020": true
+    },
+    "extends": "eslint:recommended",
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 11,
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-mixed-spaces-and-tabs": "off",
+        "no-unused-vars": "warn",
+        "quotes": [
+            "warn", "double", { "avoidEscape": true, "allowTemplateLiterals": true }
+        ]
+    }
+}
