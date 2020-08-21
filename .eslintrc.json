@@ -11,29 +11,29 @@
         "sourceType": "module"
     },
     "rules": {
-        "no-mixed-spaces-and-tabs": "off",
+        "no-mixed-spaces-and-tabs": "warn",
         "no-unused-vars": "warn",
         "quotes": [
             "warn", "double", { "avoidEscape": true, "allowTemplateLiterals": true }
         ]
     },
     "globals": {
-        "game": true,
-        "mergeObject": true,
-        "duplicate": true,
-        "ROUTE_PREFIX": true,
-        "CONFIG": true,
-        "getProperty": true,
-        "Roll": true,
-        "ui": true,
-        "ChatMessage": true,
-        "math": true,
-        "Hooks": true,
-        "Handlebars": true,
-        "SetupConfiguration": true,
-        "ImagePopout": true,
-        "TextEditor": true,
-        "_templateCache": true,
-        "Actors": true
+        "game": "readonly",
+        "mergeObject": "readonly",
+        "duplicate": "readonly",
+        "ROUTE_PREFIX": "readonly",
+        "CONFIG": "readonly",
+        "getProperty": "readonly",
+        "Roll": "readonly",
+        "ui": "readonly",
+        "ChatMessage": "readonly",
+        "math": "readonly",
+        "Hooks": "readonly",
+        "Handlebars": "readonly",
+        "SetupConfiguration": "readonly",
+        "ImagePopout": "readonly",
+        "TextEditor": "readonly",
+        "_templateCache": "readonly",
+        "Actors": "readonly"
     }
 }
