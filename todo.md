@@ -3,15 +3,7 @@
 ## Additions
 - ~~Handle multiple damage~~
 - ~~Handle versitile damage~~
-- **Editing (for version 2)**
-  - ~~Artwork~~
-  - ~~Actor Info~~
-  - ~~Attributes~~
-  - ~~Traits~~
-  - ~~Abilities~~
-  - ~~Features~~
-  - ~~Spellcasting~~
-  - ~~Bio~~
+- ~~**Editing (for version 2)**~~
 - ~~Biography~~
 - ~~Loot section~~
 - ~~Resource tracking~~
