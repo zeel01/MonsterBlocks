@@ -7,6 +7,11 @@
 	"minimumCoreVersion": "0.6.5",
 	"compatibleCoreVersion": "0.6.5",
 	"systems": ["dnd5e"],
+	"scripts": [
+		"input-expressions/math.min.js",
+		"input-expressions/handler.js",
+		"input-expressions/main.js"
+	],
 	"esmodules": [
 		"monsterblock.js"
 	],
