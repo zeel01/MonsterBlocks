@@ -82,6 +82,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				
 		data.themes = this.themes;
 		
+		this.templateData = data;
 		return data;
 	}
 	get flags() {
@@ -1249,41 +1250,30 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		return data;
 	}
+	
+	/**
+	 * This method is used as an event handler when an input is changed, updated, or submitted.
+	 * The input value is passed to Input Expressions for numbers, Roll for roll formulas.
+	 * If the input is attached to an item, it updates that item.
+	 *
+	 * @param {Event} event - The triggering event.
+	 * @return {null} 
+	 * @memberof MonsterBlock5e
+	 */
 	_onChangeInput(event) {
 		const input = event.currentTarget;
 		let value = input.innerText;
 		
-		let entity = input.dataset.entity ? 
+		const entity = input.dataset.entity ? 
 			this.actor.getEmbeddedEntity("OwnedItem", input.dataset.entity) : 
 			this.actor.data;
-		let key = input.dataset.fieldKey
-		let dtype = input.dataset.dtype;
+		const key = input.dataset.fieldKey
+		const dtype = input.dataset.dtype;
 
 		switch (dtype) {
-			case "Number": {
-				if (value != "") {
-					let current = getProperty(entity, key);
-					if (window.math?.roll) {
-						if (/^[+\-/*]/.test(value)) value = current + value;
-						try {
-							let evaluated = Number(math.evaluate(value, {
-								entity: this.actor,
-								data: this.actor.data.data,
-								abilities: this.actor.data.data.abilities,
-								attributes: this.actor.data.data.attributes
-							}));
-							if (isNaN(evaluated)) throw Error("The expression did not have a numeric result.")
-							input.innerText = evaluated;
-						}
-						catch(e) {
-							console.error(e);
-							ui.notifications.error(e);
-							return
-						}
-					}
-				}
+			case "Number":
+				if (value != "") this.handleNumberChange(entity, key, input, event);
 				break;
-			}
 			case "Roll": {
 				try { new Roll(value).roll(); }
 				catch (e) {
@@ -1296,7 +1286,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 
 		if (input.dataset.entity) {
-			let value = input.innerText;
 			if (dtype == "Number") value = Number(value);
 			
 			this.actor.updateEmbeddedEntity("OwnedItem", {
@@ -1308,6 +1297,29 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		super._onChangeInput(event);
 	}
+	
+	/**
+	 * Evaluate numeric input, handling expressions using Input Expressions
+	 *
+	 * @param {Entity} entity - The entity (Actor, Item) for the sheet.
+	 * @param {string} key - Data key for the value
+	 * @param {JQuery} input - The input element
+	 * @param {Event} event - The triggering event
+	 * @memberof MonsterBlock5e
+	 *//* global inputExpression:readonly */
+	handleNumberChange(entity, key, input, event) {
+		const current = getProperty(entity, key);
+
+		if (window.math?.roll)
+			inputExpression(new ContentEditableAdapter(input), current, entity, this.templateData, event);
+		else {
+			input.innerText = current;
+			const msg = "Input Expressions for Monster Blocks appears to be missing or has failed to initialize.";
+			ui.notifications.error(msg);
+			throw Error(msg);
+		}
+	}
+
 	_onTraitSelector(event) {
 		event.preventDefault();
 		const a = event.currentTarget;
@@ -1509,10 +1521,22 @@ class MenuTree extends MenuItem {
 		this.children.push(item);
 	}
 }
+/* global InputAdapter:readonly */
+class ContentEditableAdapter extends InputAdapter {
+	get value() {
+		return this.element.innerText;
+	}
+	set value(val) {
+		this.element.innerText = val;
+	}
+}
 
 Hooks.once("init", () => {
 	Handlebars.registerHelper(MonsterBlock5e.handlebarsHelpers); // Register all the helpers needed for Handlebars
 	
+	/* global inputExprInitHandler:readonly */
+	inputExprInitHandler();
+
 	console.log(`Monster Block | %cInitialized.`, "color: orange");
 });
 

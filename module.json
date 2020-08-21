@@ -9,8 +9,7 @@
 	"systems": ["dnd5e"],
 	"scripts": [
 		"input-expressions/math.min.js",
-		"input-expressions/handler.js",
-		"input-expressions/main.js"
+		"input-expressions/handler.js"
 	],
 	"esmodules": [
 		"monsterblock.js"
