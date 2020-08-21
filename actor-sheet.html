@@ -191,9 +191,11 @@
 		<h1 class="charname" contenteditable="{{flags.editing}}" data-field-key="name"
 			placeholder="{{ localize 'DND5E.Name' }}">{{actor.name}}</h1>
 		{{#unless flags.hide-profile-image}}
-			<figure class="profile-image profile-img" style="background-image: url({{actor.img}});" title="{{actor.name}}"
-				data-edit="img" />
-			</figure>{{/unless}}
+			<figure class="profile-image">
+				<img class="profile" src="{{actor.img}}" data-edit="img"
+					title="{{actor.name}} - {{ localize "MOBLOKS5E.EditHint" }}">
+			</figure>
+		{{/unless}}
 	</header>
 	<main class="bio-box">
 		<h2 class="section-header">{{ localize "DND5E.Biography" }}</h2>
@@ -225,7 +227,12 @@
 					{{~data.details.alignment~}}
 				</span>
 			</div>
-			{{#unless flags.hide-profile-image}}<figure class="profile-image profile-img" style="background-image: url({{actor.img}});" title="{{actor.name}}" data-edit="img"/></figure>{{/unless}}
+			{{#unless flags.hide-profile-image}}
+				<figure class="profile-image">
+					<img class="profile" src="{{actor.img}}" data-edit="img"
+						title="{{actor.name}} - {{ localize "MOBLOKS5E.EditHint" }}">
+				</figure>
+			{{/unless}}
 		</section>
 		<section class="monster-attributes1">
 			<ul class="attributes">

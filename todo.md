@@ -4,7 +4,7 @@
 - ~~Handle multiple damage~~
 - ~~Handle versitile damage~~
 - **Editing (for version 2)**
-  - Artwork
+  - ~~Artwork~~
   - ~~Actor Info~~
   - ~~Attributes~~
   - ~~Traits~~
