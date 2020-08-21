@@ -1,7 +1,8 @@
 {
     "env": {
         "browser": true,
-        "es2020": true
+        "es2020": true,
+        "jquery": true
     },
     "extends": "eslint:recommended",
     "parser": "babel-eslint",
@@ -15,5 +16,24 @@
         "quotes": [
             "warn", "double", { "avoidEscape": true, "allowTemplateLiterals": true }
         ]
+    },
+    "globals": {
+        "game": true,
+        "mergeObject": true,
+        "duplicate": true,
+        "ROUTE_PREFIX": true,
+        "CONFIG": true,
+        "getProperty": true,
+        "Roll": true,
+        "ui": true,
+        "ChatMessage": true,
+        "math": true,
+        "Hooks": true,
+        "Handlebars": true,
+        "SetupConfiguration": true,
+        "ImagePopout": true,
+        "TextEditor": true,
+        "_templateCache": true,
+        "Actors": true
     }
 }
