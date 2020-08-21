@@ -470,7 +470,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	prepResources(data, item) {
 		data.hasresource 
-			 = Boolean(item.data.data.consume?.target)
+			=  Boolean(item.data.data.consume?.target)
 			|| item.type == "consumable"
 			|| item.type == "loot";
 
@@ -615,9 +615,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	 */
 	filterSpellbook(data, ct, cts) {
 		return data.spellbook.filter(page => {
-			if ((ct == cts.pact && !(page.order == 0.5 || page.order == 0))	// Pact magic is only "0.5" and cantrips
-			 || (page.order == -20)											// Don't bother with at-will.
-			 || (ct != cts.innate && page.order == -10)						// Only innate has -10
+			if (   (ct == cts.pact && !(page.order == 0.5 || page.order == 0))	// Pact magic is only "0.5" and cantrips
+				|| (page.order == -20)											// Don't bother with at-will.
+				|| (ct != cts.innate && page.order == -10)						// Only innate has -10
 			) return false;
 
 			page.maxSpellLevel = page.spells.reduce(
