@@ -1523,7 +1523,7 @@ Hooks.once("ready", () => {
 	 * It then checks if it is enabled, and if not enables it.
 	 *
 	 * Based on [FoundryGet](https://github.com/cswendrowski/foundryget) by cswendrowski.
-	 */
+	 
 	(async () => {
 		const moduleName = "input-expressions";
 		const moduleManifest = "https://raw.githubusercontent.com/zeel01/input-expressions/master/module.json";
@@ -1552,7 +1552,7 @@ Hooks.once("ready", () => {
 			}
 		}
 	})();
-
+*/
 	MonsterBlock5e.getBetterRolls();
 	MonsterBlock5e.getTokenizer();
 	
