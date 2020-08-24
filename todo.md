@@ -15,7 +15,7 @@
 ## Fixes
 - ~~Passive perception needs different handling for editable sheet~~
 - ~~Handle fractional challenge ratings~~
-- Input Expressions isn't working on ammo.
+- ~~Input Expressions isn't working on ammo.~~
 
 ## Cleanup
 - Clean up classes from the template that aren't needed

@@ -1292,7 +1292,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		switch (dtype) {
 			case "Number":
-				if (value != "") this.handleNumberChange(entity, key, input, event);
+				if (value != "") value = this.handleNumberChange(entity, key, input, event);
 				break;
 			case "Roll": {
 				try { new Roll(value).roll(); }
@@ -1305,9 +1305,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 		}
 
-		if (input.dataset.entity) {
-			if (dtype == "Number") value = Number(value);
-			
+		if (input.dataset.entity) {		
 			this.actor.updateEmbeddedEntity("OwnedItem", {
 				_id: input.dataset.entity,
 				[key]: value
@@ -1331,7 +1329,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		const current = getProperty(entity, key);
 
 		if (window.math?.roll)
-			inputExpression(new ContentEditableAdapter(input), current, entity, this.templateData, event);
+			return inputExpression(new ContentEditableAdapter(input), current, entity, this.templateData, event);
 		else {
 			input.innerText = current;
 			const msg = "Input Expressions for Monster Blocks appears to be missing or has failed to initialize.";
