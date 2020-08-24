@@ -1,7 +1,6 @@
 import ActorSheet5eNPC from "../../systems/dnd5e/module/actor/sheets/npc.js";
 import TraitSelector from "../../systems/dnd5e/module/apps/trait-selector.js";
 
-
 /**
  * Main class for the Monster Blocks module
  *
@@ -1560,42 +1559,6 @@ Hooks.once("init", () => {
 });
 
 Hooks.once("ready", () => {
-	/**
-	 * Require Input Expressions:
-	 * This function checks if "Input Expressions" is installed, and if not it installs it.
-	 * It then checks if it is enabled, and if not enables it.
-	 *
-	 * Based on [FoundryGet](https://github.com/cswendrowski/foundryget) by cswendrowski.
-	 
-	(async () => {
-		const moduleName = "input-expressions";
-		const moduleManifest = "https://raw.githubusercontent.com/zeel01/input-expressions/master/module.json";
-
-		const dependency = game.data.modules.find(m => m.id == moduleName);
-		if (!dependency) {
-			let message = `Monster Blocks requires Input Expressions, installing it now, then returning you to the setup screen.`;
-			ui.notifications.error(message);
-			console.warn(message);
-			await SetupConfiguration.installPackage({ manifest: moduleManifest });
-
-			ui.notifications.warn("Installation complete, returning to setup screen...")
-			window.setTimeout(()=> {
-				game.shutDown();
-			}, 1000);
-		}
-		else {
-			const enabled = game.settings.get("core", "moduleConfiguration")[moduleName];
-			if (!enabled) {
-				let message = `Monster Blocks requires Input Expressions, enabling it now.`;
-				ui.notifications.warn(message);
-				console.warn(message);
-				let settings = duplicate(game.settings.get("core", "moduleConfiguration"));
-				settings[moduleName] = true;
-				game.settings.set("core", "moduleConfiguration", settings)
-			}
-		}
-	})();
-*/
 	MonsterBlock5e.getBetterRolls();
 	MonsterBlock5e.getTokenizer();
 	
