@@ -205,6 +205,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		featMenu.add(this.createFeatureAdder({ type: "loot" }, "MOBLOKS5E.AddInventory"));
 		featMenu.add(this.createFeatureAdder({ type: "consumable" }, "MOBLOKS5E.AddConsumable"));
 
+		if (this.constructor.CharacterSheetContext) {
+			featMenu.add(new MenuItem("trigger", {
+				control: "quickInsert",
+				icon: `<i class="fas fa-search"></i>`,
+				label: game.i18n.localize("Quick Insert")
+			}));
+		}
+
 		return featMenu;
 	}
 	createFeatureAdder(data, label) {
@@ -214,6 +222,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			icon: `<i class="fa fa-plus"></i>`,
 			label: game.i18n.localize(label)
 		});
+	}
+	quickInsert(event) {
+		const context = new this.constructor.CharacterSheetContext(this, $(event.currentTarget));
+		context.filter = this.constructor.dnd5eFilters["items"];
+		ui.quickInsert.render(true, { context });
 	}
 
 	/**
@@ -1006,6 +1019,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			this.Tokenizer = false;
 		}
 	}
+	static async getQuickInserts() {
+		if (game.data.modules.find(m => m.id == "quick-insert")?.active) {
+			let { CharacterSheetContext, dnd5eFilters } = await import("../quick-insert/quick-insert.js");
+			Object.assign(this, { CharacterSheetContext, dnd5eFilters });
+		}
+		else {
+			this.CharacterSheetContext = false;
+		}
+	}
 	async activateListeners(html) {	// We need listeners to provide interaction.
 	//	this.menuStates = this.menuStates ?? {};
 		
@@ -1561,6 +1583,7 @@ Hooks.once("init", () => {
 Hooks.once("ready", () => {
 	MonsterBlock5e.getBetterRolls();
 	MonsterBlock5e.getTokenizer();
+	MonsterBlock5e.getQuickInserts().then(m=>console.warn(MonsterBlock5e.CharacterSheetContext));
 	
 	game.settings.register("monsterblock", "attack-descriptions", {
 		name: game.i18n.localize("MOBLOKS5E.attack-description-name"),

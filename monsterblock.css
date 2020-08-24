@@ -407,7 +407,7 @@
 .monsterblock .menu-item-icon {
 	position: relative;
 	display: inline-block;
-	margin-right: 2ch;
+	width: 3.5ch;
 	top: 1px;
 }
 .monsterblock .charname {
