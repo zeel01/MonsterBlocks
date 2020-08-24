@@ -45,7 +45,7 @@ I will see if there is a way to handle the need.
 
 # Changelog
 ## Version: 2.x
-### Added 27 strings:
+### Added 29 strings:
 ```json
 "MOBLOKS5E.EditHint": "Right-click to edit",
 
@@ -66,6 +66,8 @@ I will see if there is a way to handle the need.
 "MOBLOKS5E.HideResources": "Hide Resource Values",
 "MOBLOKS5E.ShowSkillSave": "Always show skills & saves",
 "MOBLOKS5E.HideSkillSave": "Hide empty skills & saves",
+"MOBLOKS5E.OpenTokenizer": "Open VTTA Tokenizer",
+"MOBLOKS5E.QuickInsert": "Quick Insert",
 
 "MOBLOKS5E.MultiDamageAttackConjunctionPlus": "plus",
 

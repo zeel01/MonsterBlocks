@@ -209,7 +209,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			featMenu.add(new MenuItem("trigger", {
 				control: "quickInsert",
 				icon: `<i class="fas fa-search"></i>`,
-				label: game.i18n.localize("Quick Insert")	// Localize me
+				label: game.i18n.localize("MOBLOKS5E.QuickInsert")
 			}));
 		}
 

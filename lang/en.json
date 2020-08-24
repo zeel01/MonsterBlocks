@@ -32,6 +32,8 @@
 	"MOBLOKS5E.HideProfileImage": "Hide profile image",
 	"MOBLOKS5E.ShowLair": "Show lair actions",
 	"MOBLOKS5E.HideLair": "Hide lair actions",
+	"MOBLOKS5E.OpenTokenizer": "Open VTTA Tokenizer",
+	"MOBLOKS5E.QuickInsert": "Quick Insert",
 
 	"MOBLOKS5E.Theme": "Theme",
 	"MOBLOKS5E.CustomThemeName": "Custom",
