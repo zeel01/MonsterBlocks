@@ -209,7 +209,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			featMenu.add(new MenuItem("trigger", {
 				control: "quickInsert",
 				icon: `<i class="fas fa-search"></i>`,
-				label: game.i18n.localize("Quick Insert")
+				label: game.i18n.localize("Quick Insert")	// Localize me
 			}));
 		}
 
@@ -977,6 +977,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"editing": game.settings.get("monsterblock", "editing"),
 		"show-not-prof": game.settings.get("monsterblock", "show-not-prof"),
 		"show-resources": game.settings.get("monsterblock", "show-resources"),
+		"show-skill-save": game.settings.get("monsterblock", "show-skill-save"),
 		"show-delete": false,
 		"show-bio": false
 		
@@ -1233,7 +1234,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		this.lastSelection = el.dataset.fieldKey;
 	}
 	selectElement(el) {
-		if (!el) return;
+		if (!el || !el.firstChild) return;
 		let selection = window.getSelection();
 		selection.removeAllRanges();
 		let range = document.createRange();
@@ -1664,6 +1665,14 @@ Hooks.once("ready", () => {
 		config: true,
 		type: Boolean,
 		default: false
+	});
+	game.settings.register("monsterblock", "show-skill-save", {
+		name: game.i18n.localize("MOBLOKS5E.show-skill-save-name"),
+		hint: game.i18n.localize("MOBLOKS5E.show-skill-save-hint"),
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: true
 	});
 	game.settings.register("monsterblock", "show-resources", {
 		name: game.i18n.localize("MOBLOKS5E.show-resources-name"),

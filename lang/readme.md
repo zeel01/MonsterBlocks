@@ -45,7 +45,7 @@ I will see if there is a way to handle the need.
 
 # Changelog
 ## Version: 2.x
-### Added 23 strings:
+### Added 27 strings:
 ```json
 "MOBLOKS5E.EditHint": "Right-click to edit",
 
@@ -64,6 +64,8 @@ I will see if there is a way to handle the need.
 "MOBLOKS5E.HideNotProf": "Hide not-proficient checks",
 "MOBLOKS5E.ShowResources": "Show Resource Values",
 "MOBLOKS5E.HideResources": "Hide Resource Values",
+"MOBLOKS5E.ShowSkillSave": "Always show skills & saves",
+"MOBLOKS5E.HideSkillSave": "Hide empty skills & saves",
 
 "MOBLOKS5E.MultiDamageAttackConjunctionPlus": "plus",
 
@@ -75,6 +77,8 @@ I will see if there is a way to handle the need.
 "MOBLOKS5E.show-not-prof-hint": "Choose whether or not showing not-proficient skills and saves is enabled by default."
 "MOBLOKS5E.show-resources-name": "Show resource values",
 "MOBLOKS5E.show-resources-hint": "Choose whether or not showing resource values by default."
+"MOBLOKS5E.show-skill-save-name": "Always show skills & saves",
+"MOBLOKS5E.show-skill-save-hint": "Choose whether or not to show empty skill and save lists by default."
 
 ```
 ### Edited 1 Strings:

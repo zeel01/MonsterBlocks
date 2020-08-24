@@ -11,6 +11,8 @@
 	"MOBLOKS5E.DisableDelete": "Disable delete",
 	"MOBLOKS5E.ShowNotProf": "Show not-proficient checks",
 	"MOBLOKS5E.HideNotProf": "Hide not-proficient checks",
+	"MOBLOKS5E.ShowSkillSave": "Always show skills & saves",
+	"MOBLOKS5E.HideSkillSave": "Hide empty skills & saves",
 	"MOBLOKS5E.ShowBio": "Show Biography",
 	"MOBLOKS5E.HideBio": "Hide Biography",
 	"MOBLOKS5E.ShowResources": "Show Resource Values",
@@ -181,5 +183,7 @@
 	"MOBLOKS5E.show-not-prof-name": "Show Non-Proficient Skills and Saves",
 	"MOBLOKS5E.show-not-prof-hint": "Choose whether or not showing not-proficient skills and saves is enabled by default.",
 	"MOBLOKS5E.show-resources-name": "Show resource values",
-	"MOBLOKS5E.show-resources-hint": "Choose whether or not showing resource values by default."
+	"MOBLOKS5E.show-resources-hint": "Choose whether or not showing resource values by default.",
+	"MOBLOKS5E.show-skill-save-name": "Always show skills & saves",
+	"MOBLOKS5E.show-skill-save-hint": "Choose whether or not to show empty skill and save lists by default."
 }
