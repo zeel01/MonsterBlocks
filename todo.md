@@ -1,24 +1,12 @@
 # TODO:
 
 ## Additions
-- ~~Handle multiple damage~~
-- ~~Handle versitile damage~~
 - ~~**Editing (for version 2)**~~
-- ~~Biography~~
-- ~~Loot section~~
 - ~~Resource tracking~~
-  - ~~Spell slots~~
-  - ~~Limited uses~~
-  - ~~Legendary Actions~~
 - Input sanitization
-- ~~Decide what to do about Input Expressions (include or not?)~~
-  - ~~If I require IE, I should maybe have it "disabled" for everything but MB unelss the user manually enables it.~~
-
 
 ## Changes
-- ~~Item uses per short/long rest~~
-- ~~The way secrets are hidden needs to be corrected in JS rather than CSS.~~
-- ~~Support viewing permissions other than "owner"~~
+- Change to dependecy support for Input Expressions? Or not?
 - Indicate to new users that the menu in the corner exists
 - Rolls for saves/skills that aren't listed (not proficient) <sup>One can simply roll an ability check</sup>
 
