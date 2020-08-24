@@ -1171,6 +1171,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		html.find(".custom-trait input").keydown((event) => {
 			if (event.key == "Enter") this.onCustomTraitChange(event);
 		});
+		
+		
+		html.find("[contenteditable=true]").focusin(this.selectInput.bind(this));
+		
 		html.find("[contenteditable=true]").focusout(this._onChangeInput.bind(this));
 		html.find(".trait-selector").contextmenu(this._onTraitSelector.bind(this));
 		html.find(".trait-selector-add").click(this._onTraitSelector.bind(this));
@@ -1199,8 +1203,23 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			html.find("img[data-edit]").contextmenu(ev => this._onEditImage(ev));
 		}
 
-		
+		this.selectElement(html.find(`[data-field-key="${this.lastSelection}"]`)[0])
 	}
+	
+	selectInput(event) {
+		let el = event.currentTarget;
+		this.selectElement(el);
+		this.lastSelection = el.dataset.fieldKey;
+	}
+	selectElement(el) {
+		if (!el) return;
+		let selection = window.getSelection();
+		selection.removeAllRanges();
+		let range = document.createRange();
+		range.selectNode(el.firstChild);
+		selection.addRange(range);
+	}
+
 	openItemEditor(event, d) {
 		event.preventDefault();
 		event.stopPropagation();
@@ -1250,7 +1269,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		return data;
 	}
-	
+
 	/**
 	 * This method is used as an event handler when an input is changed, updated, or submitted.
 	 * The input value is passed to Input Expressions for numbers, Roll for roll formulas.
@@ -1262,7 +1281,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	 */
 	_onChangeInput(event) {
 		const input = event.currentTarget;
-		let value = input.innerText;
+		input.innerText = input.innerText.replace(/\s+/gm, " ");	// Strip excess whitespace
+		let value = input.innerText;								// .innerText will not include any HTML tags
 		
 		const entity = input.dataset.entity ? 
 			this.actor.getEmbeddedEntity("OwnedItem", input.dataset.entity) : 
@@ -1427,6 +1447,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 	};
 }
+
 /**
  * A base class for items that might be in a menu
  * 

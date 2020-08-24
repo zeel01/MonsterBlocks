@@ -3,7 +3,8 @@
 ## Additions
 - ~~**Editing (for version 2)**~~
 - ~~Resource tracking~~
-- Input sanitization
+- ~~Input sanitization~~
+- ~~Auto select numbers~~
 
 ## Changes
 - Change to dependecy support for Input Expressions? Or not?
@@ -14,6 +15,7 @@
 ## Fixes
 - ~~Passive perception needs different handling for editable sheet~~
 - ~~Handle fractional challenge ratings~~
+- Input Expressions isn't working on ammo.
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
