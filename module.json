@@ -4,8 +4,8 @@
 	"description": "An NPC sheet designed to emulate standard 5e monster stat blocks as faithfully as possible. Read-only, supports rolls.",
 	"author": "zeel",
 	"version": "2.x",
-	"minimumCoreVersion": "0.6.5",
-	"compatibleCoreVersion": "0.6.5",
+	"minimumCoreVersion": "0.6.6",
+	"compatibleCoreVersion": "0.6.6",
 	"systems": ["dnd5e"],
 	"scripts": [
 		"input-expressions/math.min.js",
