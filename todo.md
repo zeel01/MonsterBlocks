@@ -5,6 +5,7 @@
 - ~~Resource tracking~~
 - ~~Input sanitization~~
 - ~~Auto select numbers~~
+- Support Quick Inserts
 
 ## Changes
 - Indicate to new users that the menu in the corner exists
