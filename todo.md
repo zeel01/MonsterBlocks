@@ -7,6 +7,7 @@
 - ~~Auto select numbers~~
 
 ## Changes
+- Toggle skill/save drop downs
 - Indicate to new users that the menu in the corner exists
 - Rollable hit points
 - ~~Rolls for saves/skills that aren't listed (not proficient) <sup>One can simply roll an ability check</sup>~~
