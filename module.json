@@ -6,12 +6,6 @@
 	"version": "2.0.0",
 	"minimumCoreVersion": "0.6.6",
 	"compatibleCoreVersion": "0.6.6",
-	"dependencies": [
-		{
-			"name": "input-expressions",
-			"manifest": "https://raw.githubusercontent.com/zeel01/input-expressions/master/module.json"
-		}
-	],
 	"systems": ["dnd5e"],
 	"scripts": [
 		"input-expressions/math.min.js",
