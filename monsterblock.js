@@ -1351,7 +1351,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		const current = getProperty(entity, key);
 
 		if (window.math?.roll)
-			return inputExpression(new ContentEditableAdapter(input), current, entity, this.templateData, event);
+			return inputExpression(new ContentEditableAdapter(input), current, { 
+				entity, event, 
+				data: this.templateData,
+				actor: this.object
+			});
 		else {
 			input.innerText = current;
 			const msg = "Input Expressions for Monster Blocks appears to be missing or has failed to initialize.";
