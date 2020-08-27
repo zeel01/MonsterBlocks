@@ -5,6 +5,7 @@
 - ~~Resource tracking~~
 - ~~Input sanitization~~
 - ~~Auto select numbers~~
+- Broken item recovery area, for things like spells without a home.
 
 ## Changes
 - Toggle skill/save drop downs
