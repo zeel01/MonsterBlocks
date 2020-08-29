@@ -15,6 +15,7 @@
 
   
 ## Fixes
+- VTTA Tokenizer
 - ~~Passive perception needs different handling for editable sheet~~
 - ~~Handle fractional challenge ratings~~
 - ~~Input Expressions isn't working on ammo.~~
