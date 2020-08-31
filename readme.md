@@ -2,9 +2,7 @@
 
 An NPC sheet for FoundryVTT designed to faithfully reproduce the apperance of D&D 5e monster statblocks.
 
-Does not support editing directly except for Hit Points. You *can* edit features and other items by right clicking their descriptions. This sheet is intended for use as an in-game reference to a monster, *not* as a tool for building NPCs. See: [To Do List](todo.md)
-
-A few **quick settings** can be toggled from the special **cog menu in the upper left corner**, including. This includes enabling and disabling certain features, themes, and a quick switch button to take back to the default sheet for editing.
+A few **quick settings** can be toggled from the special **cog menu in the upper left corner**. This includes enabling and disabling certain features, themes, and a toggle for editing.
 
 ![Ancient Red Dragon](examples/ancientRedDragon_5.png)
 
@@ -21,7 +19,6 @@ A few **quick settings** can be toggled from the special **cog menu in the upper
 - Made it so that the [X Close] button can't get overflown off of the control bar (this effects all windows, not just this sheet).
 - Rolls for ability checks, saving throws, skills, features, actions, and spells.
 - Open and edit features, spells, and other items by right-clicking their description.
-- Quick switch between this sheet and the default through the cog menu in the upper left.
 - Drag and drop items from the sheet to elsewhere.
 - Set default options in settings, and per-actor settings from the settings cog.
 - Supports rolls from [Better Rolls for 5e](https://github.com/RedReign/FoundryVTT-BetterRolls5e) if installed.
@@ -45,6 +42,9 @@ A few **quick settings** can be toggled from the special **cog menu in the upper
 		--inline-link-color: #ff6400;
 		```
 - Clicking on the creature's artwork will open an image pop-up that can be shown to the players.
+- **New In v2.x**:
+  - Editing, adding features and items, changing skill and save proficiencies.
+  - You can now roll skills and saves that are not proficient (or hide this feature)
 
 ### Languages
 - English
@@ -57,19 +57,11 @@ A few **quick settings** can be toggled from the special **cog menu in the upper
 To adjust settings for each individual monster, there is a settings cog located in the upper left corner of the sheet next to the creature's name.
 These options toggle various features on and off.
 
-### Q: I can't edit anything, what's wrong?
-**A**: Monster Blocks is a "read-only" sheet for the most part.
-It is designed to show the vital information about a creature in a familiar way, while still giving the GM access to features like rolling, and while still being linked to the data for that creature's actor (as opposed to a book on your desk, or another reference outside of Foundry).
-For monsters from the SRD, or imported from other sources, simply switching that actor to the Monster Blocks sheet and toggling the settings you want should be all you need to do.
-For custom creatures and NPCs, I recommend using the default 5e sheet, or any other sheet of your choice, to build and design your creature... then switch it to Monster Blocks during your session for quick reference.
-In the future, I intend to add limited editability, starting with hit points, but I don't plan to make Monster Blocks a fully editable sheet - of course, you are welcome to fork it and add feature, and I would be happy to accept pull requests if you do!
+### Q. How do I edit spells and features?
+**A**: Right click on any feature, item, or spell to edit it.
 
-### Q: Switching sheets is annoying though...
-**A**: Yep, that's why I added an option in the settings cog to quickly switch to default, and I added the same cog to the default sheet with a "Switch to Monster Blocks" option to make this as painless as possible.
-
-### Q: What about my features and spells, can I edit those?
-**A**: Yes! If you *right-click* on a feature or action description, or on the name of a spell, the item sheet for that item will be opened.
-From there, you can edit that item as normal.
+### Q. How do I edit the avatar/character art?
+**A**: Right click on the image.
 
 ### Q: Why can't a resize the window?
 **A**: Simple answer? Because getting it to automatically size itself to neatly contain the stats without being too large/small was challenging, and letting users adjust it might lead to unexpected behaviour.
@@ -138,20 +130,3 @@ This is much more of a problem if you have *lots* of other modules installed. A 
 .window-app.monsterblock .window-header i { font-size: 14px; }
 ```
 This will show only icons, which should help as long as you remember what they all do.
-
-## Helpful Macros
-See [macros.js](macros.js)
-
-### Toggle the selected token between the default 5e sheet, and MonsterBlock:
-```javascript
-(async ()=> {
-	await token.actor.sheet.close();
-	if (token.actor.getFlag("core", "sheetClass") === "dnd5e.ActorSheet5eNPC") {
-		await token.actor.setFlag("core", "sheetClass", "dnd5e.MonsterBlock5e")
-	}
-	else {
-		await token.actor.setFlag("core", "sheetClass", "dnd5e.ActorSheet5eNPC")
-	}
-	await token.actor.sheet.render(true)
-})();
-```
