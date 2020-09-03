@@ -1087,7 +1087,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 			
 			if (target) {
-				let s = roll._total >= parseInt(target, 10);
+				let s = roll.total >= parseInt(target, 10);
 				
 				flavor += `<span style="font-weight: bold; color: ${s ? "green" : "red"};">${s ? success : failure}</span>`;
 			}
@@ -1450,17 +1450,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	static averageRoll(formula, mods) {
 		if (!formula) return 0;
-		let roll;
-		try { roll = new Roll(formula, mods).roll(); }
+		try { 
+			const roll = new Roll(formula, mods).roll(); 
+			return Math.floor((		// The maximum roll plus the minimum roll, divided by two, rounded down.
+				Roll.maximize(roll.formula).total +
+				Roll.minimize(roll.formula).total
+			) / 2);
+		}
 		catch (e) {
 			console.error(e);
 			ui.notifications.error(e);
 			return 0;
 		}
-		return Math.floor((		// The maximum roll plus the minimum roll, divided by two, rounded down.
-			Roll.maximize(roll.formula)._total +
-			Roll.minimize(roll.formula)._total
-		) / 2);
 	}
 	static handlebarsHelpers = {
 		"moblok-hascontents": (obj) => { // Check if an array is empty.
