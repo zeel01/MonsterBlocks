@@ -1,5 +1,9 @@
 # TODO:
 
+## Foundry 0.7.x
+- Switch from Roll static methods to `.evaluate()`
+- Deal with the quick switch cog menu displaying over top of the normal cog menu. Seems that the `renderActorSheet5eNPC` Hook is being called for some reason? Foundry bug?
+
 ## Additions
 - ~~**Editing (for version 2)**~~
 - ~~Resource tracking~~
