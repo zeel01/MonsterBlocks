@@ -6,6 +6,8 @@
 - ~~Input sanitization~~
 - ~~Auto select numbers~~
 - Broken item recovery area, for things like spells without a home.
+- Add spelcasting in one click
+- Add legres in one click
 
 ## Changes
 - Toggle skill/save drop downs
@@ -16,6 +18,9 @@
   
 ## Fixes
 - VTTA Tokenizer
+- Limited use spells work incorrectly
+- Saving throw issue?
+- Missing resistance option?
 - ~~Passive perception needs different handling for editable sheet~~
 - ~~Handle fractional challenge ratings~~
 - ~~Input Expressions isn't working on ammo.~~
