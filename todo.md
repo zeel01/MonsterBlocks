@@ -1,10 +1,6 @@
 # TODO:
 
 ## Additions
-- ~~**Editing (for version 2)**~~
-- ~~Resource tracking~~
-- ~~Input sanitization~~
-- ~~Auto select numbers~~
 - Broken item recovery area, for things like spells without a home.
 - Add spelcasting in one click
 - Add legres in one click
@@ -13,7 +9,6 @@
 - Toggle skill/save drop downs
 - Indicate to new users that the menu in the corner exists
 - Rollable hit points
-- ~~Rolls for saves/skills that aren't listed (not proficient) <sup>One can simply roll an ability check</sup>~~
 
   
 ## Fixes
@@ -21,9 +16,6 @@
 - Limited use spells work incorrectly
 - Saving throw issue?
 - Missing resistance option?
-- ~~Passive perception needs different handling for editable sheet~~
-- ~~Handle fractional challenge ratings~~
-- ~~Input Expressions isn't working on ammo.~~
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
