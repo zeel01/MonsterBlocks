@@ -1589,7 +1589,7 @@ Hooks.once("init", () => {
 Hooks.once("ready", () => {
 	MonsterBlock5e.getBetterRolls();
 	MonsterBlock5e.getTokenizer();
-	MonsterBlock5e.getQuickInserts().then(()=>console.warn(MonsterBlock5e.CharacterSheetContext));
+	MonsterBlock5e.getQuickInserts();
 	
 	game.settings.register("monsterblock", "attack-descriptions", {
 		name: game.i18n.localize("MOBLOKS5E.attack-description-name"),
