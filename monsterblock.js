@@ -788,10 +788,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}),
 			range: game.i18n.format("MOBLOKS5E.AttackRange", {
 				reachRange: game.i18n.localize(this.isRangedAttack(attack) ? "MOBLOKS5E.range" : "MOBLOKS5E.reach"),
-				range: atkd.range.value,
-				sep: atkd.range.long ? "/" : "",
-				max: atkd.range.long ? atkd.range.long : "",
-				units: atkd.range.units
+				range: atkd.range?.value,
+				sep: atkd.range?.long ? "/" : "",
+				max: atkd.range?.long ? atkd.range.long : "",
+				units: atkd.range?.units
 			}),
 			target: game.i18n.format("MOBLOKS5E.AttackTarget", {
 				quantity: this.getNumberString(atkd.target.value ? atkd.target.value : 1),
