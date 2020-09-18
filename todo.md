@@ -17,6 +17,7 @@
 - Saving throw issue?
 - Missing resistance option?
 - Potential issue with flags getting deleted after constructor is called.
+- Negative attack modifiers are not working correctly.
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
