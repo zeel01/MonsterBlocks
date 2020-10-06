@@ -5,12 +5,14 @@
 - Add spelcasting in one click
 - Add legres in one click
 - Size scaling?
-
+- Support Quick Inserts
+  - ~~Add menu item~~
+  - Correct style
+  
 ## Changes
 - Toggle skill/save drop downs
 - Indicate to new users that the menu in the corner exists
 - Rollable hit points
-
   
 ## Fixes
 - VTTA Tokenizer
@@ -28,9 +30,6 @@
 - Remove anything unused
 
 ## Back Burner
-- Support Quick Inserts <sup>Needs support from @Sunspots</sup>
-  - ~~Add menu item~~
-  - Correct style
 - Change to dependecy support for Input Expressions? Or not? <sup>For now, I'm keeping it as-is.</sup>
 - Handle "other" damage? <sup>May not be consistant enough to implement.</sup>
 - Toggle "Uses Lair Actions" when showing/hiding lair actions.<sup>The system doesn't seem to use this for anything yet.</sup>
