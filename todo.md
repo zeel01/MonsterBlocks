@@ -4,6 +4,7 @@
 - Broken item recovery area, for things like spells without a home.
 - Add spelcasting in one click
 - Add legres in one click
+- Size scaling?
 
 ## Changes
 - Toggle skill/save drop downs
