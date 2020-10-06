@@ -485,13 +485,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		data.hasresource 
 			=  Boolean(item.data.data.consume?.target)
 			|| item.type == "consumable"
-			|| item.type == "loot";
+			|| item.type == "loot"
+			|| item.data.data.uses?.max;
 
 		if (!data.hasresource) return;
 
 		let res = data.resource = {};
 
 		if (item.type == "consumable" || item.type == "loot") res.type = "consume";
+		else if (item.data.data.uses?.max) res.type = "charges";
 		else res.type = item.data.data.consume.type;
 
 		switch (res.type) {
@@ -508,7 +510,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 			case "charges": {
 				res.target = "data.uses.value";
-				res.entity = item.data.data.consume.target;
+				res.entity = item.data.data.consume.target || item.id;
 				res.current = item.data.data.uses.value;
 				res.limit = item.type == "spell" ? false : item.data.data.uses.max;
 				res.limTarget = "data.uses.max";

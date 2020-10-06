@@ -14,7 +14,7 @@
   
 ## Fixes
 - VTTA Tokenizer
-- Limited use spells work incorrectly
+- ~~Limited use spells work incorrectly~~
 - ~~Saving throw issue?~~
 - ~~Missing resistance option?~~
 - Potential issue with flags getting deleted after constructor is called.
