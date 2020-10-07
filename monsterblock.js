@@ -1238,13 +1238,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			html.find("img[data-edit]").contextmenu(ev => this._onEditImage(ev));
 		}
 
-		this.selectElement(html.find(`[data-field-key="${this.lastSelection}"]`)[0])
+		const key    = this.lastSelection.key    ? `[data-field-key="${this.lastSelection.key}"]` : "";
+		const entity = this.lastSelection.entity ? `[data-entity="${this.lastSelection.entity}"]` : "";
+		if (key) this.selectElement(html.find(`${key}${entity}`)[0]);
 	}
 	
 	selectInput(event) {
+		if (!this.lastSelection) this.lastSelection = {};
+
 		let el = event.currentTarget;
 		this.selectElement(el);
-		this.lastSelection = el.dataset.fieldKey;
+		this.lastSelection.key = el.dataset.fieldKey;
+		this.lastSelection.entity = el.dataset.entity;
 	}
 	selectElement(el) {
 		if (!el || !el.firstChild) return;
@@ -1430,7 +1435,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	 */
 	async close(...args) {
 		this.lastValue = undefined;
-		this.lastSelection = undefined;
+		this.lastSelection = {};
 		return super.close(...args);
 	}
 
