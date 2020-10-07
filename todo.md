@@ -15,13 +15,13 @@
 - Rollable hit points
   
 ## Fixes
-- VTTA Tokenizer
+- ~~VTTA Tokenizer~~
 - ~~Limited use spells work incorrectly~~
 - ~~Saving throw issue?~~
 - ~~Missing resistance option?~~
-- Potential issue with flags getting deleted after constructor is called.
 - ~~Negative attack modifiers are not working correctly.~~
 - ~~Sheet keeps trying to pull fucus back to an input.~~
+- Potential issue with flags getting deleted after constructor is called.
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
