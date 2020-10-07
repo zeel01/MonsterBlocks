@@ -2,7 +2,7 @@
 
 ## Additions
 - Broken item recovery area, for things like spells without a home.
-- Add spelcasting in one click
+- Add spellcasting in one click
 - Add legres in one click
 - Size scaling?
 - Support Quick Inserts
