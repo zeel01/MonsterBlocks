@@ -8,7 +8,7 @@
   
 ## Changes
 - Indicate to new users that the menu in the corner exists
-- Rollable hit points
+- ~~Rollable hit points~~
   
 ## Fixes
 - *none for now*

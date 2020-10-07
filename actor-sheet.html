@@ -250,7 +250,11 @@
 					<span class="attr-value" data-field-key="data.attributes.ac.value" data-dtype="Number" placeholder="{{ localize 'DND5E.ArmorClass' }}" contenteditable="{{flags.editing}}">{{data.attributes.ac.value}}</span>
 				</li>
 				<li class="attribute health">
-					<h4 class="attribute-name box-title">{{localize "DND5E.HitPoints" }} </h4>
+					<h4 class="attribute-name box-title">
+						<a class="trigger" data-control="_onRollHPFormula">
+							{{~localize "DND5E.HitPoints" }} 
+						</a>
+					</h4>
 					{{~#unless (or flags.current-hit-points flags.maximum-hit-points)~}}
 						<span title="{{ localize 'MOBLOKS5E.Average' }}" class="attr-value">{{data.attributes.hp.average}}</span>
 					{{~/unless~}}
