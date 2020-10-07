@@ -5,9 +5,8 @@
 - Add spellcasting in one click
 - Add legres in one click
 - Size scaling?
-- Support Quick Inserts
+- ~~Support Quick Inserts~~
   - ~~Add menu item~~
-  - Correct style
   
 ## Changes
 - ~~Toggle skill/save drop downs~~

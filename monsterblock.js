@@ -1,5 +1,6 @@
 import ActorSheet5eNPC from "../../systems/dnd5e/module/actor/sheets/npc.js";
 import TraitSelector from "../../systems/dnd5e/module/apps/trait-selector.js";
+/* global QuickInsert:readonly */
 
 /**
  * Main class for the Monster Blocks module
@@ -207,7 +208,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		featMenu.add(this.createFeatureAdder({ type: "loot" }, "MOBLOKS5E.AddInventory"));
 		featMenu.add(this.createFeatureAdder({ type: "consumable" }, "MOBLOKS5E.AddConsumable"));
 
-		if (this.constructor.CharacterSheetContext) {
+		if (window.QuickInsert) {
 			featMenu.add(new MenuItem("trigger", {
 				control: "quickInsert",
 				icon: `<i class="fas fa-search"></i>`,
@@ -225,10 +226,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			label: game.i18n.localize(label)
 		});
 	}
-	quickInsert(event) {
-		const context = new this.constructor.CharacterSheetContext(this, $(event.currentTarget));
-		context.filter = this.constructor.dnd5eFilters["items"];
-		ui.quickInsert.render(true, { context });
+	quickInsert() {
+		QuickInsert.open({
+			allowMultiple: true,
+			restrictTypes: ["Item"],
+			onSubmit: async (item) => {
+				const theItem = await fromUuid(item.uuid);
+				this.actor.createEmbeddedEntity("OwnedItem", theItem);
+			}
+		});
 	}
 
 	/**
