@@ -1237,15 +1237,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			html.find(".editor-content[data-edit]").each((i, div) => this._activateEditor(div));
 			html.find("img[data-edit]").contextmenu(ev => this._onEditImage(ev));
 		}
-
+		
+		if (!this.lastSelection) this.lastSelection = {};
 		const key    = this.lastSelection.key    ? `[data-field-key="${this.lastSelection.key}"]` : "";
 		const entity = this.lastSelection.entity ? `[data-entity="${this.lastSelection.entity}"]` : "";
 		if (key) this.selectElement(html.find(`${key}${entity}`)[0]);
 	}
 	
 	selectInput(event) {
-		if (!this.lastSelection) this.lastSelection = {};
-
 		let el = event.currentTarget;
 		this.selectElement(el);
 		this.lastSelection.key = el.dataset.fieldKey;
