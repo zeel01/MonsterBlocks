@@ -887,7 +887,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 		}
 		if (bonus > 0) parts.push("+");
-		if (bonus < 0) parts.push("-");
+		if (bonus < 0) {				// If the bonus was negative, it has a minus sign already. 
+			parts.push("-");			// But we want to format it with a space later. So push the minus sign.
+			bonus = Math.abs(bonus); 	// Then remove the sign from the number.
+		}
 		if (bonus != 0) parts.push(bonus);
 		
 		return parts.join(" ");
