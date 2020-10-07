@@ -15,13 +15,7 @@
 - Rollable hit points
   
 ## Fixes
-- ~~VTTA Tokenizer~~
-- ~~Limited use spells work incorrectly~~
-- ~~Saving throw issue?~~
-- ~~Missing resistance option?~~
-- ~~Negative attack modifiers are not working correctly.~~
-- ~~Sheet keeps trying to pull fucus back to an input.~~
-- Potential issue with flags getting deleted after constructor is called.
+- *none for now*
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
@@ -30,6 +24,7 @@
 - Remove anything unused
 
 ## Back Burner
+- FIX: Potential issue with flags getting deleted after constructor is called. <sup>Likely doesn't cause any harm, low priority</sup>
 - Change to dependecy support for Input Expressions? Or not? <sup>For now, I'm keeping it as-is.</sup>
 - Handle "other" damage? <sup>May not be consistant enough to implement.</sup>
 - Toggle "Uses Lair Actions" when showing/hiding lair actions.<sup>The system doesn't seem to use this for anything yet.</sup>
