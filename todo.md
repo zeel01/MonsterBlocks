@@ -5,17 +5,13 @@
 - Add spellcasting in one click
 - Add legres in one click
 - Size scaling?
-- ~~Support Quick Inserts~~
-  - ~~Add menu item~~
   
 ## Changes
-- ~~Toggle skill/save drop downs~~
-  - ~~Now act with click-on/click-off instead of hover~~
 - Indicate to new users that the menu in the corner exists
 - Rollable hit points
   
 ## Fixes
-- ~~lastSelection on resources moves selection to the first resource of that type~~
+- *none for now*
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
