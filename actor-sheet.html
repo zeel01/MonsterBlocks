@@ -404,17 +404,19 @@
 			<ul class="attributes">
 				{{#if (or info.hasSaveProfs flags.show-not-prof flags.show-skill-save)}}
 				<li class="monster-saves attribute">
-					<h4 class="attribute-name">{{ localize "MOBLOKS5E.SavingThrowS" }}</h4>
-					<figure class="position-wrapper">
-						<ul class="hover-list">
-						{{#each data.abilities as |ability id|}}
-							<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}"
-								title="{{ability.label}}">
-								<span class="ability-name">{{ability.label}}</span>
-								<span class="ability-save">{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
-							</li>
-						{{/each}}
-						</ul>
+					<figure class="menu simple-menu">
+						<h4 class="attribute-name menu-toggle" data-menu-id="save-roller">{{ localize "MOBLOKS5E.SavingThrowS" }}</h4>
+						<div class="overflow-fix">
+							<ul>
+							{{#each data.abilities as |ability id|}}
+								<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}"
+									title="{{ability.label}}">
+									<span class="ability-name">{{ability.label}}</span>
+									<span class="ability-save">{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
+								</li>
+							{{/each}}
+							</ul>
+						</div>
 					</figure>
 					<ul class="inline-list">
 					{{#each data.abilities as |ability id|}}
@@ -431,16 +433,18 @@
 				{{/if}}
 				{{#if (or info.hasSkills flags.show-not-prof flags.show-skill-save)}}
 				<li class="monster-skills attribute">
-					<h4 class="attribute-name">{{ localize "MOBLOKS5E.SkillS" }}</h4>
-					<figure class="position-wrapper">
-						<ul class="hover-list">
-						{{#each data.skills as |skill s|}}
-							<li class="skill {{#if skill.value}}proficient{{/if}}" title="{{skill.ability}}" data-skill="{{s}}">
-								<span class="skill-name">{{skill.label}}</span>
-								<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>{{~" "~}}
-							</li>
-						{{/each}}
-						</ul>
+					<figure class="menu simple-menu">
+						<h4 class="attribute-name menu-toggle" data-menu-id="skill-roller">{{ localize "MOBLOKS5E.SkillS" }}</h4>
+						<div class="overflow-fix">
+							<ul>
+							{{#each data.skills as |skill s|}}
+								<li class="skill {{#if skill.value}}proficient{{/if}}" title="{{skill.ability}}" data-skill="{{s}}">
+									<span class="skill-name">{{skill.label}}</span>
+									<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>{{~" "~}}
+								</li>
+							{{/each}}
+							</ul>
+						</div>
 					</figure>
 					<ul class="inline-list">
 					{{#each data.skills as |skill s|}}

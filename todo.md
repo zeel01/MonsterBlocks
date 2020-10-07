@@ -10,7 +10,8 @@
   - Correct style
   
 ## Changes
-- Toggle skill/save drop downs
+- ~~Toggle skill/save drop downs~~
+  - ~~Now act with click-on/click-off instead of hover~~
 - Indicate to new users that the menu in the corner exists
 - Rollable hit points
   

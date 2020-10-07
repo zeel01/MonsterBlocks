@@ -169,11 +169,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	prepMenus() {
 		this.menuTrees = {
 			attributes: this.prepAttributeMenu(),
-			features: this.prepFeaturesMenu()
+			features: this.prepFeaturesMenu(),
+			skills: this.addMenu("skill-roller"),
+			saves: this.addMenu("save-roller")
 		};
 	}
 	/**
-	 * @param {*} args - Array of arguments
+	 * @param {...*} args - Array of arguments
 	 * @return {MenuTree} 
 	 * @memberof MonsterBlock5e
 	 */
@@ -1534,11 +1536,13 @@ class MenuItem {
 class MenuTree extends MenuItem {
 	/**
 	 * Creates an instance of MenuTree.
-	 * @param {MonsterBlock5e} monsterblock - The object representing the sheet itseld
+	 * @param {MonsterBlock5e} monsterblock - The object representing the sheet itself
 	 * @param {string} id - A unique identifier for this menu
 	 * @param {string} label - The text of the label, doubles as the button for open/close clicks
 	 * @param {MenuTree|false} parent - A reference to the parent menu, or false if this menu is the root
 	 * @param {function} updateFn - A function used to update any data that might need changed on render
+	 * @param {string} auxSelect - A selector for an auxilary element to toggle a class on
+	 * @param {string} auxClass - A class to toggle on the auxilary element
 	 * @param {Boolean} visible - Set the initial state of visible or not
 	 * @param {JQuery} element - Set the jQuery object for the HTML element associated with this menu
 	 * @param {MenuItem[]} children - An array of items in this menu
