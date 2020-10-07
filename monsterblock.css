@@ -290,9 +290,6 @@
 	width: calc(var(--column-width) / 2);
 	color: var(--heading-color);
 }
-.monsterblock .simple-menu ul {
-	padding: 
-}
 .monsterblock .tweak-menu .overflow-fix > ul {
 	right: -8px;
 	top: -.4em;
