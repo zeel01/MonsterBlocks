@@ -1197,9 +1197,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		
 		
-		html.find("[contenteditable=true]").focusin(this.selectInput.bind(this));
+		html.find("[contenteditable=true]").focusin(this._onFocusEditable.bind(this));
 		
-		html.find("[contenteditable=true]").focusout(this._onChangeInput.bind(this));
+		html.find("[contenteditable=true]").focusout(this._onUnfocusEditable.bind(this));
 		html.find(".trait-selector").contextmenu(this._onTraitSelector.bind(this));
 		html.find(".trait-selector-add").click(this._onTraitSelector.bind(this));
 		html.find("[data-skill-id]").contextmenu(this._onCycleSkillProficiency.bind(this));
@@ -1293,7 +1293,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		return data;
 	}
-
+	_onFocusEditable(event) {
+		this.lastValue = event.currentTarget.innerText;
+		this.selectInput(event);
+	}
+	_onUnfocusEditable(event) {
+		if (event.currentTarget.innerText == this.lastValue) return;
+		this._onChangeInput(event);
+		this.lastValue = undefined;
+	}
 	/**
 	 * This method is used as an event handler when an input is changed, updated, or submitted.
 	 * The input value is passed to Input Expressions for numbers, Roll for roll formulas.
@@ -1397,6 +1405,24 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		// Update the field value and save the form
 		this._onSubmit(event);
 	}
+	
+	/**
+	 * Closes the sheet.
+	 *
+	 * This override adds clearing of some temporary properties
+	 * to avoid potential errors.
+	 *
+	 * @override
+	 * @param {object} args
+	 * @return {Promise} 
+	 * @memberof MonsterBlock5e
+	 */
+	async close(...args) {
+		this.lastValue = undefined;
+		this.lastSelection = undefined;
+		return super.close(...args);
+	}
+
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
 		let name = item.name.toLowerCase().replace(/\s+/g, "");	// Convert the name of the item to all lower case, and remove whitespace.
 		return game.i18n.localize("MOBLOKS5E.MultiattackLocators").includes(name); // Array.includes() checks if any item in the array matches the value given. This will determin if the name of the item is one of the options in the array.
