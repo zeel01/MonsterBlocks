@@ -16,7 +16,7 @@
 - Rollable hit points
   
 ## Fixes
-- *none for now*
+- lastSelection on resources moves selection to the first resource of that type
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
