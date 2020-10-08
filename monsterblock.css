@@ -473,15 +473,16 @@
 	display: inline;
 	font-weight: bold;
 }
-.monsterblock .ability-name {
+.monsterblock .ability-title {
 	display: block;
 	font-weight: bold;
 	margin: 0;
 	text-transform: uppercase;
 }
-.monsterblock .monster-saves .ability-name {
+.monsterblock .monster-saves .ability-title {
 	display: inline;
 	font-weight: normal;
+	margin: 0;
 	text-transform: capitalize;
 }
 
