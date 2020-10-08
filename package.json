@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/zeel01/MonsterBlocks#readme",
   "devDependencies": {
-    "eslint": "^7.7.0",
+    "eslint": "^7.9.0",
     "foundry-pc-types": "gitlab:foundry-projects/foundry-pc/foundry-pc-types",
     "gulp": "^4.0.2",
     "gulp-zip": "^5.0.2"

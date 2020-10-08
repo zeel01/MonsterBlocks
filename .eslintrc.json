@@ -15,7 +15,13 @@
         "no-unused-vars": "warn",
         "quotes": [
             "warn", "double", { "avoidEscape": true, "allowTemplateLiterals": true }
-        ]
+        ],
+        "class-methods-use-this": ["off", {
+                "exceptMethods": ["getData", "_updateObject"]
+            }
+        ],
+        "max-depth": ["off", { "max": 2 }],
+        "max-statements-per-line": ["warn", { "max": 2 }]
     },
     "globals": {
         "ROUTE_PREFIX": "readonly",

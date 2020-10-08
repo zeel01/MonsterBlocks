@@ -1,5 +1,6 @@
 import ActorSheet5eNPC from "../../systems/dnd5e/module/actor/sheets/npc.js";
 import TraitSelector from "../../systems/dnd5e/module/apps/trait-selector.js";
+/* global QuickInsert:readonly */
 
 /**
  * Main class for the Monster Blocks module
@@ -169,11 +170,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	prepMenus() {
 		this.menuTrees = {
 			attributes: this.prepAttributeMenu(),
-			features: this.prepFeaturesMenu()
+			features: this.prepFeaturesMenu(),
+			skills: this.addMenu("skill-roller"),
+			saves: this.addMenu("save-roller")
 		};
 	}
 	/**
-	 * @param {*} args - Array of arguments
+	 * @param {...*} args - Array of arguments
 	 * @return {MenuTree} 
 	 * @memberof MonsterBlock5e
 	 */
@@ -205,7 +208,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		featMenu.add(this.createFeatureAdder({ type: "loot" }, "MOBLOKS5E.AddInventory"));
 		featMenu.add(this.createFeatureAdder({ type: "consumable" }, "MOBLOKS5E.AddConsumable"));
 
-		if (this.constructor.CharacterSheetContext) {
+		if (window.QuickInsert) {
 			featMenu.add(new MenuItem("trigger", {
 				control: "quickInsert",
 				icon: `<i class="fas fa-search"></i>`,
@@ -223,10 +226,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			label: game.i18n.localize(label)
 		});
 	}
-	quickInsert(event) {
-		const context = new this.constructor.CharacterSheetContext(this, $(event.currentTarget));
-		context.filter = this.constructor.dnd5eFilters["items"];
-		ui.quickInsert.render(true, { context });
+	quickInsert() {
+		QuickInsert.open({
+			allowMultiple: true,
+			restrictTypes: ["Item"],
+			onSubmit: async (item) => {
+				const theItem = await fromUuid(item.uuid);
+				this.actor.createEmbeddedEntity("OwnedItem", theItem);
+			}
+		});
 	}
 
 	/**
@@ -287,7 +295,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	prepDamageTypeMenu(id, label, attrMenu) {
 		let menu = this.addMenu(id, game.i18n.localize(label), attrMenu);
-		this.getTraitChecklist(id, menu, `data.traits.${id}`, "damage-type", CONFIG.DND5E.damageTypes);
+		this.getTraitChecklist(id, menu, `data.traits.${id}`, "damage-type", CONFIG.DND5E.damageResistanceTypes);
 		return menu;
 	}
 	prepConditionTypeMenu(id, label, attrMenu) {
@@ -485,13 +493,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		data.hasresource 
 			=  Boolean(item.data.data.consume?.target)
 			|| item.type == "consumable"
-			|| item.type == "loot";
+			|| item.type == "loot"
+			|| item.data.data.uses?.max;
 
 		if (!data.hasresource) return;
 
 		let res = data.resource = {};
 
 		if (item.type == "consumable" || item.type == "loot") res.type = "consume";
+		else if (item.data.data.uses?.max) res.type = "charges";
 		else res.type = item.data.data.consume.type;
 
 		switch (res.type) {
@@ -508,7 +518,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 			case "charges": {
 				res.target = "data.uses.value";
-				res.entity = item.data.data.consume.target;
+				res.entity = item.data.data.consume.target || item.id;
 				res.current = item.data.data.uses.value;
 				res.limit = item.type == "spell" ? false : item.data.data.uses.max;
 				res.limTarget = "data.uses.max";
@@ -788,10 +798,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}),
 			range: game.i18n.format("MOBLOKS5E.AttackRange", {
 				reachRange: game.i18n.localize(this.isRangedAttack(attack) ? "MOBLOKS5E.range" : "MOBLOKS5E.reach"),
-				range: atkd.range.value,
-				sep: atkd.range.long ? "/" : "",
-				max: atkd.range.long ? atkd.range.long : "",
-				units: atkd.range.units
+				range: atkd.range?.value,
+				sep: atkd.range?.long ? "/" : "",
+				max: atkd.range?.long ? atkd.range.long : "",
+				units: atkd.range?.units
 			}),
 			target: game.i18n.format("MOBLOKS5E.AttackTarget", {
 				quantity: this.getNumberString(atkd.target.value ? atkd.target.value : 1),
@@ -885,7 +895,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 		}
 		if (bonus > 0) parts.push("+");
-		if (bonus < 0) parts.push("-");
+		if (bonus < 0) {				// If the bonus was negative, it has a minus sign already. 
+			parts.push("-");			// But we want to format it with a space later. So push the minus sign.
+			bonus = Math.abs(bonus); 	// Then remove the sign from the number.
+		}
 		if (bonus != 0) parts.push(bonus);
 		
 		return parts.join(" ");
@@ -1195,9 +1208,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		
 		
-		html.find("[contenteditable=true]").focusin(this.selectInput.bind(this));
+		html.find("[contenteditable=true]").focusin(this._onFocusEditable.bind(this));
 		
-		html.find("[contenteditable=true]").focusout(this._onChangeInput.bind(this));
+		html.find("[contenteditable=true]").focusout(this._onUnfocusEditable.bind(this));
 		html.find(".trait-selector").contextmenu(this._onTraitSelector.bind(this));
 		html.find(".trait-selector-add").click(this._onTraitSelector.bind(this));
 		html.find("[data-skill-id]").contextmenu(this._onCycleSkillProficiency.bind(this));
@@ -1224,14 +1237,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			html.find(".editor-content[data-edit]").each((i, div) => this._activateEditor(div));
 			html.find("img[data-edit]").contextmenu(ev => this._onEditImage(ev));
 		}
-
-		this.selectElement(html.find(`[data-field-key="${this.lastSelection}"]`)[0])
+		
+		if (!this.lastSelection) this.lastSelection = {};
+		const key    = this.lastSelection.key    ? `[data-field-key="${this.lastSelection.key}"]` : "";
+		const entity = this.lastSelection.entity ? `[data-entity="${this.lastSelection.entity}"]` : "";
+		if (key) this.selectElement(html.find(`${key}${entity}`)[0]);
 	}
 	
 	selectInput(event) {
 		let el = event.currentTarget;
 		this.selectElement(el);
-		this.lastSelection = el.dataset.fieldKey;
+		this.lastSelection.key = el.dataset.fieldKey;
+		this.lastSelection.entity = el.dataset.entity;
 	}
 	selectElement(el) {
 		if (!el || !el.firstChild) return;
@@ -1291,7 +1308,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		return data;
 	}
-
+	_onFocusEditable(event) {
+		this.lastValue = event.currentTarget.innerText;
+		this.selectInput(event);
+	}
+	_onUnfocusEditable(event) {
+		if (event.currentTarget.innerText == this.lastValue) return;
+		this._onChangeInput(event);
+		this.lastValue = undefined;
+	}
 	/**
 	 * This method is used as an event handler when an input is changed, updated, or submitted.
 	 * The input value is passed to Input Expressions for numbers, Roll for roll formulas.
@@ -1395,6 +1420,24 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		// Update the field value and save the form
 		this._onSubmit(event);
 	}
+	
+	/**
+	 * Closes the sheet.
+	 *
+	 * This override adds clearing of some temporary properties
+	 * to avoid potential errors.
+	 *
+	 * @override
+	 * @param {object} args
+	 * @return {Promise} 
+	 * @memberof MonsterBlock5e
+	 */
+	async close(...args) {
+		this.lastValue = undefined;
+		this.lastSelection = {};
+		return super.close(...args);
+	}
+
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
 		let name = item.name.toLowerCase().replace(/\s+/g, "");	// Convert the name of the item to all lower case, and remove whitespace.
 		return game.i18n.localize("MOBLOKS5E.MultiattackLocators").includes(name); // Array.includes() checks if any item in the array matches the value given. This will determin if the name of the item is one of the options in the array.
@@ -1503,11 +1546,13 @@ class MenuItem {
 class MenuTree extends MenuItem {
 	/**
 	 * Creates an instance of MenuTree.
-	 * @param {MonsterBlock5e} monsterblock - The object representing the sheet itseld
+	 * @param {MonsterBlock5e} monsterblock - The object representing the sheet itself
 	 * @param {string} id - A unique identifier for this menu
 	 * @param {string} label - The text of the label, doubles as the button for open/close clicks
 	 * @param {MenuTree|false} parent - A reference to the parent menu, or false if this menu is the root
 	 * @param {function} updateFn - A function used to update any data that might need changed on render
+	 * @param {string} auxSelect - A selector for an auxilary element to toggle a class on
+	 * @param {string} auxClass - A class to toggle on the auxilary element
 	 * @param {Boolean} visible - Set the initial state of visible or not
 	 * @param {JQuery} element - Set the jQuery object for the HTML element associated with this menu
 	 * @param {MenuItem[]} children - An array of items in this menu
@@ -1589,7 +1634,7 @@ Hooks.once("init", () => {
 Hooks.once("ready", () => {
 	MonsterBlock5e.getBetterRolls();
 	MonsterBlock5e.getTokenizer();
-	MonsterBlock5e.getQuickInserts().then(()=>console.warn(MonsterBlock5e.CharacterSheetContext));
+	MonsterBlock5e.getQuickInserts();
 	
 	game.settings.register("monsterblock", "attack-descriptions", {
 		name: game.i18n.localize("MOBLOKS5E.attack-description-name"),

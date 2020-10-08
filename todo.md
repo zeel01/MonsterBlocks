@@ -6,24 +6,17 @@
 - New item should be returned correctly now https://gitlab.com/foundrynet/foundryvtt/-/issues/3419
 
 ## Additions
-- ~~**Editing (for version 2)**~~
-- ~~Resource tracking~~
-- ~~Input sanitization~~
-- ~~Auto select numbers~~
 - Broken item recovery area, for things like spells without a home.
-
+- Add spellcasting in one click
+- Add legres in one click
+- Size scaling?
+  
 ## Changes
-- Toggle skill/save drop downs
 - Indicate to new users that the menu in the corner exists
-- Rollable hit points
-- ~~Rolls for saves/skills that aren't listed (not proficient) <sup>One can simply roll an ability check</sup>~~
-
+- ~~Rollable hit points~~
   
 ## Fixes
-- VTTA Tokenizer
-- ~~Passive perception needs different handling for editable sheet~~
-- ~~Handle fractional challenge ratings~~
-- ~~Input Expressions isn't working on ammo.~~
+- *none for now*
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
@@ -32,9 +25,7 @@
 - Remove anything unused
 
 ## Back Burner
-- Support Quick Inserts <sup>Needs support from @Sunspots</sup>
-  - ~~Add menu item~~
-  - Correct style
+- FIX: Potential issue with flags getting deleted after constructor is called. <sup>Likely doesn't cause any harm, low priority</sup>
 - Change to dependecy support for Input Expressions? Or not? <sup>For now, I'm keeping it as-is.</sup>
 - Handle "other" damage? <sup>May not be consistant enough to implement.</sup>
 - Toggle "Uses Lair Actions" when showing/hiding lair actions.<sup>The system doesn't seem to use this for anything yet.</sup>

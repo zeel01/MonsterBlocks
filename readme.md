@@ -42,9 +42,9 @@ A few **quick settings** can be toggled from the special **cog menu in the upper
 		--inline-link-color: #ff6400;
 		```
 - Clicking on the creature's artwork will open an image pop-up that can be shown to the players.
-- **New In v2.x**:
-  - Editing, adding features and items, changing skill and save proficiencies.
-  - You can now roll skills and saves that are not proficient (or hide this feature)
+- Editing, adding features and items, changing skill and save proficiencies.
+- You can now roll skills and saves that are not proficient (or hide this feature)
+- Supports Quick Insert
 
 ### Languages
 - English

@@ -206,7 +206,16 @@
 	height: 1em;
 	padding: 0;
 }
-.monsterblock .ability:hover, .monsterblock .saving-throw:hover, .monsterblock .skill:hover, .monsterblock .item-name:hover, .monsterblock .spell:hover, .monsterblock a.inline-roll:hover, .monsterblock [data-roll-formula]:hover, .monsterblock .window-content a:hover, .monsterblock .tweak-menu ul label:hover {
+.monsterblock .ability:hover, 
+.monsterblock .saving-throw:hover, 
+.monsterblock .skill:hover, 
+.monsterblock .item-name:hover, 
+.monsterblock .spell:hover, 
+.monsterblock a.inline-roll:hover, 
+.monsterblock [data-roll-formula]:hover, 
+.monsterblock .window-content a:hover, 
+.monsterblock .tweak-menu ul label:hover,
+.monsterblock .menu .menu-toggle:hover {
 	text-shadow: 0px 0px .05em var(--roll-hover-color);
 	cursor: pointer;
 	color: var(--roll-hover-color);
@@ -262,7 +271,11 @@
 	visibility: hidden;
 	cursor: pointer;
 }
-.monsterblock .tweak-menu .overflow-fix {
+.monsterblock .simple-menu {
+	display: inline;
+	margin: 0;
+}
+.monsterblock .menu .overflow-fix {
 	position: fixed;
 	margin: 0;
 	z-index: 10;
@@ -281,22 +294,10 @@
 }
 
 .monsterblock .tweak-menu ul {
-	text-align: left;
-	display: block;
-	position: absolute;
-	visibility: hidden;
-	list-style: none;
 	padding: 0;
-	color: var(--heading-color);
 	box-shadow: 1px 1px 5px 0px var(--shadow-color);
-	background: url(/ui/parchment.jpg), var(--background-filter);
-	background-repeat: repeat;
-	background-blend-mode: var(--background-blend);
-	z-index: 1;
 	width: calc(var(--column-width) / 2);
-	/* max-height: 220px; */
-	/* overflow-y: scroll; */
-	/* overflow-x: hidden; */
+	color: var(--heading-color);
 }
 .monsterblock .tweak-menu .overflow-fix > ul {
 	right: -8px;
@@ -314,11 +315,14 @@
 	border-right: 3px solid var(--divider-color);
 	border-bottom: 1px dashed gray;
 }
-.monsterblock .tweak-menu label {
-	display: inline-block;
-	width: 100%;
+.monsterblock .menu label,
+.monsterblock .menu h4 {
 	cursor: pointer;
 	user-select: none;
+}
+.monsterblock .menu label {
+	display: inline-block;
+	width: 100%;
 }
 .monsterblock .tweak-menu li label:not(:only-child):before {
 	display: block;
@@ -342,14 +346,14 @@
 	text-shadow: none;
 }
 .monsterblock .tweak-menu.menu-open > label,
-.monsterblock .tweak-menu.menu-open .overflow-fix > ul,
-.monsterblock .tweak-menu li.menu-open > ul {
+.monsterblock .menu.menu-open .overflow-fix > ul,
+.monsterblock .menu li.menu-open > ul {
 	visibility: visible;
 }
 .monsterblock .menu-open > label {
 	font-weight: bold;
 }
-.monsterblock .tweak-menu li a {
+.monsterblock .menu li a {
 	display: inline-block;
 	width: 100%;
 }
@@ -639,7 +643,15 @@ li:nth-last-of-type(2):after {
 	cursor: pointer;
 }
 .monsterblock .select-list,
-.monsterblock .hover-list {
+.monsterblock .hover-list,
+.monsterblock .simple-menu ul {
+	padding-left: .3em;
+	padding-right: .4em;
+	box-shadow: 0px 0px 1px 0px var(--shadow-color);
+}
+.monsterblock .select-list,
+.monsterblock .hover-list,
+.monsterblock .menu ul {
 	visibility: hidden;
 	display: block;
 	position: absolute;
@@ -647,10 +659,10 @@ li:nth-last-of-type(2):after {
 	background: url(/ui/parchment.jpg), var(--background-filter);
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
-	padding-left: .3em;
-	padding-right: .4em;
-	box-shadow: 0px 0px 1px 0px var(--shadow-color);
 	z-index: 1;	
+}
+.monsterblock .menu ul {
+	text-align: left;
 }
 .monsterblock .select-list {
 	top: .7em;
@@ -693,7 +705,8 @@ li:nth-last-of-type(2):after {
 	float: right;
 	font-size: .7em;
 }
-.monsterblock .hover-list {
+.monsterblock .hover-list,
+.monsterblock .simple-menu ul {
 	text-indent: 0;
 	width: fit-content;
 	top: -7px;
