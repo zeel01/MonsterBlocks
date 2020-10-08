@@ -1,10 +1,7 @@
 # TODO:
 
 ## Foundry 0.7.x
-- ~~Switch from Roll static methods to `.evaluate()`, swap `parts` to `terms`~~
-- ~~Deal with the quick switch cog menu displaying over top of the normal cog menu. Seems that the `renderActorSheet5eNPC` Hook is being called for some reason? Foundry bug?~~
-- ~~New item should be returned correctly now https://gitlab.com/foundrynet/foundryvtt/-/issues/3419~~
-- ~~Fix Better Rolls integration~~
+- *none for now*
 
 ## Additions
 - Broken item recovery area, for things like spells without a home.
