@@ -885,7 +885,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 		let parts = [], bonus = 0, op = "+";
 		
-		for (let part of roll.parts) {	// Now the formula from Roll is broken down, and re-constructed to combine all the constants.
+		for (let part of roll.terms) {	// Now the formula from Roll is broken down, and re-constructed to combine all the constants.
 			if (typeof part == "object") parts.push(part.formula);
 			else if (part === "+" || part === "-") op = part;
 			else if (isNaN(parseInt(part, 10))) console.error("Unexpected part in damage roll");
@@ -1494,10 +1494,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static averageRoll(formula, mods) {
 		if (!formula) return 0;
 		try { 
-			const roll = new Roll(formula, mods).roll(); 
+			const rollMin = new Roll(formula, mods);
+			const rollMax = rollMin.clone();
 			return Math.floor((		// The maximum roll plus the minimum roll, divided by two, rounded down.
-				Roll.maximize(roll.formula).total +
-				Roll.minimize(roll.formula).total
+				rollMax.evaluate({ maximize: true }).total +
+				rollMin.evaluate({ minimize: true }).total
 			) / 2);
 		}
 		catch (e) {
