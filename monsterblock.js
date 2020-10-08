@@ -1900,6 +1900,8 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the she
 });
 
 Hooks.on("renderActorSheet5eNPC", (sheet) => {
+	if (sheet.constructor.name != "ActorSheet5eNPC") return;
+	
 	console.debug("Adding Control...");
 	let nav = document.createElement("nav");
 	nav.innerHTML = `
