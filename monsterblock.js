@@ -159,11 +159,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	async addFeature(event) {
 		let type = event.currentTarget.dataset.type == "spell" ? "spell" : "item";
-		let items = [...this.actor.items].map(i => i.id);
-		await this._onItemCreate(event);
-		let item = [...this.actor.items].find(i => !items.includes(i.id));
+		let item = await this._onItemCreate(event);
 
-		let id = item.id;
+		let id = item._id;
 		if (type == "item") this.openItemEditor(event, id);
 		else this.openSpellEditor(event, id);
 	}
@@ -1901,7 +1899,7 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the she
 
 Hooks.on("renderActorSheet5eNPC", (sheet) => {
 	if (sheet.constructor.name != "ActorSheet5eNPC") return;
-	
+
 	console.debug("Adding Control...");
 	let nav = document.createElement("nav");
 	nav.innerHTML = `
