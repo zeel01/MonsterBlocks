@@ -1,7 +1,7 @@
 {
 	"name": "monsterblock",
-	"title": "Monster Blocks",
-	"description": "An NPC sheet designed to emulate standard 5e monster stat blocks as faithfully as possible.",
+	"title": "Monster Blocks for FVTT 0.6.x (no updates)",
+	"description": "This is a no-updates version of Monster Blocks for Foundry Core 0.6.x series. An NPC sheet designed to emulate standard 5e monster stat blocks as faithfully as possible.",
 	"author": "zeel",
 	"version": "2.1.0",
 	"minimumCoreVersion": "0.6.6",
@@ -29,7 +29,7 @@
 			"path": "lang/ja.json"
 		}
 	],
-	"manifest": "https://raw.githubusercontent.com/zeel01/MonsterBlocks/master/module.json",
+	"manifest": "https://github.com/zeel01/MonsterBlocks/releases/download/v2.1.0/module.json",
 	"url": "https://github.com/zeel01/MonsterBlocks",
 	"download": "https://github.com/zeel01/MonsterBlocks/releases/download/v2.1.0/monsterblock.zip"
 }
