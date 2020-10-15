@@ -1132,18 +1132,26 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		
 		// Item and spell "roll" handlers. Really just pops their chat card into chat, allowing for rolling from there.
-		html.find(".item-name").click((event) => {
+		html.find(".item-name").click(async (event) => {
 			event.preventDefault();
 			let id = event.currentTarget.dataset.itemId;
 			const item = this.actor.getOwnedItem(id);
-			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.newItemRoll(item, mergeObject(MonsterBlock5e.CustomRoll.eventToAdvantage(event), {preset:0})).toMessage();
+			if (MonsterBlock5e.CustomRoll) {
+				const params = await MonsterBlock5e.CustomRoll.eventToAdvantage(event);
+				const preset = event.altKey ? 1 : 0;
+				MonsterBlock5e.CustomRoll.newItemRoll(item, mergeObject(params, {preset})).toMessage();
+			}
 			else return item.roll(); // Conveniently, items have all this logic built in already.
 		});
-		html.find(".spell").click((event) => {
+		html.find(".spell").click(async (event) => {
 			event.preventDefault();
 			let id = event.currentTarget.dataset.itemId;
 			const item = this.actor.getOwnedItem(id);
-			if (MonsterBlock5e.CustomRoll && !event.shiftKey) MonsterBlock5e.CustomRoll.newItemRoll(item, mergeObject(MonsterBlock5e.CustomRoll.eventToAdvantage(event), {preset:0})).toMessage();
+			if (MonsterBlock5e.CustomRoll && !event.shiftKey) {
+				const params = await MonsterBlock5e.CustomRoll.eventToAdvantage(event);
+				const preset = event.altKey ? 1 : 0;
+				MonsterBlock5e.CustomRoll.newItemRoll(item, mergeObject(params, {preset})).toMessage();
+			}
 			else return this.actor.useSpell(item, {configureDialog: !event.shiftKey}); // Spells are used through the actor, to track slots.
 		});
 		

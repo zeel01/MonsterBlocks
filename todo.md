@@ -11,7 +11,7 @@
   
 ## Changes
 - Indicate to new users that the menu in the corner exists
-- Support Better Rolls Alt rolls
+- ~~Support Better Rolls Alt rolls~~
 - ~~Rollable hit points~~
   
 ## Fixes
