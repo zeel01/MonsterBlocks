@@ -991,7 +991,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"show-resources": game.settings.get("monsterblock", "show-resources"),
 		"show-skill-save": game.settings.get("monsterblock", "show-skill-save"),
 		"show-delete": false,
-		"show-bio": false
+		"show-bio": false,
+		"scale": 1.0
 		
 	}
 	async prepFlags() {
@@ -1794,14 +1795,16 @@ class PopupHandler {
 	 * @param {number} defaultWidth - The starting width of the popup
 	 * @param {number} defaultHeight - The starting height of the popup
 	 * @param {number} padding - The padding around the popup content
+	 * @param {number} scale - The CSS transform scale to set on this sheet
 	 * @memberof PopupHandler
 	 */
-	constructor(application, layoutselector, defaultWidth, defaultHeight, padding) {
+	constructor(application, layoutselector, defaultWidth, defaultHeight, padding, scale) {
 		this.application = application;
 		this.padding = padding;
 		this.element = application.element;
 		this._height = defaultHeight;
 		this._width = defaultWidth;
+		this._scale = scale;
 		
 		this.width = this._width;	// Actually set the width and height to the default values,
 		this.height = this._height;	// allowing the column layout to correctly set the number of columns needed.
@@ -1858,10 +1861,13 @@ class PopupHandler {
 	}
 	
 	fix() {
+		this.element.css("transform", "");
+
 		this.fixWidth();	// Width needs corrected first, so that the column layout will expand and balance correctly.
 		this.fixHeight();	// Once the layout is balanced, we can correct the height to match it.
 		
 		if (this.position.default) this.fixPos();
+		if (this._scale != 1) this.element.css("transform", `scale(${this._scale})`);
 	}
 	
 	// The following simply add the calculated layout dimensions to the padding, and set the wrapper to that size
@@ -1901,7 +1907,8 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the she
 		"form.flexcol",
 		monsterblock.options.width, 													// From default options
 		window.innerHeight - game.settings.get("monsterblock", "max-height-offset"),	// Configurable offset, default is 72 to give space for the macro bar and 10px of padding.
-		8																				// The margins on the window content are 8px
+		8,
+		monsterblock.flags.scale																				// The margins on the window content are 8px
 	);
 	popup.fix();
 });
