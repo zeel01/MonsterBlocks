@@ -1906,7 +1906,7 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the she
 		monsterblock, 	// The Application window
 		"form.flexcol",
 		monsterblock.options.width, 													// From default options
-		window.innerHeight - game.settings.get("monsterblock", "max-height-offset"),	// Configurable offset, default is 72 to give space for the macro bar and 10px of padding.
+		(window.innerHeight - game.settings.get("monsterblock", "max-height-offset")) * (1 / monsterblock.flags.scale),	// Configurable offset, default is 72 to give space for the macro bar and 10px of padding.
 		8,
 		monsterblock.flags.scale																				// The margins on the window content are 8px
 	);
