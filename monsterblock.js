@@ -271,7 +271,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return menu;
 	}
 	prepSkillsMenu(attrMenu) {
-		let menu = this.addMenu("skills", game.i18n.localize("DND5E.Skills"), attrMenu);
+		let menu = this.addMenu("skills", game.i18n.localize("MOBLOKS5E.SkillS"), attrMenu);
 
 		Object.entries(this.actor.data.data.skills).forEach(([id, skill]) => {
 			skill.abilityAbbr = game.i18n.localize(`MOBLOKS5E.Abbr${skill.ability}`);
