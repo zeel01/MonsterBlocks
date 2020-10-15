@@ -14,7 +14,7 @@
 - ~~Rollable hit points~~
   
 ## Fixes
-- *none for now*
+- Something is wrong with the portrait pop up zoom
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
