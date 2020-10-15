@@ -251,12 +251,13 @@
 	display: block;
 	position: relative;
 }
+.monsterblock .sheet-header section:not(:first-of-type), main {
+	margin-top: .5em;
+}
 .monsterblock .sheet-header section:not(:first-of-type)::before,
 .monsterblock main::before {
-	margin-top: .5em;
 	margin-bottom: .5em;
 	display: block;
-	/* width: var(--column-width); */
 	content: "";
 	border: none;
 	border-top: .2em solid transparent;
