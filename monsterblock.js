@@ -386,6 +386,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static prop = "A String";
 	static themes = {
 		"default": { name: "MOBLOKS5E.DefaultThemeName", class: "default-theme" },
+		"foundry": { name: "MOBLOKS5E.FoundryThemeName", class: "foundry-theme" },
 		"srd": { name: "MOBLOKS5E.SimpleThemeName", class: "srd-theme" },
 		"dark": { name: "MOBLOKS5E.DarkThemeName", class: "dark-theme" },
 		"cool": { name: "MOBLOKS5E.CoolThemeName", class: "cool-theme" },

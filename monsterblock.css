@@ -21,6 +21,7 @@
 	--roll-hover-color: hsl(8 70% 14% / 1);
 	--divider-color: rgba(140, 42, 42, 1);
 	--divider-color-end: rgba(140, 42, 42, 0);
+	--background-image: url(/ui/parchment.jpg);
 	--background-filter: hsl(39deg 100% 60% / 80%);
 	--background-blend: hard-light;
 	--menu-background: #f7e2ac;
@@ -73,6 +74,18 @@
 	--inline-link-color: #ab4b2e;
 	--shadow-color: var(--divider-color);
 }
+.monsterblock.foundry-theme {
+	font-size: 14px;
+	color: white;
+	--heading-color: #ff6400;
+	--roll-hover-color: #ff2000;
+	--divider-color: red;
+	--background-image: url(/ui/denim075.png);
+	--background-filter: rgba(0,0,0,0);
+	--inline-link-color: #ff8000;
+	--shadow-color: #444;
+	--main-text-color: #d2d2d2;
+}
 
 .monsterblock * {
 	user-select: text;
@@ -93,7 +106,7 @@
 	text-shadow: 0 0 8px var(--inline-link-color);
 }
 .monsterblock .window-content {
-	background: url(/ui/parchment.jpg), var(--background-filter);
+	background: var(--background-image), var(--background-filter);
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
 	color: var(--main-text-color);
@@ -128,7 +141,7 @@
 	top: 0;
 	display: none;
 	position: absolute;
-	background: url(/ui/parchment.jpg), var(--background-filter);
+	background: var(--background-image), var(--background-filter);
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
 	color: var(--heading-color);
@@ -382,7 +395,7 @@
 	top: -2px;
 }
 .monsterblock .delete-item i {
-	background: url(/ui/parchment.jpg), var(--background-filter);
+	background: var(--background-image), var(--background-filter);
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
 	box-shadow: 0px 0px 5px 0px var(
@@ -657,7 +670,7 @@ li:nth-last-of-type(2):after {
 	display: block;
 	position: absolute;
 	list-style: none;
-	background: url(/ui/parchment.jpg), var(--background-filter);
+	background: var(--background-image), var(--background-filter);
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
 	z-index: 1;	
