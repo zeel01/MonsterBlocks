@@ -123,6 +123,7 @@
 	color: #aaa;
 }
 .window-app.dnd5e .switches {
+	--background-image: url(/ui/parchment.jpg);
 	--background-filter: rgba(0, 0, 0, 0);
 	--background-blend: none;
 	--heading-color: black;
