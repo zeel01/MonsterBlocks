@@ -1,7 +1,7 @@
 # TODO:
 
 ## Foundry 0.7.x
-- *none for now*
+- ~~Something is wrong with the portrait pop up zoom~~
 
 ## Additions
 - Broken item recovery area, for things like spells without a home.
@@ -15,7 +15,7 @@
 - ~~Rollable hit points~~
   
 ## Fixes
-- Something is wrong with the portrait pop up zoom
+- *none for now*
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
