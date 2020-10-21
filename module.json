@@ -3,12 +3,11 @@
 	"title": "Monster Blocks",
 	"description": "An NPC sheet designed to emulate standard 5e monster stat blocks as faithfully as possible.",
 	"author": "zeel",
-	"version": "2.1.0",
-	"minimumCoreVersion": "0.6.6",
-	"compatibleCoreVersion": "0.6.6",
+	"version": "2.1.1",
+	"minimumCoreVersion": "0.7.5",
+	"compatibleCoreVersion": "0.7.5",
 	"systems": ["dnd5e"],
 	"scripts": [
-		"input-expressions/math.min.js",
 		"input-expressions/handler.js"
 	],
 	"esmodules": [
@@ -29,7 +28,14 @@
 			"path": "lang/ja.json"
 		}
 	],
+	"dependencies": [
+		{
+			"name": "_mathjs",
+			"type": "module",
+			"manifest": "https://raw.githubusercontent.com/League-of-Foundry-Developers/mathjs-lib/master/module.json"
+		}
+	],
 	"manifest": "https://raw.githubusercontent.com/zeel01/MonsterBlocks/master/module.json",
 	"url": "https://github.com/zeel01/MonsterBlocks",
-	"download": "https://github.com/zeel01/MonsterBlocks/releases/download/v2.1.0/monsterblock.zip"
+	"download": "https://github.com/zeel01/MonsterBlocks/releases/download/v2.1.1/monsterblock.zip"
 }

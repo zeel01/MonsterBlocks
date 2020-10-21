@@ -159,11 +159,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	async addFeature(event) {
 		let type = event.currentTarget.dataset.type == "spell" ? "spell" : "item";
-		let items = [...this.actor.items].map(i => i.id);
-		await this._onItemCreate(event);
-		let item = [...this.actor.items].find(i => !items.includes(i.id));
+		let item = await this._onItemCreate(event);
 
-		let id = item.id;
+		let id = item._id;
 		if (type == "item") this.openItemEditor(event, id);
 		else this.openSpellEditor(event, id);
 	}
@@ -273,7 +271,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return menu;
 	}
 	prepSkillsMenu(attrMenu) {
-		let menu = this.addMenu("skills", game.i18n.localize("DND5E.Skills"), attrMenu);
+		let menu = this.addMenu("skills", game.i18n.localize("MOBLOKS5E.SkillS"), attrMenu);
 
 		Object.entries(this.actor.data.data.skills).forEach(([id, skill]) => {
 			skill.abilityAbbr = game.i18n.localize(`MOBLOKS5E.Abbr${skill.ability}`);
@@ -388,6 +386,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static prop = "A String";
 	static themes = {
 		"default": { name: "MOBLOKS5E.DefaultThemeName", class: "default-theme" },
+		"foundry": { name: "MOBLOKS5E.FoundryThemeName", class: "foundry-theme" },
 		"srd": { name: "MOBLOKS5E.SimpleThemeName", class: "srd-theme" },
 		"dark": { name: "MOBLOKS5E.DarkThemeName", class: "dark-theme" },
 		"cool": { name: "MOBLOKS5E.CoolThemeName", class: "cool-theme" },
@@ -885,7 +884,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 		let parts = [], bonus = 0, op = "+";
 		
-		for (let part of roll.parts) {	// Now the formula from Roll is broken down, and re-constructed to combine all the constants.
+		for (let part of roll.terms) {	// Now the formula from Roll is broken down, and re-constructed to combine all the constants.
 			if (typeof part == "object") parts.push(part.formula);
 			else if (part === "+" || part === "-") op = part;
 			else if (isNaN(parseInt(part, 10))) console.error("Unexpected part in damage roll");
@@ -992,7 +991,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"show-resources": game.settings.get("monsterblock", "show-resources"),
 		"show-skill-save": game.settings.get("monsterblock", "show-skill-save"),
 		"show-delete": false,
-		"show-bio": false
+		"show-bio": false,
+		"scale": 1.0
 		
 	}
 	async prepFlags() {
@@ -1134,18 +1134,26 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		
 		// Item and spell "roll" handlers. Really just pops their chat card into chat, allowing for rolling from there.
-		html.find(".item-name").click((event) => {
+		html.find(".item-name").click(async (event) => {
 			event.preventDefault();
 			let id = event.currentTarget.dataset.itemId;
 			const item = this.actor.getOwnedItem(id);
-			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.newItemRoll(item, mergeObject(MonsterBlock5e.CustomRoll.eventToAdvantage(event), {preset:0})).toMessage();
+			if (MonsterBlock5e.CustomRoll) {
+				const params = await MonsterBlock5e.CustomRoll.eventToAdvantage(event);
+				const preset = event.altKey ? 1 : 0;
+				MonsterBlock5e.CustomRoll.newItemRoll(item, mergeObject(params, {preset})).toMessage();
+			}
 			else return item.roll(); // Conveniently, items have all this logic built in already.
 		});
-		html.find(".spell").click((event) => {
+		html.find(".spell").click(async (event) => {
 			event.preventDefault();
 			let id = event.currentTarget.dataset.itemId;
 			const item = this.actor.getOwnedItem(id);
-			if (MonsterBlock5e.CustomRoll && !event.shiftKey) MonsterBlock5e.CustomRoll.newItemRoll(item, mergeObject(MonsterBlock5e.CustomRoll.eventToAdvantage(event), {preset:0})).toMessage();
+			if (MonsterBlock5e.CustomRoll && !event.shiftKey) {
+				const params = await MonsterBlock5e.CustomRoll.eventToAdvantage(event);
+				const preset = event.altKey ? 1 : 0;
+				MonsterBlock5e.CustomRoll.newItemRoll(item, mergeObject(params, {preset})).toMessage();
+			}
 			else return this.actor.useSpell(item, {configureDialog: !event.shiftKey}); // Spells are used through the actor, to track slots.
 		});
 		
@@ -1494,10 +1502,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static averageRoll(formula, mods) {
 		if (!formula) return 0;
 		try { 
-			const roll = new Roll(formula, mods).roll(); 
+			const rollMin = new Roll(formula, mods);
+			const rollMax = rollMin.clone();
 			return Math.floor((		// The maximum roll plus the minimum roll, divided by two, rounded down.
-				Roll.maximize(roll.formula).total +
-				Roll.minimize(roll.formula).total
+				rollMax.evaluate({ maximize: true }).total +
+				rollMin.evaluate({ minimize: true }).total
 			) / 2);
 		}
 		catch (e) {
@@ -1786,14 +1795,16 @@ class PopupHandler {
 	 * @param {number} defaultWidth - The starting width of the popup
 	 * @param {number} defaultHeight - The starting height of the popup
 	 * @param {number} padding - The padding around the popup content
+	 * @param {number} scale - The CSS transform scale to set on this sheet
 	 * @memberof PopupHandler
 	 */
-	constructor(application, layoutselector, defaultWidth, defaultHeight, padding) {
+	constructor(application, layoutselector, defaultWidth, defaultHeight, padding, scale) {
 		this.application = application;
 		this.padding = padding;
 		this.element = application.element;
 		this._height = defaultHeight;
 		this._width = defaultWidth;
+		this._scale = scale;
 		
 		this.width = this._width;	// Actually set the width and height to the default values,
 		this.height = this._height;	// allowing the column layout to correctly set the number of columns needed.
@@ -1850,10 +1861,13 @@ class PopupHandler {
 	}
 	
 	fix() {
+		this.element.css("transform", "");
+
 		this.fixWidth();	// Width needs corrected first, so that the column layout will expand and balance correctly.
 		this.fixHeight();	// Once the layout is balanced, we can correct the height to match it.
 		
 		if (this.position.default) this.fixPos();
+		if (this._scale != 1) this.element.css("transform", `scale(${this._scale})`);
 	}
 	
 	// The following simply add the calculated layout dimensions to the padding, and set the wrapper to that size
@@ -1892,13 +1906,16 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the she
 		monsterblock, 	// The Application window
 		"form.flexcol",
 		monsterblock.options.width, 													// From default options
-		window.innerHeight - game.settings.get("monsterblock", "max-height-offset"),	// Configurable offset, default is 72 to give space for the macro bar and 10px of padding.
-		8																				// The margins on the window content are 8px
+		(window.innerHeight - game.settings.get("monsterblock", "max-height-offset")) * (1 / monsterblock.flags.scale),	// Configurable offset, default is 72 to give space for the macro bar and 10px of padding.
+		8,
+		monsterblock.flags.scale																				// The margins on the window content are 8px
 	);
 	popup.fix();
 });
 
 Hooks.on("renderActorSheet5eNPC", (sheet) => {
+	if (sheet.constructor.name != "ActorSheet5eNPC") return;
+
 	console.debug("Adding Control...");
 	let nav = document.createElement("nav");
 	nav.innerHTML = `

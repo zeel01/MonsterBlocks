@@ -320,7 +320,7 @@
 			<ul class="ability-scores flexrow">
             {{#each data.abilities as |ability id|}}
                 <li class="ability{{#if ability.proficient}} proficient{{/if}}" data-ability="{{id}}">
-                    <h4 class="ability-name box-title" title="{{ability.label}}">{{ability.abbr}}</h4>
+                    <h4 class="ability-title box-title" title="{{ability.label}}">{{ability.abbr}}</h4>
 					<span class="attr-value"
 						contenteditable="{{@root.flags.editing}}"
 						placeholder="0"
@@ -415,8 +415,8 @@
 							{{#each data.abilities as |ability id|}}
 								<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}"
 									title="{{ability.label}}">
-									<span class="ability-name">{{ability.label}}</span>
-									<span class="ability-save">{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
+									<span class="ability-title">{{ability.label}}</span>
+									<span>{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
 								</li>
 							{{/each}}
 							</ul>
@@ -426,8 +426,8 @@
 					{{#each data.abilities as |ability id|}}
 					{{#if (or ability.proficient @root.flags.show-not-prof)}}
 						<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}" title="{{ability.label}}">
-							<span class="ability-name">{{ability.abbr}}</span>
-							<span class="ability-save">{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
+							<span class="ability-title">{{ability.abbr}}</span>
+							<span>{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
 						</li>
 					{{/if}}
 					{{/each}}
@@ -443,7 +443,7 @@
 							<ul>
 							{{#each data.skills as |skill s|}}
 								<li class="skill {{#if skill.value}}proficient{{/if}}" title="{{skill.ability}}" data-skill="{{s}}">
-									<span class="skill-name">{{skill.label}}</span>
+									<span class="skill-title">{{skill.label}}</span>
 									<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>{{~" "~}}
 								</li>
 							{{/each}}
@@ -454,7 +454,7 @@
 					{{#each data.skills as |skill s|}}
 					{{#if (or skill.value @root.flags.show-not-prof)}}
 						<li class="skill {{#if skill.value}}proficient{{/if}}"  title="{{skill.ability}}" data-skill="{{s}}">
-							<span class="skill-name">{{skill.label}}</span>
+							<span class="skill-title">{{skill.label}}</span>
 							<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>{{~" "~}}
 						</li>
 					{{/if}}

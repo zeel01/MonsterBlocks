@@ -5,6 +5,7 @@
 - Add spellcasting in one click
 - Add legres in one click
 - Size scaling?
+  - ~~Support a `scale` flag to rescale the window~~
   
 ## Changes
 - Indicate to new users that the menu in the corner exists
