@@ -1,8 +1,5 @@
 # TODO:
 
-## Foundry 0.7.x
-- ~~Something is wrong with the portrait pop up zoom~~
-
 ## Additions
 - Broken item recovery area, for things like spells without a home.
 - Add spellcasting in one click
@@ -12,8 +9,6 @@
   
 ## Changes
 - Indicate to new users that the menu in the corner exists
-- ~~Support Better Rolls Alt rolls~~
-- ~~Rollable hit points~~
   
 ## Fixes
 - *none for now*
