@@ -8,7 +8,6 @@
 	"compatibleCoreVersion": "0.7.4",
 	"systems": ["dnd5e"],
 	"scripts": [
-		"input-expressions/math.min.js",
 		"input-expressions/handler.js"
 	],
 	"esmodules": [
@@ -27,6 +26,13 @@
 			"lang": "ja",
 			"name": "日本語",
 			"path": "lang/ja.json"
+		}
+	],
+	"dependencies": [
+		{
+			"name": "_mathjs",
+			"type": "module",
+			"manifest": "https://raw.githubusercontent.com/League-of-Foundry-Developers/mathjs-lib/master/module.json"
 		}
 	],
 	"manifest": "https://raw.githubusercontent.com/zeel01/MonsterBlocks/master/module.json",
