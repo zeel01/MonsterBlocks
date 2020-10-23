@@ -11,7 +11,7 @@
 - Indicate to new users that the menu in the corner exists
   
 ## Fixes
-- *none for now*
+- When the senses are blank, the value is stored as `null` but it really should be an empty string `""`
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
