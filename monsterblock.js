@@ -46,7 +46,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	getData() {	// Override and add to the getData() function
 		const data = super.getData();
 		
-		console.debug(data);
+		//console.debug(data);
 
 		data.notOwner = !data.owner;
 		data.limited = this.actor.limited;
@@ -613,7 +613,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		featureData.description = this.getCastingFeatureDescription(ct, cts, castingAbility, abilityTitle, tohit, featureData, data)
 
 		
-		console.debug(featureData);
+		//console.debug(featureData);
 	}
 	/**
 	 * Retuns the formatted spellbook data for the associated casting feature
@@ -1780,12 +1780,13 @@ Hooks.once("ready", () => {
 	});
 });
 
+/*
 Hooks.on("renderActorSheet", () => {	// This is just for debugging, it prevents this sheet's template from being cached.
 	let template = "modules/monsterblock/actor-sheet.html";
     delete _templateCache[template];
     console.debug(`Monster Block | removed "${template}" from _templateCache.`);
 })
-
+*/
 /**
  * A class to handle the sizing of a popup box like a character sheet.
  *
@@ -1904,7 +1905,7 @@ class PopupHandler {
 
 // This is how the box sizing is corrected to fit the statblock
 Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the sheet is rendered
-	console.debug(`Monster Block |`, monsterblock, html, data);
+	//console.debug(`Monster Block |`, monsterblock, html, data);
 
 	let popup = new PopupHandler(
 		monsterblock, 	// The Application window
@@ -1920,7 +1921,7 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the she
 Hooks.on("renderActorSheet5eNPC", (sheet) => {
 	if (sheet.constructor.name != "ActorSheet5eNPC") return;
 
-	console.debug("Adding Control...");
+	//console.debug("Adding Control...");
 	let nav = document.createElement("nav");
 	nav.innerHTML = `
 		<i class="fas fa-cog"></i>
