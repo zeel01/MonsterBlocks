@@ -10,8 +10,7 @@ function createRelease(cb) {
 		"monsterblock.css",
 		"actor-sheet.html",
 		"lang/*",
-		"input-expressions/handler.js",
-		"input-expressions/math.min.js"
+		"input-expressions/handler.js"
 	], { base: "." })
 		.pipe(zip("monsterblock.zip"))
 		.pipe(Gulp.dest("./"));
