@@ -93,15 +93,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	 * this version gets data from `contenteditable` and other 
 	 * custom fields rather than standard HTML form elements.
 	 *
-	 * @param {HTMLFormElement} form - The HTML form element being submitted
-	 * @return {FormData} 
+	 * @return {object} 
 	 * @memberof MonsterBlock5e
 	 * @override
 	 */
-	_getFormData(form) {	// Work in progress, might not use.
-		//console.debug("_getFormData!");
-		let formData = new FormData();
-		let dtypes = {};
+	_getSubmitData() {	
+		if (!this.form) throw new Error(`The FormApplication subclass has no registered form element`);
+		
+		const form = this.form;
+		// eslint-disable-next-line no-undef
+		const formData = new FormDataExtended(this.form, { editors: this.editors });
+				
+		const dtypes = {};
 		
 		const fields = form.querySelectorAll("[data-field-key]");
 		for (let field of fields) {
@@ -142,7 +145,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 		
 		formData._dtypes = dtypes;
-		return formData;
+
+		return flattenObject(formData.toObject());
 	}
 	handleSpecial(key, value) {
 		switch (key) {
