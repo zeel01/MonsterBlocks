@@ -54,7 +54,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		// Tweak a few properties to get a proper output
 		data.data.details.xp.label = this.constructor.formatNumberCommas(data.data.details.xp.value);
 		data.data.traits.passivePerception = !this.listsPassPercept(data.data.traits.senses) ? this.getPassivePerception() : false,
-		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula);
+		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula, duplicate(this.actor.data.data));
 		this.prepAbilities(data);
 
 		try {
@@ -863,7 +863,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 					"0";	
 		let attr = attack.abilityMod;
 		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;
-		return this.constructor.averageRoll(formula, {mod: abilityBonus});
+		const mods = duplicate(this.actor.data.data);
+		mods.mod = abilityBonus;
+		return this.constructor.averageRoll(formula, mods);
 	}
 
 /*	damageFormula(attack, index) {
@@ -883,7 +885,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		let attr = attack.abilityMod;										// The ability used for this attack
 		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;		// The ability bonus of the actor
 		let roll;
-		try { roll = new Roll(formula, {mod: abilityBonus}).roll();	}	// Create a new Roll, giving the ability modifier to sub in for @mod
+
+		const mods = duplicate(this.actor.data.data);
+		mods.mod = abilityBonus;
+
+		try { roll = new Roll(formula, mods).roll();	}	// Create a new Roll, giving the ability modifier to sub in for @mod
 		catch (e) {
 			console.error(e);
 			ui.notifications.error(e);
@@ -1915,8 +1921,8 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the she
 		monsterblock, 	// The Application window
 		"form.flexcol",
 		monsterblock.options.width,													// From default options
-	//	window.innerHeight - game.settings.get("monsterblock", "max-height-offset"),	// Configurable offset, default is 72 to give space for the macro bar and 10px of padding.
-		(window.innerHeight - game.settings.get("monsterblock", "max-height-offset")) * (1 / monsterblock.flags.scale),	// Configurable offset, default is 72 to give space for the macro bar and 10px of padding.
+		window.innerHeight - game.settings.get("monsterblock", "max-height-offset"),	// Configurable offset, default is 72 to give space for the macro bar and 10px of padding.
+	//	(window.innerHeight - game.settings.get("monsterblock", "max-height-offset")) * (1 / monsterblock.flags.scale),	// Configurable offset, default is 72 to give space for the macro bar and 10px of padding.
 		8,
 		monsterblock.flags.scale																				// The margins on the window content are 8px
 	);
