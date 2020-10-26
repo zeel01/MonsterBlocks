@@ -3,6 +3,7 @@
 ## Additions
 - Broken item recovery area, for things like spells without a home.
 - Add spellcasting in one click
+- Guess spellcasting feature if none present but spells present.
 - Add legres in one click
 - Size scaling?
   - ~~Support a `scale` flag to rescale the window~~
