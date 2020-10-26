@@ -13,6 +13,7 @@
   
 ## Fixes
 - Window sizing is broken in Firefox
+- Might still be missing some stuff from the damn formula data
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
