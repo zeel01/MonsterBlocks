@@ -12,7 +12,7 @@
   
 ## Fixes
 - ~~When the senses are blank, the value is stored as `null` but it really should be an empty string `""`~~
-- Resource Plus compat issue?
+- ~~Resource Plus compat issue?~~ (fixed by R+)
 - ~~Line 61 duplicate can throw an error, maybe just catch it?~~
 - Window sizing is broken in Firefox
 
