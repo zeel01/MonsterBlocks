@@ -105,7 +105,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		if (!this.form) throw new Error(`The FormApplication subclass has no registered form element`);
 		
 		const form = this.form;
-		// eslint-disable-next-line no-undef
 		const formData = new FormDataExtended(this.form, { editors: this.editors });
 				
 		const dtypes = {};

@@ -99,6 +99,7 @@
         "Hooks": "readonly",
         "SortingHelpers": "readonly",
         "math": "readonly",
-        "game": "readonly"
+        "game": "readonly",
+        "FormDataExtended": "readonly"
     }
 }
