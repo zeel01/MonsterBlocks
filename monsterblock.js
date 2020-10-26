@@ -53,7 +53,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		// Tweak a few properties to get a proper output
 		data.data.details.xp.label = this.constructor.formatNumberCommas(data.data.details.xp.value);
-	//	data.data.traits.senses = this.prepSenses(data.data.traits.senses);
 		data.data.traits.passivePerception = !this.listsPassPercept(data.data.traits.senses) ? this.getPassivePerception() : false,
 		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula);
 		this.prepAbilities(data);
