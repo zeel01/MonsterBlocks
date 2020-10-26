@@ -16,6 +16,7 @@
 - ~~Resource Plus compat issue?~~ (fixed by R+)
 - ~~Line 61 duplicate can throw an error, maybe just catch it?~~
 - Window sizing is broken in Firefox
+- Roll formulas need access to all the data properties of the Actor
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
