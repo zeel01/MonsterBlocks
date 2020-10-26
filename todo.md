@@ -13,7 +13,7 @@
 ## Fixes
 - ~~When the senses are blank, the value is stored as `null` but it really should be an empty string `""`~~
 - Resource Plus compat issue?
-- Line 61 duplicate can throw an error, maybe just catch it?
+- ~~Line 61 duplicate can throw an error, maybe just catch it?~~
 - Window sizing is broken in Firefox
 
 ## Cleanup
@@ -23,6 +23,7 @@
 - Remove anything unused
 
 ## Back Burner
+- Why does `duplicate()`ing the flags object cause an error sometimes? It's weird but seems to not cause any issue.
 - FIX: Potential issue with flags getting deleted after constructor is called. <sup>Likely doesn't cause any harm, low priority</sup>
 - Change to dependecy support for Input Expressions? Or not? <sup>For now, I'm keeping it as-is.</sup>
 - Handle "other" damage? <sup>May not be consistant enough to implement.</sup>
