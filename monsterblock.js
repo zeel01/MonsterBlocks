@@ -480,7 +480,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		data.features = features;
 	}
 	listsPassPercept(senses) {
-		return senses?.toLowerCase().indexOf(game.i18n.localize("MOBLOKS5E.PerceptionLocator")) > -1;
+		return senses.toLowerCase().indexOf(game.i18n.localize("MOBLOKS5E.PerceptionLocator")) > -1;
 	}
 	getPassivePerception() {
 		return game.i18n.format("MOBLOKS5E.PassivePerception", {
@@ -1904,13 +1904,15 @@ class PopupHandler {
 }
 
 // This is how the box sizing is corrected to fit the statblock
+// eslint-disable-next-line no-unused-vars
 Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the sheet is rendered
 	//console.debug(`Monster Block |`, monsterblock, html, data);
 
 	let popup = new PopupHandler(
 		monsterblock, 	// The Application window
 		"form.flexcol",
-		monsterblock.options.width, 													// From default options
+		monsterblock.options.width,													// From default options
+	//	window.innerHeight - game.settings.get("monsterblock", "max-height-offset"),	// Configurable offset, default is 72 to give space for the macro bar and 10px of padding.
 		(window.innerHeight - game.settings.get("monsterblock", "max-height-offset")) * (1 / monsterblock.flags.scale),	// Configurable offset, default is 72 to give space for the macro bar and 10px of padding.
 		8,
 		monsterblock.flags.scale																				// The margins on the window content are 8px
