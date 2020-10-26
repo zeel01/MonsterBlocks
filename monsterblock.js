@@ -57,12 +57,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula, duplicate(this.actor.data.data));
 		this.prepAbilities(data);
 
-		try {
-			data.flags = duplicate(this.flags);	// Get the flags for this module, and make them available in the data
-		}
-		catch (e) {
-			console.warn(e.message);
-		}
+		data.flags = duplicate(this.flags);	// Get the flags for this module, and make them available in the data
+
 		if (data.notOwner) data.flags.editing = false;
 		if (!data.flags.editing) data.flags["show-delete"] = false;
 		if (this.actor.limited) data.flags["show-bio"] = true;
