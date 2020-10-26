@@ -109,13 +109,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		const fields = form.querySelectorAll("[data-field-key]");
 		for (let field of fields) {
 			let key = field.dataset.fieldKey;
-			let type = field.dataset.dtype;
+			let type = field.dataset.dtype || "String";
 			let value = field.innerText;
 			
 			value = this.handleSpecial(key, value);
 
 			formData.append(key, value);
-			if (type) dtypes[key] = type;
+			dtypes[key] = type;
 		}
 
 		const selects = form.querySelectorAll("[data-select-key]");
@@ -144,7 +144,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			formData.append(img.dataset.edit, img.src.replace(basePath, ""));
 		}
 		
-		formData._dtypes = dtypes;
+		formData.dtypes = dtypes;
 
 		return flattenObject(formData.toObject());
 	}

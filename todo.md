@@ -11,7 +11,7 @@
 - Indicate to new users that the menu in the corner exists
   
 ## Fixes
-- When the senses are blank, the value is stored as `null` but it really should be an empty string `""`
+- ~~When the senses are blank, the value is stored as `null` but it really should be an empty string `""`~~
 - Resource Plus compat issue?
 - Line 61 duplicate can throw an error, maybe just catch it?
 - Window sizing is broken in Firefox
