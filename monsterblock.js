@@ -480,7 +480,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		data.features = features;
 	}
 	listsPassPercept(senses) {
-		return senses.toLowerCase().indexOf(game.i18n.localize("MOBLOKS5E.PerceptionLocator")) > -1;
+		return senses?.toLowerCase().indexOf(game.i18n.localize("MOBLOKS5E.PerceptionLocator")) > -1;
 	}
 	getPassivePerception() {
 		return game.i18n.format("MOBLOKS5E.PassivePerception", {
