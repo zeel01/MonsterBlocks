@@ -93,11 +93,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	 * this version gets data from `contenteditable` and other 
 	 * custom fields rather than standard HTML form elements.
 	 *
+	 * @param {object} updateData     Additional data that should be merged with the form data
 	 * @return {object} 
 	 * @memberof MonsterBlock5e
 	 * @override
 	 */
-	_getSubmitData() {	
+	_getSubmitData(updateData={}) {	
 		if (!this.form) throw new Error(`The FormApplication subclass has no registered form element`);
 		
 		const form = this.form;
@@ -145,7 +146,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		formData.dtypes = dtypes;
 
-		return flattenObject(formData.toObject());
+		return flattenObject(
+			mergeObject(
+				formData.toObject(), 
+				updateData
+			)
+		);
 	}
 	handleSpecial(key, value) {
 		switch (key) {
@@ -266,7 +272,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				target: `data.abilities.${ab}.proficient`,
 				icon: flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
 			}, (m) => {
-				m.flag = Boolean(ability.proficient);
+				m.flag = Boolean(this.actor.data.data.abilities[ab]?.proficient);
 				m.icon = m.flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>';
 			}));
 		});
@@ -282,7 +288,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			skill.hover = CONFIG.DND5E.proficiencyLevels[skill.value];
 			skill.label = CONFIG.DND5E.skills[id];
 			menu.add(new MenuItem("skill", { id, skill }, (m, data) => {
-				m.skill.icon = data.data.skills[m.id].icon
+				m.skill.icon = data.data.skills[m.id].icon,
+				m.skill.value = data.data.skills[m.id].value
 			}));
 		});
 			
