@@ -1,6 +1,5 @@
 import ActorSheet5eNPC from "../../systems/dnd5e/module/actor/sheets/npc.js";
 import TraitSelector from "../../systems/dnd5e/module/apps/trait-selector.js";
-import Item5e from "../../systems/dnd5e/module/item/entity.js";
 /* global QuickInsert:readonly */
 
 /**
