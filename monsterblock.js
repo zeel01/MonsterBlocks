@@ -1,5 +1,6 @@
 import ActorSheet5eNPC from "../../systems/dnd5e/module/actor/sheets/npc.js";
 import TraitSelector from "../../systems/dnd5e/module/apps/trait-selector.js";
+import Item5e from "../../systems/dnd5e/module/item/entity.js";
 /* global QuickInsert:readonly */
 
 /**
@@ -54,7 +55,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		// Tweak a few properties to get a proper output
 		data.data.details.xp.label = this.constructor.formatNumberCommas(data.data.details.xp.value);
 		data.data.traits.passivePerception = !this.listsPassPercept(data.data.traits.senses) ? this.getPassivePerception() : false,
-		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula, duplicate(this.actor.data.data));
+		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula, this.actor.getRollData());
 		this.prepAbilities(data);
 
 		data.flags = duplicate(this.flags);	// Get the flags for this module, and make them available in the data
@@ -847,17 +848,13 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return "DND5E.Action" + attack?.data?.data?.actionType?.toUpperCase();
 	}
 	getAttackBonus(attack) {
-		let attr = attack.abilityMod;									// The ability the item says it uses
-		let attackBonus = attack.data.data?.attackBonus;				// Magical item or other bonus
-		let abilityBonus = this.actor.data.data.abilities[attr]?.mod;	// The ability bonus of the actor
-		let isProf = attack.data.data.proficient;						// Is the actor proficient with this item?
-		let profBonus = this.actor.data.data.attributes?.prof;			// The actor's proficiency bonus
-		
-		return abilityBonus + (isProf ? profBonus : 0) + attackBonus;
+		const rData = attack.getRollData();
+		return rData.mod + rData.prof + attack.data.data.attackBonus;
 	}
 	isRangedAttack(attack) {
 		return ["rwak", "rsak"].includes(attack.data.data?.actionType);
 	}
+
 	/**
 	 * Extract the specified roll formula from the item
 	 *
@@ -871,34 +868,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return index == "v" ?						// Versitile formula is index 'v'
 				atkd?.damage?.versatile				
 			:
-					atkd?.damage?.parts?.length > 0 ?
+				atkd?.damage?.parts?.length > 0 ?
 					atkd?.damage?.parts[index][0]
 				: "0";
 	}
+	averageDamage(attack, index=0) {
+		return this.constructor.averageRoll(this.getAttackFormula(attack, index), attack.getRollData());
 	}
 
-/*	damageFormula(attack, index) {
-		if (index != undefined) return this.singleDamageFormula(attack);
-		else {
-			return attack.data.data?.damage?.parts.reduce((acc, part, i) => {
-				return acc + (i > 0 ? "+" : "") + this.singleDamageFormula(attack, i);
-			}, "");
-		}
-	}
-*/	damageFormula(attack, index=0) {	// Extract and re-format the damage formula
-		let atkd = attack.data.data;
-		let formula =	index == "v" ? atkd?.damage?.versatile : (
-						atkd?.damage?.parts?.length > 0 ? 
-						atkd?.damage?.parts[index][0] :
-						"0");												// This is the existing formula, typicallys contains a non-number like @mod
-		let attr = attack.abilityMod;										// The ability used for this attack
-		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;		// The ability bonus of the actor
+	damageFormula(attack, index=0) {	// Extract and re-format the damage formula
+		/** @type Roll */
 		let roll;
-
-		const mods = duplicate(this.actor.data.data);
-		mods.mod = abilityBonus;
-
-		try { roll = new Roll(formula, mods).roll();	}	// Create a new Roll, giving the ability modifier to sub in for @mod
+		try { roll = new Roll(this.getAttackFormula(attack, index), attack.getRollData()).roll();	}	// Create a new Roll
 		catch (e) {
 			console.error(e);
 			ui.notifications.error(e);
