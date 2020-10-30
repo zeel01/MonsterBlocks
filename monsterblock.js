@@ -858,17 +858,23 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	isRangedAttack(attack) {
 		return ["rwak", "rsak"].includes(attack.data.data?.actionType);
 	}
-	averageDamage(attack, index=0) {
-		let atkd = attack.data.data;
-		let formula = index == "v" ? atkd?.damage?.versatile :
+	/**
+	 * Extract the specified roll formula from the item
+	 *
+	 * @param {Item5e} attack - The attack item
+	 * @param {number|string} [index=0] - The index of the rollable formula within the parts of the damage. If 'v', this referes tot he versitile damage formual.
+	 * @return {string} A rollable formula 
+	 * @memberof MonsterBlock5e
+	 */
+	getAttackFormula(attack, index=0) {
+		const atkd = attack.data.data;
+		return index == "v" ?						// Versitile formula is index 'v'
+				atkd?.damage?.versatile				
+			:
 					atkd?.damage?.parts?.length > 0 ?
-					atkd?.damage?.parts[index][0] :
-					"0";	
-		let attr = attack.abilityMod;
-		let abilityBonus = this.actor.data.data?.abilities[attr]?.mod;
-		const mods = duplicate(this.actor.data.data);
-		mods.mod = abilityBonus;
-		return this.constructor.averageRoll(formula, mods);
+					atkd?.damage?.parts[index][0]
+				: "0";
+	}
 	}
 
 /*	damageFormula(attack, index) {
