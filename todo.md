@@ -7,7 +7,7 @@
 - Add legres in one click
 - Size scaling?
   - ~~Support a `scale` flag to rescale the window~~
-- Add the "source" field to the bio view
+- ~~Add the "source" field to the bio view~~
   
 ## Changes
 - Indicate to new users that the menu in the corner exists
