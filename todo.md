@@ -8,6 +8,7 @@
 - Size scaling?
   - ~~Support a `scale` flag to rescale the window~~
 - ~~Add the "source" field to the bio view~~
+- Ability to open a "show to players" pop-up for any image in the biography.
   
 ## Changes
 - Indicate to new users that the menu in the corner exists
