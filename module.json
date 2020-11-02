@@ -3,6 +3,14 @@
 	"title": "Monster Blocks",
 	"description": "An NPC sheet designed to emulate standard 5e monster stat blocks as faithfully as possible.",
 	"author": "zeel",
+	"authors": [
+		{
+			"name": "zeel",
+			"email": "zeel02@gmail.com",
+			"url": "https://github.com/zeel01",
+			"discord": "zeel#4200"
+		}
+	],
 	"version": "2.2.7",
 	"minimumCoreVersion": "0.7.5",
 	"compatibleCoreVersion": "0.7.5",
@@ -37,5 +45,18 @@
 	],
 	"manifest": "https://raw.githubusercontent.com/zeel01/MonsterBlocks/master/module.json",
 	"url": "https://github.com/zeel01/MonsterBlocks",
-	"download": "https://github.com/zeel01/MonsterBlocks/releases/download/v2.2.7/monsterblock.zip"
+	"download": "https://github.com/zeel01/MonsterBlocks/releases/download/v2.2.7/monsterblock.zip",
+	"readme": "https://github.com/zeel01/MonsterBlocks/blob/master/readme.md",
+	"bugs": "https://github.com/zeel01/MonsterBlocks/issues",
+	"changelog": "https://github.com/zeel01/MonsterBlocks/releases",
+	"media": [
+		{
+			"type": "cover",
+			"link": "https://github.com/zeel01/MonsterBlocks/raw/master/examples/ancientRedDragon_5.png"
+		},
+		{
+			"type": "icon",
+			"link": "https://avatars2.githubusercontent.com/u/1721836"
+		}
+	]
 }
