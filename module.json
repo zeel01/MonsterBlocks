@@ -12,8 +12,8 @@
 		}
 	],
 	"version": "2.2.7",
-	"minimumCoreVersion": "0.7.5",
-	"compatibleCoreVersion": "0.7.5",
+	"minimumCoreVersion": "0.7.6",
+	"compatibleCoreVersion": "0.7.6",
 	"systems": ["dnd5e"],
 	"scripts": [
 		"input-expressions/handler.js"
@@ -52,11 +52,11 @@
 	"media": [
 		{
 			"type": "cover",
-			"link": "https://raw.githubusercontent.com/zeel01/MonsterBlocks/master/examples/ancientRedDragon_5.png"
+			"url": "https://raw.githubusercontent.com/zeel01/MonsterBlocks/master/examples/ancientRedDragon_5.png"
 		},
 		{
 			"type": "icon",
-			"link": "https://avatars2.githubusercontent.com/u/1721836"
+			"url": "https://avatars2.githubusercontent.com/u/1721836"
 		}
 	]
 }
