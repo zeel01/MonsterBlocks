@@ -15,6 +15,7 @@
   
 ## Fixes
 - Window sizing is broken in Firefox
+- Use the new movement format in 5e System version 0.99
 - ~~Might still be missing some stuff from the damn formula data~~
 
 ## Cleanup
