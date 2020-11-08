@@ -304,18 +304,19 @@
 				</li>
 				<li class="attribute">
                     <h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }}</h4>
-					<span class="attr-value" 
-						contenteditable="{{flags.editing}}"
-						placeholder="{{ localize 'DND5E.Speed' }}"
-						data-field-key="data.attributes.speed.value">
-						{{~data.attributes.speed.value~}}
-					</span>{{~" "~}}
-					<span class="attr-value optional-comma"
-						contenteditable="{{flags.editing}}"
-						placeholder="{{ localize 'DND5E.SpeedSpecial' }}"
-						data-field-key="data.attributes.speed.special">
-						{{~data.attributes.speed.special~}}
-					</span>
+					{{#each movement as |move|~}}
+						<span class="editable-wrapper{{#if (and move.value @index)}} optional-comma{{/if}}">
+							{{~#if (and move.value move.showLabel)}}{{move.label}} {{/if~}}
+							<span class="attr-value" 
+								contenteditable="{{../flags.editing}}"
+								placeholder="&nbsp;{{move.label}}"
+								data-field-key="{{move.key}}"
+								data-dtype="Number">
+								{{~move.value~}}
+							</span>
+							{{~#if move.value}} {{move.unit}}{{/if~}}
+						</span>
+					{{~/each}}
                 </li>
 			</ul>
 		</section>
