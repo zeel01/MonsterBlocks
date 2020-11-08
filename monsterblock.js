@@ -1778,13 +1778,14 @@ Hooks.once("ready", () => {
 	});
 });
 
-/*
-Hooks.on("renderActorSheet", () => {	// This is just for debugging, it prevents this sheet's template from being cached.
+
+Hooks.on("renderActorSheet", (...args) => {	// This is just for debugging, it prevents this sheet's template from being cached.
 	let template = "modules/monsterblock/actor-sheet.html";
     delete _templateCache[template];
     console.debug(`Monster Block | removed "${template}" from _templateCache.`);
+	console.log(args);
 })
-*/
+
 /**
  * A class to handle the sizing of a popup box like a character sheet.
  *
