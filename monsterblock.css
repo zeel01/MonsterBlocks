@@ -619,6 +619,7 @@ li:nth-last-of-type(2):after {
 }
 
 .monsterblock *:hover > [contenteditable=true]:empty::after,
+.monsterblock *:hover > .editable-wrapper > [contenteditable=true]:empty::after,
 .monsterblock [contenteditable=true]:focus:empty::after {
 	text-shadow: none;
 	content: attr(placeholder);
