@@ -56,6 +56,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		data.data.traits.passivePerception = !this.listsPassPercept(data.data.traits.senses) ? this.getPassivePerception() : false,
 		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula, this.actor.getRollData());
 		this.prepAbilities(data);
+		this.prepMovement(data);
 
 		data.flags = duplicate(this.flags);	// Get the flags for this module, and make them available in the data
 
@@ -497,6 +498,46 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		Object.entries(data.data?.abilities)?.forEach(
 			([id, ability]) => ability.abbr = game.i18n.localize("MOBLOKS5E.Abbr" + id)
 		)
+	}
+	/**
+	 * @typedef moveData 
+	 * A set of data about a movement speed 
+	 * used to generate the text to display on the sheet.
+	 * 
+	 * @property {string} name - The name of the movement type
+	 * @property {Boolean} showLabel - True if the label should be shown, otherwise the label is hidden.
+	 * @property {string} label - The label for this movement speed, should not be capitalized
+	 * @property {number|string} value - The speed, if zero this is set to an empty string so that nothing is displayed
+	 * @property {string} unit - The unit these measurements are in, typically an abbreviation ending in a character like a period
+	 * @property {string} key - The data-field-key, the dot syntax idnetifier for the data this field mutates
+	 */
+	/**
+	 * Prepares a new `movement` property on data
+	 * containing information needed to format that
+	 * various movements speeds on the sheet.
+	 *
+	 * @param {object} data - The data object returned by this.getData() for the template.
+	 * @memberof MonsterBlock5e
+	 */
+	prepMovement(data) {
+		const moveTpyes = ["walk", "burrow", "climb", "fly", "swim"];
+		/** @type moveData[] */
+		const movement = [];
+		for (let move of moveTpyes) {
+			const moveNameCaps = move.replace(move[0], move[0].toUpperCase());
+			const speed = data.data.attributes.movement[move];
+
+			movement.push({
+				name: move,
+				showLabel: move != "walk",
+				label: game.i18n.localize(`DND5E.Movement${moveNameCaps}`).toLowerCase(),
+				value: speed > 0 ? speed : "",
+				unit: data.data.attributes.movement.units + game.i18n.localize("MOBLOKS5E.SpeedUnitAbbrEnd"),
+				key: `data.attributes.movement.${move}`
+			});
+		}
+
+		data.movement = movement;
 	}
 	prepResources(data, item) {
 		data.hasresource 
