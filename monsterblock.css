@@ -718,6 +718,9 @@ li:nth-last-of-type(2):after {
 	font-size: .7em;
 	width: 10ch;
 }
+.monsterblock .biography .editor-content img {
+	cursor: pointer;
+}
 .monsterblock .header-resource {
 	float: right;
 	font-size: .7em;

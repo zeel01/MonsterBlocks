@@ -1293,6 +1293,16 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		const key    = this.lastSelection.key    ? `[data-field-key="${this.lastSelection.key}"]` : "";
 		const entity = this.lastSelection.entity ? `[data-entity="${this.lastSelection.entity}"]` : "";
 		if (key) this.selectElement(html.find(`${key}${entity}`)[0]);
+
+		html.find(".editor-content img").click((event) => {
+			event.preventDefault();
+			let imgSource = event.target.src;
+			new ImagePopout(imgSource, {
+				title: this.actor.name,
+				shareable: true,
+				uuid: this.actor.uuid
+			}).render(true);
+		});
 	}
 	
 	selectInput(event) {
