@@ -44,6 +44,13 @@ please post an issue on [Github](https://github.com/zeel01/MonsterBlocks/issues)
 I will see if there is a way to handle the need.
 
 # Changelog
+## Version: <= 2.3.0
+### Added 2 strings:
+```json
+"MOBLOCKS5E.physicalDamage": "bludgeoning, piercing, and slashing from nonmagical attacks",
+"MOBLOKS5E.SpeedUnitAbbrEnd": ".",
+```
+
 ## Version: 2.0.1
 ### Added 29 strings:
 ```json
