@@ -13,6 +13,8 @@
 ## Changes
 - Change the way that non-magic melee weapons are listed for resistances and immunities.
 - Indicate to new users that the menu in the corner exists
+- Make rolling for recharge actually mark the ability as charged
+- Add sheet class label
   
 ## Fixes
 - Window sizing is broken in Firefox
