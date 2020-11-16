@@ -15,6 +15,7 @@
 - Indicate to new users that the menu in the corner exists
 - Make rolling for recharge actually mark the ability as charged
 - ~~Add sheet class label~~
+- When "Siwtch to default" is clicked, if this is the default sheet, switch to the system default instead.
   
 ## Fixes
 - Window sizing is broken in Firefox
