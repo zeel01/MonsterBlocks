@@ -1986,5 +1986,6 @@ Hooks.on("renderActorSheet5eNPC", (sheet) => {
 
 Actors.registerSheet("dnd5e", MonsterBlock5e, {
     types: ["npc"],
-    makeDefault: false
+    makeDefault: false,
+	label: "MOBLOKS5E.MonsterBlocks"
 });
