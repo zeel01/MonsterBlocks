@@ -9,7 +9,7 @@
   - ~~Support a `scale` flag to rescale the window~~
   
 ## Changes
-- Change the way that non-magic melee weapons are listed for resistances and immunities.
+- ~~Change the way that non-magic melee weapons are listed for resistances and immunities.~~
 - Indicate to new users that the menu in the corner exists
 - Make rolling for recharge actually mark the ability as charged
 - When "Siwtch to default" is clicked, if this is the default sheet, switch to the system default instead.

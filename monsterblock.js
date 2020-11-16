@@ -57,6 +57,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula, this.actor.getRollData());
 		this.prepAbilities(data);
 		this.prepMovement(data);
+		this.replaceNonMagPysicalText(data);
 
 		data.flags = duplicate(this.flags);	// Get the flags for this module, and make them available in the data
 
@@ -311,6 +312,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		let menu = this.addMenu(id, game.i18n.localize(label), attrMenu);
 		this.getTraitChecklist(id, menu, `data.traits.${id}`, "condition-type", CONFIG.DND5E.conditionTypes);
 		return menu;
+	}
+	/**
+	 * Re-localizes the text for non-magical physical damage
+	 * to match the working in the books.
+	 *
+	 * @memberof MonsterBlock5e
+	 */
+	replaceNonMagPysicalText(data) {
+		["di", "dr", "dv"].forEach(damageSet => {
+			const selected = data.actor.data.traits[damageSet]?.selected;
+			if (selected.physical) selected.physical = game.i18n.localize("MOBLOCKS5E.physicalDamage");
+		});
 	}
 	/**
 	 * This method creates MenuItems and populates the target menu for trait lists.
