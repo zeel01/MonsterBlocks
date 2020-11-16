@@ -7,21 +7,17 @@
 - Add legres in one click
 - Size scaling?
   - ~~Support a `scale` flag to rescale the window~~
-- ~~Add the "source" field to the bio view~~
-- ~~Ability to open a "show to players" pop-up for any image in the biography.~~
   
 ## Changes
 - Change the way that non-magic melee weapons are listed for resistances and immunities.
 - Indicate to new users that the menu in the corner exists
 - Make rolling for recharge actually mark the ability as charged
-- ~~Add sheet class label~~
 - When "Siwtch to default" is clicked, if this is the default sheet, switch to the system default instead.
+- ~~Use the new movement format in 5e System version 0.99~~
+  - Support the Hover option and support unit changing 
   
 ## Fixes
 - Window sizing is broken in Firefox
-- ~~Use the new movement format in 5e System version 0.99~~
-  - Support the Hover option and support unit changing
-- ~~Might still be missing some stuff from the damn formula data~~
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
