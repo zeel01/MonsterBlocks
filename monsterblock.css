@@ -111,6 +111,8 @@
 	background-blend-mode: var(--background-blend);
 	color: var(--main-text-color);
 	background-position: 0px 130px;
+/*	overflow-y: hidden; */
+/*	overflow-x: visible; */
 }
 .window-app .switches {
 	/* background: red; */
