@@ -1237,15 +1237,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		// Item editing handlers. Allows right clicking on the description of any item (features, action, etc.) to open its own sheet to edit.
 		html.find(".item").contextmenu(this.openItemEditor.bind(this));
 		html.find(".spell").contextmenu(this.openSpellEditor.bind(this));
-		
-		html.find(".big-red-button").click((event) => {
-			event.preventDefault();
-			//this._onSubmit(event);
-			new ActorSheet5eNPC(this.object).render(true);
-			this._element.removeClass("monsterblock");
-			this._element.addClass("dnd5e");
-			this._element.addClass("npc");
-		});
 					
 		html.find(".select-field").click((event) => {
 			let control = event.currentTarget;
