@@ -45,10 +45,11 @@ I will see if there is a way to handle the need.
 
 # Changelog
 ## Version: <= 2.3.0
-### Added 2 strings:
+### Added 3 strings:
 ```json
 "MOBLOCKS5E.physicalDamage": "bludgeoning, piercing, and slashing from nonmagical attacks",
 "MOBLOKS5E.SpeedUnitAbbrEnd": ".",
+"MOBLOKS5E.FoundryThemeName": "Foundry",
 ```
 
 ## Version: 2.0.1
