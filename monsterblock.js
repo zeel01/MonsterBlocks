@@ -1252,7 +1252,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				}
 			}
 		});
-
+		html.find("input[type=checkbox]").click((event) => {
+			event.currentTarget.value = !event.currentTarget.checked;
+			this._onChangeInput(event);
+		})
 		html.find("[data-save-toggle], [data-damage-type], [data-condition-type], [data-language-opt]").click((event) => {
 			let el = event.currentTarget;
 			let state = (el.dataset.flag == "true");
@@ -1402,6 +1405,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	 */
 	_onChangeInput(event) {
 		const input = event.currentTarget;
+
+		if (input.nodeName == "INPUT") return super._onChangeInput(event);
+
 		input.innerText = input.innerText.replace(/\s+/gm, " ");	// Strip excess whitespace
 		let value = input.innerText;								// .innerText will not include any HTML tags
 		

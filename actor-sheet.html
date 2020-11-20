@@ -317,6 +317,13 @@
 							{{~#if move.value}} {{move.unit}}{{/if~}}
 						</span>
 					{{~/each}}
+					<input class="hover-only"
+						type="checkbox" 
+						data-dtype="Boolean"
+						name="data.attributes.movement.hover"
+						value="{{data.attributes.movement.hover}}"
+						checked="{{data.attributes.movement.hover}}"
+						>
                 </li>
 			</ul>
 		</section>
