@@ -7,6 +7,7 @@
 - Add legres in one click
 - Size scaling?
   - ~~Support a `scale` flag to rescale the window~~
+- Add a "charged" indicator for rechargable abilities.
   
 ## Changes
 - Indicate to new users that the menu in the corner exists
