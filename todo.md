@@ -15,7 +15,7 @@
 - ~~When "Switch to default" is clicked, if this is the default sheet, switch to the system default instead.~~
 - ~~Use the new movement format in 5e System version 0.99~~
   - ~~Support Hover~~
-  - Support unit changing
+  - ~~Support unit changing~~
   
 ## Fixes
 - ~~Window sizing is broken in Firefox~~

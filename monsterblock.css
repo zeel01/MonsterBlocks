@@ -236,7 +236,8 @@
 	color: var(--roll-hover-color);
 }
 
-.monsterblock .hover-only {
+.monsterblock .hover-only,
+.monsterblock .hover-only.select-field {
 	display: none;
 }
 .monsterblock *:hover > .hover-only {
@@ -505,6 +506,9 @@
 	padding-left: 2ch;
 	text-indent: -2ch;
 	position: relative;
+}
+.monsterblock .attributes .attribute .select-field {
+	text-indent: initial;
 }
 .monsterblock .attribute-name {
 	display: inline;
