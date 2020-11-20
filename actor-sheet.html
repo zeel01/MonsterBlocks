@@ -607,12 +607,14 @@
 				</span>
 				
 				{{~#if item.data.recharge.value~}}
-					<span class="name-extension" 
+					<span class="name-extension"
+						data-item-id="{{item._id}}"
 						data-roll-flavor="{{item.name}} ({{ localize 'MOBLOKS5E.Recharge' }} {{item.data.recharge.value}}-6): " 
 						data-roll-formula="1d6" 
 						data-roll-target="{{item.data.recharge.value}}" 
 						data-roll-success="{{ localize 'DND5E.Charged' }}" 
-						data-roll-failure="{{ localize 'MOBLOKS5E.NCharged' }}">
+						data-roll-failure="{{ localize 'MOBLOKS5E.NCharged' }}"
+						data-roll-handler="setCharged">
 						({{ localize 'MOBLOKS5E.Recharge' }} {{item.data.recharge.value}}-6){{~" "~}}
 					</span>
 				{{~/if~}}

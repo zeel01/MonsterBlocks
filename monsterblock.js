@@ -979,6 +979,22 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 		return false;
 	}
+
+	/**
+	 *
+	 *
+	 * @param {boolean} success - Whether or not the roll was a success.
+	 * @param {Event} event - The event object associated with this roll.
+	 * @memberof MonsterBlock5e
+	 */
+	async setCharged(success, event) {
+		await this.actor.updateEmbeddedEntity("OwnedItem", {
+			_id: event.currentTarget.dataset.itemId,
+			"data.recharge.charged": success
+		})
+
+		super._onChangeInput(event);
+	}
 	
 	prepareInnateSpellbook(spellbook) { // We need to completely re-organize the spellbook for an innate spellcaster
 		let innateSpellbook = [];
@@ -1144,11 +1160,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		html.find("[data-roll-formula]").click((event) => {			// Universal way to add an element that provides a roll, just add the data attribute "data-roll-formula" with a formula in it, and this applies.
 			event.preventDefault();									// This handler makes "quick rolls" possible, it just takes some data stored on the HTML element, and rolls dice directly.
-			let formula = event.currentTarget.dataset.rollFormula;
+			const formula = event.currentTarget.dataset.rollFormula;
+			const target = event.currentTarget.dataset.rollTarget;
+			const success = event.currentTarget.dataset.rollSuccess;
+			const failure = event.currentTarget.dataset.rollFailure;
+			const handler = event.currentTarget.dataset.rollHandler;
 			let flavor = event.currentTarget.dataset.rollFlavor;	// Optionally, you can include data-roll-flavor to add text to the message.
-			let target = event.currentTarget.dataset.rollTarget;
-			let success = event.currentTarget.dataset.rollSuccess;
-			let failure = event.currentTarget.dataset.rollFailure;
 			
 			let roll;
 			try { roll = new Roll(formula).roll(); }
@@ -1160,6 +1177,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			
 			if (target) {
 				let s = roll.total >= parseInt(target, 10);
+				if (handler) this[handler](s, event); 
 				
 				flavor += `<span style="font-weight: bold; color: ${s ? "green" : "red"};">${s ? success : failure}</span>`;
 			}
