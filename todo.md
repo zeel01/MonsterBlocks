@@ -17,7 +17,7 @@
   - **Support the Hover option and support unit changing**
   
 ## Fixes
-- Window sizing is broken in Firefox
+- ~~Window sizing is broken in Firefox~~
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
