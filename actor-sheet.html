@@ -315,15 +315,22 @@
 								{{~move.value~}}
 							</span>
 							{{~#if move.value}} {{move.unit}}{{/if~}}
+							{{~#if move.fly}}
+								<span class="hover-only no-break nocaps">
+									(<span class="toggle-button" data-toggle-key="data.attributes.movement.hover"
+										data-toggle-value="{{../data.attributes.movement.hover}}">
+										{{~#if ../data.attributes.movement.hover~}}
+											<i class="fas fa-check"></i>
+										{{~else~}}
+											<i class="far fa-circle"></i>
+										{{~/if}}
+										{{ localize "DND5E.MovementHover" ~}}
+									</span>)
+								</span>
+							{{~/if~}}
 						</span>
 					{{~/each}}
-					<input class="hover-only"
-						type="checkbox" 
-						data-dtype="Boolean"
-						name="data.attributes.movement.hover"
-						value="{{data.attributes.movement.hover}}"
-						checked="{{data.attributes.movement.hover}}"
-						>
+					
                 </li>
 			</ul>
 		</section>

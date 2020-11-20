@@ -236,6 +236,27 @@
 	color: var(--roll-hover-color);
 }
 
+.monsterblock .hover-only {
+	display: none;
+}
+.monsterblock *:hover > .hover-only {
+	display: initial;
+}
+.monsterblock .nocaps {
+	text-transform: lowercase;
+}
+.monsterblock .no-break {
+	white-space: nowrap;
+}
+.monsterblock .toggle-button {
+	/* display: inline-block; */
+	/* width: 20px; */
+	/* height: 20px; */
+	/* border: 1px solid red; */
+	text-indent: initial;
+	cursor: pointer;
+}
+
 .monsterblock .flexcol {
     display: block;
     height: 100%;

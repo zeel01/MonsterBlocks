@@ -137,6 +137,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			dtypes[key] = "Number";
 		}
 
+		const toggles = form.querySelectorAll("[data-toggle-key]");
+		for (let toggle of toggles) {
+			let key = toggle.dataset.toggleKey;
+			let value = toggle.dataset.toggleValue == "true";
+
+			formData.append(key, value);
+			dtypes[key] = "Boolean";
+		}
+
 		// Process editable images
 		const images = form.querySelectorAll("img[data-edit]")
 		for (let img of images) {
@@ -536,12 +545,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		const moveTpyes = ["walk", "burrow", "climb", "fly", "swim"];
 		/** @type moveData[] */
 		const movement = [];
+		const hover = data.data.attributes.movement.hover;
+
 		for (let move of moveTpyes) {
-			const moveNameCaps = move.replace(move[0], move[0].toUpperCase());
 			const speed = data.data.attributes.movement[move];
+			
+			let moveName = move;
+			if (moveName == "fly" && hover) moveName = "hover";
+			const moveNameCaps = moveName.replace(moveName[0], moveName[0].toUpperCase());
 
 			movement.push({
 				name: move,
+				fly: move == "fly",
 				showLabel: move != "walk",
 				label: game.i18n.localize(`DND5E.Movement${moveNameCaps}`).toLowerCase(),
 				value: speed > 0 ? speed : "",
@@ -1264,8 +1279,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				}
 			}
 		});
-		html.find("input[type=checkbox]").click((event) => {
-			event.currentTarget.value = !event.currentTarget.checked;
+		html.find(".toggle-button").click((event) => {
+			const el = event.currentTarget;
+			el.dataset.toggleValue = el.dataset.toggleValue != "true";
 			this._onChangeInput(event);
 		})
 		html.find("[data-save-toggle], [data-damage-type], [data-condition-type], [data-language-opt]").click((event) => {
@@ -1417,8 +1433,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	 */
 	_onChangeInput(event) {
 		const input = event.currentTarget;
-
-		if (input.nodeName == "INPUT") return super._onChangeInput(event);
 
 		input.innerText = input.innerText.replace(/\s+/gm, " ");	// Strip excess whitespace
 		let value = input.innerText;								// .innerText will not include any HTML tags
