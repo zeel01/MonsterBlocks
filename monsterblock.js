@@ -1023,7 +1023,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		const config = CONFIG[this.object.entity];
 		const type = this.object.data.type;
 		const classes = Object.values(config.sheetClasses[type]);
-		const defcls = classes.find(c => c.default);
+		let defcls = classes.find(c => c.default).id;
+
+		// When Monster Blocks *is* the default, use the system default instead.
+		if (defcls == "dnd5e.MonsterBlock5e") defcls = "dnd5e.ActorSheet5eNPC";
 		
 		await this.close();
 		await this.actor.setFlag("core", "sheetClass", defcls);
