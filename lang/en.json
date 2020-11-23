@@ -54,6 +54,9 @@
 	"MOBLOKS5E.Abbrint": "int",
 	"MOBLOKS5E.Abbrwis": "wis",
 	"MOBLOKS5E.Abbrcha": "cha",
+	"MOBLOKS5E.Abbrhon": "hon",
+	"MOBLOKS5E.Abbrsan": "san",
+	"MOBLOKS5E.Abbrblo": "blo",
 
 	"MOBLOKS5E.Score": "Score",
 	"MOBLOKS5E.Modifier": "Modifier",

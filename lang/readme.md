@@ -44,6 +44,18 @@ please post an issue on [Github](https://github.com/zeel01/MonsterBlocks/issues)
 I will see if there is a way to handle the need.
 
 # Changelog
+
+## Version 2.3.1
+
+These are added to support Calego's 5e ability extension.
+The abbreviations are for Honor, Sanity, and Bloodline
+
+### Added 3 Strings:
+```json
+"MOBLOKS5E.Abbrhon": "hon",
+"MOBLOKS5E.Abbrsan": "san",
+"MOBLOKS5E.Abbrblo": "blo",
+```
 ## Version: <= 2.3.0
 ### Added 3 strings:
 ```json
