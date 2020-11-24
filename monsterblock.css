@@ -275,7 +275,7 @@
 	display: block;
 	position: relative;
 }
-.monsterblock .sheet-header section:not(:first-of-type), main {
+.monsterblock .sheet-header section:not(:first-of-type), .monsterblock main {
 	margin-top: .5em;
 }
 .monsterblock .sheet-header section:not(:first-of-type)::before,
