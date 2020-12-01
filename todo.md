@@ -14,7 +14,7 @@
 - Indicate to new users that the menu in the corner exists
 
 ## Fixes
-- *none for now*
+- `null` descriptions showing as "null" on the sheet.
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
