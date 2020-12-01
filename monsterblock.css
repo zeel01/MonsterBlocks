@@ -769,3 +769,99 @@ li:nth-last-of-type(2):after {
 	margin: 0;
 	z-index: 1;
 }
+
+/* Mini Blocks */
+
+.monsterblock.mini-block {
+	--column-width: 290px;
+	font-size: 12px;
+	overflow: hidden;
+	border-radius: 1em;
+}
+.monsterblock.mini-block .window-header {
+	width: 100%;
+	position: absolute;
+	height: 1.5em;
+	border: none;
+	color: var(--main-text-color);
+	padding-top: .3em;
+	line-height: 1em;
+	padding-right: 1.5ch;
+}
+.monsterblock.mini-block .window-title {
+	visibility: hidden;
+}
+.monsterblock.mini-block .window-header .header-button { 
+	font-size: 0px;
+}
+.monsterblock.mini-block .window-header .header-button > i {
+	font-size: 12px; 
+}
+.monsterblock.mini-block .window-header .header-button.close {
+	position: initial;
+	right: initial;
+	height: initial;
+}
+.monsterblock.mini-block .window-content {
+	padding-top: 1.5em;
+	box-shadow: inset 0px 0px 4px 4px #00000038;
+}
+.monsterblock.mini-block .flexcol {
+	column-gap: 18px;
+}
+
+
+.monsterblock.mini-block .sheet-header section:before {
+	margin-bottom: .3em;
+}
+.monsterblock.mini-block .sheet-header section {
+	margin-top: .3em;
+}
+
+.monsterblock.mini-block .monster-attributes1,
+.monsterblock.mini-block .monster-abilities,
+.monsterblock.mini-block .monster-attributes2 {
+	line-height: 1.1em;
+}
+
+
+.monsterblock.mini-block .section-header {
+	margin-bottom: -.1em;
+}
+.monsterblock.mini-block .item {
+	position: relative;
+	height: 2.6em;
+	margin-top: .2em;
+}
+.monsterblock.mini-block .feature-description,
+.monsterblock.mini-block .attack-description {
+	height: 2.6em; /* Line height is 1.3em */
+	overflow: hidden;
+	position: fixed;
+	width: var(--column-width);
+	--mask-image: linear-gradient(to bottom, black 1.6em, transparent);
+	-webkit-mask-image: var(--mask-image);
+	mask-image: var(--mask-image);
+}
+.monsterblock.mini-block .item:hover .feature-description,
+.monsterblock.mini-block .item:hover .attack-description {
+	height: fit-content;
+	background: var(--background-image), var(--background-filter);
+	background-repeat: repeat;
+	background-blend-mode: var(--background-blend);
+	-webkit-mask-image: none;
+	mask-image: none;
+	z-index: 1;
+	box-shadow: 0px 3px 2px 2px #00000047;
+	padding: 1ch;
+	width: calc(var(--column-width) + 2ch);
+	margin-left: -1ch;
+	margin-top: -1ch;
+}
+.monsterblock.mini-block .item.legendary-actions:hover .feature-description {
+	padding-left: 3ch;
+}
+.monsterblock.mini-block .item:before {
+	display: block;
+	position: relative;
+}
