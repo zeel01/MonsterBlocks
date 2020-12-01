@@ -29,11 +29,25 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
 			classes: ["monsterblock", "sheet", "actor"],
-			width: 406,	// Column width of 390, plus 8px of padding on each side.
+			width: 406,	// 406 Column width of 390, plus 8px of padding on each side.
 			height: 400, // Arbitrary and basically meaningless.
 			dragDrop: [{dragSelector: ".item .item-name"}, {dragSelector: ".spell-list .spell"}],
 			resizable: false
 		});
+	}
+
+	render(...args) {
+		if (this.flags["mini-blocks"]) {
+			this.options.classes.push("mini-block");
+			this.options.width = 306;
+		}
+		else {
+			const i = this.options.classes.indexOf("mini-block");
+			if (i > -1) this.options.classes.splice(i, 1);
+			this.options.width = 406;
+		}
+
+		super.render(...args);
 	}
 	
 	/**
@@ -1082,8 +1096,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"show-skill-save": game.settings.get("monsterblock", "show-skill-save"),
 		"show-delete": false,
 		"show-bio": false,
-		"scale": 1.0
-		
+		"scale": 1.0,
+		"mini-blocks": false
 	}
 	async prepFlags() {
 		if (!this.actor.getFlag("monsterblock", "initialized")) {
@@ -1943,7 +1957,7 @@ class PopupHandler {
 		return this.layout.reduce((width, el) => {						// Iterate over all the children of the layout, searching for the one with a right edge furthest from 0
 			let right = el.offsetLeft + el.getBoundingClientRect().width;	// The left edge offset of the element, plus the width, is the right edge offset
 			return right > width ? right : width;							// If this element has a right side further from 0 than the previous record, its offset is the new record.
-		}, 391);
+		}, this.application.options.width - 15); //391
 	}
 	/**
 	 * Returns the greatest offset from the top of the layout

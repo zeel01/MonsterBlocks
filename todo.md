@@ -9,6 +9,7 @@
   - ~~Support a `scale` flag to rescale the window~~
 - Add a "charged" indicator for rechargable abilities.
 - A more compact view
+  - Improve the toggle so that it isn't janky
   
 ## Changes
 - Indicate to new users that the menu in the corner exists
