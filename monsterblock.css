@@ -12,11 +12,12 @@
 	height: 30px !important;	/* Prevents other modules that might try 100% from messing this up now that it's an absolute element. */
 }
 .switches, .monsterblock {
-	/* --column-width: 390px; */
+	--column-width: 53ch;
 }
 .monsterblock {
 	width: 100%;
 	font-size: 14px;
+	--window-padding: 8px;
 	--heading-color: rgb(89 23 13);
 	--roll-hover-color: hsl(8 70% 14% / 1);
 	--divider-color: rgba(140, 42, 42, 1);
@@ -106,6 +107,7 @@
 	text-shadow: 0 0 8px var(--inline-link-color);
 }
 .monsterblock .window-content {
+	padding: var(--window-padding);
 	background: var(--background-image), var(--background-filter);
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
@@ -263,7 +265,7 @@
     height: 100%;
     /* width: var(--column-width); */
     column-width: var(--column-width);
-    column-gap: 35px;
+    column-gap: 3ch;
     column-fill: balance;
     /* border: 1px solid red; */
 }
@@ -466,7 +468,7 @@
 .monsterblock .image-enabled .charname,
 .monsterblock .image-enabled .chartype,
 .monsterblock .image-enabled .monster-attributes1 .attributes {
-	width: 265px;
+	width: 250px;
 }
 .monsterblock .profile-image {
 	border: none;
@@ -772,85 +774,102 @@ li:nth-last-of-type(2):after {
 
 /* Mini Blocks */
 
-.monsterblock.mini-block, .monsterblock.mini-block .switches {
-	--column-width: 290px;
-}
 .monsterblock.mini-block {
-	
 	font-size: 12px;
+}
+
+.monsterblock.mini-block.compact-layout, .monsterblock.mini-block.compact-window .switches > i {
+	visibility: hidden;
+}
+.monsterblock.mini-block.compact-layout, .monsterblock.mini-block.compact-window .switches:hover > i {
+	visibility: visible;
+}
+.monsterblock.mini-block.compact-window {
 	overflow: hidden;
 	border-radius: 1em;
 }
-.monsterblock.mini-block .window-header {
+.monsterblock.mini-block.compact-window .window-header {
 	width: 100%;
 	position: absolute;
-	height: 1.3em;
+	height: 1.5em;
 	border: none;
 	color: var(--main-text-color);
 	padding-top: .3em;
 	line-height: 1em;
 	padding-right: 1.5ch;
+	z-index: 2;
 }
-.monsterblock.mini-block .switches {
+.monsterblock.mini-block.compact-window .window-header * {
+	visibility: hidden;
+}
+.monsterblock.mini-block.compact-window .window-header:hover * {
+	visibility: visible;
+}
+.monsterblock.mini-block.compact-window .switches {
 	top: 4px;
 	left: 0px;
+	width: calc(var(--column-width) / 2);
+	height: 1.5em;
+	z-index: 3;
 }
-.monsterblock.mini-block .switches > ul {
+.monsterblock.mini-block.compact-window .switches > ul {
 	top: 14px;
 	left: 0px;
 }
-.monsterblock.mini-block .window-title {
+.monsterblock.mini-block.compact-window .window-header .window-title {
 	visibility: hidden;
 }
-.monsterblock.mini-block .window-header .header-button { 
+.monsterblock.mini-block.compact-window .window-header .header-button { 
 	font-size: 0px;
 }
-.monsterblock.mini-block .window-header .header-button > i {
+.monsterblock.mini-block.compact-window .window-header .header-button > i {
 	font-size: 12px; 
 }
-.monsterblock.mini-block .window-header .header-button.close {
+.monsterblock.mini-block.compact-window .window-header .header-button.close {
 	position: initial;
 	right: initial;
 	height: initial;
 }
-.monsterblock.mini-block .window-content {
-	padding-top: 1.5em;
+.monsterblock.mini-block.compact-window .window-content {
+	/* padding-top: 0.5em; */
 	box-shadow: inset 0px 0px 4px 4px #00000038;
 }
-.monsterblock.mini-block .flexcol {
-	column-gap: 18px;
-}
 
-.monsterblock.mini-block .charname {
+.monsterblock.mini-block.compact-layout .charname {
 	line-height: 1em;
-	height: 1em;
 }
 
 
-.monsterblock.mini-block .sheet-header section:before {
+.monsterblock.mini-block.compact-layout .sheet-header section:before {
 	margin-bottom: .3em;
 }
-.monsterblock.mini-block .sheet-header section {
+
+.monsterblock.mini-block.compact-layout .sheet-header section {
 	margin-top: .3em;
 }
+.monsterblock.mini-block.compact-layout .sheet-header .monster-identity {
+	margin-top: 0em;
+}
 
-.monsterblock.mini-block .monster-attributes1,
-.monsterblock.mini-block .monster-abilities,
-.monsterblock.mini-block .monster-attributes2 {
+.monsterblock.mini-block.compact-layout .monster-attributes1,
+.monsterblock.mini-block.compact-layout .monster-abilities,
+.monsterblock.mini-block.compact-layout .monster-attributes2 {
 	line-height: 1.1em;
 }
 
 
-.monsterblock.mini-block .section-header {
+.monsterblock.mini-block.compact-layout .section-header {
 	margin-bottom: -.1em;
 }
-.monsterblock.mini-block .item {
-	position: relative;
-	height: 2.6em;
+.monsterblock.mini-block.compact-layout .item {
 	margin-top: .2em;
 }
-.monsterblock.mini-block .feature-description,
-.monsterblock.mini-block .attack-description {
+.monsterblock.mini-block.compact-feats .item {
+	position: relative;
+	height: 2.6em;
+}
+.monsterblock.mini-block.compact-feats .feature-description,
+.monsterblock.mini-block.compact-feats .attack-description {
 	height: 2.6em; /* Line height is 1.3em */
 	overflow: hidden;
 	position: fixed;
@@ -859,8 +878,8 @@ li:nth-last-of-type(2):after {
 	-webkit-mask-image: var(--mask-image);
 	mask-image: var(--mask-image);
 }
-.monsterblock.mini-block .item:hover .feature-description,
-.monsterblock.mini-block .item:hover .attack-description {
+.monsterblock.mini-block.compact-feats .item:hover .feature-description,
+.monsterblock.mini-block.compact-feats .item:hover .attack-description {
 	height: fit-content;
 	background: var(--background-image), var(--background-filter);
 	background-repeat: repeat;
@@ -868,16 +887,17 @@ li:nth-last-of-type(2):after {
 	-webkit-mask-image: none;
 	mask-image: none;
 	z-index: 1;
-	box-shadow: 0px 3px 2px 2px #00000047;
+	box-shadow: 0px 3px 2px 2px #00000030;
 	padding: 1ch;
 	width: calc(var(--column-width) + 2ch);
 	margin-left: -1ch;
 	margin-top: -1ch;
+	border-radius: 0 0 .2em .2em;
 }
-.monsterblock.mini-block .item.legendary-actions:hover .feature-description {
+.monsterblock.mini-block.compact-feats .item.legendary-actions:hover .feature-description {
 	padding-left: 3ch;
 }
-.monsterblock.mini-block .item:before {
+.monsterblock.mini-block.compact-feats .item:before {
 	display: block;
 	position: relative;
 }
