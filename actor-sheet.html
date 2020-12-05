@@ -167,6 +167,44 @@
 			</li>
 			{{/if}}
 			<li>
+				<a class="switch" data-control="mini-block">
+					{{~#if flags.mini-block}}
+						{{~ localize "MOBLOKS5E.mini-block.disable" ~}}
+					{{~else}}
+						{{~ localize "MOBLOKS5E.mini-block.enable" ~}}
+					{{~/if~}}
+				</a>
+				<ul>
+					<li>
+						<a class="switch" data-control="compact-window">
+							{{~#if flags.compact-window}}
+								{{~ localize "MOBLOKS5E.compact-window.disable" ~}}
+							{{~else}}
+								{{~ localize "MOBLOKS5E.compact-window.enable" ~}}
+							{{~/if~}}
+						</a>
+					</li>
+					<li>
+						<a class="switch" data-control="compact-layout">
+							{{~#if flags.compact-layout}}
+								{{~ localize "MOBLOKS5E.compact-layout.disable" ~}}
+							{{~else}}
+								{{~ localize "MOBLOKS5E.compact-layout.enable" ~}}
+							{{~/if~}}
+						</a>
+					</li>
+					<li>
+						<a class="switch" data-control="compact-feats">
+							{{~#if flags.compact-feats}}
+								{{~ localize "MOBLOKS5E.compact-feats.disable" ~}}
+							{{~else}}
+								{{~ localize "MOBLOKS5E.compact-feats.enable" ~}}
+							{{~/if~}}
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li>
 				<a>{{ localize "MOBLOKS5E.Theme" }}</a>
 				<ul>
 				{{#each themes as |theme id|}}

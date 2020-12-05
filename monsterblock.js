@@ -37,15 +37,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 
 	render(...args) {
-		if (this.flags["mini-blocks"]) {
-			this.options.classes.push("mini-block");
-			this.options.width = 306;
-		}
-		else {
-			const i = this.options.classes.indexOf("mini-block");
-			if (i > -1) this.options.classes.splice(i, 1);
-			this.options.width = 406;
-		}
+		//
 
 		super.render(...args);
 	}
@@ -1097,7 +1089,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		"show-delete": false,
 		"show-bio": false,
 		"scale": 1.0,
-		"mini-blocks": false
+		"mini-block": false
 	}
 	async prepFlags() {
 		if (!this.actor.getFlag("monsterblock", "initialized")) {
@@ -1147,7 +1139,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 	}
 	async activateListeners(html) {	// We need listeners to provide interaction.
-	//	this.menuStates = this.menuStates ?? {};
+		this.setWindowClasses(html);
 		
 		html.find(".switch").click((event) => {							// Switches are the primary way that settings are applied per-actor.
 			event.preventDefault();
@@ -1363,6 +1355,21 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 	}
 	
+	setWindowClasses(html) {
+		const outer = html.parent().parent();
+
+		const miniBlockFlags = [
+			"mini-block",
+			"compact-window",
+			"compact-layout",
+			"compact-feats"
+		];
+
+		miniBlockFlags.forEach(flag => {
+			if (this.flags[flag]) outer.addClass(flag);
+			else outer.removeClass(flag);
+		});
+	}
 	selectInput(event) {
 		let el = event.currentTarget;
 		this.selectElement(el);
@@ -1957,7 +1964,7 @@ class PopupHandler {
 		return this.layout.reduce((width, el) => {						// Iterate over all the children of the layout, searching for the one with a right edge furthest from 0
 			let right = el.offsetLeft + el.getBoundingClientRect().width;	// The left edge offset of the element, plus the width, is the right edge offset
 			return right > width ? right : width;							// If this element has a right side further from 0 than the previous record, its offset is the new record.
-		}, this.application.options.width - 15); //391
+		}, parseFloat(window.getComputedStyle(this.element[0]).width)); //391
 	}
 	/**
 	 * Returns the greatest offset from the top of the layout
@@ -1986,6 +1993,7 @@ class PopupHandler {
 	
 	// The following simply add the calculated layout dimensions to the padding, and set the wrapper to that size
 	fixWidth() {
+		this.element.css("width", "calc(var(--column-width) + var(--window-padding) * 2)");
 		this.width = this.layoutWidth + this.padding;
 	}
 	fixHeight() {
