@@ -872,6 +872,7 @@ li:nth-last-of-type(2):after {
 	--mask-image: linear-gradient(to bottom, black 1.6em, transparent);
 	-webkit-mask-image: var(--mask-image);
 	mask-image: var(--mask-image);
+	transition: box-shadow .2s;
 }
 .monsterblock.compact-feats .item:hover .feature-description,
 .monsterblock.compact-feats .item:hover .attack-description {
