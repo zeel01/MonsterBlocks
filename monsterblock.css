@@ -773,21 +773,17 @@ li:nth-last-of-type(2):after {
 
 /* Mini Blocks */
 
-.monsterblock.mini-block {
-	font-size: 12px;
-}
-
-.monsterblock.mini-block.compact-layout, .monsterblock.mini-block.compact-window .switches > i {
+.monsterblock.compact-layout, .monsterblock.compact-window .switches > i {
 	visibility: hidden;
 }
-.monsterblock.mini-block.compact-layout, .monsterblock.mini-block.compact-window .switches:hover > i {
+.monsterblock.compact-layout, .monsterblock.compact-window .switches:hover > i {
 	visibility: visible;
 }
-.monsterblock.mini-block.compact-window {
+.monsterblock.compact-window {
 	overflow: hidden;
 	border-radius: 1em;
 }
-.monsterblock.mini-block.compact-window .window-header {
+.monsterblock.compact-window .window-header {
 	width: 100%;
 	position: absolute;
 	height: 1.5em;
@@ -798,77 +794,77 @@ li:nth-last-of-type(2):after {
 	padding-right: 1.5ch;
 	z-index: 2;
 }
-.monsterblock.mini-block.compact-window .window-header * {
+.monsterblock.compact-window .window-header * {
 	visibility: hidden;
 }
-.monsterblock.mini-block.compact-window .window-header:hover * {
+.monsterblock.compact-window .window-header:hover * {
 	visibility: visible;
 }
-.monsterblock.mini-block.compact-window .switches {
+.monsterblock.compact-window .switches {
 	top: 4px;
 	left: 0px;
 	width: calc(var(--column-width) / 2);
 	height: 1.5em;
 	z-index: 3;
 }
-.monsterblock.mini-block.compact-window .switches > ul {
+.monsterblock.compact-window .switches > ul {
 	top: 14px;
 	left: 0px;
 }
-.monsterblock.mini-block.compact-window .window-header .window-title {
+.monsterblock.compact-window .window-header .window-title {
 	visibility: hidden;
 }
-.monsterblock.mini-block.compact-window .window-header .header-button { 
+.monsterblock.compact-window .window-header .header-button { 
 	font-size: 0px;
 }
-.monsterblock.mini-block.compact-window .window-header .header-button > i {
+.monsterblock.compact-window .window-header .header-button > i {
 	font-size: 12px; 
 }
-.monsterblock.mini-block.compact-window .window-header .header-button.close {
+.monsterblock.compact-window .window-header .header-button.close {
 	position: initial;
 	right: initial;
 	height: initial;
 }
-.monsterblock.mini-block.compact-window .window-content {
+.monsterblock.compact-window .window-content {
 	/* padding-top: 0.5em; */
 	box-shadow: inset 0px 0px 4px 4px #00000038;
 }
 
-.monsterblock.mini-block.compact-layout .charname {
+.monsterblock.compact-layout .charname {
 	line-height: 1em;
 }
 
 
-.monsterblock.mini-block.compact-layout .sheet-header section:before {
+.monsterblock.compact-layout .sheet-header section:before {
 	margin-bottom: .3em;
 }
 
-.monsterblock.mini-block.compact-layout .sheet-header section {
+.monsterblock.compact-layout .sheet-header section {
 	margin-top: .3em;
 }
-.monsterblock.mini-block.compact-layout .sheet-header .monster-identity {
+.monsterblock.compact-layout .sheet-header .monster-identity {
 	margin-top: 0em;
 }
 
-.monsterblock.mini-block.compact-layout .monster-attributes1,
-.monsterblock.mini-block.compact-layout .monster-abilities,
-.monsterblock.mini-block.compact-layout .monster-attributes2 {
+.monsterblock.compact-layout .monster-attributes1,
+.monsterblock.compact-layout .monster-abilities,
+.monsterblock.compact-layout .monster-attributes2 {
 	line-height: 1.1em;
 }
 
 
-.monsterblock.mini-block.compact-layout .section-header {
+.monsterblock.compact-layout .section-header {
 	margin-bottom: -.1em;
 }
-.monsterblock.mini-block.compact-layout .item {
+.monsterblock.compact-layout .item {
 	margin-top: .2em;
 }
-.monsterblock.mini-block.compact-feats .item {
+.monsterblock.compact-feats .item {
 	position: relative;
 	height: 2.6em;
 }
-.monsterblock.mini-block.compact-feats .feature-description,
-.monsterblock.mini-block.compact-feats .attack-description {
+.monsterblock.compact-feats .feature-description,
+.monsterblock.compact-feats .attack-description {
 	height: 2.6em; /* Line height is 1.3em */
 	overflow: hidden;
 	position: fixed;
@@ -877,8 +873,8 @@ li:nth-last-of-type(2):after {
 	-webkit-mask-image: var(--mask-image);
 	mask-image: var(--mask-image);
 }
-.monsterblock.mini-block.compact-feats .item:hover .feature-description,
-.monsterblock.mini-block.compact-feats .item:hover .attack-description {
+.monsterblock.compact-feats .item:hover .feature-description,
+.monsterblock.compact-feats .item:hover .attack-description {
 	height: fit-content;
 	background: var(--background-image), var(--background-filter);
 	background-repeat: repeat;
@@ -893,10 +889,10 @@ li:nth-last-of-type(2):after {
 	margin-top: -1ch;
 	border-radius: 0 0 .2em .2em;
 }
-.monsterblock.mini-block.compact-feats .item.legendary-actions:hover .feature-description {
+.monsterblock.compact-feats .item.legendary-actions:hover .feature-description {
 	padding-left: 3ch;
 }
-.monsterblock.mini-block.compact-feats .item:before {
+.monsterblock.compact-feats .item:before {
 	display: block;
 	position: relative;
 }

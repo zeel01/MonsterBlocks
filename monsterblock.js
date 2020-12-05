@@ -1370,7 +1370,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		const outer = html.parent().parent();
 
 		const miniBlockFlags = [
-			"mini-block",
+		//	"mini-block",
 			"compact-window",
 			"compact-layout",
 			"compact-feats"
