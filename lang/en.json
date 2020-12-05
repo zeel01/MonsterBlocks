@@ -1,8 +1,8 @@
 {
 	"MOBLOKS5E": {
 		"mini-block": {
-			"enable": "Enable Mini Blocks",
-			"disable": "Disable Mini Blocks"
+			"enable": "Mini Blocks",
+			"disable": "Mini Blocks"
 		},
 		"compact-window": {
 			"enable": "Enable Compact Window",
