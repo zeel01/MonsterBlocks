@@ -471,6 +471,16 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		this.setCurrentTheme(value);
 	}
+	async setFontSize(event) {
+		const value = parseFloat(event.currentTarget.nextElementSibling.value);
+
+		if (isNaN(value)) {
+			ui.notifications.error(game.i18n.localize("MOBLOK5E.font-size.NaN-error"));
+			throw new Error(game.i18n.localize("MOBLOK5E.font-size.NaN-error"));
+		}
+
+		await this.actor.setFlag("monsterblock", "font-size", value)
+	}
 	
 	_prepareItems(data) {
 
@@ -1140,6 +1150,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	async activateListeners(html) {	// We need listeners to provide interaction.
 		this.setWindowClasses(html);
+		this.applyFontSize(html);
 		
 		html.find(".switch").click((event) => {							// Switches are the primary way that settings are applied per-actor.
 			event.preventDefault();
@@ -1160,14 +1171,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			
 			this[control](event);
 		});
-		html.find(".custom-class-input").keydown((event) => {							
+		html.find(".switch-input").keydown((event) => {							
 			if (event.key !== "Enter") return;
 			event.preventDefault();
 			let target = event.currentTarget;
 			let anchor = target.previousElementSibling;
 			event.currentTarget = anchor;
-			
-			this.pickTheme(event);
+
+			this[anchor.dataset.control](event);
 		});
 		html.find(".profile-image").click((event) => {
 			event.preventDefault();
@@ -1369,6 +1380,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			if (this.flags[flag]) outer.addClass(flag);
 			else outer.removeClass(flag);
 		});
+	}
+	applyFontSize(html) {
+		const outer = html.parent().parent();
+		const size = this.flags["font-size"] || parseFloat(window.getComputedStyle(document.body).fontSize);
+		outer.css("font-size", `${size}px`);
 	}
 	selectInput(event) {
 		let el = event.currentTarget;

@@ -191,9 +191,8 @@
 	font-size: .7em;
 	font-weight: bold;
 }
-.monsterblock .switches .custom-class-input {
+.monsterblock .switches .switch-input {
 	width: 60%;
-	
 }
 .monsterblock .inline-secrets .secret {
 	display: inline;

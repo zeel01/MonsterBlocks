@@ -202,6 +202,14 @@
 							{{~/if~}}
 						</a>
 					</li>
+					<li>		
+						<label>
+							<a class="trigger nochild" data-control="setFontSize">
+								{{~ localize "MOBLOKS5E.font-size.label" }}{{ localize "MOBLOKS5E.Colon" ~}}
+							</a>
+							<input type="text" class="switch-input" placeholder="{{localize "MOBLOKS5E.font-size.placeholder"}}" value="{{flags.font-size}}">
+						</label>
+					</li>
 				</ul>
 			</li>
 			<li>
@@ -225,7 +233,7 @@
 								data-value="custom">
 								{{~ localize "MOBLOKS5E.CustomThemeName" }}{{ localize "MOBLOKS5E.Colon" ~}}
 							</a>
-							<input type="text" class="custom-class-input" placeholder="class-name" value="{{flags.custom-theme-class}}">
+							<input type="text" class="switch-input" placeholder="class-name" value="{{flags.custom-theme-class}}">
 						</label>
 					</li>
 				</ul>
