@@ -1,4 +1,23 @@
 {
+	"MOBLOKS5E": {
+		"mini-block": {
+			"enable": "Enable Mini Blocks",
+			"disable": "Disable Mini Blocks"
+		},
+		"compact-window": {
+			"enable": "Enable Compact Windoe",
+			"disable": "Disable Compact Window"
+		},
+		"compact-layout": {
+			"enable": "Enable Compact Layout",
+			"disable": "Disable Compact Layout"
+		},
+		"compact-feats": {
+			"enable": "Enable Compact Features",
+			"disable": "Disable Compact Features"
+		}
+	},
+
 	"MOBLOKS5E.MonsterBlocks": "Monster Blocks",
 	
 	"MOBLOKS5E.SwitchToDefault": "Switch to Default Sheet",
