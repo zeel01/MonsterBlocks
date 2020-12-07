@@ -860,11 +860,14 @@ li:nth-last-of-type(2):after {
 	margin-top: .2em;
 }
 .monsterblock.compact-feats .item {
+	cursor: pointer;
+}
+.monsterblock.compact-feats .item.compact {
 	position: relative;
 	height: 2.6em;
 }
-.monsterblock.compact-feats .feature-description,
-.monsterblock.compact-feats .attack-description {
+.monsterblock.compact-feats .compact .feature-description,
+.monsterblock.compact-feats .compact .attack-description {
 	height: 2.6em; /* Line height is 1.3em */
 	overflow: hidden;
 	position: fixed;
@@ -876,6 +879,10 @@ li:nth-last-of-type(2):after {
 }
 .monsterblock.compact-feats .item:hover .feature-description,
 .monsterblock.compact-feats .item:hover .attack-description {
+	box-shadow: 0 0 2px 1px #00000030;
+}
+.monsterblock.compact-feats .item.compact:hover .feature-description,
+.monsterblock.compact-feats .item.compact:hover .attack-description {
 	height: fit-content;
 	background: var(--background-image), var(--background-filter);
 	background-repeat: repeat;
@@ -890,10 +897,10 @@ li:nth-last-of-type(2):after {
 	margin-top: -1ch;
 	border-radius: 0 0 .2em .2em;
 }
-.monsterblock.compact-feats .item.legendary-actions:hover .feature-description {
+.monsterblock.compact-feats .item.compact.legendary-actions:hover .feature-description {
 	padding-left: 3ch;
 }
-.monsterblock.compact-feats .item:before {
+.monsterblock.compact-feats .item.compact:before {
 	display: block;
 	position: relative;
 }

@@ -1192,6 +1192,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		html.find("[data-roll-formula]").click((event) => {			// Universal way to add an element that provides a roll, just add the data attribute "data-roll-formula" with a formula in it, and this applies.
 			event.preventDefault();									// This handler makes "quick rolls" possible, it just takes some data stored on the HTML element, and rolls dice directly.
+			event.stopPropagation();
+			
 			const formula = event.currentTarget.dataset.rollFormula;
 			const target = event.currentTarget.dataset.rollTarget;
 			const success = event.currentTarget.dataset.rollSuccess;
@@ -1245,6 +1247,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		// Item and spell "roll" handlers. Really just pops their chat card into chat, allowing for rolling from there.
 		html.find(".item-name").click(async (event) => {
 			event.preventDefault();
+			event.stopPropagation();
 			let id = event.currentTarget.dataset.itemId;
 			const item = this.actor.getOwnedItem(id);
 			if (MonsterBlock5e.CustomRoll) {
@@ -1256,6 +1259,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		html.find(".spell").click(async (event) => {
 			event.preventDefault();
+			event.stopPropagation();
 			let id = event.currentTarget.dataset.itemId;
 			const item = this.actor.getOwnedItem(id);
 			if (MonsterBlock5e.CustomRoll && !event.shiftKey) {
@@ -1364,6 +1368,21 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				uuid: this.actor.uuid
 			}).render(true);
 		});
+
+		html.find(".item").click(this.toggleExpanded.bind(this));
+	}
+	
+	toggleExpanded(event) {
+		if (!this.flags["compact-feats"]) return;
+
+		const element = event.currentTarget;
+		const name = element.querySelector(".item-name");
+		const id = name.dataset.itemId;
+
+		const item = this.actor.getOwnedItem(id);
+		const expanded = item.getFlag("monsterblock", "expanded");
+
+		item.setFlag("monsterblock", "expanded", !expanded);
 	}
 	
 	setWindowClasses(html) {

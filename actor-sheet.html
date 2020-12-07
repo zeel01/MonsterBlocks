@@ -659,7 +659,7 @@
 		{{~/if}}
 	{{~/inline}}
 	{{#*inline "featureBlock"}}
-	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}{{#if lairactions}} lair-actions{{/if}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
+	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}{{#if lairactions}} lair-actions{{/if}}{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="feature-description inline-children">
 			{{#if flags.show-delete}}
 				<a class="delete-item" data-item-id="{{item._id}}">
@@ -704,7 +704,7 @@
 	
 	{{#each features.casting.items as |casting id|}}
 	{{#if @root.flags.casting-feature}}
-	<section class="item monster-feature spellcasting-trait" title="{{ localize 'MOBLOKS5E.EditHint' }}">
+	<section class="item monster-feature spellcasting-trait{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="feature-description inline-children">
 			{{#if @root.flags.show-delete}}
 				<a class="delete-item" data-item-id="{{casting._id}}">
@@ -797,7 +797,7 @@
 	{{~/inline}}
 	{{#each features.attacks.items as |item iid|}}
 	{{#unless item.is.specialAction}}
-	<section class="item monster-action" title="{{ localize 'MOBLOKS5E.EditHint' }}">
+	<section class="item monster-action{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="attack-description inline-children">
 			{{#if @root.flags.show-delete}}
 				<a class="delete-item" data-item-id="{{item._id}}">
