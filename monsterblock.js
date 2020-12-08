@@ -67,7 +67,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		data.flags = duplicate(this.flags);	// Get the flags for this module, and make them available in the data
 
-		if (data.notOwner) data.flags.editing = false;
+		if (data.notOwner || !this.options.editable) data.flags.editing = false;
 		if (!data.flags.editing) data.flags["show-delete"] = false;
 		if (this.actor.limited) data.flags["show-bio"] = true;
 		
