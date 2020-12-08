@@ -775,19 +775,6 @@ li:nth-last-of-type(2):after {
 	z-index: 1;
 }
 
-/* GM Screen By Calego#0914 Compatability */
-
-.grid-cell .monsterblock {
-	--background-filter: none;
-}
-.grid-cell .monsterblock .flexcol {
-	--column-width: calc(var(--cell-width) - 8px);
-}
-
-.grid-cell .monsterblock header .profile-image img {
-	margin-right: 0px;
-}
-
 /* Mini Blocks */
 
 .monsterblock.compact-layout,
@@ -926,4 +913,17 @@ li:nth-last-of-type(2):after {
 .monsterblock.compact-feats .item.compact:before {
 	display: block;
 	position: relative;
+}
+
+/* GM Screen By Calego#0914 Compatability */
+
+.grid-cell .monsterblock {
+	--background-filter: none;
+}
+.grid-cell .monsterblock .flexcol {
+	--column-width: calc(var(--cell-width) - 8px);
+}
+
+.grid-cell .monsterblock header .profile-image img {
+	margin-right: 0px;
 }
