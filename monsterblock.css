@@ -155,11 +155,15 @@
 	box-shadow: -1px 1px 5px 0px var(--shadow-color);
 }
 .window-app .switches > ul {
-	top: 23px;
-	left: -2px;
+	margin-top: 8px;
+	margin-left: -8px;
+	top: unset;
+	left: unset;
+	position: fixed;
+	flex-direction: column;
 }
 .window-app .switches:hover > ul {
-	display: block;
+	display: flex;
 }
 .window-app .switches li a:not(:only-child):after {
 	display: block;
@@ -827,8 +831,8 @@ li:nth-last-of-type(2):after {
 }
 .grid-cell .monsterblock .switches > ul,
 .monsterblock.compact-window .switches > ul {
-	top: 14px;
-	left: 0px;
+	margin-top: 2px;
+	margin-left: -4px;
 }
 .monsterblock.compact-window .window-header .window-title {
 	visibility: hidden;
