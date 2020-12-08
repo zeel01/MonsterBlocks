@@ -920,10 +920,28 @@ li:nth-last-of-type(2):after {
 .grid-cell .monsterblock {
 	--background-filter: none;
 }
+
 .grid-cell .monsterblock .flexcol {
 	--column-width: calc(var(--cell-width) - 8px);
+	overflow-x: hidden;
 }
 
 .grid-cell .monsterblock header .profile-image img {
 	margin-right: 0px;
+}
+
+.grid-cell .monsterblock.compact-feats .compact .feature-description,
+.grid-cell .monsterblock.compact-feats .compact .attack-description {
+	position: absolute;
+	width: inherit;
+}
+.grid-cell .monsterblock.compact-feats .item.compact:hover .feature-description,
+.grid-cell .monsterblock.compact-feats .item.compact:hover .attack-description {
+	padding: 0;
+	width: 100%;
+	margin-left: 0;
+	margin-top: 0;
+}
+.grid-cell .monsterblock.compact-feats .item.compact.legendary-actions:hover .feature-description {
+	padding-left: 2ch;
 }
