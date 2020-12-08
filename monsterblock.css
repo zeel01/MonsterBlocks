@@ -771,12 +771,29 @@ li:nth-last-of-type(2):after {
 	z-index: 1;
 }
 
+/* GM Screen By Calego#0914 Compatability */
+
+.grid-cell .monsterblock {
+	--background-filter: none;
+}
+.grid-cell .monsterblock .flexcol {
+	--column-width: calc(var(--cell-width) - 8px);
+}
+
+.grid-cell .monsterblock header .profile-image img {
+	margin-right: 0px;
+}
+
 /* Mini Blocks */
 
-.monsterblock.compact-layout, .monsterblock.compact-window .switches > i {
+.monsterblock.compact-layout,
+.grid-cell .monsterblock .switches > i,
+.monsterblock.compact-window .switches > i {
 	visibility: hidden;
 }
-.monsterblock.compact-layout, .monsterblock.compact-window .switches:hover > i {
+.monsterblock.compact-layout,
+.grid-cell .monsterblock .switches:hover i,
+.monsterblock.compact-window .switches:hover > i {
 	visibility: visible;
 }
 .monsterblock.compact-window {
@@ -800,6 +817,7 @@ li:nth-last-of-type(2):after {
 .monsterblock.compact-window .window-header:hover * {
 	visibility: visible;
 }
+.grid-cell .monsterblock .switches,
 .monsterblock.compact-window .switches {
 	top: 4px;
 	left: 0px;
@@ -807,6 +825,7 @@ li:nth-last-of-type(2):after {
 	height: 1.5em;
 	z-index: 3;
 }
+.grid-cell .monsterblock .switches > ul,
 .monsterblock.compact-window .switches > ul {
 	top: 14px;
 	left: 0px;
@@ -872,7 +891,7 @@ li:nth-last-of-type(2):after {
 	overflow: hidden;
 	position: fixed;
 	width: var(--column-width);
-	--mask-image: linear-gradient(to bottom, black 1.6em, transparent);
+	--mask-image: linear-gradient(to bottom, black 1.3em, transparent 2.4em);
 	-webkit-mask-image: var(--mask-image);
 	mask-image: var(--mask-image);
 	transition: box-shadow .2s;

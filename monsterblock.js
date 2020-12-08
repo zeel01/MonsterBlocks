@@ -1386,7 +1386,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	
 	setWindowClasses(html) {
-		const outer = html.parent().parent();
+		const outer = html.parents(".monsterblock");
 
 		const miniBlockFlags = [
 		//	"mini-block",
@@ -2059,6 +2059,7 @@ class PopupHandler {
 // eslint-disable-next-line no-unused-vars
 Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the sheet is rendered
 	//console.debug(`Monster Block |`, monsterblock, html, data);
+	if (html.parent().hasClass("grid-cell-content")) return;
 
 	let popup = new PopupHandler(
 		monsterblock, 	// The Application window
