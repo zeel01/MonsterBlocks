@@ -1401,7 +1401,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 	}
 	applyFontSize(html) {
-		const outer = html.parent().parent();
+		const outer = html.parents(".monsterblock");
 		const size = this.flags["font-size"] || parseFloat(window.getComputedStyle(document.body).fontSize);
 		outer.css("font-size", `${size}px`);
 	}
