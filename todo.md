@@ -22,6 +22,7 @@
   
 ## Changes
 - Indicate to new users that the menu in the corner exists
+- Refactor language file
 
 ## Fixes
 - The damned "unexpected u" bug.
