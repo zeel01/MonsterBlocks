@@ -11,15 +11,20 @@
 - A more compact view
   - ~~adjust font size~~
     - ~~Responsive window sizing~~
+      - Verify this
   - ~~compact layout~~
   - ~~compact features~~
     - ~~hover to view~~
     - ~~toggle individually~~
+  - Improve menu
+  - Add defaults
+- Reset to default button
   
 ## Changes
 - Indicate to new users that the menu in the corner exists
 
 ## Fixes
+- The damned "unexpected u" bug.
 - ~~`null` descriptions showing as "null" on the sheet.~~
 - Any ability for casting
   - Needs to fix menu overflow issue to allow
