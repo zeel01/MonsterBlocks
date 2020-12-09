@@ -1,25 +1,40 @@
 {
 	"MOBLOKS5E": {
 		"mini-block": {
-			"enable": "Mini Blocks",
-			"disable": "Mini Blocks"
+			"label": "Mini Blocks"
 		},
 		"compact-window": {
 			"enable": "Enable Compact Window",
-			"disable": "Disable Compact Window"
+			"disable": "Disable Compact Window",
+			"settings": {
+				"name": "Compact Window",
+				"hint": "Removes the window title bar, and makes the sheet appear more compact."
+			}
 		},
 		"compact-layout": {
 			"enable": "Enable Compact Layout",
-			"disable": "Disable Compact Layout"
+			"disable": "Disable Compact Layout",
+			"settings": {
+				"name": "Compact Layout",
+				"hint": "Reducs the spacing between items on the sheet to save space."
+			}
 		},
 		"compact-feats": {
 			"enable": "Enable Compact Features",
-			"disable": "Disable Compact Features"
+			"disable": "Disable Compact Features",
+			"settings": {
+				"name": "Compact Features",
+				"hint": "Reduces the space taken up by features. When this setting is enabled, each feature will take up only two lines of space. Hovering your mouse over a fature will reveal the full description. Features can be expanded/compacted individually by clicking on them."
+			}
 		},
 		"font-size": {
 			"label": "Font Size",
 			"placeholder": "Font Size (px)",
-			"NaN-error": "Font size must be a number."
+			"NaN-error": "Font size must be a number.",
+			"settings": {
+				"name": "Font Size",
+				"hint": "Set the font size, in pixels, for text in the sheet. Other aspects of the sheet will scale accordingly, reducing font size will make the entire sheet much smaller while increasing it improves readablity."
+			}
 		}
 	},
 
