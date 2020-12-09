@@ -20,7 +20,7 @@
 - Indicate to new users that the menu in the corner exists
 
 ## Fixes
-- `null` descriptions showing as "null" on the sheet.
+- ~~`null` descriptions showing as "null" on the sheet.~~
 - Any ability for casting
   - Needs to fix menu overflow issue to allow
 

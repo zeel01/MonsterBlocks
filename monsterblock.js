@@ -1674,7 +1674,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			return Object.keys(obj).length > 0;
 		},
 		"moblok-enrichhtml": (str, owner, flags) => { // Formats any text to include proper inline rolls and links.
-			return TextEditor.enrichHTML(str, { secrets: (owner && !flags["hidden-secrets"]) });
+			return TextEditor.enrichHTML(str || "", { secrets: (owner && !flags["hidden-secrets"]) });
 		}
 	};
 }
