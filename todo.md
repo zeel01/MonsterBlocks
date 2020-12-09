@@ -16,8 +16,8 @@
   - ~~compact features~~
     - ~~hover to view~~
     - ~~toggle individually~~
-  - Improve menu
-  - Add defaults
+  - ~~Improve menu~~
+  - ~~Add defaults~~
 - ~~Reset to default button~~
   
 ## Changes
