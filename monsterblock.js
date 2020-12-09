@@ -422,6 +422,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			new this.constructor.Tokenizer({}, this.entity).render(true);
 		}
 	}
+	async resetDefaults() {
+		await this.setCurrentTheme(game.settings.get("monsterblock", "default-theme"));
+		this.actor.update({"flags.monsterblock": this.defaultFlags});
+	}
 	static prop = "A String";
 	static themes = {
 		"default": { name: "MOBLOKS5E.DefaultThemeName", class: "default-theme" },
@@ -1080,26 +1084,31 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		return this.actor.sheet.render(true)
 	}
-	defaultFlags = {
-		"initialized": true,
-		"attack-descriptions": game.settings.get("monsterblock", "attack-descriptions"),
-		"casting-feature": game.settings.get("monsterblock", "casting-feature"),
-		"inline-secrets": game.settings.get("monsterblock", "inline-secrets"),
-		"hidden-secrets": game.settings.get("monsterblock", "hidden-secrets"),
-		"current-hit-points": game.settings.get("monsterblock", "current-hit-points"),
-		"maximum-hit-points": game.settings.get("monsterblock", "maximum-hit-points"),
-		"hide-profile-image": game.settings.get("monsterblock", "hide-profile-image"),
-		"show-lair-actions": game.settings.get("monsterblock", "show-lair-actions"),
-		"theme-choice": game.settings.get("monsterblock", "default-theme"),
-		"custom-theme-class": game.settings.get("monsterblock", "custom-theme-class"),
-		"editing": game.settings.get("monsterblock", "editing"),
-		"show-not-prof": game.settings.get("monsterblock", "show-not-prof"),
-		"show-resources": game.settings.get("monsterblock", "show-resources"),
-		"show-skill-save": game.settings.get("monsterblock", "show-skill-save"),
-		"show-delete": false,
-		"show-bio": false,
-		"scale": 1.0,
-		"mini-block": false
+	get defaultFlags() {
+		return duplicate({
+			"initialized": true,
+			"attack-descriptions": game.settings.get("monsterblock", "attack-descriptions"),
+			"casting-feature": game.settings.get("monsterblock", "casting-feature"),
+			"inline-secrets": game.settings.get("monsterblock", "inline-secrets"),
+			"hidden-secrets": game.settings.get("monsterblock", "hidden-secrets"),
+			"current-hit-points": game.settings.get("monsterblock", "current-hit-points"),
+			"maximum-hit-points": game.settings.get("monsterblock", "maximum-hit-points"),
+			"hide-profile-image": game.settings.get("monsterblock", "hide-profile-image"),
+			"show-lair-actions": game.settings.get("monsterblock", "show-lair-actions"),
+			"theme-choice": game.settings.get("monsterblock", "default-theme"),
+			"custom-theme-class": game.settings.get("monsterblock", "custom-theme-class"),
+			"editing": game.settings.get("monsterblock", "editing"),
+			"show-not-prof": game.settings.get("monsterblock", "show-not-prof"),
+			"show-resources": game.settings.get("monsterblock", "show-resources"),
+			"show-skill-save": game.settings.get("monsterblock", "show-skill-save"),
+			"show-delete": false,
+			"show-bio": false,
+			"scale": 1.0,
+			"compact-window": game.settings.get("monsterblock", "compact-window"),
+			"compact-feats": game.settings.get("monsterblock", "compact-feats"),
+			"compact-layout": game.settings.get("monsterblock", "compact-layout"),
+			"font-size": game.settings.get("monsterblock", "font-size")
+		});
 	}
 	async prepFlags() {
 		if (!this.actor.getFlag("monsterblock", "initialized")) {
@@ -1927,6 +1936,38 @@ Hooks.once("ready", () => {
 		config: true,
 		type: String,
 		default: ""
+	});
+	game.settings.register("monsterblock", "compact-window", {
+		name: game.i18n.localize("MOBLOKS5E.compact-window.settings.name"),
+		hint: game.i18n.localize("MOBLOKS5E.compact-window.settings.hint"),
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: false
+	});
+	game.settings.register("monsterblock", "compact-layout", {
+		name: game.i18n.localize("MOBLOKS5E.compact-layout.settings.name"),
+		hint: game.i18n.localize("MOBLOKS5E.compact-layout.settings.hint"),
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: false
+	});
+	game.settings.register("monsterblock", "compact-feats", {
+		name: game.i18n.localize("MOBLOKS5E.compact-feats.settings.name"),
+		hint: game.i18n.localize("MOBLOKS5E.compact-feats.settings.hint"),
+		scope: "world",
+		config: true,
+		type: Boolean,
+		default: false
+	});
+	game.settings.register("monsterblock", "font-size", {
+		name: game.i18n.localize("MOBLOKS5E.font-size.settings.name"),
+		hint: game.i18n.localize("MOBLOKS5E.font-size.settings.hint"),
+		scope: "world",
+		config: true,
+		type: Number,
+		default: 14
 	});
 });
 

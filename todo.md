@@ -18,7 +18,7 @@
     - ~~toggle individually~~
   - Improve menu
   - Add defaults
-- Reset to default button
+- ~~Reset to default button~~
   
 ## Changes
 - Indicate to new users that the menu in the corner exists

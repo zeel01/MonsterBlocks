@@ -35,6 +35,9 @@
 				"name": "Font Size",
 				"hint": "Set the font size, in pixels, for text in the sheet. Other aspects of the sheet will scale accordingly, reducing font size will make the entire sheet much smaller while increasing it improves readablity."
 			}
+		},
+		"resetDefaults": {
+			"label": "Reset to Defaults"
 		}
 	},
 
