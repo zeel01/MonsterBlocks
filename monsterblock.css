@@ -908,7 +908,7 @@ li:nth-last-of-type(2):after {
 .monsterblock.compact-feats .compact .attack-description {
 	height: 2.6em; /* Line height is 1.3em */
 	overflow: hidden;
-	position: fixed;
+	position: absolute;
 	width: var(--column-width);
 	--mask-image: linear-gradient(to bottom, black 1.3em, transparent 2.4em);
 	-webkit-mask-image: var(--mask-image);
@@ -927,6 +927,7 @@ li:nth-last-of-type(2):after {
 	background-blend-mode: var(--background-blend);
 	-webkit-mask-image: none;
 	mask-image: none;
+	position: fixed;
 	z-index: 1;
 	box-shadow: 0px 3px 2px 2px #00000030;
 	padding: 1ch;
