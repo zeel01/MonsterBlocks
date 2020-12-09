@@ -863,6 +863,33 @@ li:nth-last-of-type(2):after {
 	line-height: 1.1em;
 }
 
+.monsterblock.compact-layout .attribute {
+	height: 1.1em;
+	width: var(--column-width);
+	position: relative;
+}
+
+.monsterblock.compact-layout .attribute .attribute-wrapper {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	width: var(--column-width);
+	height: 1.1em;
+	position: absolute;
+	padding-left: 2ch;
+}
+.monsterblock.compact-layout .attribute:hover .attribute-wrapper {
+	white-space: normal;
+	text-overflow: ellipsis;
+	overflow: visible;
+	background: var(--background-image), var(--background-filter);
+	background-repeat: repeat;
+	background-blend-mode: var(--background-blend);
+	z-index: 1;
+	height: fit-content;
+	position: absolute;
+	/* left: 2ch; */
+}
 
 .monsterblock.compact-layout .section-header {
 	margin-bottom: -.1em;
