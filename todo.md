@@ -25,7 +25,7 @@
 - Refactor language file
 
 ## Fixes
-- The damned "unexpected u" bug.
+- ~~The damned "unexpected u" bug.~~
 - ~~`null` descriptions showing as "null" on the sheet.~~
 - Any ability for casting
   - Needs to fix menu overflow issue to allow

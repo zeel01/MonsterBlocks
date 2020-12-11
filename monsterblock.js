@@ -59,14 +59,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		// Tweak a few properties to get a proper output
 		data.data.details.xp.label = this.constructor.formatNumberCommas(data.data.details.xp.value);
-		//data.data.traits.passivePerception = !this.listsPassPercept(data.data.traits.senses) ? this.getPassivePerception() : false,
 		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula, this.actor.getRollData());
+	
 		this.prepAbilities(data);
 		this.prepMovement(data);
 		this.prepSenses(data);
 		this.replaceNonMagPysicalText(data);
 
-		data.flags = duplicate(this.flags);	// Get the flags for this module, and make them available in the data
+		data.flags = this.preparingFlags ? this.defaultFlags : duplicate(this.flags);	// Get the flags for this module, and make them available in the data
 
 		if (data.notOwner || !this.options.editable) data.flags.editing = false;
 		if (!data.flags.editing) data.flags["show-delete"] = false;
@@ -1160,10 +1160,15 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 	}
 	async prepFlags() {
+		this.preparingFlags = false;
+
 		if (!this.actor.getFlag("monsterblock", "initialized")) {
+			this.preparingFlags = true;
 			await this.actor.update({
 				"flags": { "monsterblock": this.defaultFlags }
 			}, {});
+
+			this.preparingFlags = false;
 			return true;
 		}
 		
@@ -1173,9 +1178,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			if (this.actor.getFlag("monsterblock", flag) !== undefined) continue;
 			
 			changes = true;
+			this.preparingFlags = true;
 			await this.actor.setFlag("monsterblock", flag, this.defaultFlags[flag]);
 		}
 		
+		this.preparingFlags = false;
 		return changes;
 	}
 	static async getBetterRolls() {
