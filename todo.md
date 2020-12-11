@@ -8,10 +8,10 @@
 - Size scaling?
   - ~~Support a `scale` flag to rescale the window~~
 - Add a "charged" indicator for rechargable abilities.
-- A more compact view
+- ~~A more compact view~~
   - ~~adjust font size~~
     - ~~Responsive window sizing~~
-      - Verify this
+      - ~~Verify this~~
   - ~~compact layout~~
   - ~~compact features~~
     - ~~hover to view~~
