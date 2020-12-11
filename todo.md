@@ -6,29 +6,13 @@
 - Guess spellcasting feature if none present but spells present.
 - Add legres in one click
 - Add a "charged" indicator for rechargable abilities.
-- ~~A more compact view~~
-  - ~~adjust font size~~
-    - ~~Responsive window sizing~~
-      - ~~Verify this~~
-  - ~~compact layout~~
-  - ~~compact features~~
-    - ~~hover to view~~
-    - ~~toggle individually~~
-  - ~~Improve menu~~
-  - ~~Add defaults~~
-- ~~Reset to default button~~
-- ~~Size scaling?~~
-  - ~~Support a `scale` flag to rescale the window~~  
 
 ## Changes
 - Indicate to new users that the menu in the corner exists
 - Refactor language file
 
 ## Fixes
-- ~~The damned "unexpected u" bug.~~
-- ~~`null` descriptions showing as "null" on the sheet.~~
-- ~~Any ability for casting~~
-  - ~~Needs to fix menu overflow issue to allow~~
+- *none for now*
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
@@ -37,7 +21,6 @@
 - Remove anything unused
 
 ## Back Burner
-- ~~Why does `duplicate()`ing the flags object cause an error sometimes? It's weird but seems to not cause any issue.~~
 - FIX: Potential issue with flags getting deleted after constructor is called. <sup>Likely doesn't cause any harm, low priority</sup>
 - Change to dependecy support for Input Expressions? Or not? <sup>For now, I'm keeping it as-is.</sup>
 - Handle "other" damage? <sup>May not be consistant enough to implement.</sup>
