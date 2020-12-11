@@ -968,7 +968,7 @@ li:nth-last-of-type(2):after {
 .grid-cell .monsterblock.compact-feats .item.compact:hover .feature-description,
 .grid-cell .monsterblock.compact-feats .item.compact:hover .attack-description {
 	padding: 0;
-	width: 100%;
+	width: calc(var(--cell-width) - 1ch);
 	margin-left: 0;
 	margin-top: 0;
 }
