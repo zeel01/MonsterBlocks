@@ -53,10 +53,11 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		// Tweak a few properties to get a proper output
 		data.data.details.xp.label = this.constructor.formatNumberCommas(data.data.details.xp.value);
-		data.data.traits.passivePerception = !this.listsPassPercept(data.data.traits.senses) ? this.getPassivePerception() : false,
+		//data.data.traits.passivePerception = !this.listsPassPercept(data.data.traits.senses) ? this.getPassivePerception() : false,
 		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula, this.actor.getRollData());
 		this.prepAbilities(data);
 		this.prepMovement(data);
+		this.prepSenses(data);
 		this.replaceNonMagPysicalText(data);
 
 		data.flags = duplicate(this.flags);	// Get the flags for this module, and make them available in the data
@@ -535,7 +536,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	 */
 	/**
 	 * Prepares a new `movement` property on data
-	 * containing information needed to format that
+	 * containing information needed to format the
 	 * various movements speeds on the sheet.
 	 *
 	 * @param {object} data - The data object returned by this.getData() for the template.
@@ -567,6 +568,54 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 		data.movement = movement;
 	}
+
+	/**
+	 * @typedef senseData 
+	 * A set of data about a sense 
+	 * used to generate the text to display on the sheet.
+	 * 
+	 * @property {string} name - The name of the sense type
+	 * @property {string} label - The label for this sense, should not be capitalized
+	 * @property {number|string} value - The sense, if zero this is set to an empty string so that nothing is displayed
+	 * @property {string} unit - The unit these measurements are in, typically an abbreviation ending in a character like a period
+	 * @property {string} key - The data-field-key, the dot syntax idnetifier for the data this field mutates
+	 */
+	/**
+	 * Prepares a new `senses` property on data
+	 * containing information needed to format the
+	 * various senses speeds on the sheet.
+	 *
+	 * @param {object} data - The data object returned by this.getData() for the template.
+	 * @memberof MonsterBlock5e
+	 */
+	prepSenses(data) {
+		const senseTypes = ["blindsight", "darkvision", "tremorsense", "truesight", "special"];
+		/** @type senseData[] */
+		const senses = [];
+
+		for (let sense of senseTypes) {
+			const range = data.data.attributes.senses[sense];
+
+			let senseName = sense;
+			const senseNameCaps = senseName.replace(senseName[0], senseName[0].toUpperCase());
+
+			senses.push({
+				name: sense,
+				label: game.i18n.localize(`DND5E.Sense${senseNameCaps}`).toLowerCase(),
+				value: sense == "special" ? range : range > 0 ? range : "",
+				unit: data.data.attributes.senses.units + game.i18n.localize("MOBLOKS5E.SpeedUnitAbbrEnd"),
+				key: `data.attributes.senses.${sense}`
+			});
+		}
+
+		const special = senses.pop();
+		data.senses = senses;
+		data.specialSenses = {
+			passivePerception: this.getPassivePerception(),
+			special
+		}
+	}
+
 	prepResources(data, item) {
 		data.hasresource 
 			=  Boolean(item.data.data.consume?.target)
