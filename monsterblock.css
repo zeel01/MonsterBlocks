@@ -643,7 +643,7 @@ li:nth-last-of-type(2):after {
 .monsterblock .inline-children 
 .description p:first-of-type,
 .monsterblock .inline-children 
-.description div:first-of-type {
+.description div:first-of-type:not(.select-field) {
 	display: inline;
 }
 .monsterblock .description {
@@ -684,7 +684,7 @@ li:nth-last-of-type(2):after {
 }
 
 .monsterblock .select-field {
-	display: inline;
+	display: inline-block;
 	position: relative;
 	cursor: pointer;
 }
@@ -708,14 +708,15 @@ li:nth-last-of-type(2):after {
 	background: var(--background-image), var(--background-filter);
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
-	z-index: 1;	
+	z-index: 1;
 }
 .monsterblock .menu ul {
 	text-align: left;
 }
 .monsterblock .select-list {
-	top: .7em;
-	left: -.3em;
+	position: fixed;
+	margin-top: 0;
+	margin-left: -.5ch;
 }
 .monsterblock .select-list li {
 	cursor: pointer;

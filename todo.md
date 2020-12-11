@@ -27,8 +27,8 @@
 ## Fixes
 - ~~The damned "unexpected u" bug.~~
 - ~~`null` descriptions showing as "null" on the sheet.~~
-- Any ability for casting
-  - Needs to fix menu overflow issue to allow
+- ~~Any ability for casting~~
+  - ~~Needs to fix menu overflow issue to allow~~
 
 ## Cleanup
 - Clean up classes from the template that aren't needed

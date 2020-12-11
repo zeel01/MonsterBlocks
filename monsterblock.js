@@ -856,7 +856,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		const casterLevel = this.actor.data.data?.details?.spellLevel ?? 0;
 		const suffix = this.constructor.getOrdinalSuffix(casterLevel);
 		let abilityOptions = Object.entries(CONFIG.DND5E.abilities).reduce((acc, [key, value]) => {
-			if (!["int", "wis", "cha"].includes(key) || key == castingAbility) return acc;
+			if (key == castingAbility) return acc;
 			return acc + `<li data-selection-value="${key}">${value}</li>`
 		}, "")
 
