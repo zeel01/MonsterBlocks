@@ -45,6 +45,58 @@ I will see if there is a way to handle the need.
 
 # Changelog
 
+## Version 2.4.0
+
+Added a number of strings to support Mini Blocks.
+The new strings are added in the non-flat JSON format, going forward this is how
+all new strings will be added. Eventually the whole file will be refactored into this format.
+
+### Added 19 Strings:
+
+```json
+"MOBLOKS5E": {
+	"mini-block": {
+		"label": "Mini Blocks"
+	},
+	"compact-window": {
+		"enable": "Enable Compact Window",
+		"disable": "Disable Compact Window",
+		"settings": {
+			"name": "Compact Window",
+			"hint": "Removes the window title bar, and makes the sheet appear more compact."
+		}
+	},
+	"compact-layout": {
+		"enable": "Enable Compact Layout",
+		"disable": "Disable Compact Layout",
+		"settings": {
+			"name": "Compact Layout",
+			"hint": "Reducs the spacing between items on the sheet to save space."
+		}
+	},
+	"compact-feats": {
+		"enable": "Enable Compact Features",
+		"disable": "Disable Compact Features",
+		"settings": {
+			"name": "Compact Features",
+			"hint": "Reduces the space taken up by features. When this setting is enabled, each feature will take up only two lines of space. Hovering your mouse over a fature will reveal the full description. Features can be expanded/compacted individually by clicking on them."
+		}
+	},
+	"font-size": {
+		"label": "Font Size",
+		"placeholder": "Font Size (px)",
+		"NaN-error": "Font size must be a number.",
+		"settings": {
+			"name": "Font Size",
+			"hint": "Set the font size, in pixels, for text in the sheet. Other aspects of the sheet will scale accordingly, reducing font size will make the entire sheet much smaller while increasing it improves readablity."
+		}
+	},
+	"resetDefaults": {
+		"label": "Reset to Defaults"
+	}
+}
+```
+
 ## Version 2.3.1
 
 These are added to support Calego's 5e ability extension.
