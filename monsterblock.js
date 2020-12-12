@@ -986,7 +986,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	getAttackBonus(attack) {
 		const rData = attack.getRollData();
-		return rData.mod + rData.prof + attack.data.data.attackBonus;
+		return DiceHelper.condenseRollFormula(`@mod + @prof + ${attack.data.data.attackBonus}`, rData);
 	}
 	isRangedAttack(attack) {
 		return ["rwak", "rsak"].includes(attack.data.data?.actionType);
@@ -1014,34 +1014,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 
 	damageFormula(attack, index=0) {	// Extract and re-format the damage formula
-		/** @type Roll */
-		let roll;
-		try { roll = new Roll(this.getAttackFormula(attack, index), attack.getRollData()).roll();	}	// Create a new Roll
-		catch (e) {
-			console.error(e);
-			ui.notifications.error(e);
-			roll = new Roll("0").roll();
-		}
-		let parts = [], bonus = 0, op = "+";
-		
-		for (let part of roll.terms) {	// Now the formula from Roll is broken down, and re-constructed to combine all the constants.
-			if (typeof part == "object") parts.push(part.formula);
-			else if (part === "+" || part === "-") op = part;
-			else if (isNaN(parseInt(part, 10))) console.error("Unexpected part in damage roll");
-			else {
-				let n = parseInt(part, 10);
-				bonus = op === "+" ? bonus + n : bonus - n;
-			}
-		}
-		if (bonus > 0) parts.push("+");
-		if (bonus < 0) {				// If the bonus was negative, it has a minus sign already. 
-			parts.push("-");			// But we want to format it with a space later. So push the minus sign.
-			bonus = Math.abs(bonus); 	// Then remove the sign from the number.
-		}
-		if (bonus != 0) parts.push(bonus);
-		
-		return parts.join(" ");
-		
+		return DiceHelper.condenseRollFormula(this.getAttackFormula(attack, index), attack.getRollData());
 	}
 	dealsDamage(item) {
 		return Boolean(item.data.data?.damage?.parts?.length);
@@ -2034,6 +2007,75 @@ Hooks.on("renderActorSheet", (...args) => {	// This is just for debugging, it pr
     console.debug(`Monster Block | removed "${template}" from _templateCache.`);
 	console.log(args);
 })
+
+/**
+ * A collection of static helper methods for dealing with dice and rolling.
+ *
+ * @class DiceHelper
+ */
+class DiceHelper {
+	/**
+	 * Condenses the constant terms of a roll formula into a single constant term.
+	 * This simplifes the formula for display purposes.
+	 *
+	 * This also applies to non-roll expressions, reducing the expression to a final result.
+	 *
+	 * @static
+	 * @param {string} formula - The original formula supplied
+	 * @param {object} data - Data for substitution into the formula
+	 * @return {string} The resuting condensed formula
+	 * @memberof DiceHelper
+	 */
+	static condenseRollFormula(formula, data) {
+		const roll = new Roll(Roll.replaceFormulaData(formula, data));
+		const terms = roll.terms;
+
+		if (terms.some(this.isUnsupportedTerm)) return roll.formula;
+
+		const rollableTerms = [];
+		const constantTerms = [];
+		let operators = [];
+
+		for (let term of terms) {
+			if (["+", "-"].includes(term)) operators.push(term);
+			else {
+				if (term instanceof DiceTerm) {
+					rollableTerms.push(...operators);
+					rollableTerms.push(term);
+				}
+				else {
+					constantTerms.push(...operators);
+					constantTerms.push(term);
+				}
+				operators = [];
+			}
+		}
+
+		const constantFormula = Roll.cleanFormula(constantTerms);
+		const rollableFormula = Roll.cleanFormula(rollableTerms);
+
+		const constantPart = roll._safeEval(constantFormula);
+
+		return new Roll(`${rollableFormula} + ${constantPart}`).formula;
+	}
+
+	/**
+	 * Only some terms are supported by condenseRollFormula,
+	 * this method returns true when the term is not supported.
+	 *
+	 * @static
+	 * @param {*} term - A single Dice term to check support on
+	 * @return {Boolean} True when unsupported, false if supported 
+	 * @memberof DiceHelper
+	 */
+	static isUnsupportedTerm(term) {
+		const diceTerm = term instanceof DiceTerm;
+		const operator = ["+", "-"].includes(term);
+		const number   = !isNaN(Number(term));
+
+		return !(diceTerm || operator || number);
+	}
+}
 
 /**
  * A class to handle the sizing of a popup box like a character sheet.
