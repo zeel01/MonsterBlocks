@@ -26,6 +26,7 @@
     "globals": {
         "ROUTE_PREFIX": "readonly",
         "Roll": "readonly",
+        "DiceTerm": "readonly",
         "ChatMessage": "readonly",
         "SetupConfiguration": "readonly",
         "ImagePopout": "readonly",
