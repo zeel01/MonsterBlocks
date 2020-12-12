@@ -11,7 +11,7 @@
 			"discord": "zeel#4200"
 		}
 	],
-	"version": "2.4.0",
+	"version": "2.4.1",
 	"minimumCoreVersion": "0.7.6",
 	"compatibleCoreVersion": "0.7.8",
 	"systems": ["dnd5e"],
@@ -46,7 +46,7 @@
 	],
 	"manifest": "https://raw.githubusercontent.com/zeel01/MonsterBlocks/master/module.json",
 	"url": "https://github.com/zeel01/MonsterBlocks",
-	"download": "https://github.com/zeel01/MonsterBlocks/releases/download/v2.4.0/monsterblock.zip",
+	"download": "https://github.com/zeel01/MonsterBlocks/releases/download/v2.4.1/monsterblock.zip",
 	"readme": "https://github.com/zeel01/MonsterBlocks/blob/master/readme.md",
 	"bugs": "https://github.com/zeel01/MonsterBlocks/issues",
 	"changelog": "https://github.com/zeel01/MonsterBlocks/releases",
