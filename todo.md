@@ -10,6 +10,7 @@
 ## Changes
 - Indicate to new users that the menu in the corner exists
 - Refactor language file
+- Change the way ammo is displayed on an item to avoid implying that the item consumes the specified amount.
 
 ## Fixes
 - *none for now*
