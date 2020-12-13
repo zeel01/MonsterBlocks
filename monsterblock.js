@@ -1283,7 +1283,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		
 		// Item and spell "roll" handlers. Really just pops their chat card into chat, allowing for rolling from there.
-		html.find(".item-name").click(async (event) => {
+		html.find(".item-name, .spell").click(async (event) => {
 			event.preventDefault();
 			event.stopPropagation();
 			let id = event.currentTarget.dataset.itemId;
@@ -1294,18 +1294,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 				MonsterBlock5e.CustomRoll.newItemRoll(item, mergeObject(params, {preset})).toMessage();
 			}
 			else return item.roll(); // Conveniently, items have all this logic built in already.
-		});
-		html.find(".spell").click(async (event) => {
-			event.preventDefault();
-			event.stopPropagation();
-			let id = event.currentTarget.dataset.itemId;
-			const item = this.actor.getOwnedItem(id);
-			if (MonsterBlock5e.CustomRoll && !event.shiftKey) {
-				const params = await MonsterBlock5e.CustomRoll.eventToAdvantage(event);
-				const preset = event.altKey ? 1 : 0;
-				MonsterBlock5e.CustomRoll.newItemRoll(item, mergeObject(params, {preset})).toMessage();
-			}
-			else return this.actor.useSpell(item, {configureDialog: !event.shiftKey}); // Spells are used through the actor, to track slots.
 		});
 		
 		// Item editing handlers. Allows right clicking on the description of any item (features, action, etc.) to open its own sheet to edit.
