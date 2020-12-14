@@ -826,10 +826,13 @@ li:nth-last-of-type(2):after {
 .monsterblock.compact-window .window-header .window-title {
 	visibility: hidden;
 }
-.monsterblock.compact-window .window-header .header-button { 
+.monsterblock.compact-window .window-header a {
 	font-size: 0px;
 }
-.monsterblock.compact-window .window-header .header-button > i {
+.monsterblock.compact-window .window-header a:hover {
+	text-shadow: 0px 0px 1px var(--roll-hover-color);
+}
+.monsterblock.compact-window .window-header a > i {
 	font-size: 12px; 
 }
 .monsterblock.compact-window .window-header .header-button.close {
