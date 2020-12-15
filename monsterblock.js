@@ -81,7 +81,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			isWarlock: this.isWarlock(),
 			hasAtWillSpells: this.hasAtWillSpells(),
 			hasLegendaryActions: Boolean(data.features.legendary.items.length),
-			hasLair: Boolean(data.features.lair.items),
+			hasLair: Boolean(data.features.lair.items.length),
 			hasReactions: Boolean(data.features.reaction.items.length),
 			hasLoot: Boolean(data.features.equipment.items.length),
 			vttatokenizer: Boolean(this.constructor.Tokenizer)
