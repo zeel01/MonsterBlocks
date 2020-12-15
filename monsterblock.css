@@ -248,6 +248,9 @@
 .monsterblock *:hover > .hover-only {
 	display: initial;
 }
+.monsterblock *:hover > .hover-only.select-field {
+	display: inline-block;
+}
 .monsterblock .nocaps {
 	text-transform: lowercase;
 }
@@ -884,15 +887,12 @@ li:nth-last-of-type(2):after {
 }
 .monsterblock.compact-layout .attribute:hover .attribute-wrapper {
 	white-space: normal;
-	text-overflow: ellipsis;
 	overflow: visible;
 	background: var(--background-image), var(--background-filter);
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
 	z-index: 1;
-	height: fit-content;
-	position: absolute;
-	/* left: 2ch; */
+	height: auto;
 }
 
 .monsterblock.compact-layout .section-header {
