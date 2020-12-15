@@ -610,6 +610,7 @@ li:nth-last-of-type(2):after {
 }
 .monsterblock .item {
 	margin-top: 1em;
+	/* display: inline-flex; */
 }
 .monsterblock .item-name,
 .monsterblock .name-extension {
@@ -672,7 +673,7 @@ li:nth-last-of-type(2):after {
 	content: '\00a0';
 }
 .monsterblock [contenteditable=true]:empty {
-	display: inline-block;
+	display: inline-flex;
 	text-indent: 0;
 }
 .monsterblock [contenteditable=true]:active,
@@ -844,6 +845,7 @@ li:nth-last-of-type(2):after {
 	height: initial;
 }
 .monsterblock.compact-window .window-content {
+	cursor: text;
 	/* padding-top: 0.5em; */
 	box-shadow: inset 0px 0px 4px 4px #00000038;
 }
