@@ -66,7 +66,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		this.prepSenses(data);
 		this.replaceNonMagPysicalText(data);
 
-		data.flags = this.preparingFlags ? this.defaultFlags : duplicate(this.flags);	// Get the flags for this module, and make them available in the data
+		data.flags = duplicate(this.flags);	// Get the flags for this module, and make them available in the data
 
 		if (data.notOwner || !this.options.editable) data.flags.editing = false;
 		if (!data.flags.editing) data.flags["show-delete"] = false;
@@ -95,7 +95,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return data;
 	}
 	get flags() {
-		return this.actor.data.flags.monsterblock;
+		return this.preparingFlags 		// Preparing flags
+			|| this.actor.compendium    // Or compendium actor
+				?  this.defaultFlags    // Use default flags instead of legit flags.
+				:  this.actor.data.flags.monsterblock; // Otherwise normal flags
 	}
 	/**
 	 * Constructs a FormData object using data from the sheet,
@@ -445,7 +448,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return this._themes;
 	}
 	get currentTheme() {
-		return this.actor.getFlag("monsterblock", "theme-choice");
+		return this.flags["theme-choice"];
 	}
 	set currentTheme(t) {
 		this.setCurrentTheme(t);
@@ -1133,6 +1136,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 	}
 	async prepFlags() {
+		if (this.actor.compendium) return;
+		
 		this.preparingFlags = false;
 
 		if (!this.actor.getFlag("monsterblock", "initialized")) {
