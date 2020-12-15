@@ -927,7 +927,7 @@ li:nth-last-of-type(2):after {
 }
 .monsterblock.compact-feats .item.compact:hover .feature-description,
 .monsterblock.compact-feats .item.compact:hover .attack-description {
-	height: fit-content;
+	height: auto;
 	background: var(--background-image), var(--background-filter);
 	background-repeat: repeat;
 	background-blend-mode: var(--background-blend);
