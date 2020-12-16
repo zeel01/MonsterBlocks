@@ -673,8 +673,10 @@ li:nth-last-of-type(2):after {
 	content: '\00a0';
 }
 .monsterblock [contenteditable=true]:empty {
-	display: inline-flex;
+	display: inline-block;
 	text-indent: 0;
+	/* line-height: 1.1em; */
+	height: .9em;
 }
 .monsterblock [contenteditable=true]:active,
 .monsterblock [contenteditable=true]:focus, 
