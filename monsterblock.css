@@ -494,6 +494,7 @@
 	border: none;
 	margin-right: 0;
 }
+.monsterblock.compact-layout .profile-image:hover,
 .monsterblock .profile-image:hover {
 	width: calc(var(--column-width) * 0.7);
 	height: calc(var(--column-width) * 0.7);
@@ -855,7 +856,15 @@ li:nth-last-of-type(2):after {
 .monsterblock.compact-layout .charname {
 	line-height: 1em;
 }
-
+.monsterblock.compact-layout .profile-image {
+	height: 14ch;
+	width: 14ch;
+}
+.monsterblock.compact-layout .image-enabled .charname,
+.monsterblock.compact-layout .image-enabled .chartype,
+.monsterblock.compact-layout .image-enabled .monster-attributes1 .attributes {
+	width: 72%;
+}
 
 .monsterblock.compact-layout .sheet-header section:before {
 	margin-bottom: .3em;
