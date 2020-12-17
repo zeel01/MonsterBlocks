@@ -44,7 +44,7 @@
 			"manifest": "https://raw.githubusercontent.com/League-of-Foundry-Developers/mathjs-lib/master/module.json"
 		}
 	],
-	"manifest": "https://raw.githubusercontent.com/zeel01/MonsterBlocks/master/module.json",
+	"manifest": "https://github.com/zeel01/MonsterBlocks/releases/latest/download/module.json",
 	"url": "https://github.com/zeel01/MonsterBlocks",
 	"download": "https://github.com/zeel01/MonsterBlocks/releases/download/v2.4.2/monsterblock.zip",
 	"readme": "https://github.com/zeel01/MonsterBlocks/blob/master/readme.md",
