@@ -46,7 +46,7 @@
 	],
 	"manifest": "https://github.com/zeel01/MonsterBlocks/releases/latest/download/module.json",
 	"url": "https://github.com/zeel01/MonsterBlocks",
-	"download": "https://github.com/zeel01/MonsterBlocks/releases/download/v2.4.2/monsterblock.zip",
+	"download": "https://github.com/zeel01/MonsterBlocks/releases/download/latest/monsterblock.zip",
 	"readme": "https://github.com/zeel01/MonsterBlocks/blob/master/readme.md",
 	"bugs": "https://github.com/zeel01/MonsterBlocks/issues",
 	"changelog": "https://github.com/zeel01/MonsterBlocks/releases",
