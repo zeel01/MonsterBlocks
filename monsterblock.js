@@ -939,12 +939,14 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	getAttackDescription(attack) {
 		let atkd = attack.data.data;
-		let tohit = this.getAttackBonus(attack);
+		let tohit = this.getAttackBonus(attack) || "0";
 		
 		return {
 			attackType: this.getAttackType(attack),
 			tohit: game.i18n.format("MOBLOKS5E.AttackToHit", {
-				bonus: `${tohit > -1 ? "+" : ""}${tohit}`,
+				bonus: ["+", "-"].includes(tohit.charAt(0))
+					? tohit.charAt(1) == " " ? tohit.slice(0, 1) + tohit.slice(2) : tohit
+					: `+${tohit}`
 			}),
 			range: game.i18n.format("MOBLOKS5E.AttackRange", {
 				reachRange: game.i18n.localize(this.isRangedAttack(attack) ? "MOBLOKS5E.range" : "MOBLOKS5E.reach"),
@@ -988,8 +990,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		return "DND5E.Action" + attack?.data?.data?.actionType?.toUpperCase();
 	}
 	getAttackBonus(attack) {
-		const rData = attack.getRollData();
-		return DiceHelper.condenseRollFormula(`@mod + @prof + ${attack.data.data.attackBonus}`, rData);
+		const rData = attack.getRollData(); 
+		return DiceHelper.condenseRollFormula(
+			`@mod + @prof + ${attack.data.data.attackBonus}`, rData, { constantFirst: true }
+		);
 	}
 	isRangedAttack(attack) {
 		return ["rwak", "rsak"].includes(attack.data.data?.actionType);
