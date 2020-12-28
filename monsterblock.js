@@ -2008,10 +2008,11 @@ class DiceHelper {
 	 * @static
 	 * @param {string} formula - The original formula supplied
 	 * @param {object} data - Data for substitution into the formula
+	 * @param {boolean} constantFirst - Should the constant term appear at the start of the formula?
 	 * @return {string} The resuting condensed formula
 	 * @memberof DiceHelper
 	 */
-	static condenseRollFormula(formula, data) {
+	static condenseRollFormula(formula, data, {constantFirst = false} = {}) {
 		const roll = new Roll(Roll.replaceFormulaData(formula, data));
 		const terms = roll.terms;
 
@@ -2041,7 +2042,10 @@ class DiceHelper {
 
 		const constantPart = roll._safeEval(constantFormula);
 
-		return new Roll([rollableFormula, constantPart].filterJoin(" + ")).formula;
+		const parts = constantFirst ? 
+			[constantPart, rollableFormula] : [rollableFormula, constantPart];
+
+		return new Roll(parts.filterJoin(" + ")).formula.trim();
 	}
 
 	/**
