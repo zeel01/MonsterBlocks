@@ -2041,7 +2041,7 @@ class DiceHelper {
 
 		const constantPart = roll._safeEval(constantFormula);
 
-		return new Roll(`${rollableFormula} + ${constantPart}`).formula;
+		return new Roll([rollableFormula, constantPart].filterJoin(" + ")).formula;
 	}
 
 	/**
