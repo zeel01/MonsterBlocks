@@ -987,7 +987,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 	}
 	getAttackType(attack) {
-		return "DND5E.Action" + attack?.data?.data?.actionType?.toUpperCase();
+		return CONFIG.DND5E.itemActionTypes[attack?.data?.data?.actionType] || "";
 	}
 	getAttackBonus(attack) {
 		const rData = attack.getRollData(); 
