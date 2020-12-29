@@ -968,7 +968,9 @@ li:nth-last-of-type(2):after {
 }
 
 .grid-cell .monsterblock .flexcol {
-	--column-width: calc(var(--cell-width) - 8px);
+	--column-width: calc(var(--grid-cell-width) - 8px);
+	column-width: unset;
+	column-count: var(--column-span-count);
 	overflow-x: hidden;
 }
 
@@ -984,7 +986,7 @@ li:nth-last-of-type(2):after {
 .grid-cell .monsterblock.compact-feats .item.compact:hover .feature-description,
 .grid-cell .monsterblock.compact-feats .item.compact:hover .attack-description {
 	padding: 0;
-	width: calc(var(--cell-width) - 1ch);
+	width: calc(var(--grid-cell-width) - 1ch);
 	margin-left: 0;
 	margin-top: 0;
 }
