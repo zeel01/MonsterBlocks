@@ -971,6 +971,7 @@ li:nth-last-of-type(2):after {
 	--column-width: calc(var(--grid-cell-width) - 8px);
 	column-width: unset;
 	column-count: var(--column-span-count);
+	height: unset;
 }
 
 .grid-cell .monsterblock header .profile-image img {
