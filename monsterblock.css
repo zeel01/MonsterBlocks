@@ -299,6 +299,9 @@
 	border-top: .2em solid transparent;
 	border-bottom: .2em solid transparent;
 	border-left: var(--column-width) solid var(--divider-color);
+	--mask-image: linear-gradient(to right, black 30%, #000000b8 80%, transparent);
+	-webkit-mask-image: var(--mask-image);
+	mask-image: var(--mask-image);
 }
 .monsterblock .editing main.bio-box:hover::before {
 	border-left: var(--column-width) solid var(--divider-color);
