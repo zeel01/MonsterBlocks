@@ -6,14 +6,17 @@
 - Guess spellcasting feature if none present but spells present.
 - Add legres in one click
 - Add a "charged" indicator for rechargable abilities.
+- A way to roll initiative
 
 ## Changes
 - Indicate to new users that the menu in the corner exists
 - Refactor language file
 - Change the way ammo is displayed on an item to avoid implying that the item consumes the specified amount.
+- Consider changes to target and range.
+- Possibly include activation condition in attack descriptions.
 
 ## Fixes
-- *none for now*
+- Better Rolls shift/ctr click on ability checks
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
