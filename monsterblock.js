@@ -341,7 +341,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	replaceNonMagPysicalText(data) {
 		["di", "dr", "dv"].forEach(damageSet => {
 			const selected = data.actor.data.traits[damageSet]?.selected;
-			if (selected.physical) selected.physical = game.i18n.localize("MOBLOCKS5E.physicalDamage");
+			if (selected.physical) selected.physical = game.i18n.localize("MOBLOKS5E.physicalDamage");
 		});
 	}
 	/**
