@@ -12,7 +12,7 @@
 	height: 30px !important;	/* Prevents other modules that might try 100% from messing this up now that it's an absolute element. */
 }
 .switches, .monsterblock {
-	--column-width: 53ch;
+	--column-width: 52ch;
 }
 .monsterblock {
 	width: 100%;
