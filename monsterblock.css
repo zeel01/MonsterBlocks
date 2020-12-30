@@ -280,6 +280,9 @@
 .monsterblock .monster-attributes2 {
 	position: relative;
 }
+.monsterblock .no-caps {
+	text-transform: lowercase;
+}
 .monsterblock .sheet-header {
 	display: block;
 	position: relative;
@@ -471,6 +474,10 @@
 .monsterblock .chartype {
 	font-style: italic;
 	margin: 0;
+	text-transform: lowercase;
+}
+.monsterblock .chartype .select-field {
+	text-transform: capitalize;
 }
 .monsterblock .image-enabled .charname,
 .monsterblock .image-enabled .chartype,
