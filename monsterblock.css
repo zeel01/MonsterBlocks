@@ -30,6 +30,7 @@
 	--inline-link-color: #ff6400;
 	--faded-text: #80808080;
 	--shadow-color: var(--main-text-color);
+	--column-gap: 3ch;
 }
 .monsterblock.dark-theme {
 	font-size: 14px;
@@ -271,7 +272,7 @@
     height: 100%;
     /* width: var(--column-width); */
     column-width: var(--column-width);
-    column-gap: 3ch;
+    column-gap: var(--column-gap);
     column-fill: balance;
     /* border: 1px solid red; */
 }
