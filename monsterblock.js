@@ -2111,12 +2111,13 @@ class PopupHandler {
 	}
 	set width(w) {
 		this._width = w;
-		this.element.css("width", w + "px");
-		this.position.width = w;
+		this.element.css("width", w);
+		this.position.width = this.computedWidth;
 	}
 	
 	get height() { return this._height; }
 	get width() { return this._width; }
+	get computedWidth() { return parseFloat(window.getComputedStyle(this.element[0]).width); }
 	get position() { return this.application.position; }
 	
 
@@ -2131,7 +2132,7 @@ class PopupHandler {
 		return this.layout.reduce((width, el) => {						// Iterate over all the children of the layout, searching for the one with a right edge furthest from 0
 			let right = el.offsetLeft + el.getBoundingClientRect().width;	// The left edge offset of the element, plus the width, is the right edge offset
 			return right > width ? right : width;							// If this element has a right side further from 0 than the previous record, its offset is the new record.
-		}, parseFloat(window.getComputedStyle(this.element[0]).width)); //391
+		}, this.computedWidth); //391
 	}
 	/**
 	 * Returns the greatest offset from the top of the layout
@@ -2147,6 +2148,19 @@ class PopupHandler {
 			return bottom > height ? bottom : height;				// If this element's bottom is lower than the record, the record is updated.
 		}, 46);
 	}
+
+	getWidthCSSString(columns) {
+		const gaps = columns - 1;
+		const gap = gaps ? `+ var(--column-gap) * ${gaps}` : ""
+
+		return `
+			calc(
+				var(--column-width) * ${columns}
+				${gap}
+				+ var(--window-padding) * 2
+			)
+		`
+	}
 	
 	fix() {
 		this.element.css("transform", "");
@@ -2160,8 +2174,10 @@ class PopupHandler {
 	
 	// The following simply add the calculated layout dimensions to the padding, and set the wrapper to that size
 	fixWidth() {
-		this.element.css("width", "calc(var(--column-width) + var(--window-padding) * 2)");
-		this.width = this.layoutWidth + this.padding;
+		this.element.css("width", this.getWidthCSSString(1));
+		const baseWidth = parseFloat(window.getComputedStyle(this.element[0]).width) - this.padding;
+		const columns = parseInt(this.layoutWidth / baseWidth, 10);
+		this.width = this.getWidthCSSString(columns);
 	}
 	fixHeight() {
 		this.height = this.layoutHeight + this.padding;
@@ -2174,7 +2190,7 @@ class PopupHandler {
 		this.position.default = false;
 	}
 	fixLeft() {
-		let dw = this.width - this.application.options.width;
+		let dw = this.computedWidth - this.application.options.width;
 		let left = dw / 2;
 		this.position.left -= left;
 		this.element.css("left", this.position.left + "px");
