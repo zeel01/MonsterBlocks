@@ -991,7 +991,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	getAttackBonus(attack) {
 		const rData = attack.getRollData(); 
-		return DiceHelper.condenseRollFormula(
+		return DiceHelper.simplifyRollFormula(
 			`@mod + @prof + ${attack.data.data.attackBonus}`, rData, { constantFirst: true }
 		);
 	}
@@ -1021,7 +1021,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 
 	damageFormula(attack, index=0) {	// Extract and re-format the damage formula
-		return DiceHelper.condenseRollFormula(this.getAttackFormula(attack, index), attack.getRollData());
+		return DiceHelper.simplifyRollFormula(this.getAttackFormula(attack, index), attack.getRollData());
 	}
 	dealsDamage(item) {
 		return Boolean(item.data.data?.damage?.parts?.length);
@@ -2016,7 +2016,7 @@ class DiceHelper {
 	 * @return {string} The resuting condensed formula
 	 * @memberof DiceHelper
 	 */
-	static condenseRollFormula(formula, data, {constantFirst = false} = {}) {
+	static simplifyRollFormula(formula, data, {constantFirst = false} = {}) {
 		const roll = new Roll(Roll.replaceFormulaData(formula, data));
 		const terms = roll.terms;
 
