@@ -2004,7 +2004,7 @@ Hooks.once("ready", () => {
  */
 class DiceHelper {
 	/**
-	 * Condenses the constant terms of a roll formula into a single constant term.
+	 * Simplifes the constant terms of a roll formula into a single constant term.
 	 * This simplifes the formula for display purposes.
 	 *
 	 * This also applies to non-roll expressions, reducing the expression to a final result.
@@ -2017,43 +2017,47 @@ class DiceHelper {
 	 * @memberof DiceHelper
 	 */
 	static simplifyRollFormula(formula, data, {constantFirst = false} = {}) {
-		const roll = new Roll(Roll.replaceFormulaData(formula, data));
+		const roll = new Roll(formula, data); // Parses the formula and replaces any @properties
 		const terms = roll.terms;
 
+		// Some terms are "too complicated" for this algorithm to simplify
+		// In this case, the original formula is returned.
 		if (terms.some(this.isUnsupportedTerm)) return roll.formula;
 
-		const rollableTerms = [];
-		const constantTerms = [];
-		let operators = [];
+		const rollableTerms = []; // Terms that are non-constant, and their associated operators
+		const constantTerms = []; // Terms that are constant, and their associated operators
+		let operators = [];       // Temporary storage for operators before they are moved to one of the above
 
-		for (let term of terms) {
-			if (["+", "-"].includes(term)) operators.push(term);
-			else {
-				if (term instanceof DiceTerm) {
-					rollableTerms.push(...operators);
-					rollableTerms.push(term);
-				}
-				else {
-					constantTerms.push(...operators);
-					constantTerms.push(term);
-				}
-				operators = [];
+		for (let term of terms) {                                  // For each term
+			if (["+", "-"].includes(term)) operators.push(term);   // If the term is an addition/subtraction operator, push the term into the operators array
+			else {                                                 // Otherwise the term is not an operator
+				if (term instanceof DiceTerm) {                    // If the term is something rollable
+					rollableTerms.push(...operators);              // Place all the operators into the rollableTerms array
+					rollableTerms.push(term);                      // Then place this rollable term into it as well
+				}                                                  //
+				else {                                             // Otherwise, this must be a constant
+					constantTerms.push(...operators);              // Place the operators into the constantTerms array
+					constantTerms.push(term);                      // Then also add this constant term to that array.
+				}                                                  //
+				operators = [];                                    // Finally, the operators have now all been assigend to one of the arrays, so empty this before the next iteration.
 			}
 		}
 
-		const constantFormula = Roll.cleanFormula(constantTerms);
-		const rollableFormula = Roll.cleanFormula(rollableTerms);
+		const constantFormula = Roll.cleanFormula(constantTerms);  // Cleans up the constant terms and produces a new formula string
+		const rollableFormula = Roll.cleanFormula(rollableTerms);  // Cleans up the non-constant terms and produces a new formula string
 
-		const constantPart = roll._safeEval(constantFormula);
+		const constantPart = roll._safeEval(constantFormula);      // Mathematically evaluate the constant formula to produce a single constant term
 
-		const parts = constantFirst ? 
+		const parts = constantFirst ? // Order the rollable and constant terms, either constant first or second depending on the optional argumen
 			[constantPart, rollableFormula] : [rollableFormula, constantPart];
-
+		
+		// Join the parts with a + sign, pass them to `Roll` once again to clean up the formula
+		// And return the string with whitespace trimmed off.
 		return new Roll(parts.filterJoin(" + ")).formula.trim();
 	}
 
 	/**
-	 * Only some terms are supported by condenseRollFormula,
+	 * Only some terms are supported by simplifyRollFormula,
 	 * this method returns true when the term is not supported.
 	 *
 	 * @static
