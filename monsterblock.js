@@ -1266,24 +1266,24 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		
 		// Special Roll Handlers
-		html.find(".ability").click((event) => {
+		html.find(".ability").click(async (event) => {
 			event.preventDefault();
 			let ability = event.currentTarget.dataset.ability;
 			
-			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.fullRollAttribute(this.actor, ability, "check", MonsterBlock5e.CustomRoll.eventToAdvantage(event));
+			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.fullRollAttribute(this.actor, ability, "check", await MonsterBlock5e.CustomRoll.eventToAdvantage(event));
 			else this.actor.rollAbilityTest(ability, {event: event});
 		});
-		html.find(".saving-throw").click((event) => {
+		html.find(".saving-throw").click(async (event) => {
 			event.preventDefault();
 			let ability = event.currentTarget.dataset.ability;
 			
-			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.fullRollAttribute(this.actor, ability, "save", MonsterBlock5e.CustomRoll.eventToAdvantage(event));
+			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.fullRollAttribute(this.actor, ability, "save", await MonsterBlock5e.CustomRoll.eventToAdvantage(event));
 			else this.actor.rollAbilitySave(ability, {event: event});
 		});
-		html.find(".skill").click((event) => {
+		html.find(".skill").click(async (event) => {
 			event.preventDefault();
 			let skill = event.currentTarget.dataset.skill;
-			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.fullRollSkill(this.actor, skill, MonsterBlock5e.CustomRoll.eventToAdvantage(event));
+			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.fullRollSkill(this.actor, skill, await MonsterBlock5e.CustomRoll.eventToAdvantage(event));
 			else this.actor.rollSkill(skill, {event: event});
 		});
 		
