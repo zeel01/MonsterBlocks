@@ -1,5 +1,7 @@
 import ActorSheet5eNPC from "../../systems/dnd5e/module/actor/sheets/npc.js";
 import TraitSelector from "../../systems/dnd5e/module/apps/trait-selector.js";
+import { simplifyRollFormula } from "../../systems/dnd5e/module/dice.js";
+
 /* global QuickInsert:readonly */
 
 /**
@@ -991,7 +993,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	getAttackBonus(attack) {
 		const rData = attack.getRollData(); 
-		return DiceHelper.simplifyRollFormula(
+		return simplifyRollFormula(
 			`@mod + @prof + ${attack.data.data.attackBonus}`, rData, { constantFirst: true }
 		);
 	}
@@ -1021,7 +1023,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 
 	damageFormula(attack, index=0) {	// Extract and re-format the damage formula
-		return DiceHelper.simplifyRollFormula(this.getAttackFormula(attack, index), attack.getRollData());
+		return simplifyRollFormula(this.getAttackFormula(attack, index), attack.getRollData());
 	}
 	dealsDamage(item) {
 		return Boolean(item.data.data?.damage?.parts?.length);
@@ -1997,82 +1999,15 @@ Hooks.once("ready", () => {
 	});
 });
 
-/**
+/** CURRENTLY UNUSED
  * A collection of static helper methods for dealing with dice and rolling.
  *
  * @class DiceHelper
- */
+ 
 class DiceHelper {
-	/**
-	 * Simplifes the constant terms of a roll formula into a single constant term.
-	 * This simplifes the formula for display purposes.
-	 *
-	 * This also applies to non-roll expressions, reducing the expression to a final result.
-	 *
-	 * @static
-	 * @param {string} formula - The original formula supplied
-	 * @param {object} data - Data for substitution into the formula
-	 * @param {boolean} constantFirst - Should the constant term appear at the start of the formula?
-	 * @return {string} The resuting condensed formula
-	 * @memberof DiceHelper
-	 */
-	static simplifyRollFormula(formula, data, {constantFirst = false} = {}) {
-		const roll = new Roll(formula, data); // Parses the formula and replaces any @properties
-		const terms = roll.terms;
 
-		// Some terms are "too complicated" for this algorithm to simplify
-		// In this case, the original formula is returned.
-		if (terms.some(this.isUnsupportedTerm)) return roll.formula;
-
-		const rollableTerms = []; // Terms that are non-constant, and their associated operators
-		const constantTerms = []; // Terms that are constant, and their associated operators
-		let operators = [];       // Temporary storage for operators before they are moved to one of the above
-
-		for (let term of terms) {                                  // For each term
-			if (["+", "-"].includes(term)) operators.push(term);   // If the term is an addition/subtraction operator, push the term into the operators array
-			else {                                                 // Otherwise the term is not an operator
-				if (term instanceof DiceTerm) {                    // If the term is something rollable
-					rollableTerms.push(...operators);              // Place all the operators into the rollableTerms array
-					rollableTerms.push(term);                      // Then place this rollable term into it as well
-				}                                                  //
-				else {                                             // Otherwise, this must be a constant
-					constantTerms.push(...operators);              // Place the operators into the constantTerms array
-					constantTerms.push(term);                      // Then also add this constant term to that array.
-				}                                                  //
-				operators = [];                                    // Finally, the operators have now all been assigend to one of the arrays, so empty this before the next iteration.
-			}
-		}
-
-		const constantFormula = Roll.cleanFormula(constantTerms);  // Cleans up the constant terms and produces a new formula string
-		const rollableFormula = Roll.cleanFormula(rollableTerms);  // Cleans up the non-constant terms and produces a new formula string
-
-		const constantPart = roll._safeEval(constantFormula);      // Mathematically evaluate the constant formula to produce a single constant term
-
-		const parts = constantFirst ? // Order the rollable and constant terms, either constant first or second depending on the optional argumen
-			[constantPart, rollableFormula] : [rollableFormula, constantPart];
-		
-		// Join the parts with a + sign, pass them to `Roll` once again to clean up the formula
-		// And return the string with whitespace trimmed off.
-		return new Roll(parts.filterJoin(" + ")).formula.trim();
-	}
-
-	/**
-	 * Only some terms are supported by simplifyRollFormula,
-	 * this method returns true when the term is not supported.
-	 *
-	 * @static
-	 * @param {*} term - A single Dice term to check support on
-	 * @return {Boolean} True when unsupported, false if supported 
-	 * @memberof DiceHelper
-	 */
-	static isUnsupportedTerm(term) {
-		const diceTerm = term instanceof DiceTerm;
-		const operator = ["+", "-"].includes(term);
-		const number   = !isNaN(Number(term));
-
-		return !(diceTerm || operator || number);
-	}
 }
+*/
 
 /**
  * A class to handle the sizing of a popup box like a character sheet.
