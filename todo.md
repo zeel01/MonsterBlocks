@@ -16,7 +16,7 @@
 - Possibly include activation condition in attack descriptions.
 
 ## Fixes
-- ~~Better Rolls shift/ctr click on ability checks~~
+- *none for now*
 
 ## Cleanup
 - Clean up classes from the template that aren't needed
