@@ -727,7 +727,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		this.prepResources(attackData, attack);
 
-		attackData.tohit = this.getAttackBonus(attack);
+		attackData.tohit = attack.labels.toHit;
 		
 		attackData.description = this.getAttackDescription(attack);
 	}
@@ -941,7 +941,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	getAttackDescription(attack) {
 		let atkd = attack.data.data;
-		let tohit = this.getAttackBonus(attack) || "0";
+		let tohit = attack.labels.toHit || "0";
 		
 		return {
 			attackType: this.getAttackType(attack),
@@ -990,12 +990,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	getAttackType(attack) {
 		return CONFIG.DND5E.itemActionTypes[attack?.data?.data?.actionType] || "";
-	}
-	getAttackBonus(attack) {
-		const rData = attack.getRollData(); 
-		return simplifyRollFormula(
-			`@mod + @prof + ${attack.data.data.attackBonus}`, rData, { constantFirst: true }
-		);
 	}
 	isRangedAttack(attack) {
 		return ["rwak", "rsak"].includes(attack.data.data?.actionType);
