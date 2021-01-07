@@ -2183,10 +2183,10 @@ Actors.registerSheet("dnd5e", MonsterBlock5e, {
     makeDefault: false,
 	label: "MOBLOKS5E.MonsterBlocks"
 });
-
+/*
 Hooks.on("renderActorSheet", (...args) => {	// This is just for debugging, it prevents this sheet's template from being cached.
 	let template = "modules/monsterblock/actor-sheet.html";
     delete _templateCache[template];
     console.debug(`Monster Block | removed "${template}" from _templateCache.`);
 	console.log(args);
-})
+})*/
