@@ -974,33 +974,33 @@ li:nth-last-of-type(2):after {
 
 /* GM Screen By Calego#0914 Compatability */
 
-.grid-cell .monsterblock {
+.gm-screen-grid-cell .monsterblock {
 	--background-filter: none;
 }
 
-.grid-cell .monsterblock .flexcol {
+.gm-screen-grid-cell .monsterblock .flexcol {
 	--column-width: calc(var(--grid-cell-width) - 8px);
 	column-width: unset;
 	column-count: var(--column-span-count);
 	height: unset;
 }
 
-.grid-cell .monsterblock header .profile-image img {
+.gm-screen-grid-cell .monsterblock header .profile-image img {
 	margin-right: 0px;
 }
 
-.grid-cell .monsterblock.compact-feats .compact .feature-description,
-.grid-cell .monsterblock.compact-feats .compact .attack-description {
+.gm-screen-grid-cell .monsterblock.compact-feats .compact .feature-description,
+.gm-screen-grid-cell .monsterblock.compact-feats .compact .attack-description {
 	position: absolute;
 	width: inherit;
 }
-.grid-cell .monsterblock.compact-feats .item.compact:hover .feature-description,
-.grid-cell .monsterblock.compact-feats .item.compact:hover .attack-description {
+.gm-screen-grid-cell .monsterblock.compact-feats .item.compact:hover .feature-description,
+.gm-screen-grid-cell .monsterblock.compact-feats .item.compact:hover .attack-description {
 	padding: 0;
 	width: calc(var(--grid-cell-width) - 1ch);
 	margin-left: 0;
 	margin-top: 0;
 }
-.grid-cell .monsterblock.compact-feats .item.compact.legendary-actions:hover .feature-description {
+.gm-screen-grid-cell .monsterblock.compact-feats .item.compact.legendary-actions:hover .feature-description {
 	padding-left: 2ch;
 }
