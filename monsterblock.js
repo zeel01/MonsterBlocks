@@ -1166,7 +1166,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static async getBetterRolls() {
 		if (game.data.modules.find(m => m.id == "betterrolls5e")?.active) {
 			let { CustomItemRoll, CustomRoll } = await import("../betterrolls5e/scripts/custom-roll.js");
+			let { Utils } = await import("../betterrolls5e/scripts/utils.js");
+
 			Object.assign(this, { CustomItemRoll, CustomRoll });
+			Object.assign(this, { Utils });
 		}
 		else {
 			this.CustomItemRoll = false;
@@ -1270,20 +1273,20 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			event.preventDefault();
 			let ability = event.currentTarget.dataset.ability;
 			
-			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.fullRollAttribute(this.actor, ability, "check", await MonsterBlock5e.CustomRoll.eventToAdvantage(event));
+			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.rollAttribute(this.actor, ability, "check", await MonsterBlock5e.Utils.eventToAdvantage(event));
 			else this.actor.rollAbilityTest(ability, {event: event});
 		});
 		html.find(".saving-throw").click(async (event) => {
 			event.preventDefault();
 			let ability = event.currentTarget.dataset.ability;
 			
-			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.fullRollAttribute(this.actor, ability, "save", await MonsterBlock5e.CustomRoll.eventToAdvantage(event));
+			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.rollAttribute(this.actor, ability, "save", await MonsterBlock5e.Utils.eventToAdvantage(event));
 			else this.actor.rollAbilitySave(ability, {event: event});
 		});
 		html.find(".skill").click(async (event) => {
 			event.preventDefault();
 			let skill = event.currentTarget.dataset.skill;
-			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.fullRollSkill(this.actor, skill, await MonsterBlock5e.CustomRoll.eventToAdvantage(event));
+			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.rollSkill(this.actor, skill, await MonsterBlock5e.Utils.eventToAdvantage(event));
 			else this.actor.rollSkill(skill, {event: event});
 		});
 		
@@ -1294,7 +1297,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			let id = event.currentTarget.dataset.itemId;
 			const item = this.actor.getOwnedItem(id);
 			if (MonsterBlock5e.CustomRoll) {
-				const params = await MonsterBlock5e.CustomRoll.eventToAdvantage(event);
+				const params = await MonsterBlock5e.Utils.eventToAdvantage(event);
 				const preset = event.altKey ? 1 : 0;
 				MonsterBlock5e.CustomRoll.newItemRoll(item, mergeObject(params, {preset})).toMessage();
 			}
