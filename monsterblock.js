@@ -1163,19 +1163,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		this.preparingFlags = false;
 		return changes;
 	}
-	static async getBetterRolls() {
-		if (game.data.modules.find(m => m.id == "betterrolls5e")?.active) {
-			let { CustomItemRoll, CustomRoll } = await import("../betterrolls5e/scripts/custom-roll.js");
-			let { Utils } = await import("../betterrolls5e/scripts/utils.js");
-
-			Object.assign(this, { CustomItemRoll, CustomRoll });
-			Object.assign(this, { Utils });
-		}
-		else {
-			this.CustomItemRoll = false;
-			this.CustomRoll = false;
-		}
-	}
 	static async getTokenizer() {
 		if (game.data.modules.find(m => m.id == "vtta-tokenizer")?.active) {
 			let Tokenizer = (await import("../vtta-tokenizer/src/tokenizer/index.js")).default;
@@ -1273,20 +1260,20 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			event.preventDefault();
 			let ability = event.currentTarget.dataset.ability;
 			
-			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.rollAttribute(this.actor, ability, "check", await MonsterBlock5e.Utils.eventToAdvantage(event));
+			if (window.BetterRolls) window.BetterRolls.rollCheck(this.actor, ability, { event });
 			else this.actor.rollAbilityTest(ability, {event: event});
 		});
 		html.find(".saving-throw").click(async (event) => {
 			event.preventDefault();
 			let ability = event.currentTarget.dataset.ability;
 			
-			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.rollAttribute(this.actor, ability, "save", await MonsterBlock5e.Utils.eventToAdvantage(event));
+			if (window.BetterRolls) window.BetterRolls.rollSave(this.actor, ability, { event });
 			else this.actor.rollAbilitySave(ability, {event: event});
 		});
 		html.find(".skill").click(async (event) => {
 			event.preventDefault();
 			let skill = event.currentTarget.dataset.skill;
-			if (MonsterBlock5e.CustomRoll) MonsterBlock5e.CustomRoll.rollSkill(this.actor, skill, await MonsterBlock5e.Utils.eventToAdvantage(event));
+			if (window.BetterRolls) window.BetterRolls.rollSkill(this.actor, skill, { event });
 			else this.actor.rollSkill(skill, {event: event});
 		});
 		
@@ -1296,10 +1283,9 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			event.stopPropagation();
 			let id = event.currentTarget.dataset.itemId;
 			const item = this.actor.getOwnedItem(id);
-			if (MonsterBlock5e.CustomRoll) {
-				const params = await MonsterBlock5e.Utils.eventToAdvantage(event);
+			if (window.BetterRolls) {
 				const preset = event.altKey ? 1 : 0;
-				MonsterBlock5e.CustomRoll.newItemRoll(item, mergeObject(params, {preset})).toMessage();
+				window.BetterRolls.rollItem(item, { event, preset }).toMessage();
 			}
 			else return item.roll(); // Conveniently, items have all this logic built in already.
 		});
@@ -1829,7 +1815,6 @@ Hooks.once("init", () => {
 });
 
 Hooks.once("ready", () => {
-	MonsterBlock5e.getBetterRolls();
 	MonsterBlock5e.getTokenizer();
 	MonsterBlock5e.getQuickInserts();
 	
