@@ -37,12 +37,6 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			resizable: false
 		});
 	}
-
-	render(...args) {
-		//
-
-		super.render(...args);
-	}
 	
 	/**
 	 * Provides the data used in Handlebars for the sheet template.
