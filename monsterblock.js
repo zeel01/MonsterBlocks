@@ -1638,7 +1638,8 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		
 	static isSpellcasting(item) {
 		const name = item.name.toLowerCase().replace(/\s+/g, "");
-		return game.i18n.localize("MOBLOKS5E.SpellcastingLocators").some(loc => loc.includes(name));
+		return !this.isInnateSpellcasting(item) &&
+			game.i18n.localize("MOBLOKS5E.SpellcastingLocators").some(loc => loc.includes(name));
 	}
 
 	static isInnateSpellcasting(item) {
