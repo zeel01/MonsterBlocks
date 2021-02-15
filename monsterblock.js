@@ -1616,7 +1616,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
 		let name = item.name.toLowerCase().replace(/\s+/g, "");	// Convert the name of the item to all lower case, and remove whitespace.
-		return game.i18n.localize("MOBLOKS5E.MultiattackLocators").some(loc => loc.includes(name));
+		return game.i18n.localize("MOBLOKS5E.MultiattackLocators").some(loc => name.includes(loc));
 	}
 	
 	static isLegendaryResistance(item) {
@@ -1639,12 +1639,12 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static isSpellcasting(item) {
 		const name = item.name.toLowerCase().replace(/\s+/g, "");
 		return !this.isInnateSpellcasting(item) &&
-			game.i18n.localize("MOBLOKS5E.SpellcastingLocators").some(loc => loc.includes(name));
+			game.i18n.localize("MOBLOKS5E.SpellcastingLocators").some(loc => name.includes(loc));
 	}
 
 	static isInnateSpellcasting(item) {
 		let name = item.name.toLowerCase().replace(/\s+/g, "");
-		return game.i18n.localize("MOBLOKS5E.InnateCastingLocators").some(loc => loc.includes(name));
+		return game.i18n.localize("MOBLOKS5E.InnateCastingLocators").some(loc => name.includes(loc));
 	}
 		
 	static isPactMagic(item) {
