@@ -1616,7 +1616,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
 		let name = item.name.toLowerCase().replace(/\s+/g, "");	// Convert the name of the item to all lower case, and remove whitespace.
-		return game.i18n.localize("MOBLOKS5E.MultiattackLocators").includes(name); // Array.includes() checks if any item in the array matches the value given. This will determin if the name of the item is one of the options in the array.
+		return game.i18n.localize("MOBLOKS5E.MultiattackLocators").some(loc => name.includes(loc));
 	}
 	
 	static isLegendaryResistance(item) {
@@ -1635,14 +1635,18 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static isReaction(item) {
 		return item.data?.activation?.type === "reaction";
 	}
+		
 	static isSpellcasting(item) {
-		let name = item.name.toLowerCase().replace(/\s+/g, "");
-		return game.i18n.localize("MOBLOKS5E.SpellcastingLocators").includes(name);
+		const name = item.name.toLowerCase().replace(/\s+/g, "");
+		return !this.isInnateSpellcasting(item) &&
+			game.i18n.localize("MOBLOKS5E.SpellcastingLocators").some(loc => name.includes(loc));
 	}
+
 	static isInnateSpellcasting(item) {
 		let name = item.name.toLowerCase().replace(/\s+/g, "");
-		return game.i18n.localize("MOBLOKS5E.InnateCastingLocators").includes(name);
+		return game.i18n.localize("MOBLOKS5E.InnateCastingLocators").some(loc => name.includes(loc));
 	}
+		
 	static isPactMagic(item) {
 		let desc = item.data.description?.value?.toLowerCase().replace(/\s+/g, "");
 		return game.i18n.localize("MOBLOKS5E.WarlockLocators").some(
