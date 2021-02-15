@@ -1616,7 +1616,16 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
 		let name = item.name.toLowerCase().replace(/\s+/g, "");	// Convert the name of the item to all lower case, and remove whitespace.
-		return game.i18n.localize("MOBLOKS5E.MultiattackLocators").includes(name); // Array.includes() checks if any item in the array matches the value given. This will determin if the name of the item is one of the options in the array.
+		let locators = game.i18n.localize("MOBLOKS5E.MultiattackLocators");
+
+		for (let index = 0; index < locators.length; index++) {
+			const val = locators[index];
+
+			if (name.includes(val)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	static isLegendaryResistance(item) {
@@ -1635,14 +1644,44 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	static isReaction(item) {
 		return item.data?.activation?.type === "reaction";
 	}
+		
 	static isSpellcasting(item) {
 		let name = item.name.toLowerCase().replace(/\s+/g, "");
-		return game.i18n.localize("MOBLOKS5E.SpellcastingLocators").includes(name);
+		let locators = game.i18n.localize("MOBLOKS5E.SpellcastingLocators");
+		let innateLocators = game.i18n.localize("MOBLOKS5E.InnateCastingLocators");
+
+		for (let index = 0; index < locators.length; index++) {
+			const val = locators[index];
+
+			if (name.includes(val)) {
+
+				for (let index = 0; index < innateLocators.length; index++) {
+					const innate = innateLocators[index];
+					
+					if (name.includes(innate)) {
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+		return false;
 	}
+
 	static isInnateSpellcasting(item) {
 		let name = item.name.toLowerCase().replace(/\s+/g, "");
-		return game.i18n.localize("MOBLOKS5E.InnateCastingLocators").includes(name);
+		let locators = game.i18n.localize("MOBLOKS5E.InnateCastingLocators");
+
+		for (let index = 0; index < locators.length; index++) {
+			const val = locators[index];
+			
+			if (name.includes(val)) {
+				return true;
+			}
+		}
+		return false;
 	}
+		
 	static isPactMagic(item) {
 		let desc = item.data.description?.value?.toLowerCase().replace(/\s+/g, "");
 		return game.i18n.localize("MOBLOKS5E.WarlockLocators").some(
