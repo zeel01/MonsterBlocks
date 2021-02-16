@@ -886,8 +886,8 @@
 										damage=item.description.versatile.text
 								)
 							}}
+							{{~#unless @last}}{{ localize "MOBLOKS5E.Comma" }}{{/unless~}}
 						{{/if}}
-						{{~#unless @last}}{{ localize "MOBLOKS5E.Comma" }}{{/unless}}
 						{{~#if @last}}{{ localize "MOBLOKS5E.FullStop" }}{{/if}}
 					{{/each}}			
 				{{/if}}
