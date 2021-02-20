@@ -1693,6 +1693,10 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		},
 		"moblok-enrichhtml": (str, owner, flags) => { // Formats any text to include proper inline rolls and links.
 			return TextEditor.enrichHTML(str || "", { secrets: (owner && !flags["hidden-secrets"]) });
+		},
+		"moblok-moretext": (desc) => { // Checks if description text starts with a space or a comma.
+			if (desc === null) return false;
+			return desc.startsWith('\s', desc.indexOf('>') + 1) || desc.startsWith(',', desc.indexOf('>') + 1);
 		}
 	};
 }
