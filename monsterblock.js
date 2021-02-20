@@ -1696,7 +1696,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 		},
 		"moblok-moretext": (desc) => { // Checks if description text starts with a space or a comma.
 			if (desc === null) return false;
-			return desc.startsWith('\s', desc.indexOf('>') + 1) || desc.startsWith(',', desc.indexOf('>') + 1);
+			return desc.startsWith('\s', desc.indexOf('>') + 1) || desc.startsWith('&nbsp;', desc.indexOf('>') + 1) || desc.startsWith(',', desc.indexOf('>') + 1);
 		}
 	};
 }
