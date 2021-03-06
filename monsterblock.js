@@ -5,6 +5,15 @@ import { simplifyRollFormula } from "../../systems/dnd5e/module/dice.js";
 /* global QuickInsert:readonly */
 
 /**
+ * Returns whether or not the debug mode for Monster Blocks is enabled.
+ *
+ * @return {boolean} - True if debugging is enabled
+ */
+function debugging() {
+	return window.DEV?.getPackageDebugValue("monsterblock");
+}
+
+/**
  * Main class for the Monster Blocks module
  *
  * @export
@@ -1184,7 +1193,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 			let control = event.currentTarget.dataset.control;			// A data attribute is used on an element with the class .switch, and it contains the name of the switch to toggle.
 			
 			let state = !this.actor.getFlag("monsterblock", control);	
-			console.debug(`Monster Block | %cSwitching: ${control} to: ${state}`, "color: orange")
+			if (debugging()) console.debug(`Monster Block | %cSwitching: ${control} to: ${state}`, "color: orange")
 			
 			this.actor.setFlag(											
 				"monsterblock", 
@@ -2171,8 +2180,14 @@ Actors.registerSheet("dnd5e", MonsterBlock5e, {
 });
 
 Hooks.on("renderActorSheet", (...args) => {	// This is just for debugging, it prevents this sheet's template from being cached.
+	if (!debugging()) return; 
+
 	let template = "modules/monsterblock/actor-sheet.html";
     delete _templateCache[template];
     console.debug(`Monster Block | removed "${template}" from _templateCache.`);
 	console.log(args);
 })
+
+Hooks.once("devModeReady", ({ registerPackageDebugFlag }) => {
+	registerPackageDebugFlag("monsterblock");
+});
