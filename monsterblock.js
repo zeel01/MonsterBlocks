@@ -231,9 +231,10 @@ Actors.registerSheet("dnd5e", MonsterBlock5e, {
 Hooks.on("renderActorSheet", (...args) => {	// This is just for debugging, it prevents this sheet's template from being cached.
 	if (!debugging()) return; 
 
-	let template = "modules/monsterblock/templates/dnd5e/monsterblock5e.hbs";
-    delete _templateCache[template];
-    console.debug(`Monster Block | removed "${template}" from _templateCache.`);
+	//let template = "modules/monsterblock/templates/dnd5e/monsterblock5e.hbs";
+    //delete _templateCache[template];
+	window._templateCache = [];
+    //console.debug(`Monster Block | removed "${template}" from _templateCache.`);
 	console.log(args);
 });
 
