@@ -1,68 +1,78 @@
 <main class="main-section{{#if menus.features.visible}} menu-active{{/if}}">
-{{#if flags.editing}}
-	{{> "modules/monsterblock/templates/dnd5e/parts/menuItem.hbs" item=menus.features}}
-{{/if}}
-
-
-{{#each features.casting.items as |casting id|}}
-{{#if @root.flags.casting-feature}}
-	{{> "modules/monsterblock/templates/dnd5e/parts/spellcasting.hbs" casting=casting}}
-{{else}}
-	{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=casting actor=@root.actor}}
-{{/if}}
-{{/each}}
-
-
-{{#each features.features.items as |item iid|}}
-	{{#unless item.is.specialAction}}
-		{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
-	{{/unless}}
-{{/each}}
-
-{{#if features.legResist.items}}
-	{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=features.legResist.items.[0] actor=actor flags=flags}}
-{{/if}}
-
-<h2 class="section-header" >{{localize "DND5E.ActionPl"}}</h2>
-
-{{#if features.multiattack.items}}
-	{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=features.multiattack.items.[0] actor=actor flags=flags}}
-{{/if}}
-
-{{#each features.attacks.items as |item iid|}}
-{{#unless item.is.specialAction}}
-	{{> "modules/monsterblock/templates/dnd5e/parts/attack.hbs" item=item}}
-{{/unless}}
-{{/each}}
-
-{{#each features.actions.items as |item iid|}}
-	{{#unless item.is.specialAction}}
-		{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
-	{{/unless}}
-{{/each}}
-{{! Reactions }}
-{{#if info.hasReactions}}
-	<h2 class="section-header">{{localize "MOBLOKS5E.Reactions"}}</h2>
-	{{#each features.reaction.items as |item iid|}}
-		{{#if item.is.reaction}}
-			{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
+	{{! Features Menu }}
+		{{#if flags.editing}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/menuItem.hbs" item=menus.features}}
 		{{/if}}
-	{{/each}}
-{{/if}}
-{{! Legendary Actions }}
-{{#if info.hasLegendaryActions}}
-	{{> "modules/monsterblock/templates/dnd5e/parts/legendaryActs.hbs"}}
-{{/if}}
-{{#if info.hasLoot}}
-	<h2 class="section-header">{{localize "DND5E.Inventory"}}</h2>
-	{{#each features.equipment.items as |item iid|}}
-		{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
-	{{/each}}
-{{/if}}
-{{! Lair Actions }}
-{{#if info.hasLair}}
-{{#if flags.show-lair-actions}}
-	{{> "modules/monsterblock/templates/dnd5e/parts/lairActs.hbs"}}
-{{/if}}
-{{/if}}
+
+	{{! Spellcasting Features }}
+		{{#each features.casting.items as |casting id|}}
+			{{#if @root.flags.casting-feature}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/spellcasting.hbs" casting=casting}}
+			{{else}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=casting actor=@root.actor}}
+			{{/if}}
+		{{/each}}
+
+	{{! Non-action Features }}
+		{{#each features.features.items as |item iid|}}
+			{{#unless item.is.specialAction}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
+			{{/unless}}
+		{{/each}}
+
+		{{! Legendary Resistance }}
+		{{#if features.legResist.items}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=features.legResist.items.[0] actor=actor flags=flags}}
+		{{/if}}
+
+	{{! Actions }}
+		<h2 class="section-header" >{{localize "DND5E.ActionPl"}}</h2>
+
+		{{! Multiattack }}
+		{{#if features.multiattack.items}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=features.multiattack.items.[0] actor=actor flags=flags}}
+		{{/if}}
+
+		{{! Attacks }}
+		{{#each features.attacks.items as |item iid|}}
+			{{#unless item.is.specialAction}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/attack.hbs" item=item}}
+			{{/unless}}
+		{{/each}}
+
+		{{! Other Actions}}
+		{{#each features.actions.items as |item iid|}}
+			{{#unless item.is.specialAction}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
+			{{/unless}}
+		{{/each}}
+
+	{{! Reactions }}
+		{{#if info.hasReactions}}
+			<h2 class="section-header">{{localize "MOBLOKS5E.Reactions"}}</h2>
+			{{#each features.reaction.items as |item iid|}}
+				{{#if item.is.reaction}}
+					{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
+				{{/if}}
+			{{/each}}
+		{{/if}}
+	{{! Legendary Actions }}
+		{{#if info.hasLegendaryActions}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/legendaryActs.hbs"}}
+		{{/if}}
+	
+	{{! Loot Items }}
+		{{#if info.hasLoot}}
+			<h2 class="section-header">{{localize "DND5E.Inventory"}}</h2>
+			{{#each features.equipment.items as |item iid|}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
+			{{/each}}
+		{{/if}}
+
+	{{! Lair Actions }}
+		{{#if info.hasLair}}
+			{{#if flags.show-lair-actions}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/lairActs.hbs"}}
+			{{/if}}
+		{{/if}}
 </main>
