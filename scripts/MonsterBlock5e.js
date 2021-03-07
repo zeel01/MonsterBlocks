@@ -2,7 +2,7 @@ import ActorSheet5eNPC from "../../systems/dnd5e/module/actor/sheets/npc.js";
 import TraitSelector from "../../systems/dnd5e/module/apps/trait-selector.js";
 import { simplifyRollFormula } from "../../systems/dnd5e/module/dice.js";
 import { MenuItem, MenuTree } from "./MenuTree.js";
-import { debugging, ContentEditableAdapter } from "utilities.js";
+import { debugging, ContentEditableAdapter } from "./utilities.js";
 
 /* global QuickInsert:readonly */
 
