@@ -601,48 +601,6 @@
 		{{#if flags.editing}}
 			{{> "modules/monsterblock/templates/dnd5e/parts/menuItem.hbs" item=menus.features}}
 		{{/if}}
-	{{#*inline "featureBlock"}}
-	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}{{#if lairactions}} lair-actions{{/if}}{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
-		<div class="feature-description inline-children">
-			{{#if flags.show-delete}}
-				<a class="delete-item" data-item-id="{{item._id}}">
-					<i class="fa fa-trash"></i>
-				</a>
-			{{/if}}
-			{{#unless lairactions}}
-				<span class="item-name" data-item-id="{{item._id}}">
-					{{~item.name~}} 
-				</span>
-				
-				{{~#if item.data.recharge.value~}}
-					<span class="name-extension"
-						data-item-id="{{item._id}}"
-						data-roll-flavor="{{item.name}} ({{ localize 'MOBLOKS5E.Recharge' }} {{item.data.recharge.value}}-6): " 
-						data-roll-formula="1d6" 
-						data-roll-target="{{item.data.recharge.value}}" 
-						data-roll-success="{{ localize 'DND5E.Charged' }}" 
-						data-roll-failure="{{ localize 'MOBLOKS5E.NCharged' }}"
-						data-roll-handler="setCharged">
-						({{ localize 'MOBLOKS5E.Recharge' }} {{item.data.recharge.value}}-6){{~" "~}}
-					</span>
-				{{~/if~}}
-				{{~#if (and item.is.legendary (gt item.data.activation.cost 1))~}}
-					<span class="name-extension">
-						({{ localize "MOBLOKS5E.LegActionCost" number=item.data.activation.cost}}){{~" "~}}
-					</span>
-				{{~/if~}}
-				{{~#unless legendaryactions~}}
-					{{~#if item.hasresource~}}
-						{{> "modules/monsterblock/templates/dnd5e/parts/resource.hbs" resource=item.resource}}
-					{{~/if~}}
-				{{~/unless~}}{{ localize "MOBLOKS5E.NameDescriptionSep" }}
-			{{~else~}}
-				<span class="item-name" data-item-id="{{item._id}}"></span>
-			{{~/unless}}
-			<span class="description">{{{moblok-enrichhtml item.data.description.value @root.owner @root.flags}}}</span>
-		</div>
-	</section>
-	{{/inline}}
 	
 	
 	{{#each features.casting.items as |casting id|}}
@@ -711,25 +669,25 @@
 		</div>
 	</section>
 	{{else}}
-		{{> featureBlock item=casting actor=@root.actor}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=casting actor=@root.actor}}
 	{{/if}}
 	{{/each}}
 	
 
 	{{#each features.features.items as |item iid|}}
 		{{#unless item.is.specialAction}}
-			{{> featureBlock item=item actor=@root.actor flags=@root.flags}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
 		{{/unless}}
 	{{/each}}
 
 	{{#if features.legResist.items}}
-		{{> featureBlock item=features.legResist.items.[0] actor=actor flags=flags}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=features.legResist.items.[0] actor=actor flags=flags}}
 	{{/if}}
 
 	<h2 class="section-header" >{{localize "DND5E.ActionPl"}}</h2>
 	
 	{{#if features.multiattack.items}}
-		{{> featureBlock item=features.multiattack.items.[0] actor=actor flags=flags}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=features.multiattack.items.[0] actor=actor flags=flags}}
 	{{/if}}
 	{{#*inline "damageRoll"~}}
 		<span class="attack-damage" 
@@ -800,7 +758,7 @@
 	{{/each}}
 	{{#each features.actions.items as |item iid|}}
 		{{#unless item.is.specialAction}}
-			{{> featureBlock item=item actor=@root.actor flags=@root.flags}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
 		{{/unless}}
 	{{/each}}
 	{{! Reactions }}
@@ -808,7 +766,7 @@
 		<h2 class="section-header">{{localize "MOBLOKS5E.Reactions"}}</h2>
 		{{#each features.reaction.items as |item iid|}}
 			{{#if item.is.reaction}}
-				{{> featureBlock item=item actor=@root.actor flags=@root.flags}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
 			{{/if}}
 		{{/each}}
 	{{/if}}
@@ -842,7 +800,7 @@
 			{{#each features.legendary.items as |item iid|}}
 				{{#if item.is.legendary }}
 				{{#unless item.is.legResist}}
-					{{> featureBlock item=item actor=@root.actor legendaryactions=true flags=@root.flags}}
+					{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor legendaryactions=true flags=@root.flags}}
 				{{/unless}}
 				{{/if}}
 			{{/each}}
@@ -851,7 +809,7 @@
 	{{#if info.hasLoot}}
 		<h2 class="section-header">{{localize "DND5E.Inventory"}}</h2>
 		{{#each features.equipment.items as |item iid|}}
-			{{> featureBlock item=item actor=@root.actor flags=@root.flags}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
 		{{/each}}
 	{{/if}}
 	{{! Lair Actions }}
@@ -864,7 +822,7 @@
 			{{#each features.lair.items as |item iid|}}
 				{{#if item.is.lair}}
 				<li>
-					{{> featureBlock item=item actor=@root.actor lairactions=true flags=@root.flags}}
+					{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor lairactions=true flags=@root.flags}}
 				</li>
 				{{/if}}
 			{{/each}}
