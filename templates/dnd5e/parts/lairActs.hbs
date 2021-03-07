@@ -1,0 +1,13 @@
+<h2 class="section-header">{{ localize "MOBLOKS5E.LairActionsHeading" }}</h2>
+<section>
+	<p>{{ localize "MOBLOKS5E.LairText" name=actor.name }}</p>
+	<ul>
+	{{#each features.lair.items as |item iid|}}
+		{{#if item.is.lair}}
+		<li>
+			{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor lairactions=true flags=@root.flags}}
+		</li>
+		{{/if}}
+	{{/each}}
+	</ul>
+</section>
