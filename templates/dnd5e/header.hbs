@@ -1,14 +1,14 @@
 <header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
 	<section class="monster-identity">
-		{{> "modules/monsterblock/templates/dnd5e/parts/identity.hbs"}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/header/identity.hbs"}}
 	</section>
 	<section class="monster-attributes1">
-		{{> "modules/monsterblock/templates/dnd5e/parts/attributes1.hbs"}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes1.hbs"}}
 	</section>
 	<section class="monster-abilities">
-		{{> "modules/monsterblock/templates/dnd5e/parts/abilities.hbs"}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/header/abilities.hbs"}}
 	</section>
 	<section class="monster-attributes2{{#if menus.attributes.visible}} menu-active{{/if}}">
-		{{> "modules/monsterblock/templates/dnd5e/parts/attributes2.hbs"}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes2.hbs"}}
 	</section>
 </header>
