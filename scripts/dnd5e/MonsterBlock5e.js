@@ -1,8 +1,8 @@
-import ActorSheet5eNPC from "../../../systems/dnd5e/module/actor/sheets/npc.js";
-import TraitSelector from "../../../systems/dnd5e/module/apps/trait-selector.js";
-import { simplifyRollFormula } from "../../../systems/dnd5e/module/dice.js";
-import { MenuItem, MenuTree } from "./MenuTree.js";
-import { debugging, ContentEditableAdapter } from "./utilities.js";
+import ActorSheet5eNPC from "../../../../systems/dnd5e/module/actor/sheets/npc.js";
+import TraitSelector from "../../../../systems/dnd5e/module/apps/trait-selector.js";
+import { simplifyRollFormula } from "../../../../systems/dnd5e/module/dice.js";
+import { MenuItem, MenuTree } from "../MenuTree.js";
+import { debugging, ContentEditableAdapter } from "../utilities.js";
 
 /* global QuickInsert:readonly */
 
@@ -1170,7 +1170,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	static async getQuickInserts() {
 		if (game.data.modules.find(m => m.id == "quick-insert")?.active) {
-			let { CharacterSheetContext, dnd5eFilters } = await import("../../quick-insert/quick-insert.js");
+			let { CharacterSheetContext, dnd5eFilters } = await import("../../../quick-insert/quick-insert.js");
 			Object.assign(this, { CharacterSheetContext, dnd5eFilters });
 		}
 		else {

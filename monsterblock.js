@@ -1,4 +1,4 @@
-import MonsterBlock5e from "./scripts/MonsterBlock5e.js";
+import MonsterBlock5e from "./scripts/dnd5e/MonsterBlock5e.js";
 import  { debugging } from "./scripts/utilities.js";
 import PopupHandler from "./scripts/PopupHandler.js"
 
