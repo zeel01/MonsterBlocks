@@ -1714,10 +1714,11 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			"modules/monsterblock/templates/dnd5e/parts/header/attributes1.hbs",
 			"modules/monsterblock/templates/dnd5e/parts/header/abilities.hbs",
 			"modules/monsterblock/templates/dnd5e/parts/header/attributes2.hbs",
-			"modules/monsterblock/templates/dnd5e/parts/header/saves.hbs",
-			"modules/monsterblock/templates/dnd5e/parts/header/skills.hbs",
-			"modules/monsterblock/templates/dnd5e/parts/header/senses.hbs",
-			"modules/monsterblock/templates/dnd5e/parts/header/damage.hbs",
+
+			"modules/monsterblock/templates/dnd5e/parts/header/attributes/saves.hbs",
+			"modules/monsterblock/templates/dnd5e/parts/header/attributes/skills.hbs",
+			"modules/monsterblock/templates/dnd5e/parts/header/attributes/senses.hbs",
+			"modules/monsterblock/templates/dnd5e/parts/header/attributes/damage.hbs",
 
 			"modules/monsterblock/templates/dnd5e/parts/main/spellcasting.hbs",
 			"modules/monsterblock/templates/dnd5e/parts/main/attack.hbs",

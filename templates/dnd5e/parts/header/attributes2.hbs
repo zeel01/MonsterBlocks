@@ -9,7 +9,7 @@
 	{{#if (or info.hasSaveProfs flags.show-not-prof flags.show-skill-save)}}
 		<li class="monster-saves attribute">
 			<span class="attribute-wrapper">
-				{{> "modules/monsterblock/templates/dnd5e/parts/header/saves.hbs"}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/saves.hbs"}}
 			</span>
 		</li>
 	{{/if}}
@@ -18,28 +18,28 @@
 	{{#if (or info.hasSkills flags.show-not-prof flags.show-skill-save)}}
 		<li class="monster-skills attribute">
 			<span class="attribute-wrapper">
-				{{> "modules/monsterblock/templates/dnd5e/parts/header/skills.hbs"}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/skills.hbs"}}
 			</span>
 		</li>
 	{{/if}}
 
 {{! Damage & Condition Resistances & Immunities}}
-	{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
+	{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/damage.hbs"
 		damage=data.traits.dv.selected
 		label="DND5E.DamVuln" 
 	}}
 
-	{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
+	{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/damage.hbs"
 		damage=data.traits.dr.selected
 		label="DND5E.DamRes" 
 	}}
 
-	{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
+	{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/damage.hbs"
 		damage=data.traits.di.selected
 		label="DND5E.DamImm" 
 	}}
 
-	{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
+	{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/damage.hbs"
 		damage=data.traits.ci.selected
 		label="DND5E.ConImm" 
 	}}
@@ -47,7 +47,7 @@
 {{! Senses }}
 	<li class="attribute">
 		<span class="attribute-wrapper">
-			{{> "modules/monsterblock/templates/dnd5e/parts/header/senses.hbs"}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/senses.hbs"}}
 		</span>
 	</li>
 
