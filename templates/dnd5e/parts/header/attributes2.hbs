@@ -10,32 +10,7 @@
 	{{/if}}
 	{{#if (or info.hasSkills flags.show-not-prof flags.show-skill-save)}}
 	<li class="monster-skills attribute">
-		<span class="attribute-wrapper">
-			<figure class="menu simple-menu">
-				<h4 class="attribute-name menu-toggle" data-menu-id="skill-roller">{{ localize "MOBLOKS5E.SkillS" }}</h4>
-				<div class="overflow-fix">
-					<ul>
-					{{#each data.skills as |skill s|}}
-						<li class="skill {{#if skill.value}}proficient{{/if}}" title="{{skill.ability}}" data-skill="{{s}}">
-							<span class="skill-title">{{skill.label}}</span>
-							<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>{{~" "~}}
-						</li>
-					{{/each}}
-					</ul>
-				</div>
-			</figure>
-			<ul class="inline-list">
-			{{#each data.skills as |skill s|}}
-			{{#if (or skill.value @root.flags.show-not-prof)}}
-				<li class="skill {{#if skill.value}}proficient{{/if}}"  title="{{skill.ability}}" data-skill="{{s}}">
-					<span class="skill-title">{{skill.label}}</span>
-					<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>{{~" "~}}
-				</li>
-			{{/if}}
-			{{/each}}
-				{{#unless info.hasSkills}}<li>&mdash;</li>{{/unless}}
-			</ul>
-		</span>
+		{{> "modules/monsterblock/templates/dnd5e/parts/header/skills.hbs"}}
 	</li>
 	{{/if}}
 
