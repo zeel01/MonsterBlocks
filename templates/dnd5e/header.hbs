@@ -1,32 +1,6 @@
 <header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
 	<section class="monster-identity">
-		<h1 class="charname" contenteditable="{{flags.editing}}" data-field-key="name" placeholder="{{ localize 'DND5E.Name' }}">{{actor.name}}</h1>
-		<div class="chartype">
-			<div class="select-field" data-select-key="data.traits.size" data-selected-value="{{data.traits.size}}">
-				<label class="{{#if flags.editing}}select-label{{/if}}">{{ lookup config.actorSizes data.traits.size}}</label>{{~" "~}}
-				{{#if flags.editing~}}
-					<ul class="actor-size select-list">
-						{{#each config.actorSizes as |label size|}}
-						{{#unless (eq size ../data.traits.size)}}
-							<li data-selection-value="{{size}}">{{label}}</li>
-						{{/unless}}
-						{{~/each~}}
-					</ul>
-				{{~/if~}}
-			</div>{{~" "~}}
-			<span class="optional-space" contenteditable="{{flags.editing}}" data-field-key="data.details.type" placeholder="{{ localize 'DND5E.Type' }}">
-				{{~data.details.type~}}
-			</span>{{~" "~}}
-			<span class="optional-comma" contenteditable="{{flags.editing}}" placeholder="{{ localize 'DND5E.Alignment' }}" data-field-key="data.details.alignment">
-				{{~data.details.alignment~}}
-			</span>
-		</div>
-		{{#unless flags.hide-profile-image}}
-			<figure class="profile-image">
-				<img src="{{actor.img}}" data-edit="img"
-					title="{{actor.name}} - {{ localize "MOBLOKS5E.EditHint" }}">
-			</figure>
-		{{/unless}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/identity.hbs"}}
 	</section>
 	<section class="monster-attributes1">
 		<ul class="attributes">
