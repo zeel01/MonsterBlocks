@@ -5,33 +5,7 @@
 <ul class="attributes">
 	{{#if (or info.hasSaveProfs flags.show-not-prof flags.show-skill-save)}}
 	<li class="monster-saves attribute">
-		<span class="attrbute-wrapper">
-			<figure class="menu simple-menu">
-				<h4 class="attribute-name menu-toggle" data-menu-id="save-roller">{{ localize "MOBLOKS5E.SavingThrowS" }}</h4>
-				<div class="overflow-fix">
-					<ul>
-					{{#each data.abilities as |ability id|}}
-						<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}"
-							title="{{ability.label}}">
-							<span class="ability-title">{{ability.label}}</span>
-							<span>{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
-						</li>
-					{{/each}}
-					</ul>
-				</div>
-			</figure>
-			<ul class="inline-list">
-			{{#each data.abilities as |ability id|}}
-			{{#if (or ability.proficient @root.flags.show-not-prof)}}
-				<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}" title="{{ability.label}}">
-					<span class="ability-title">{{ability.abbr}}</span>
-					<span>{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
-				</li>
-			{{/if}}
-			{{/each}}
-				{{#unless info.hasSaveProfs}}<li>&mdash;</li>{{/unless}}
-			</ul>
-		</span>
+		{{> "modules/monsterblock/templates/dnd5e/parts/header/saves.hbs"}}
 	</li>
 	{{/if}}
 	{{#if (or info.hasSkills flags.show-not-prof flags.show-skill-save)}}
