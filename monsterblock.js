@@ -15,6 +15,8 @@ Hooks.once("ready", () => {
 	MonsterBlock5e.getTokenizer();
 	MonsterBlock5e.getQuickInserts();
 	
+	/*if (!debugging())*/ MonsterBlock5e.preLoadTemplates();
+	
 	game.settings.register("monsterblock", "attack-descriptions", {
 		name: game.i18n.localize("MOBLOKS5E.attack-description-name"),
 		hint: game.i18n.localize("MOBLOKS5E.attack-description-hint"),
@@ -229,7 +231,7 @@ Actors.registerSheet("dnd5e", MonsterBlock5e, {
 Hooks.on("renderActorSheet", (...args) => {	// This is just for debugging, it prevents this sheet's template from being cached.
 	if (!debugging()) return; 
 
-	let template = "modules/monsterblock/templates/dnd5e/monsterblock5e.html";
+	let template = "modules/monsterblock/templates/dnd5e/monsterblock5e.hbs";
     delete _templateCache[template];
     console.debug(`Monster Block | removed "${template}" from _templateCache.`);
 	console.log(args);

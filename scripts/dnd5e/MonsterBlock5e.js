@@ -1697,4 +1697,14 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			return TextEditor.enrichHTML(str || "", { secrets: (owner && !flags["hidden-secrets"]) });
 		}
 	};
+
+	static async preLoadTemplates() {
+		return loadTemplates([
+			// Shared Partials
+
+			// Actor Sheet Partials
+			"modules/monsterblock/templates/dnd5e/parts/menuItem.hbs"
+			
+		]);
+	}
 }
