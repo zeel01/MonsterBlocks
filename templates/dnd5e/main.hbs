@@ -7,7 +7,7 @@
 	{{! Spellcasting Features }}
 		{{#each features.casting.items as |casting id|}}
 			{{#if @root.flags.casting-feature}}
-				{{> "modules/monsterblock/templates/dnd5e/parts/spellcasting.hbs" casting=casting}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/main/spellcasting.hbs" casting=casting}}
 			{{else}}
 				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=casting actor=@root.actor}}
 			{{/if}}
@@ -36,7 +36,7 @@
 		{{! Attacks }}
 		{{#each features.attacks.items as |item iid|}}
 			{{#unless item.is.specialAction}}
-				{{> "modules/monsterblock/templates/dnd5e/parts/attack.hbs" item=item}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/main/attack.hbs" item=item}}
 			{{/unless}}
 		{{/each}}
 
@@ -58,7 +58,7 @@
 		{{/if}}
 	{{! Legendary Actions }}
 		{{#if info.hasLegendaryActions}}
-			{{> "modules/monsterblock/templates/dnd5e/parts/legendaryActs.hbs"}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/main/legendaryActs.hbs"}}
 		{{/if}}
 	
 	{{! Loot Items }}
@@ -72,7 +72,7 @@
 	{{! Lair Actions }}
 		{{#if info.hasLair}}
 			{{#if flags.show-lair-actions}}
-				{{> "modules/monsterblock/templates/dnd5e/parts/lairActs.hbs"}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/main/lairActs.hbs"}}
 			{{/if}}
 		{{/if}}
 </main>
