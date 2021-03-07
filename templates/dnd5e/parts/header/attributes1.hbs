@@ -1,16 +1,28 @@
 <ul class="attributes">
+
+{{! Armor Class }}
 	<li class="attribute">
 		<span class="attribute-wrapper">
 			<h4 class="attribute-name box-title">{{ localize "DND5E.ArmorClass" }}</h4>
-			<span class="attr-value" data-field-key="data.attributes.ac.value" data-dtype="Number" placeholder="{{ localize 'DND5E.ArmorClass' }}" contenteditable="{{flags.editing}}">{{data.attributes.ac.value}}</span>
+			<span class="attr-value" 
+				data-field-key="data.attributes.ac.value"
+				data-dtype="Number"
+				placeholder="{{ localize 'DND5E.ArmorClass' }}"
+				contenteditable="{{flags.editing}}">{{data.attributes.ac.value}}</span>
 		</span>
 	</li>
+
+{{! Hit Points }}
 	<li class="attribute health">
 		{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/hitpoints.hbs"}}
 	</li>
+
+{{! Movement Speeds }}
+
 	<li class="attribute">
 		<span class="attribute-wrapper">
 			{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/movement.hbs"}}
 		</span>
 	</li>
+
 </ul>
