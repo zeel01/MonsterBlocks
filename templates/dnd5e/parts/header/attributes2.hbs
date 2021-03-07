@@ -41,42 +41,7 @@
 
 	<li class="attribute">
 		<span class="attribute-wrapper">
-			<h4 class="attribute-name">{{localize "DND5E.Senses"}}</h4>
-			{{#each senses as |sense|~}}
-				<span class="editable-wrapper">
-					{{~#if sense.value}}{{sense.label}} {{/if~}}
-					<span class="attr-value" contenteditable="{{../flags.editing}}" placeholder="{{sense.label}}&nbsp;"
-						data-field-key="{{sense.key}}" data-dtype="Number">
-						{{~sense.value~}}
-					</span>
-					{{~#if sense.value}} {{sense.unit}}{{/if~}}
-				</span>
-				{{~#if sense.value}}{{localize "MOBLOKS5E.Comma"}} {{/if~}}
-			{{~/each~}}
-			<span class="editable-wrapper">{{~" "~}}
-				<span class="attr-value" contenteditable="{{flags.editing}}" placeholder="{{specialSenses.special.label}}&nbsp;"
-					data-field-key="{{specialSenses.special.key}}">
-					{{~specialSenses.special.value~}}
-				</span>{{~" "~}}
-			</span>
-			{{~#if specialSenses.special.value}}{{localize "MOBLOKS5E.Comma"}} {{/if~}}
-			<span>
-				{{~specialSenses.passivePerception~}}
-			</span>
-			<div class="hover-only select-field" data-select-key="data.attributes.senses.units"
-				data-selected-value="{{data.attributes.senses.units}}">
-				<label
-					class="{{#if flags.editing}}select-label{{/if}}">{{ lookup config.movementUnits data.attributes.senses.units}}</label>{{~" "~}}
-					{{#if flags.editing~}}
-					<ul class="actor-size select-list">
-						{{#each config.movementUnits as |label unit|}}
-							{{#unless (eq unit ../data.attributes.senses.units)}}
-								<li data-selection-value="{{unit}}">{{label}}</li>
-							{{/unless}}
-						{{~/each~}}
-					</ul>
-					{{~/if~}}
-			</div>
+			{{> "modules/monsterblock/templates/dnd5e/parts/header/senses.hbs"}}
 		</span>
 	</li>
 	
