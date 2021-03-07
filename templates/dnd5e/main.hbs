@@ -1,0 +1,228 @@
+<main class="main-section{{#if menus.features.visible}} menu-active{{/if}}">
+{{#if flags.editing}}
+	{{> "modules/monsterblock/templates/dnd5e/parts/menuItem.hbs" item=menus.features}}
+{{/if}}
+
+
+{{#each features.casting.items as |casting id|}}
+{{#if @root.flags.casting-feature}}
+<section class="item monster-feature spellcasting-trait{{#unless casting.flags.monsterblock.expanded}} compact{{/unless}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
+	<div class="feature-description inline-children">
+		{{#if @root.flags.show-delete}}
+			<a class="delete-item" data-item-id="{{casting._id}}">
+				<i class="fa fa-trash"></i>
+			</a>
+		{{/if}}
+		<span class="item-name" data-item-id="{{casting._id}}">{{casting.name}}</span>.
+		{{~#if item.hasresource~}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/resource.hbs" resource=item.resource}}
+		{{~/if~}}
+		<span class="description">
+			{{{ casting.description.level }}}
+			{{{ casting.description.ability }}}
+			{{{ casting.description.stats }}}
+			{{{ casting.description.warlockRecharge }}}
+			{{{ casting.description.spellintro }}}
+		</span>
+		<ul class="spell-list">
+		{{#each casting.spellbook as |page id|}}
+		{{#if page.spells}}
+			<li>
+				<span class="spell-level-name">
+					{{page.label~}}
+				</span>
+				{{~#if page.slotLabel}}
+					<span class="spell-slots">
+						({{~#if (and @root.flags.show-resources page.dataset.level)~}}
+							<span class="resource-value" 
+								placeholder="0"
+								contenteditable="{{@root.owner}}"
+								data-dtype="Number"
+								data-field-key="{{page.slotKey}}.value">
+								{{~page.uses~}}
+							</span>/
+						{{~/if~}}
+						{{{page.slotLabel}}}){{~" "~}}
+					</span>
+				{{~/if~}}
+				{{~ localize "MOBLOKS5E.Colon" }}
+				<ul class="inline-list spells-level-{{spelllevel.dataset.level}}">
+				
+				{{#each page.spells as |spell id|}}
+						<li class="spell" data-item-id="{{spell._id}}">
+							{{#if @root.flags.show-delete}}
+								<a class="delete-item" data-item-id="{{spell._id}}">
+									<i class="fa fa-trash"></i>
+								</a>
+							{{/if}}
+							<span class="spell-name">{{spell.name}}</span>
+							{{~#if spell.hasresource~}}
+								{{> "modules/monsterblock/templates/dnd5e/parts/resource.hbs" resource=spell.resource}}
+							{{~/if~}}
+						</li>
+				{{/each}}
+				
+				</ul>
+			</li>
+		{{/if}}
+		{{/each}}
+		</ul>
+	</div>
+</section>
+{{else}}
+	{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=casting actor=@root.actor}}
+{{/if}}
+{{/each}}
+
+
+{{#each features.features.items as |item iid|}}
+	{{#unless item.is.specialAction}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
+	{{/unless}}
+{{/each}}
+
+{{#if features.legResist.items}}
+	{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=features.legResist.items.[0] actor=actor flags=flags}}
+{{/if}}
+
+<h2 class="section-header" >{{localize "DND5E.ActionPl"}}</h2>
+
+{{#if features.multiattack.items}}
+	{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=features.multiattack.items.[0] actor=actor flags=flags}}
+{{/if}}
+
+{{#each features.attacks.items as |item iid|}}
+{{#unless item.is.specialAction}}
+<section class="item monster-action{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
+	<div class="attack-description inline-children">
+		{{#if @root.flags.show-delete}}
+			<a class="delete-item" data-item-id="{{item._id}}">
+				<i class="fa fa-trash"></i>
+			</a>
+		{{/if}}
+		<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>
+		{{~#if item.hasresource~}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/resource.hbs" resource=item.resource}}
+		{{~/if~}}
+		{{ localize "MOBLOKS5E.NameDescriptionSep" }}
+		{{#if @root.flags.attack-descriptions}}
+		<span class="generated-text">			
+			<span class="attack-bonus" 
+				data-roll-flavor="{{localize 'DND5E.Attack'}}: {{item.name}}" 
+				data-roll-formula="1d20 + {{item.tohit}}">
+				<span class="attack-type">
+					{{~item.description.attackType~}}
+					{{localize "MOBLOKS5E.Colon"}}
+				</span>
+				{{item.description.tohit~}}
+			</span>{{ localize "MOBLOKS5E.Comma" }}
+			<span>
+				{{ item.description.range }}{{ localize "MOBLOKS5E.Comma" }}
+				{{ item.description.target }}{{ localize "MOBLOKS5E.FullStop" }}
+			</span>
+			{{#if item.description.damage.length }}
+				<span class="hit-label">
+					{{ localize "MOBLOKS5E.AttackHitLabel" }}
+				</span>
+				{{#each item.description.damage as |part|}}
+					{{#unless @first}}
+						{{ localize "MOBLOKS5E.MultiDamageAttackConjunctionPlus" }}						
+					{{/unless}}
+					{{> "modules/monsterblock/templates/dnd5e/parts/damageRoll.hbs" text=part.text name=item.name formula=part.formula}}
+					{{ localize "MOBLOKS5E.damage" }}
+					{{~#if (and @first item.description.versatile)~}}
+						{{ localize "MOBLOKS5E.Comma" }}
+						{{> "modules/monsterblock/templates/dnd5e/parts/damageRoll.hbs" 
+							name=item.name 
+							formula=item.description.versatile.formula
+							text=(	localize "MOBLOKS5E.AttackVersatile"
+									damage=item.description.versatile.text
+							)
+						}}
+						{{~#unless @last}}{{ localize "MOBLOKS5E.Comma" }}{{/unless~}}
+					{{/if}}
+					{{~#if @last}}{{ localize "MOBLOKS5E.FullStop" }}{{/if}}
+				{{/each}}			
+			{{/if}}
+		</span>
+		{{/if}}
+		<span class="description">{{{moblok-enrichhtml item.data.description.value @root.owner @root.flags}}}</span>
+	</div>
+</section>
+{{/unless}}
+{{/each}}
+{{#each features.actions.items as |item iid|}}
+	{{#unless item.is.specialAction}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
+	{{/unless}}
+{{/each}}
+{{! Reactions }}
+{{#if info.hasReactions}}
+	<h2 class="section-header">{{localize "MOBLOKS5E.Reactions"}}</h2>
+	{{#each features.reaction.items as |item iid|}}
+		{{#if item.is.reaction}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
+		{{/if}}
+	{{/each}}
+{{/if}}
+{{! Legendary Actions }}
+{{#if info.hasLegendaryActions}}
+	<h2 class="section-header">
+		{{localize "DND5E.LegAct"}}
+		{{#if flags.show-resources}}
+		<span class="header-resource">
+			<span class="resource-value"
+				placeholder="0"
+				contenteditable="{{@root.owner}}"
+				data-dtype="Number"
+				data-field-key="data.resources.legact.value">
+				{{~data.resources.legact.value~}}
+			</span> /
+			<span class="resource-value"
+				placeholder="0"
+				contenteditable="{{@root.flags.editing}}"
+				data-dtype="Number"
+				data-field-key="data.resources.legact.max">
+				{{~data.resources.legact.max~}}
+			</span>
+		</span>
+		{{/if}}
+	</h2>
+	<section>
+		<p class="legendary-description">
+			{{ localize "MOBLOKS5E.LegendaryText" name=actor.name number=data.resources.legact.max}}
+		</p>
+		{{#each features.legendary.items as |item iid|}}
+			{{#if item.is.legendary }}
+			{{#unless item.is.legResist}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor legendaryactions=true flags=@root.flags}}
+			{{/unless}}
+			{{/if}}
+		{{/each}}
+	</section>
+{{/if}}
+{{#if info.hasLoot}}
+	<h2 class="section-header">{{localize "DND5E.Inventory"}}</h2>
+	{{#each features.equipment.items as |item iid|}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
+	{{/each}}
+{{/if}}
+{{! Lair Actions }}
+{{#if info.hasLair}}
+{{#if flags.show-lair-actions}}
+	<h2 class="section-header">{{ localize "MOBLOKS5E.LairActionsHeading" }}</h2>
+	<section>
+		<p>{{ localize "MOBLOKS5E.LairText" name=actor.name }}</p>
+		<ul>
+		{{#each features.lair.items as |item iid|}}
+			{{#if item.is.lair}}
+			<li>
+				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor lairactions=true flags=@root.flags}}
+			</li>
+			{{/if}}
+		{{/each}}
+		</ul>
+	</section>
+{{/if}}
+{{/if}}
+</main>

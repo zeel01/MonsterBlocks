@@ -1,0 +1,337 @@
+<header class="sheet-header{{#unless flags.hide-profile-image}} image-enabled{{/unless}}">
+	<section class="monster-identity">
+		<h1 class="charname" contenteditable="{{flags.editing}}" data-field-key="name" placeholder="{{ localize 'DND5E.Name' }}">{{actor.name}}</h1>
+		<div class="chartype">
+			<div class="select-field" data-select-key="data.traits.size" data-selected-value="{{data.traits.size}}">
+				<label class="{{#if flags.editing}}select-label{{/if}}">{{ lookup config.actorSizes data.traits.size}}</label>{{~" "~}}
+				{{#if flags.editing~}}
+					<ul class="actor-size select-list">
+						{{#each config.actorSizes as |label size|}}
+						{{#unless (eq size ../data.traits.size)}}
+							<li data-selection-value="{{size}}">{{label}}</li>
+						{{/unless}}
+						{{~/each~}}
+					</ul>
+				{{~/if~}}
+			</div>{{~" "~}}
+			<span class="optional-space" contenteditable="{{flags.editing}}" data-field-key="data.details.type" placeholder="{{ localize 'DND5E.Type' }}">
+				{{~data.details.type~}}
+			</span>{{~" "~}}
+			<span class="optional-comma" contenteditable="{{flags.editing}}" placeholder="{{ localize 'DND5E.Alignment' }}" data-field-key="data.details.alignment">
+				{{~data.details.alignment~}}
+			</span>
+		</div>
+		{{#unless flags.hide-profile-image}}
+			<figure class="profile-image">
+				<img src="{{actor.img}}" data-edit="img"
+					title="{{actor.name}} - {{ localize "MOBLOKS5E.EditHint" }}">
+			</figure>
+		{{/unless}}
+	</section>
+	<section class="monster-attributes1">
+		<ul class="attributes">
+			<li class="attribute">
+				<span class="attribute-wrapper">
+					<h4 class="attribute-name box-title">{{ localize "DND5E.ArmorClass" }}</h4>
+					<span class="attr-value" data-field-key="data.attributes.ac.value" data-dtype="Number" placeholder="{{ localize 'DND5E.ArmorClass' }}" contenteditable="{{flags.editing}}">{{data.attributes.ac.value}}</span>
+				</span>
+			</li>
+			<li class="attribute health">
+				<h4 class="attribute-name box-title">
+					<a class="trigger" data-control="_onRollHPFormula">
+						{{~localize "DND5E.HitPoints" }} 
+					</a>
+				</h4>
+				{{~#unless (or flags.current-hit-points flags.maximum-hit-points)~}}
+					<span title="{{ localize 'MOBLOKS5E.Average' }}" class="attr-value">{{data.attributes.hp.average}}</span>
+				{{~/unless~}}
+				{{#if flags.current-hit-points}}
+					<span title="{{ localize 'MOBLOKS5E.Current' }}" 
+						placeholder="0" 
+						data-field-key="data.attributes.hp.value" 
+						data-dtype="Number" 
+						class="attr-value" 
+						contenteditable="{{owner}}">
+						{{~#if data.attributes.hp.value~}}
+							{{~data.attributes.hp.value~}}
+						{{~else~}}
+							0
+						{{~/if~}}
+					</span>
+				{{~/if~}}
+				{{~#if (and flags.current-hit-points flags.maximum-hit-points)~}}
+					<span class="sep"> / </span>
+				{{~/if~}}
+				{{~#if flags.maximum-hit-points~}}
+					<span title="{{ localize 'MOBLOKS5E.Maximum' }}" 
+						placeholder="0" 
+						data-field-key="data.attributes.hp.max" 
+						data-dtype="Number"
+						class="attr-value" 
+						contenteditable="{{owner}}">
+						{{~#if data.attributes.hp.max~}}
+							{{data.attributes.hp.max~}}
+						{{~else~}}
+							0
+						{{~/if~}}
+					</span>
+				{{/if}}
+				
+				(<span title="Average: {{data.attributes.hp.average}}"
+					placeholder="1d6"
+					data-field-key="data.attributes.hp.formula"
+					data-dtype="Roll"
+					class="attr-value"
+					contenteditable="{{flags.editing}}">
+						{{~data.attributes.hp.formula~}}
+				</span>)
+			</li>
+			<li class="attribute">
+				<span class="attribute-wrapper">
+					<h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }}</h4>
+					{{#each movement as |move|~}}
+						<span class="editable-wrapper{{#if (and move.value @index)}} optional-comma{{/if}}">
+							{{~#if (and move.value move.showLabel)}}{{move.label}} {{/if~}}
+							<span class="attr-value" 
+								contenteditable="{{../flags.editing}}"
+								placeholder="&nbsp;{{move.label}}"
+								data-field-key="{{move.key}}"
+								data-dtype="Number">
+								{{~move.value~}}
+							</span>
+							{{~#if move.value}} {{move.unit}}{{/if~}}
+							{{~#if move.fly~}}
+								<span class="hover-only no-break nocaps">
+									(<span class="toggle-button" data-toggle-key="data.attributes.movement.hover"
+										data-toggle-value="{{../data.attributes.movement.hover}}">
+										{{~#if ../data.attributes.movement.hover~}}
+											<i class="fas fa-check"></i>
+										{{~else~}}
+											<i class="far fa-circle"></i>
+										{{~/if}}
+										{{ localize "DND5E.MovementHover" ~}}
+									</span>){{~" "~}}
+								</span>
+							{{~/if~}}
+						</span>
+					{{~/each}}
+					<div class="hover-only select-field" data-select-key="data.attributes.movement.units" data-selected-value="{{data.attributes.movement.units}}">
+						<label
+							class="{{#if flags.editing}}select-label{{/if}}">{{ lookup config.movementUnits data.attributes.movement.units}}</label>{{~" "~}}
+							{{#if flags.editing~}}
+								<ul class="actor-size select-list">
+									{{#each config.movementUnits as |label unit|}}
+										{{#unless (eq unit ../data.attributes.movement.units)}}
+											<li data-selection-value="{{unit}}">{{label}}</li>
+										{{/unless}}
+									{{~/each~}}
+								</ul>
+							{{~/if~}}
+					</div>
+				</span>
+			</li>
+		</ul>
+	</section>
+	<section class="monster-abilities">
+		<ul class="ability-scores flexrow">
+		{{#each data.abilities as |ability id|}}
+			<li class="ability{{#if ability.proficient}} proficient{{/if}}" data-ability="{{id}}">
+				<h4 class="ability-title box-title" title="{{ability.label}}">{{ability.abbr}}</h4>
+				<span class="attr-value"
+					contenteditable="{{@root.flags.editing}}"
+					placeholder="0"
+					data-field-key="data.abilities.{{id}}.value"
+					data-dtype="Number"
+					title="{{ localize 'MOBLOKS5E.Score' }}">
+					{{~ability.value~}}
+				</span>
+				<span class="ability-modifier" title="{{ localize 'MOBLOKS5E.Modifier' }}">({{numberFormat ability.mod decimals=0 sign=true}})</span>
+			</li>
+		{{/each}}
+		</ul>
+	</section>
+	<section class="monster-attributes2{{#if menus.attributes.visible}} menu-active{{/if}}">
+		{{#if flags.editing}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/menuItem.hbs" item=menus.attributes}}
+		{{/if}}
+
+		<ul class="attributes">
+			{{#if (or info.hasSaveProfs flags.show-not-prof flags.show-skill-save)}}
+			<li class="monster-saves attribute">
+				<span class="attrbute-wrapper">
+					<figure class="menu simple-menu">
+						<h4 class="attribute-name menu-toggle" data-menu-id="save-roller">{{ localize "MOBLOKS5E.SavingThrowS" }}</h4>
+						<div class="overflow-fix">
+							<ul>
+							{{#each data.abilities as |ability id|}}
+								<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}"
+									title="{{ability.label}}">
+									<span class="ability-title">{{ability.label}}</span>
+									<span>{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
+								</li>
+							{{/each}}
+							</ul>
+						</div>
+					</figure>
+					<ul class="inline-list">
+					{{#each data.abilities as |ability id|}}
+					{{#if (or ability.proficient @root.flags.show-not-prof)}}
+						<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}" title="{{ability.label}}">
+							<span class="ability-title">{{ability.abbr}}</span>
+							<span>{{numberFormat ability.save decimals=0 sign=true}}</span>{{~" "~}}
+						</li>
+					{{/if}}
+					{{/each}}
+						{{#unless info.hasSaveProfs}}<li>&mdash;</li>{{/unless}}
+					</ul>
+				</span>
+			</li>
+			{{/if}}
+			{{#if (or info.hasSkills flags.show-not-prof flags.show-skill-save)}}
+			<li class="monster-skills attribute">
+				<span class="attribute-wrapper">
+					<figure class="menu simple-menu">
+						<h4 class="attribute-name menu-toggle" data-menu-id="skill-roller">{{ localize "MOBLOKS5E.SkillS" }}</h4>
+						<div class="overflow-fix">
+							<ul>
+							{{#each data.skills as |skill s|}}
+								<li class="skill {{#if skill.value}}proficient{{/if}}" title="{{skill.ability}}" data-skill="{{s}}">
+									<span class="skill-title">{{skill.label}}</span>
+									<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>{{~" "~}}
+								</li>
+							{{/each}}
+							</ul>
+						</div>
+					</figure>
+					<ul class="inline-list">
+					{{#each data.skills as |skill s|}}
+					{{#if (or skill.value @root.flags.show-not-prof)}}
+						<li class="skill {{#if skill.value}}proficient{{/if}}"  title="{{skill.ability}}" data-skill="{{s}}">
+							<span class="skill-title">{{skill.label}}</span>
+							<span class="skill-mod">{{numberFormat skill.total decimals=0 sign=true}}</span>{{~" "~}}
+						</li>
+					{{/if}}
+					{{/each}}
+						{{#unless info.hasSkills}}<li>&mdash;</li>{{/unless}}
+					</ul>
+				</span>
+			</li>
+			{{/if}}
+			{{#if (moblok-hascontents data.traits.dv.selected)}}
+			<li class="attribute">
+				<span class="attribute-wrapper">
+					<h4 class="attribute-name">{{localize "DND5E.DamVuln"}}</h4>
+					<ul class="traits-list inline-list no-caps">
+					{{#each data.traits.dv.selected as |v k|}}
+						<li class="trait-value">{{v}}</li>
+					{{/each}}
+					</ul>
+				</span>
+			</li>
+			{{/if}}
+			{{#if (moblok-hascontents data.traits.dr.selected)}}
+			<li class="attribute">
+				<span class="attribute-wrapper">
+					<h4 class="attribute-name">{{localize "DND5E.DamRes"}}</h4>
+					<ul class="traits-list inline-list no-caps">
+					{{#each data.traits.dr.selected as |v k|}}
+						<li class="trait-value">{{v}}</li>
+					{{/each}}
+					</ul>
+				</span>
+			</li>
+			{{/if}}
+			{{#if (moblok-hascontents data.traits.di.selected)}}
+			<li class="attribute">
+				<span class="attribute-wrapper">
+					<h4 class="attribute-name">{{localize "DND5E.DamImm"}}</h4>
+					<ul class="traits-list inline-list no-caps">
+					{{#each data.traits.di.selected as |v k|}}
+						<li class="trait-value">{{v}}</li>
+					{{/each}}
+					</ul>
+				</span>
+			</li>
+			{{/if}}
+			{{#if (moblok-hascontents data.traits.ci.selected)}}
+			<li class="attribute">
+				<span class="attribute-wrapper">
+					<h4 class="attribute-name">{{localize "DND5E.ConImm"}}</h4>
+					<ul class="traits-list inline-list no-caps">
+					{{#each data.traits.ci.selected as |v k|}}
+						<li class="trait-value">{{v}}</li>
+					{{/each}}
+					</ul>
+				</span>
+			</li>
+			{{/if}}
+			<li class="attribute">
+				<span class="attribute-wrapper">
+					<h4 class="attribute-name">{{localize "DND5E.Senses"}}</h4>
+					{{#each senses as |sense|~}}
+						<span class="editable-wrapper">
+							{{~#if sense.value}}{{sense.label}} {{/if~}}
+							<span class="attr-value" contenteditable="{{../flags.editing}}" placeholder="{{sense.label}}&nbsp;"
+								data-field-key="{{sense.key}}" data-dtype="Number">
+								{{~sense.value~}}
+							</span>
+							{{~#if sense.value}} {{sense.unit}}{{/if~}}
+						</span>
+						{{~#if sense.value}}{{localize "MOBLOKS5E.Comma"}} {{/if~}}
+					{{~/each~}}
+					<span class="editable-wrapper">{{~" "~}}
+						<span class="attr-value" contenteditable="{{flags.editing}}" placeholder="{{specialSenses.special.label}}&nbsp;"
+							data-field-key="{{specialSenses.special.key}}">
+							{{~specialSenses.special.value~}}
+						</span>{{~" "~}}
+					</span>
+					{{~#if specialSenses.special.value}}{{localize "MOBLOKS5E.Comma"}} {{/if~}}
+					<span>
+						{{~specialSenses.passivePerception~}}
+					</span>
+					<div class="hover-only select-field" data-select-key="data.attributes.senses.units"
+						data-selected-value="{{data.attributes.senses.units}}">
+						<label
+							class="{{#if flags.editing}}select-label{{/if}}">{{ lookup config.movementUnits data.attributes.senses.units}}</label>{{~" "~}}
+							{{#if flags.editing~}}
+							<ul class="actor-size select-list">
+								{{#each config.movementUnits as |label unit|}}
+									{{#unless (eq unit ../data.attributes.senses.units)}}
+										<li data-selection-value="{{unit}}">{{label}}</li>
+									{{/unless}}
+								{{~/each~}}
+							</ul>
+							{{~/if~}}
+					</div>
+				</span>
+			</li>
+			
+			<li class="attribute">
+				<span class="attribute-wrapper">
+					<h4 class="attribute-name">{{localize "DND5E.Languages"}}</h4>
+					<ul class="traits-list inline-list">
+					{{#if (moblok-hascontents data.traits.languages.selected)}}
+						{{#each data.traits.languages.selected as |v k|}}
+							<li class="trait-value">{{v}}</li>
+						{{/each}}
+					{{else}}
+						<li class="trait-value">&mdash;</li>
+					{{/if}}
+					</ul>
+				</span>
+			</li>
+			
+			<li class="attribute">
+				<span class="attribute-wrapper">
+					<h4 class="attribute-name">{{localize "MOBLOKS5E.Challenge"}}</h4>
+					<span class="trait-value"
+						placeholder="0"
+						contenteditable="{{flags.editing}}"
+						data-dtype="Number"
+						data-field-key="data.details.cr"
+						>{{labels.cr}}</span> <span>({{ localize "MOBLOKS5E.XPLabel" xp=data.details.xp.label }})</span>
+				</span>
+			</li>
+		</ul>
+	</section>
+</header>

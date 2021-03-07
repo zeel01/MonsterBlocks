@@ -1701,9 +1701,14 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	static async preLoadTemplates() {
 		return loadTemplates([
 			// Shared Partials
-			"modules/monsterblock/templates/dnd5e/parts/switches.hbs",
+			"modules/monsterblock/templates/dnd5e/switches.hbs",
 			"modules/monsterblock/templates/dnd5e/parts/switch.hbs",
 
+			// Actor Sheet Sections
+			"modules/monsterblock/templates/dnd5e/bio.hbs",
+			"modules/monsterblock/templates/dnd5e/header.hbs",
+			"modules/monsterblock/templates/dnd5e/main.hbs",
+			
 			// Actor Sheet Partials
 			"modules/monsterblock/templates/dnd5e/parts/menuItem.hbs",
 			"modules/monsterblock/templates/dnd5e/parts/resource.hbs",
