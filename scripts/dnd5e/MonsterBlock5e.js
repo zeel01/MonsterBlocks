@@ -27,7 +27,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 
 	get template() {
-		return "modules/monsterblock/templates/dnd5e/monsterblock5e.html";
+		return "modules/monsterblock/templates/dnd5e/monsterblock5e.hbs";
 	}
 	
 	static get defaultOptions() {
@@ -1704,7 +1704,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 
 			// Actor Sheet Partials
 			"modules/monsterblock/templates/dnd5e/parts/menuItem.hbs"
-			
+
 		]);
 	}
 }
