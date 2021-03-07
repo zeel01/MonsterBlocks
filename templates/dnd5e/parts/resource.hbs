@@ -1,0 +1,32 @@
+{{#if (or @root.flags.show-resources resource.limit)~}}
+<span class="name-extension">{{~" "~}}
+	({{#if @root.flags.show-resources~}}
+		<span class="resource-value" 
+			placeholder="0" 
+			contenteditable="{{@root.owner}}" 
+			data-dtype="Number"
+			{{#if resource.entity}}
+				data-entity="{{resource.entity}}"
+			{{/if}}
+			data-field-key="{{resource.target}}">{{resource.current}}</span>
+		{{~#if resource.limit}}{{localize "MOBLOKS5E.Comma"}} {{/if}}
+	{{~/if~}}
+	{{~#if resource.limit~}}
+		{{#if (eq resource.type "charges")}}
+			<span class="resource-value" 
+				placeholder="0"
+				contenteditable="{{@root.owner}}"
+				data-dtype="Number"
+				{{#if resource.entity}}
+					data-entity="{{resource.entity}}"
+				{{/if}}
+				data-field-key="{{resource.limTarget}}">{{resource.limit}}</span>
+		{{~else~}}
+			{{resource.limit}}
+		{{~/if~}}
+		/{{resource.refresh}}
+	{{~/if~}}
+	{{#if resource.name}} {{resource.name}}{{/if~}}
+	){{~" "~}}
+</span>
+{{~/if}}

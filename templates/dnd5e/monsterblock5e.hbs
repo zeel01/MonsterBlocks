@@ -601,40 +601,6 @@
 		{{#if flags.editing}}
 			{{> "modules/monsterblock/templates/dnd5e/parts/menuItem.hbs" item=menus.features}}
 		{{/if}}
-	{{#*inline "resource"~}}
-		{{#if (or @root.flags.show-resources resource.limit)~}}
-		<span class="name-extension">{{~" "~}}
-			({{#if @root.flags.show-resources~}}
-				<span class="resource-value" 
-					placeholder="0" 
-					contenteditable="{{@root.owner}}" 
-					data-dtype="Number"
-					{{#if resource.entity}}
-						data-entity="{{resource.entity}}"
-					{{/if}}
-					data-field-key="{{resource.target}}">{{resource.current}}</span>
-				{{~#if resource.limit}}{{localize "MOBLOKS5E.Comma"}} {{/if}}
-			{{~/if~}}
-			{{~#if resource.limit~}}
-				{{#if (eq resource.type "charges")}}
-					<span class="resource-value" 
-						placeholder="0"
-						contenteditable="{{@root.owner}}"
-						data-dtype="Number"
-						{{#if resource.entity}}
-							data-entity="{{resource.entity}}"
-						{{/if}}
-						data-field-key="{{resource.limTarget}}">{{resource.limit}}</span>
-				{{~else~}}
-					{{resource.limit}}
-				{{~/if~}}
-				/{{resource.refresh}}
-			{{~/if~}}
-			{{#if resource.name}} {{resource.name}}{{/if~}}
-			){{~" "~}}
-		</span>
-		{{~/if}}
-	{{~/inline}}
 	{{#*inline "featureBlock"}}
 	<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}{{#if lairactions}} lair-actions{{/if}}{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
 		<div class="feature-description inline-children">
@@ -667,7 +633,7 @@
 				{{~/if~}}
 				{{~#unless legendaryactions~}}
 					{{~#if item.hasresource~}}
-						{{> resource resource=item.resource}}
+						{{> "modules/monsterblock/templates/dnd5e/parts/resource.hbs" resource=item.resource}}
 					{{~/if~}}
 				{{~/unless~}}{{ localize "MOBLOKS5E.NameDescriptionSep" }}
 			{{~else~}}
@@ -690,7 +656,7 @@
 			{{/if}}
 			<span class="item-name" data-item-id="{{casting._id}}">{{casting.name}}</span>.
 			{{~#if item.hasresource~}}
-				{{> resource resource=item.resource}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/resource.hbs" resource=item.resource}}
 			{{~/if~}}
 			<span class="description">
 				{{{ casting.description.level }}}
@@ -732,7 +698,7 @@
 								{{/if}}
 								<span class="spell-name">{{spell.name}}</span>
 								{{~#if spell.hasresource~}}
-									{{> resource resource=spell.resource}}
+									{{> "modules/monsterblock/templates/dnd5e/parts/resource.hbs" resource=spell.resource}}
 								{{~/if~}}
 							</li>
 					{{/each}}
@@ -783,7 +749,7 @@
 			{{/if}}
 			<span class="item-name" data-item-id="{{item._id}}">{{item.name}}</span>
 			{{~#if item.hasresource~}}
-				{{> resource resource=item.resource}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/resource.hbs" resource=item.resource}}
 			{{~/if~}}
 			{{ localize "MOBLOKS5E.NameDescriptionSep" }}
 			{{#if @root.flags.attack-descriptions}}
