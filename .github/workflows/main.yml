@@ -33,7 +33,7 @@ jobs:
         download: https://github.com/${{github.repository}}/releases/download/${{steps.get_version.outputs.version}}/monsterblock.zip
 
     # Create a zip file with all files required by the module to add to the release
-    - run: zip -r ./monsterblock.zip module.json monsterblock.js monsterblock.css actor-sheet.html lang/ input-expressions/handler.js
+    - run: zip -r ./monsterblock.zip module.json monsterblock.js monsterblock.css templates/ scripts/ lang/ input-expressions/handler.js
 
     # Create a release for this specific version
     - name: Update Release with Files
