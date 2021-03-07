@@ -5,12 +5,16 @@
 <ul class="attributes">
 	{{#if (or info.hasSaveProfs flags.show-not-prof flags.show-skill-save)}}
 	<li class="monster-saves attribute">
-		{{> "modules/monsterblock/templates/dnd5e/parts/header/saves.hbs"}}
+		<span class="attribute-wrapper">
+			{{> "modules/monsterblock/templates/dnd5e/parts/header/saves.hbs"}}
+		</span>
 	</li>
 	{{/if}}
 	{{#if (or info.hasSkills flags.show-not-prof flags.show-skill-save)}}
 	<li class="monster-skills attribute">
-		{{> "modules/monsterblock/templates/dnd5e/parts/header/skills.hbs"}}
+		<span class="attribute-wrapper">
+			{{> "modules/monsterblock/templates/dnd5e/parts/header/skills.hbs"}}
+		</span>
 	</li>
 	{{/if}}
 
