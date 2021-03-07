@@ -1,0 +1,64 @@
+{{#with item}}
+	{{#if (or (eq type "root-menu") (eq type "sub-menu"))}}
+		{{! If this is a root-menu, wrap it with a figure, otherwise it's a sub-menu so it's wrapped with an li}}
+		< {{~#if (eq type "root-menu")~}}
+			figure class="menu tweak-menu
+		{{~else~}}
+			li class="menu sub-menu
+		{{~/if}}
+			{{~#if visible}} menu-open{{/if}}">
+			<label class="menu-toggle" data-menu-id="{{id}}">{{{label}}}</label>
+			{{~#if (eq type "root-menu")}}<div class="overflow-fix">{{/if}}
+				<ul>
+					{{~#each children~}}
+						{{> "modules/monsterblock/templates/dnd5e/parts/menuItem.hbs" item=this}}
+					{{~/each~}}
+				</ul>
+			{{~#if (eq type "root-menu")}}</div>{{/if}}
+		</{{#if (eq type "root-menu")}}figure{{else}}li{{/if}}>
+	{{/if}}
+	{{#if (eq type "skill")}}
+		<li>
+			<labal title="{{skill.hover}}">
+				<a class="proficiency-toggle skill-proficiency" data-skill-id="{{id}}" data-skill-value="{{skill.value}}">
+					<span class="menu-item-icon">{{{skill.icon}}}</span>{{~" "~}}
+					<span class="skill-label">{{skill.label}}</span>
+					<span class="skill-ability">{{skill.abilityAbbr}}</span>
+				</a>
+			</label>
+		</li>
+	{{/if}}
+	{{#if (or (eq type "save-toggle") (eq type "damage-type") (eq type "condition-type") (eq type "language-opt"))}}
+		<li>
+			<a data-option="{{d}}"
+				data-{{type}}="{{target}}"
+				data-flag="{{flag}}">
+				<span class="menu-item-icon">{{{icon}}}</span>{{~" "~}}
+				<span class="trait-sel-label">{{name}}</span>
+			</a>
+		</li>
+	{{/if}}
+	{{#if (eq type "custom-val")}}
+		<li class="custom-trait">
+			<label for="{{target}}">
+				<span class="trait-sel-label">{{name}}</span>
+				<input 
+					type="text" 
+					name="{{target}}"
+					value="{{value}}">
+			</label>
+		</li>
+	{{/if}}
+	{{#if (eq type "trigger")}}
+		<li>
+			<a class="trigger" data-control="{{control}}"
+				{{#each data as |dat id|}}
+					data-{{id}}="{{dat}}"
+				{{/each}}
+				>
+				<span class="menu-item-icon">{{{icon}}}</span>{{~" "~}}
+				<span class="trigger-lable">{{label}}</span>
+			</a>
+		</li>
+	{{/if}}
+{{/with}}
