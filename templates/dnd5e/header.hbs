@@ -6,22 +6,7 @@
 		{{> "modules/monsterblock/templates/dnd5e/parts/attributes1.hbs"}}
 	</section>
 	<section class="monster-abilities">
-		<ul class="ability-scores flexrow">
-		{{#each data.abilities as |ability id|}}
-			<li class="ability{{#if ability.proficient}} proficient{{/if}}" data-ability="{{id}}">
-				<h4 class="ability-title box-title" title="{{ability.label}}">{{ability.abbr}}</h4>
-				<span class="attr-value"
-					contenteditable="{{@root.flags.editing}}"
-					placeholder="0"
-					data-field-key="data.abilities.{{id}}.value"
-					data-dtype="Number"
-					title="{{ localize 'MOBLOKS5E.Score' }}">
-					{{~ability.value~}}
-				</span>
-				<span class="ability-modifier" title="{{ localize 'MOBLOKS5E.Modifier' }}">({{numberFormat ability.mod decimals=0 sign=true}})</span>
-			</li>
-		{{/each}}
-		</ul>
+		{{> "modules/monsterblock/templates/dnd5e/parts/abilities.hbs"}}
 	</section>
 	<section class="monster-attributes2{{#if menus.attributes.visible}} menu-active{{/if}}">
 		{{#if flags.editing}}
