@@ -1,6 +1,6 @@
-import ActorSheet5eNPC from "../../systems/dnd5e/module/actor/sheets/npc.js";
-import TraitSelector from "../../systems/dnd5e/module/apps/trait-selector.js";
-import { simplifyRollFormula } from "../../systems/dnd5e/module/dice.js";
+import ActorSheet5eNPC from "../../../systems/dnd5e/module/actor/sheets/npc.js";
+import TraitSelector from "../../../systems/dnd5e/module/apps/trait-selector.js";
+import { simplifyRollFormula } from "../../../systems/dnd5e/module/dice.js";
 import { MenuItem, MenuTree } from "./MenuTree.js";
 import { debugging, ContentEditableAdapter } from "./utilities.js";
 
@@ -13,7 +13,7 @@ import { debugging, ContentEditableAdapter } from "./utilities.js";
  * @class MonsterBlock5e
  * @extends {ActorSheet5eNPC}
  */
-export class MonsterBlock5e extends ActorSheet5eNPC {
+export default class MonsterBlock5e extends ActorSheet5eNPC {
 	constructor(...args) {
 		super(...args);
 		
@@ -1161,7 +1161,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	static async getTokenizer() {
 		if (game.data.modules.find(m => m.id == "vtta-tokenizer")?.active) {
-			let Tokenizer = (await import("../vtta-tokenizer/src/tokenizer/index.js")).default;
+			let Tokenizer = (await import("....//vtta-tokenizer/src/tokenizer/index.js")).default;
 			Object.assign(this, { Tokenizer });
 		}
 		else {
@@ -1170,7 +1170,7 @@ export class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	static async getQuickInserts() {
 		if (game.data.modules.find(m => m.id == "quick-insert")?.active) {
-			let { CharacterSheetContext, dnd5eFilters } = await import("../quick-insert/quick-insert.js");
+			let { CharacterSheetContext, dnd5eFilters } = await import("../../quick-insert/quick-insert.js");
 			Object.assign(this, { CharacterSheetContext, dnd5eFilters });
 		}
 		else {

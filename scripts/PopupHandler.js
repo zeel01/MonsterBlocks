@@ -3,7 +3,7 @@
  *
  * @class PopupHandler
  */
-export class PopupHandler {
+export default class PopupHandler {
 	/**
 	 * Creates an instance of PopupHandler.
 	 * @param {Application} application - A reference to an application such as a character sheet
