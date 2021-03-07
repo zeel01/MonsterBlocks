@@ -1,0 +1,12 @@
+{{#if (moblok-hascontents damage)}}
+	<li class="attribute">
+		<span class="attribute-wrapper">
+			<h4 class="attribute-name">{{localize label}}</h4>
+			<ul class="traits-list inline-list no-caps">
+				{{#each damage as |v k|}}
+					<li class="trait-value">{{v}}</li>
+				{{/each}}
+			</ul>
+		</span>
+	</li>
+{{/if}}

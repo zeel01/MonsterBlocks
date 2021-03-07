@@ -64,54 +64,28 @@
 		</span>
 	</li>
 	{{/if}}
-	{{#if (moblok-hascontents data.traits.dv.selected)}}
-	<li class="attribute">
-		<span class="attribute-wrapper">
-			<h4 class="attribute-name">{{localize "DND5E.DamVuln"}}</h4>
-			<ul class="traits-list inline-list no-caps">
-			{{#each data.traits.dv.selected as |v k|}}
-				<li class="trait-value">{{v}}</li>
-			{{/each}}
-			</ul>
-		</span>
-	</li>
-	{{/if}}
-	{{#if (moblok-hascontents data.traits.dr.selected)}}
-	<li class="attribute">
-		<span class="attribute-wrapper">
-			<h4 class="attribute-name">{{localize "DND5E.DamRes"}}</h4>
-			<ul class="traits-list inline-list no-caps">
-			{{#each data.traits.dr.selected as |v k|}}
-				<li class="trait-value">{{v}}</li>
-			{{/each}}
-			</ul>
-		</span>
-	</li>
-	{{/if}}
-	{{#if (moblok-hascontents data.traits.di.selected)}}
-	<li class="attribute">
-		<span class="attribute-wrapper">
-			<h4 class="attribute-name">{{localize "DND5E.DamImm"}}</h4>
-			<ul class="traits-list inline-list no-caps">
-			{{#each data.traits.di.selected as |v k|}}
-				<li class="trait-value">{{v}}</li>
-			{{/each}}
-			</ul>
-		</span>
-	</li>
-	{{/if}}
-	{{#if (moblok-hascontents data.traits.ci.selected)}}
-	<li class="attribute">
-		<span class="attribute-wrapper">
-			<h4 class="attribute-name">{{localize "DND5E.ConImm"}}</h4>
-			<ul class="traits-list inline-list no-caps">
-			{{#each data.traits.ci.selected as |v k|}}
-				<li class="trait-value">{{v}}</li>
-			{{/each}}
-			</ul>
-		</span>
-	</li>
-	{{/if}}
+
+	{{! Damage & Condition Resistances & Immunities}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
+			damage=data.traits.dv.selected
+			label="DND5E.DamVuln" 
+		}}
+
+		{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
+			damage=data.traits.dr.selected
+			label="DND5E.DamRes" 
+		}}
+
+		{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
+			damage=data.traits.di.selected
+			label="DND5E.DamImm" 
+		}}
+
+		{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
+			damage=data.traits.ci.selected
+			label="DND5E.ConImm" 
+		}}
+
 	<li class="attribute">
 		<span class="attribute-wrapper">
 			<h4 class="attribute-name">{{localize "DND5E.Senses"}}</h4>
