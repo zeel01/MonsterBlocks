@@ -34,6 +34,7 @@
 	{{> "modules/monsterblock/templates/dnd5e/parts/attack.hbs" item=item}}
 {{/unless}}
 {{/each}}
+
 {{#each features.actions.items as |item iid|}}
 	{{#unless item.is.specialAction}}
 		{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
@@ -50,39 +51,7 @@
 {{/if}}
 {{! Legendary Actions }}
 {{#if info.hasLegendaryActions}}
-	<h2 class="section-header">
-		{{localize "DND5E.LegAct"}}
-		{{#if flags.show-resources}}
-		<span class="header-resource">
-			<span class="resource-value"
-				placeholder="0"
-				contenteditable="{{@root.owner}}"
-				data-dtype="Number"
-				data-field-key="data.resources.legact.value">
-				{{~data.resources.legact.value~}}
-			</span> /
-			<span class="resource-value"
-				placeholder="0"
-				contenteditable="{{@root.flags.editing}}"
-				data-dtype="Number"
-				data-field-key="data.resources.legact.max">
-				{{~data.resources.legact.max~}}
-			</span>
-		</span>
-		{{/if}}
-	</h2>
-	<section>
-		<p class="legendary-description">
-			{{ localize "MOBLOKS5E.LegendaryText" name=actor.name number=data.resources.legact.max}}
-		</p>
-		{{#each features.legendary.items as |item iid|}}
-			{{#if item.is.legendary }}
-			{{#unless item.is.legResist}}
-				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor legendaryactions=true flags=@root.flags}}
-			{{/unless}}
-			{{/if}}
-		{{/each}}
-	</section>
+	{{> "modules/monsterblock/templates/dnd5e/parts/legendaryActs.hbs"}}
 {{/if}}
 {{#if info.hasLoot}}
 	<h2 class="section-header">{{localize "DND5E.Inventory"}}</h2>
