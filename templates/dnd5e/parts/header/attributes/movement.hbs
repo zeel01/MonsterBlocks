@@ -1,0 +1,40 @@
+<h4 class="attribute-name box-title">{{ localize "DND5E.Speed" }}</h4>
+{{#each movement as |move|~}}
+	<span class="editable-wrapper{{#if (and move.value @index)}} optional-comma{{/if}}">
+		{{~#if (and move.value move.showLabel)}}{{move.label}} {{/if~}}
+		<span class="attr-value" 
+			contenteditable="{{../flags.editing}}"
+			placeholder="&nbsp;{{move.label}}"
+			data-field-key="{{move.key}}"
+			data-dtype="Number">
+			{{~move.value~}}
+		</span>
+		{{~#if move.value}} {{move.unit}}{{/if~}}
+		{{~#if move.fly~}}
+			<span class="hover-only no-break nocaps">
+				(<span class="toggle-button" data-toggle-key="data.attributes.movement.hover"
+					data-toggle-value="{{../data.attributes.movement.hover}}">
+					{{~#if ../data.attributes.movement.hover~}}
+						<i class="fas fa-check"></i>
+					{{~else~}}
+						<i class="far fa-circle"></i>
+					{{~/if}}
+					{{ localize "DND5E.MovementHover" ~}}
+				</span>){{~" "~}}
+			</span>
+		{{~/if~}}
+	</span>
+{{~/each}}
+<div class="hover-only select-field" data-select-key="data.attributes.movement.units" data-selected-value="{{data.attributes.movement.units}}">
+	<label
+		class="{{#if flags.editing}}select-label{{/if}}">{{ lookup config.movementUnits data.attributes.movement.units}}</label>{{~" "~}}
+		{{#if flags.editing~}}
+			<ul class="actor-size select-list">
+				{{#each config.movementUnits as |label unit|}}
+					{{#unless (eq unit ../data.attributes.movement.units)}}
+						<li data-selection-value="{{unit}}">{{label}}</li>
+					{{/unless}}
+				{{~/each~}}
+			</ul>
+		{{~/if~}}
+</div>
