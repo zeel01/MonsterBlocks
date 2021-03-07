@@ -689,13 +689,7 @@
 	{{#if features.multiattack.items}}
 		{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=features.multiattack.items.[0] actor=actor flags=flags}}
 	{{/if}}
-	{{#*inline "damageRoll"~}}
-		<span class="attack-damage" 
-			data-roll-flavor="{{localize 'DND5E.Damage'}}: {{name}}"
-			data-roll-formula="{{formula}}">
-			{{~text~}}
-		</span>
-	{{~/inline}}
+
 	{{#each features.attacks.items as |item iid|}}
 	{{#unless item.is.specialAction}}
 	<section class="item monster-action{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
@@ -733,11 +727,11 @@
 						{{#unless @first}}
 							{{ localize "MOBLOKS5E.MultiDamageAttackConjunctionPlus" }}						
 						{{/unless}}
-						{{> damageRoll text=part.text name=item.name formula=part.formula}}
+						{{> "modules/monsterblock/templates/dnd5e/parts/damageRoll.hbs" text=part.text name=item.name formula=part.formula}}
 						{{ localize "MOBLOKS5E.damage" }}
 						{{~#if (and @first item.description.versatile)~}}
 							{{ localize "MOBLOKS5E.Comma" }}
-							{{> damageRoll 
+							{{> "modules/monsterblock/templates/dnd5e/parts/damageRoll.hbs" 
 								name=item.name 
 								formula=item.description.versatile.formula
 								text=(	localize "MOBLOKS5E.AttackVersatile"
