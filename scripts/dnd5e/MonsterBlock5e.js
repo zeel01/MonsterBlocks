@@ -27,7 +27,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 
 	get template() {
-		return "modules/monsterblock/actor-sheet.html";
+		return "modules/monsterblock/templates/dnd5e/monsterblock5e.html";
 	}
 	
 	static get defaultOptions() {
