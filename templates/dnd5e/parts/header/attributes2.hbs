@@ -1,50 +1,57 @@
-{{#if flags.editing}}
-	{{> "modules/monsterblock/templates/dnd5e/parts/menuItem.hbs" item=menus.attributes}}
-{{/if}}
+{{! Attributes Menu }}
+	{{#if flags.editing}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/menuItem.hbs" item=menus.attributes}}
+	{{/if}}
 
 <ul class="attributes">
+
+{{! Saves }}
 	{{#if (or info.hasSaveProfs flags.show-not-prof flags.show-skill-save)}}
-	<li class="monster-saves attribute">
-		<span class="attribute-wrapper">
-			{{> "modules/monsterblock/templates/dnd5e/parts/header/saves.hbs"}}
-		</span>
-	</li>
+		<li class="monster-saves attribute">
+			<span class="attribute-wrapper">
+				{{> "modules/monsterblock/templates/dnd5e/parts/header/saves.hbs"}}
+			</span>
+		</li>
 	{{/if}}
+
+{{! Skills }}
 	{{#if (or info.hasSkills flags.show-not-prof flags.show-skill-save)}}
-	<li class="monster-skills attribute">
-		<span class="attribute-wrapper">
-			{{> "modules/monsterblock/templates/dnd5e/parts/header/skills.hbs"}}
-		</span>
-	</li>
+		<li class="monster-skills attribute">
+			<span class="attribute-wrapper">
+				{{> "modules/monsterblock/templates/dnd5e/parts/header/skills.hbs"}}
+			</span>
+		</li>
 	{{/if}}
 
-	{{! Damage & Condition Resistances & Immunities}}
-		{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
-			damage=data.traits.dv.selected
-			label="DND5E.DamVuln" 
-		}}
+{{! Damage & Condition Resistances & Immunities}}
+	{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
+		damage=data.traits.dv.selected
+		label="DND5E.DamVuln" 
+	}}
 
-		{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
-			damage=data.traits.dr.selected
-			label="DND5E.DamRes" 
-		}}
+	{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
+		damage=data.traits.dr.selected
+		label="DND5E.DamRes" 
+	}}
 
-		{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
-			damage=data.traits.di.selected
-			label="DND5E.DamImm" 
-		}}
+	{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
+		damage=data.traits.di.selected
+		label="DND5E.DamImm" 
+	}}
 
-		{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
-			damage=data.traits.ci.selected
-			label="DND5E.ConImm" 
-		}}
+	{{> "modules/monsterblock/templates/dnd5e/parts/header/damage.hbs"
+		damage=data.traits.ci.selected
+		label="DND5E.ConImm" 
+	}}
 
+{{! Senses }}
 	<li class="attribute">
 		<span class="attribute-wrapper">
 			{{> "modules/monsterblock/templates/dnd5e/parts/header/senses.hbs"}}
 		</span>
 	</li>
-	
+
+{{! Languges }}
 	<li class="attribute">
 		<span class="attribute-wrapper">
 			<h4 class="attribute-name">{{localize "DND5E.Languages"}}</h4>
@@ -59,7 +66,8 @@
 			</ul>
 		</span>
 	</li>
-	
+
+{{! Challenge Rating }}
 	<li class="attribute">
 		<span class="attribute-wrapper">
 			<h4 class="attribute-name">{{localize "MOBLOKS5E.Challenge"}}</h4>
@@ -71,4 +79,5 @@
 				>{{labels.cr}}</span> <span>({{ localize "MOBLOKS5E.XPLabel" xp=data.details.xp.label }})</span>
 		</span>
 	</li>
+
 </ul>
