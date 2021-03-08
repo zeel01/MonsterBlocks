@@ -1004,3 +1004,13 @@ li:nth-last-of-type(2):after {
 .gm-screen-grid-cell .monsterblock.compact-feats .item.compact.legendary-actions:hover .feature-description {
 	padding-left: 2ch;
 }
+
+.monsterblock .flavor-text:empty {
+	display: none;
+}
+.monsterblock .flavor-text {
+	font-style: italic;
+}
+.monsterblock .flavor-text > p {
+	padding: 0 1ch;
+}
