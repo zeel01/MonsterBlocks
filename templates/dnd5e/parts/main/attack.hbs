@@ -30,18 +30,19 @@
 					{{ localize "MOBLOKS5E.AttackHitLabel" }}
 				</span>
 				{{#each item.description.damage as |part|}}
+					{{log item}}
 					{{#unless @first}}
 						{{ localize "MOBLOKS5E.MultiDamageAttackConjunctionPlus" }}						
 					{{/unless}}
-					{{> "modules/monsterblock/templates/dnd5e/parts/damageRoll.hbs" text=part.text name=item.name formula=part.formula}}
+					{{> "modules/monsterblock/templates/dnd5e/parts/damageRoll.hbs" text=part.text name=../item.name formula=part.formula}}
 					{{ localize "MOBLOKS5E.damage" }}
-					{{~#if (and @first item.description.versatile)~}}
+					{{~#if (and @first ../item.description.versatile)~}}
 						{{ localize "MOBLOKS5E.Comma" }}
 						{{> "modules/monsterblock/templates/dnd5e/parts/damageRoll.hbs" 
-							name=item.name 
-							formula=item.description.versatile.formula
+							name=../item.name 
+							formula=../item.description.versatile.formula
 							text=(	localize "MOBLOKS5E.AttackVersatile"
-									damage=item.description.versatile.text
+									damage=../item.description.versatile.text
 							)
 						}}
 						{{~#unless @last}}{{ localize "MOBLOKS5E.Comma" }} {{/unless~}}
