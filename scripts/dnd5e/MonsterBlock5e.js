@@ -726,6 +726,11 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		attackData.tohit = attack.labels.toHit;
 		
 		attackData.description = this.getAttackDescription(attack);
+
+		attackData.continuousDescription = 
+			this.constructor.isContinuousDescription(attackData.data.description.value);
+
+		console.log(attackData.continuousDescription);
 	}
 	castingTypes = {
 		standard: Symbol("Standard Spellcasting"),
@@ -1697,6 +1702,12 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			return TextEditor.enrichHTML(str || "", { secrets: (owner && !flags["hidden-secrets"]) });
 		}
 	};
+
+	static isContinuousDescription(desc) {
+		if (desc === null) return false;
+		// Either the start of input, or the first > character followed by one of the listed things (space, nbsp, seperators)
+		return /(?:^|^[^>]*>)(?:\s|&nbsp;|,|;|:|\.)/.test(desc);
+	}
 
 	static async preLoadTemplates() {
 		return loadTemplates([
