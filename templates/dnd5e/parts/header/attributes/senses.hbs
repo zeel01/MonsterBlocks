@@ -20,7 +20,7 @@
 <span>
 	{{~specialSenses.passivePerception~}}
 </span>
-<div class="hover-only select-field" data-select-key="data.attributes.senses.units"
+{{#if flags.editing}}<div class="hover-only select-field" data-select-key="data.attributes.senses.units"
 	data-selected-value="{{data.attributes.senses.units}}">
 	<label
 		class="{{#if flags.editing}}select-label{{/if}}">{{ lookup config.movementUnits data.attributes.senses.units}}</label>{{~" "~}}
@@ -33,4 +33,4 @@
 			{{~/each~}}
 		</ul>
 		{{~/if~}}
-</div>
+</div>{{/if}}
