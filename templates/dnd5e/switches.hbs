@@ -134,6 +134,15 @@
 				{{~/if~}}
 			</a>
 		</li>
+		<li>
+			<a class="switch" data-control="zoom-profile-image">
+				{{~#if flags.zoom-profile-image~}}
+					{{ localize "MOBLOKS5E.StaticProfileImage" ~}}
+				{{~else~}}
+					{{ localize "MOBLOKS5E.ZoomProfileImage" ~}}
+				{{~/if~}}
+			</a>
+		</li>
 		{{#if info.hasLair}}
 		<li>
 			<a class="switch" data-control="show-lair-actions">

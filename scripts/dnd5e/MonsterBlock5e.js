@@ -951,14 +951,15 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 					? tohit.charAt(1) == " " ? tohit.slice(0, 1) + tohit.slice(2) : tohit
 					: `+${tohit}`
 			}),
-			range: game.i18n.format("MOBLOKS5E.AttackRange", {
+			range: game.i18n.format(this.isThrownAttack(attack) ? "MOBLOKS5E.ThrownRange" : "MOBLOCKS5E.AttackRange", {
 				reachRange: game.i18n.localize(this.isRangedAttack(attack) ? "MOBLOKS5E.range" : "MOBLOKS5E.reach"),
-				range: atkd.range?.value,
+				melee: atkd.target?.width ? atkd.target?.width : 0,
+				range: atkd.range?.value ? atkd.range.value : 0,
 				sep: atkd.range?.long ? "/" : "",
 				max: atkd.range?.long ? atkd.range.long : "",
 				units: atkd.range?.units
 			}),
-			target: game.i18n.format("MOBLOKS5E.AttackTarget", {
+			target: atkd.activation.condition ? atkd.activation.condition : game.i18n.format("MOBLOKS5E.AttackTarget", {
 				quantity: this.getNumberString(atkd.target.value ? atkd.target.value : 1),
 				type:	atkd.target.type ? 
 						atkd.target.type : (
@@ -990,10 +991,13 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 	}
 	getAttackType(attack) {
-		return CONFIG.DND5E.itemActionTypes[attack?.data?.data?.actionType] || "";
+		return this.isThrownAttack(attack) ? game.i18n.localize("MOBLOKS5E.thrown") : CONFIG.DND5E.itemActionTypes[attack?.data?.data?.actionType] || "";
 	}
 	isRangedAttack(attack) {
 		return ["rwak", "rsak"].includes(attack.data.data?.actionType);
+	}
+	isThrownAttack(attack) {
+		return attack?.data?.data?.properties.thr;
 	}
 
 	/**
