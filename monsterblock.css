@@ -505,8 +505,8 @@
 	border: none;
 	margin-right: 0;
 }
-.monsterblock.compact-layout .profile-image-hover:hover,
-.monsterblock .profile-image-hover:hover {
+.monsterblock.compact-layout .profile-image-zoom .profile-image:hover,
+.monsterblock .profile-image-zoom .profile-image:hover {
 	width: calc(var(--column-width) * 0.7);
 	height: calc(var(--column-width) * 0.7);
 	z-index: 75;

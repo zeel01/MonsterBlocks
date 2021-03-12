@@ -2,7 +2,7 @@
 	<h1 class="charname" contenteditable="{{flags.editing}}" data-field-key="name"
 		placeholder="{{ localize 'DND5E.Name' }}">{{actor.name}}</h1>
 	{{#unless flags.hide-profile-image}}
-		<figure class="profile-image {{#if flags.zoom-profile-image}}profile-image-hover{{/if}}">
+		<figure class="profile-image">
 			<img src="{{actor.img}}" data-edit="img" title="{{actor.name}}{{#if flags.editing}} - {{ localize " MOBLOKS5E.EditHint" }}{{/if}}">
 		</figure>
 	{{/unless}}
