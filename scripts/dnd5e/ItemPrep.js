@@ -15,6 +15,16 @@ export default class ItemPrep {
 		
 
 		// Categorize Items as Features and Spells
+		/**
+		 * @typedef Feature
+		 * @property {typeof ItemPreper}    prep
+		 * @property {Function} filter
+		 * @property {string}   label
+		 * @property {Array}    items
+		 * @property {object}   dataset
+		 *//**
+		 * @type {Object.<string, Feature>}
+		 */
 		const features = {
 			legResist:	{ prep: this.prepFeature.bind(this), filter: MonsterBlock5e.isLegendaryResistance, label: game.i18n.localize("MOBLOKS5E.LegendaryResistance"), items: [] , dataset: {type: "feat"} },
 			legendary:	{ prep: this.prepAction.bind(this), filter: MonsterBlock5e.isLegendaryAction, label: game.i18n.localize("DND5E.LegAct"), items: [] , dataset: {type: "feat"} },
