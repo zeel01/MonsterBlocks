@@ -1,9 +1,15 @@
 import MonsterBlock5e from "./MonsterBlock5e.js";
-import { simplifyRollFormula } from "../../../../systems/dnd5e/module/dice.js";
-import Helpers from "./Helpers5e.js";
-import Item5e from "../../../../systems/dnd5e/module/item/entity.js";
 import ResourcePreper from "./ResourcePreper.js";
-export class ItemPreper {
+
+export default class ItemPreper {
+	/**
+	 * Creates an instance of ItemPreper.
+	 *
+	 * @param {MonsterBlock5e} sheet
+	 * @param {object} item
+	 * @param {object} templateData
+	 * @memberof ItemPreper
+	 */
 	constructor(sheet, item, templateData) {
 		this.sheet = sheet;
 		this.data = item;
@@ -17,5 +23,11 @@ export class ItemPreper {
 
 		this.data.resource = new ResourcePreper(this.templateData, this.data).getResource();
 	}
+
+	/** @abstract */
+	prepare() { }
+
+	/** @abstract */
+	getDescription() { }
 }
 
