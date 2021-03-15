@@ -1158,26 +1158,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		return item.data?.activation?.type === "reaction";
 	}
 		
-	static isSpellcasting(item) {
-		const name = item.name.toLowerCase().replace(/\s+/g, "");
-		return !this.isInnateSpellcasting(item) &&
-			game.i18n.localize("MOBLOKS5E.SpellcastingLocators").some(loc => name.includes(loc));
-	}
 
-	static isInnateSpellcasting(item) {
-		let name = item.name.toLowerCase().replace(/\s+/g, "");
-		return game.i18n.localize("MOBLOKS5E.InnateCastingLocators").some(loc => name.includes(loc));
-	}
-		
-	static isPactMagic(item) {
-		let desc = item.data.description?.value?.toLowerCase().replace(/\s+/g, "");
-		return game.i18n.localize("MOBLOKS5E.WarlockLocators").some(
-			s => desc.indexOf(s) > -1
-		);
-	}
-	static isCasting(item) {
-		return this.isSpellcasting(item) || this.isInnateSpellcasting(item);
-	}
 	static getItemAbility(item, actor, master) {
 		return master.object.items.get(item._id).abilityMod;
 	}
