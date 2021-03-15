@@ -8,4 +8,9 @@ export default class Helpers {
 	static formatOrdinal(number) {
 		return number + this.getOrdinalSuffix(number);		
 	}
+	static isContinuousDescription(desc) {
+		if (desc === null) return false;
+		// Either the start of input, or the first > character followed by one of the listed things (space, nbsp, seperators)
+		return /(?:^|^[^>]*>)(?:\s|&nbsp;|,|;|:|\.)/.test(desc);
+	}
 }
