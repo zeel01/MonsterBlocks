@@ -1,7 +1,7 @@
 import MonsterBlock5e from "./MonsterBlock5e.js";
 import { simplifyRollFormula } from "../../../../systems/dnd5e/module/dice.js";
 import Helpers from "./Helpers5e.js";
-
+import AttackPreper from "./AttackPreper.js";
 
 export default class ItemPrep {
 	constructor(sheet, data) {
@@ -32,7 +32,7 @@ export default class ItemPrep {
 			multiattack:{ prep: this.prepAction.bind(this), filter: MonsterBlock5e.isMultiAttack, label: game.i18n.localize("MOBLOKS5E.Multiattack"), items: [] , dataset: {type: "feat"} },
 			casting:	{ prep: this.prepCasting.bind(this), filter: MonsterBlock5e.isCasting.bind(MonsterBlock5e), label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
 			reaction:	{ prep: this.prepAction.bind(this), filter: MonsterBlock5e.isReaction, label: game.i18n.localize("MOBLOKS5E.Reactions"), items: [], dataset: {type: "feat"} },
-			attacks:	{ prep: this.prepAttack.bind(this), filter: item => item.type === "weapon", label: game.i18n.localize("DND5E.AttackPl"), items: [] , dataset: {type: "weapon"} },
+			attacks:	{ prep: AttackPreper, filter: item => item.type === "weapon", label: game.i18n.localize("DND5E.AttackPl"), items: [] , dataset: {type: "weapon"} },
 			actions:	{ prep: this.prepAction.bind(this), filter: item => Boolean(item.data?.activation?.type), label: game.i18n.localize("DND5E.ActionPl"), items: [] , dataset: {type: "feat"} },
 			features:	{ prep: this.prepFeature.bind(this), filter: item => item.type === "feat", label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
 			equipment:	{ prep: this.prepEquipment.bind(this), filter: () => true, label: game.i18n.localize("DND5E.Inventory"), items: [], dataset: {type: "loot"}}
@@ -57,12 +57,33 @@ export default class ItemPrep {
 		for ( let item of other ) {
 			let category = Object.values(features).find(cat => cat.filter(item));
 			
-			category.prep(item, data);
+			//category.prep(item, data);
+			this.prepareItem(category, item, data);
 			category.items.push(item);
 		}
 
 		// Assign and return
 		data.features = features;
+	}
+
+	/**
+	 *
+	 *
+	 * @param {Feature} category
+	 * @param {*} item
+	 * @param {*} data
+	 * @return {*} 
+	 * @memberof ItemPrep
+	 */
+	prepareItem(category, item, data) {
+		if (category.label != game.i18n.localize("DND5E.AttackPl")) {
+			category.prep(item, data);
+			return;
+		}
+
+		const preparer = new category.prep(this.sheet, item, data);
+		preparer.prepResources();
+		preparer.prepare();
 	}
 	prepFeature(featureData) {
 		let feature = this.sheet.object.items.get(featureData._id);
@@ -111,20 +132,7 @@ export default class ItemPrep {
 		
 		//console.debug(featureData);
 	}
-	prepAttack(attackData) {
-		let attack = this.sheet.object.items.get(attackData._id);
-		
-		this.prepResources(attackData, attack);
 
-		attackData.tohit = attack.labels.toHit;
-		
-		attackData.description = this.getAttackDescription(attack);
-
-		attackData.continuousDescription = 
-			MonsterBlock5e.isContinuousDescription(attackData.data.description.value);
-
-		console.log(attackData.continuousDescription);
-	}
 	prepEquipment(equipData) {
 		let item = this.sheet.object.items.get(equipData._id);
 
@@ -288,7 +296,7 @@ export default class ItemPrep {
 	 */
 	getCastingFeatureDescription(ct, cts, castingAbility, abilityTitle, tohit, featureData, data) {
 		const casterLevel = this.sheet.actor.data.data?.details?.spellLevel ?? 0;
-		const suffix = MonsterBlock5e.getOrdinalSuffix(casterLevel);
+		const suffix = Helpers.getOrdinalSuffix(casterLevel);
 		let abilityOptions = Object.entries(CONFIG.DND5E.abilities).reduce((acc, [key, value]) => {
 			if (key == castingAbility) return acc;
 			return acc + `<li data-selection-value="${key}">${value}</li>`
@@ -368,95 +376,7 @@ export default class ItemPrep {
 		}
 		return [data.actor.data?.abilities[castingability]?.label ?? game.i18n.localize("DND5E.AbilityInt"), castingability];
 	}
-	getAttackDescription(attack) {
-		let atkd = attack.data.data;
-		let tohit = attack.labels.toHit || "0";
-		
-		return {
-			attackType: this.getAttackType(attack),
-			tohit: game.i18n.format("MOBLOKS5E.AttackToHit", {
-				bonus: ["+", "-"].includes(tohit.charAt(0))
-					? tohit.charAt(1) == " " ? tohit.slice(0, 1) + tohit.slice(2) : tohit
-					: `+${tohit}`
-			}),
-			range: game.i18n.format("MOBLOKS5E.AttackRange", {
-				reachRange: game.i18n.localize(this.isRangedAttack(attack) ? "MOBLOKS5E.range" : "MOBLOKS5E.reach"),
-				range: atkd.range?.value,
-				sep: atkd.range?.long ? "/" : "",
-				max: atkd.range?.long ? atkd.range.long : "",
-				units: atkd.range?.units
-			}),
-			target: game.i18n.format("MOBLOKS5E.AttackTarget", {
-				quantity: this.getNumberString(atkd.target.value ? atkd.target.value : 1),
-				type:	atkd.target.type ? 
-						atkd.target.type : (
-							atkd.target.value > 1 ?
-							game.i18n.localize("MOBLOKS5E.targetS") :
-							game.i18n.localize("MOBLOKS5E.target")
-						),	
-			}),
-			damageFormula: this.damageFormula(attack),
-			versatile: atkd.damage.versatile ? {
-				text: this.formatAttackAndDamage(attack, "v", atkd.damage.parts[0]),
-				formula: this.damageFormula(attack, "v")
-			} : false,
-			damage: this.dealsDamage(attack) ? atkd.damage.parts.map((part, i) => {
-				return {
-					text: this.formatAttackAndDamage(attack, i, part),
-					formula: this.damageFormula(attack, i)
-				}
-			}) : []
-		}
-	}
-	formatAttackAndDamage(attack, i, part) {
-		return game.i18n.format("MOBLOKS5E.AttackDamageTemplate", {
-			average: this.averageDamage(attack, i),
-			formula: this.damageFormula(attack, i),
-			type: game.i18n.localize(
-				"DND5E.Damage" + part[1].replace(/./, l => l.toUpperCase())
-			).toLowerCase()
-		});
-	}
 
-	getAttackType(attack) {
-		return CONFIG.DND5E.itemActionTypes[attack?.data?.data?.actionType] || "";
-	}
-	isRangedAttack(attack) {
-		return ["rwak", "rsak"].includes(attack.data.data?.actionType);
-	}
-
-	/**
-	 * Extract the specified roll formula from the item
-	 *
-	 * @param {Item5e} attack - The attack item
-	 * @param {number|string} [index=0] - The index of the rollable formula within the parts of the damage. If 'v', this referes tot he versitile damage formual.
-	 * @return {string} A rollable formula 
-	 * @memberof MonsterBlock5e
-	 */
-	getAttackFormula(attack, index=0) {
-		const atkd = attack.data.data;
-		return index == "v" ?						// Versitile formula is index 'v'
-				atkd?.damage?.versatile				
-			:
-				atkd?.damage?.parts?.length > 0 ?
-					atkd?.damage?.parts[index][0]
-				: "0";
-	}
-	averageDamage(attack, index=0) {
-		return MonsterBlock5e.averageRoll(this.getAttackFormula(attack, index), attack.getRollData());
-	}
-
-	damageFormula(attack, index=0) {	// Extract and re-format the damage formula
-		return simplifyRollFormula(this.getAttackFormula(attack, index), attack.getRollData());
-	}
-	dealsDamage(item) {
-		return Boolean(item.data.data?.damage?.parts?.length);
-	}
-	getNumberString(number) {
-		number = Number(number);
-		if (number > 9 || number < 0) return number.toString();
-		return game.i18n.localize("MOBLOKS5E."+["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"][number]);
-	}
 	getMultiattack(data) { // The Multiattack action is always first in the list, so we need to find it and seperate it out.
 		for (let item of data.items) {
 			if (MonsterBlock5e.isMultiAttack(item)) return item;
