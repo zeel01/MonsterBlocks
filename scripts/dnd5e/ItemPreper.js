@@ -1,4 +1,3 @@
-import MonsterBlock5e from "./MonsterBlock5e.js";
 import ResourcePreper from "./ResourcePreper.js";
 
 export default class ItemPreper {
