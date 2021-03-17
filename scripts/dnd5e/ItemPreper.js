@@ -1,12 +1,16 @@
-import MonsterBlock5e from "./MonsterBlock5e.js";
 import ResourcePreper from "./ResourcePreper.js";
+
+/**
+ * @typedef {import("./MonsterBlock5e.js").MonsterBlock5e} MonsterBlock5e
+ * @typedef {import{"../../../../systems/dnd5e/module/item/sheet.js"}.Item5e} Item5e
+ */
 
 export default class ItemPreper {
 	/**
 	 * Creates an instance of ItemPreper.
 	 *
 	 * @param {MonsterBlock5e} sheet - The sheet instance this preper is working for
-	 * @param {object} item          - The item data for this item
+	 * @param {Item5e} item          - The item data for this item
 	 * @param {object} templateData  - The whole data for the template
 	 * @memberof ItemPreper
 	 */
