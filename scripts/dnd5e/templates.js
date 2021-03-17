@@ -4,6 +4,8 @@
  * @property {string}     label             - The display label of the option
  * @returns 
  *//**
+ * Creates a <select> like menu that is fully stylable.
+ *
  * @param {object}        args              - Arguments
  * @param {string?}       args.wrapperClass - Class name to add to the wrapper div
  * @param {string}        args.key          - The key for the select
@@ -37,6 +39,9 @@ export let selectField = ({
 
 
 /**
+ * Creates a contenteditable input that can be styled like inline text
+ * rather than a standard form <input>.
+ *
  * @param {object}  args             - Arguments
  * @param {string}  args.key         - The key of the field being edited
  * @param {string?} args.className   - A class name for this field
