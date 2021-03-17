@@ -134,19 +134,12 @@ export default class CastingPreper extends ItemPreper {
 
 	/**
 	 * Compiles the data needed to display the text description of a spellcasting feature
-	 * including appropriate transaltion.
+	 * including appropriate translation.
 	 *
 	 * @return {Object} An object containing translated and filled sections of the casting feature description
 	 * @memberof MonsterBlock5e
 	 */
 	getCastingFeatureDescription() {
-		const casterLevel = this.sheet.actor.data.data?.details?.spellLevel ?? 0;
-		const suffix = Helpers.getOrdinalSuffix(casterLevel);
-		let abilityOptions = Object.entries(CONFIG.DND5E.abilities).reduce((acc, [key, value]) => {
-			if (key == this.castingAbility) return acc;
-			return acc + `<li data-selection-value="${key}">${value}</li>`
-		}, "")
-
 		return {
 			level: this.ct == this.cts.innate ? "" : game.i18n.format("MOBLOKS5E.CasterNameLevel", {
 				name: this.sheet.actor.name,
@@ -198,6 +191,50 @@ export default class CastingPreper extends ItemPreper {
 		};
 	}
 
+	/**
+	 * The level, 0-20, of spellcaster the Actor is.
+	 *
+	 * If no level is set on the actor, their level is zero.
+	 *
+	 * @type {number}
+	 * @readonly
+	 * @memberof CastingPreper
+	 */
+	get casterLevel() {
+		return this.sheet.actor.data
+			.data?.details?.spellLevel ?? 0;
+	}
+
+	/**
+	 * Gets the ordinal suffix for the caster level of the Actor
+	 *
+	 * st, nd, rd, th... Will be localized appropriately.
+	 *
+	 * @type {string}
+	 * @readonly
+	 * @memberof CastingPreper
+	 */
+	get levelSuffix() {
+		return Helpers.getOrdinalSuffix(this.casterLevel);
+	}
+
+	/**
+	 * Gets a list of { value, label } options for casting abilities
+	 * excluding the currently selected casting ability.
+	 *
+	 * @type {Array<import("./templates.js").Option>}
+	 * @readonly
+	 * @memberof CastingPreper
+	 */
+	get abilityOptions() {
+		return Object.entries(CONFIG.DND5E.abilities)
+			.map(([key, value]) => ({ 
+				value: key, 
+				label: value 
+			}))
+			.filter(opt => opt.value != this.castingAbility);
+	} 
+
 	getSpellAttackBonus() {
 		let data = this.sheet.actor.data.data;
 		let abilityBonus = data.abilities[this.castingAbility]?.mod;
@@ -226,6 +263,4 @@ export default class CastingPreper extends ItemPreper {
 		}
 		return [this.templateData.actor.data?.abilities[castingability]?.label ?? game.i18n.localize("DND5E.AbilityInt"), castingability];
 	}
-
-
 }
