@@ -16,7 +16,7 @@ export default class CastingPreper extends ItemPreper {
 		return game.i18n.localize("MOBLOKS5E.InnateCastingLocators").some(loc => name.includes(loc));
 	}
 	static isPactMagic(item) {
-		const desc = item.data.description?.value?.toLowerCase().replace(/\s+/g, "");
+		const desc = item.data.data.description?.value?.toLowerCase().replace(/\s+/g, "");
 		return game.i18n.localize("MOBLOKS5E.WarlockLocators").some(
 			s => desc.indexOf(s) > -1
 		);
@@ -42,7 +42,7 @@ export default class CastingPreper extends ItemPreper {
 	 */
 	prepare() {		
 		this.data.castingType = this.constructor.isSpellcasting(this.item) ?
-			(this.isPactMagic() ? this.cts.pact : this.cts.standard) : this.cts.innate;
+			(this.constructor.isPactMagic(this.item) ? this.cts.pact : this.cts.standard) : this.cts.innate;
 
 		this.data.hasAtWill = this.sheet.hasAtWillSpells();
 		
