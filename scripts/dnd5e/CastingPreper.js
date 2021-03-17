@@ -1,6 +1,7 @@
 import Helpers from "./Helpers5e.js";
 import { debugging } from "../utilities.js";
 import ItemPreper from "./ItemPreper.js";
+import * as Templates from "./templates.js";
 
 export default class CastingPreper extends ItemPreper {
 	static isCasting(item) {
@@ -149,12 +150,14 @@ export default class CastingPreper extends ItemPreper {
 		return {
 			level: this.ct == this.cts.innate ? "" : game.i18n.format("MOBLOKS5E.CasterNameLevel", {
 				name: this.sheet.actor.name,
-				level: `<span class="caster-level"
-							contenteditable="${this.flags.editing}"
-							data-field-key="data.details.spellLevel"
-							data-dtype="Number"
-							placeholder="0"
-							>${casterLevel}</span>${suffix}`
+				level: Templates.editable({
+					key: "data.details.spellLevel",
+					value: this.casterLevel,
+					className: "caster-level",
+					dtype: "Number",
+					placeholder: "0",
+					enabled: this.sheet.flags.editing
+				})
 			}),
 			ability: game.i18n.format(
 				this.ct == this.cts.innate ? "MOBLOKS5E.InnateCastingAbility" : "MOBLOKS5E.CastingAbility", {
