@@ -150,7 +150,7 @@ export default class CastingPreper extends ItemPreper {
 					dtype: "Number",
 					placeholder: "0",
 					enabled: this.sheet.flags.editing
-				})
+				}) + this.levelSuffix
 			}),
 			ability: game.i18n.format(
 				this.ct == this.cts.innate ? "MOBLOKS5E.InnateCastingAbility" : "MOBLOKS5E.CastingAbility", {
