@@ -162,11 +162,14 @@ export default class CastingPreper extends ItemPreper {
 			ability: game.i18n.format(
 				this.ct == this.cts.innate ? "MOBLOKS5E.InnateCastingAbility" : "MOBLOKS5E.CastingAbility", {
 				name: this.sheet.actor.name,
-				ability: `
-				<div class="select-field" data-select-key="data.attributes.spellcasting" data-selected-value="${this.castingAbility}">
-					<label class="${this.sheet.flags.editing ? "select-label" : ""}">${this.abilityTitle}</label>
-					${this.sheet.flags.editing ? `<ul class="actor-size select-list">${abilityOptions}</ul>`: ""}
-				</div>`
+				ability: Templates.selectField({ 
+					key: "data.attributes.spellcasting", 
+					value: this.castingAbility, 
+					label: this.abilityTitle, 
+					listClass: "actor-size",
+					options: this.abilityOptions, 
+					enabled: this.sheet.flags.editing
+				})
 			}
 			),
 			stats: game.i18n.format("MOBLOKS5E.CastingStats", {
