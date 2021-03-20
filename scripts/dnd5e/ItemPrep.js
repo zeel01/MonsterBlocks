@@ -140,22 +140,5 @@ export default class ItemPrep {
 			if (MonsterBlock5e.isLegendaryResistance(item)) return item;
 		}
 		return false;
-	}
-
-	/**
-	 *
-	 *
-	 * @param {boolean} success - Whether or not the roll was a success.
-	 * @param {Event} event - The event object associated with this roll.
-	 * @memberof MonsterBlock5e
-	 */
-	async setCharged(success, event) {
-		await this.sheet.actor.updateEmbeddedEntity("OwnedItem", {
-			_id: event.currentTarget.dataset.itemId,
-			"data.recharge.charged": success
-		})
-
-		super._onChangeInput(event);
-	}
-	
+	}	
 }
