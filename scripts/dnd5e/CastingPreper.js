@@ -29,12 +29,39 @@ export default class CastingPreper extends ItemPreper {
 	 * @property {Symbol} standard - Standard spell slots and preparation, Ex: Wizard, Druid
 	 * @property {Symbol} innate   - Innate casting, Ex: Devils, racial magic, magical creatures, psyonics
 	 * @property {Symbol} pact     - Warlock pact magic
+	 * @readonly
+	 * @type {Object<string,Symbol>}
 	 * @memberof CastingPreper
 	 */
 	cts = {
 		standard: Symbol("Standard Spellcasting"),
 		innate: Symbol("Innate Spellcasting"),
 		pact: Symbol("Pact Macgic")
+	}
+
+	/**
+	 * Map all the casting types to different translation
+	 * strings since they all have different text.
+	 *
+	 * @readonly
+	 * @type {Object<Symbol,string>}
+	 * @memberof CastingPreper
+	 */
+	ctsSpIntroStrings = {
+		[this.cts.standard]: "MOBLOKS5E.CasterSpellsPreped",
+		[this.cts.pact]: "MOBLOKS5E.WarlockSpellsPreped",
+		[this.cts.innate]: "MOBLOKS5E.InnateSpellsKnown"
+	}
+
+	/**
+	 * The string id of the casting intro based on this caster's type
+	 *
+	 * @type {string}
+	 * @readonly
+	 * @memberof CastingPreper
+	 */
+	get spellIntroStringId() {
+		return this.ctsSpIntroStrings[this.ct];
 	}
 
 	/**
@@ -54,7 +81,7 @@ export default class CastingPreper extends ItemPreper {
 		[this.abilityTitle, this.castingAbility] = this.getCastingAbility();
 		this.tohit = this.getSpellAttackBonus();
 
-		this.data.description =  this.getCastingFeatureDescription();
+		this.data.description =  this.castingFeatureDescriptionData;
 
 		if (debugging()) console.debug(this);
 	}
@@ -103,7 +130,7 @@ export default class CastingPreper extends ItemPreper {
 				page.slotLabel = game.i18n.format(this.ct == this.cts.pact ?
 					"MOBLOCKS5E.SpellPactSlots" : "MOBLOCKS5E.SpellSlots", {
 					slots: `<span class="slot-count"
-								contenteditable="${this.sheet.flags.editing}"
+								contenteditable="${this.editing}"
 								data-field-key="${page.slotKey}.override"
 								data-dtype="Number"
 								placeholder="0"
@@ -136,59 +163,17 @@ export default class CastingPreper extends ItemPreper {
 	 * Compiles the data needed to display the text description of a spellcasting feature
 	 * including appropriate translation.
 	 *
-	 * @return {Object} An object containing translated and filled sections of the casting feature description
+	 * @type {Object} An object containing translated and filled sections of the casting feature description
+	 * @readonly
 	 * @memberof MonsterBlock5e
 	 */
-	getCastingFeatureDescription() {
+	get castingFeatureDescriptionData() {
 		return {
-			level: this.ct == this.cts.innate ? "" : game.i18n.format("MOBLOKS5E.CasterNameLevel", {
-				name: this.sheet.actor.name,
-				level: Templates.editable({
-					key: "data.details.spellLevel",
-					value: this.casterLevel,
-					className: "caster-level",
-					dtype: "Number",
-					placeholder: "0",
-					enabled: this.sheet.flags.editing
-				}) + this.levelSuffix
-			}),
-			ability: game.i18n.format(
-				this.ct == this.cts.innate ? "MOBLOKS5E.InnateCastingAbility" : "MOBLOKS5E.CastingAbility", {
-				name: this.sheet.actor.name,
-				ability: Templates.selectField({ 
-					key: "data.attributes.spellcasting", 
-					value: this.castingAbility, 
-					label: this.abilityTitle, 
-					listClass: "actor-size",
-					options: this.abilityOptions, 
-					enabled: this.sheet.flags.editing
-				})
-			}
-			),
-			stats: game.i18n.format("MOBLOKS5E.CastingStats", {
-				savedc: this.sheet.actor.data.data?.attributes?.spelldc,
-				bonus: `${this.tohit > -1 ? "+" : ""}${this.tohit}`
-			}),
-			warlockRecharge: this.ct == this.cts.pact ? game.i18n.localize("MOBLOKS5E.WarlockSlotRegain") : "",
-			spellintro: game.i18n.format({
-				[this.cts.standard]: "MOBLOKS5E.CasterSpellsPreped",
-				[this.cts.pact]: "MOBLOKS5E.WarlockSpellsPreped",
-				[this.cts.innate]: "MOBLOKS5E.InnateSpellsKnown"
-			}[this.ct], {
-				name: this.sheet.actor.name,
-				atwill: this.data.hasAtWill ? game.i18n.format("MOBLOKS5E.CasterAtWill", {
-					spells: Templates.itemList({
-						className: "at-will-spells",
-						items: this.atWillSpells.map(s => ({
-							name: s.name,
-							id: s._id
-						})),
-						itemClass: "spell at-will-spell",
-						itemLabelClass: "spell-name",
-						deletable: this.sheet.flags["show-delete"] && this.sheet.flags["editing"]
-					}) 
-				}) : ""
-			})
+			level: this.spellLevelText,
+			ability: this.castingAbilityText,
+			stats: this.casterStatsText,
+			warlockRecharge: this.warlockRechargeText,
+			spellintro: this.spellIntroText
 		};
 	}
 
@@ -247,6 +232,147 @@ export default class CastingPreper extends ItemPreper {
 	get atWillSpells() {
 		return this.templateData.spellbook
 			.find(l => l.prop === "atwill")?.spells || [];
+	}
+
+	/**
+	 * Whether or not editing is enabled on the sheet
+	 *
+	 * @type {Boolean}
+	 * @readonly
+	 * @memberof CastingPreper
+	 */
+	get editing() {
+		return this.sheet.flags.editing;
+	}
+
+	/**
+	 * Generate the text describing the caster's name and level.
+	 *
+	 * Blank for innate casters.
+	 *
+	 * @type {string}
+	 * @readonly
+	 * @memberof CastingPreper
+	 */
+	get spellLevelText() {
+		if (this.ct == this.cts.innate) return "";
+
+		return game.i18n.format("MOBLOKS5E.CasterNameLevel", {
+			name: this.sheet.actor.name,
+			level: Templates.editable({
+				key: "data.details.spellLevel",
+				value: this.casterLevel,
+				className: "caster-level",
+				dtype: "Number",
+				placeholder: "0",
+				enabled: this.editing
+			}) + this.levelSuffix
+		})
+	}
+
+	/**
+	 * Generate the text describing the caster's spellcasting ability,
+	 * including a control to change the ability if editing is enabled.
+	 *
+	 * Also shows the name on innate casters.
+	 *
+	 * @type {string}
+	 * @readonly
+	 * @memberof CastingPreper
+	 */
+	get castingAbilityText() {
+		const string = this.ct == this.cts.innate  // If it's an innate caster
+			? "MOBLOKS5E.InnateCastingAbility"     // Use the text for innate casters
+			: "MOBLOKS5E.CastingAbility";          // Otherwise use the normal text
+
+		return game.i18n.format(string, {
+			name: this.sheet.actor.name,           // Innate casters print thier name in this block
+			ability: Templates.selectField({ 
+				key: "data.attributes.spellcasting", 
+				value: this.castingAbility, 
+				label: this.abilityTitle, 
+				listClass: "actor-size",
+				options: this.abilityOptions, 
+				enabled: this.editing
+			})
+		});
+	}
+
+	/**
+	 * Generate the text describing key stats for the caster
+	 * including spell save DC and spell attack bonus.
+	 *
+	 * @type {string}
+	 * @readonly
+	 * @memberof CastingPreper
+	 */
+	get casterStatsText() {
+		return game.i18n.format("MOBLOKS5E.CastingStats", {
+			savedc: this.sheet.actor.data.data?.attributes?.spelldc,
+			bonus: `${this.tohit > -1 ? "+" : ""}${this.tohit}`
+		})
+	}
+
+	/**
+	 * If this is a warlock, returns the string of text explaining
+	 * how pact magic spell slots work.
+	 *
+	 * @type {string}
+	 * @readonly
+	 * @memberof CastingPreper
+	 */
+	get warlockRechargeText() {
+		if (this.ct != this.cts.pact) return "";
+		return game.i18n.localize("MOBLOKS5E.WarlockSlotRegain");
+	}
+
+	/**
+	 * Generate the text which introduces the spell list
+	 *
+	 * @type {string}
+	 * @readonly
+	 * @memberof CastingPreper
+	 */
+	get spellIntroText() {
+		return game.i18n.format(this.spellIntroStringId, {
+			name: this.sheet.actor.name,
+			atwill: this.atWillSpellListText
+		})
+	}
+
+	/**
+	 * Generate the text of the list of at-will spells if any exist
+	 *
+	 * @type {string}
+	 * @readonly
+	 * @memberof CastingPreper
+	 */
+	get atWillSpellListText() {
+		if (!this.data.hasAtWill) return "";
+
+		return game.i18n.format("MOBLOKS5E.CasterAtWill", {
+			spells: Templates.itemList({
+				className: "at-will-spells",
+				items: this.atWillSpellsForList,
+				itemClass: "spell at-will-spell",
+				itemLabelClass: "spell-name",
+				deletable: this.sheet.flags["show-delete"] && this.editing  // When deletion and editing are both enabled
+			}) 
+		});
+	}
+
+	/**
+	 * Re-form the list of at-will spells to be used by the itemList
+	 * 
+	 * @type {Array<import("./templates.js").Item>}
+	 * @readonly
+	 * @memberof CastingPreper
+	 */
+	get atWillSpellsForList() {
+		return this.atWillSpells.map(s => ({
+			name: s.name,
+			id: s._id
+		}));
 	}
 
 	getSpellAttackBonus() {
