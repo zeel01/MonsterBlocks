@@ -1,9 +1,13 @@
 import MonsterBlock5e from "./MonsterBlock5e.js";
-import Helpers from "./Helpers5e.js";
 import AttackPreper from "./AttackPreper.js";
 import CastingPreper from "./CastingPreper.js";
 import ResourcePreper from "./ResourcePreper.js";
 import ActionPreper from "./ActionPreper.js";
+import ItemPreper from "./ItemPreper.js";
+
+/**
+ * @typedef {import{"../../../../systems/dnd5e/module/item/sheet.js"}.Item5e} Item5e
+ */
 
 export default class ItemPrep {
 	constructor(sheet, data) {
@@ -28,7 +32,7 @@ export default class ItemPrep {
 		 * @type {Object.<string, Feature>}
 		 */
 		const features = {
-			legResist:	{ prep: this.prepFeature.bind(this), filter: MonsterBlock5e.isLegendaryResistance, label: game.i18n.localize("MOBLOKS5E.LegendaryResistance"), items: [] , dataset: {type: "feat"} },
+			legResist:	{ prep: ItemPreper, filter: MonsterBlock5e.isLegendaryResistance, label: game.i18n.localize("MOBLOKS5E.LegendaryResistance"), items: [] , dataset: {type: "feat"} },
 			legendary:	{ prep: ActionPreper, filter: MonsterBlock5e.isLegendaryAction, label: game.i18n.localize("DND5E.LegAct"), items: [] , dataset: {type: "feat"} },
 			lair:		{ prep: ActionPreper, filter: MonsterBlock5e.isLairAction, label: game.i18n.localize("MOBLOKS5E.LairActionsHeading"), items: [] , dataset: {type: "feat"} },
 			multiattack:{ prep: ActionPreper, filter: MonsterBlock5e.isMultiAttack, label: game.i18n.localize("MOBLOKS5E.Multiattack"), items: [] , dataset: {type: "feat"} },
@@ -36,8 +40,8 @@ export default class ItemPrep {
 			reaction:	{ prep: ActionPreper, filter: MonsterBlock5e.isReaction, label: game.i18n.localize("MOBLOKS5E.Reactions"), items: [], dataset: {type: "feat"} },
 			attacks:	{ prep: AttackPreper, filter: item => item.type === "weapon", label: game.i18n.localize("DND5E.AttackPl"), items: [] , dataset: {type: "weapon"} },
 			actions:	{ prep: ActionPreper, filter: item => Boolean(item.data?.activation?.type), label: game.i18n.localize("DND5E.ActionPl"), items: [] , dataset: {type: "feat"} },
-			features:	{ prep: this.prepFeature.bind(this), filter: item => item.type === "feat", label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
-			equipment:	{ prep: this.prepEquipment.bind(this), filter: () => true, label: game.i18n.localize("DND5E.Inventory"), items: [], dataset: {type: "loot"}}
+			features:	{ prep: ItemPreper, filter: item => item.type === "feat", label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
+			equipment:	{ prep: ItemPreper, filter: () => true, label: game.i18n.localize("DND5E.Inventory"), items: [], dataset: {type: "loot"}}
 		};
 
 		// Start by classifying items into groups for rendering
@@ -110,34 +114,19 @@ export default class ItemPrep {
 	}
 
 	/**
+	 * Create an instance of the appropriate item preparer, 
+	 * then prepare the item and its resources.
 	 *
-	 *
-	 * @param {Feature} category
-	 * @param {*} item
-	 * @param {*} data
-	 * @return {*} 
+	 * @param {Feature} category - The type of item
+	 * @param {Item5e} item      - The instance of the item
+	 * @param {object} data      - The data for the template
+	 * @return {void} 
 	 * @memberof ItemPrep
 	 */
 	prepareItem(category, item, data) {
-		if (!(category.prep == AttackPreper || category.prep == CastingPreper || category.prep == ActionPreper)) {
-			category.prep(item, data);
-			return;
-		}
-
 		const preparer = new category.prep(this.sheet, item, data);
 		preparer.prepResources();
 		preparer.prepare();
-	}
-	prepFeature(featureData) {
-		let feature = this.sheet.object.items.get(featureData._id);
-
-		//this.prepResources(featureData, feature)
-	}
-	
-	prepEquipment(equipData) {
-		let item = this.sheet.object.items.get(equipData._id);
-
-		//this.prepResources(equipData, item);
 	}
 
 	getMultiattack(data) { // The Multiattack action is always first in the list, so we need to find it and seperate it out.
