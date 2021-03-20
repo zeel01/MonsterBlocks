@@ -3,19 +3,56 @@ import { debugging } from "../utilities.js";
 import ItemPreper from "./ItemPreper.js";
 import * as Templates from "./templates.js";
 
+/**
+ * @typedef {import{"../../../../systems/dnd5e/module/item/sheet.js"}.Item5e} Item5e
+ */
+
 export default class CastingPreper extends ItemPreper {
+	/**
+	 * Determine if the item is a spellcasting feature
+	 *
+	 * @static
+	 * @param {Item5e} item - An item that might be a spellcasting feature
+	 * @return {boolean} 
+	 * @memberof CastingPreper
+	 */
 	static isCasting(item) {
 		return this.isSpellcasting(item) || this.isInnateSpellcasting(item);
 	}
+	/**
+	 * Determine if the item is a standard casting feature or pact magic,
+	 * or if it's innate.
+	 *
+	 * @static
+	 * @param {Item5e} item - An item that might be a spellcasting feature
+	 * @return {boolean}      True for standard or pact magic, false for innate
+	 * @memberof CastingPreper
+	 */
 	static isSpellcasting(item) {
 		const name = item.name.toLowerCase().replace(/\s+/g, "");
 		return !this.isInnateSpellcasting(item) &&
 			game.i18n.localize("MOBLOKS5E.SpellcastingLocators").some(loc => name.includes(loc));
 	}
+	/**
+	 * Determine is the item is an innate casting feature
+	 *
+	 * @static
+	 * @param {Item5e} item - An item that might be a spellcasting feature
+	 * @return {boolean} 
+	 * @memberof CastingPreper
+	 */
 	static isInnateSpellcasting(item) {
 		const name = item.name.toLowerCase().replace(/\s+/g, "");
 		return game.i18n.localize("MOBLOKS5E.InnateCastingLocators").some(loc => name.includes(loc));
 	}
+	/**
+	 * Determine if the item is a pact magic feature
+	 *
+	 * @static
+	 * @param {Item5e} item - An item that might be a spellcasting feature
+	 * @return {boolean} 
+	 * @memberof CastingPreper
+	 */
 	static isPactMagic(item) {
 		const desc = item.data.data.description?.value?.toLowerCase().replace(/\s+/g, "");
 		return game.i18n.localize("MOBLOKS5E.WarlockLocators").some(
@@ -331,7 +368,7 @@ export default class CastingPreper extends ItemPreper {
 	 * Gets a list of spell items that are at-will spells.
 	 * Or returns an empty array.
 	 *
-	 * @type {Array<import{"../../../../systems/dnd5e/module/item/sheet.js"}.Item5e>|Array}
+	 * @type {Array<Item5e>|Array}
 	 * @readonly
 	 * @memberof CastingPreper
 	 */
