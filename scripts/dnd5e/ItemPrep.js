@@ -3,6 +3,7 @@ import Helpers from "./Helpers5e.js";
 import AttackPreper from "./AttackPreper.js";
 import CastingPreper from "./CastingPreper.js";
 import ResourcePreper from "./ResourcePreper.js";
+import ActionPreper from "./ActionPreper.js";
 
 export default class ItemPrep {
 	constructor(sheet, data) {
@@ -28,13 +29,13 @@ export default class ItemPrep {
 		 */
 		const features = {
 			legResist:	{ prep: this.prepFeature.bind(this), filter: MonsterBlock5e.isLegendaryResistance, label: game.i18n.localize("MOBLOKS5E.LegendaryResistance"), items: [] , dataset: {type: "feat"} },
-			legendary:	{ prep: this.prepAction.bind(this), filter: MonsterBlock5e.isLegendaryAction, label: game.i18n.localize("DND5E.LegAct"), items: [] , dataset: {type: "feat"} },
-			lair:		{ prep: this.prepAction.bind(this), filter: MonsterBlock5e.isLairAction, label: game.i18n.localize("MOBLOKS5E.LairActionsHeading"), items: [] , dataset: {type: "feat"} },
-			multiattack:{ prep: this.prepAction.bind(this), filter: MonsterBlock5e.isMultiAttack, label: game.i18n.localize("MOBLOKS5E.Multiattack"), items: [] , dataset: {type: "feat"} },
+			legendary:	{ prep: ActionPreper, filter: MonsterBlock5e.isLegendaryAction, label: game.i18n.localize("DND5E.LegAct"), items: [] , dataset: {type: "feat"} },
+			lair:		{ prep: ActionPreper, filter: MonsterBlock5e.isLairAction, label: game.i18n.localize("MOBLOKS5E.LairActionsHeading"), items: [] , dataset: {type: "feat"} },
+			multiattack:{ prep: ActionPreper, filter: MonsterBlock5e.isMultiAttack, label: game.i18n.localize("MOBLOKS5E.Multiattack"), items: [] , dataset: {type: "feat"} },
 			casting:	{ prep: CastingPreper, filter: CastingPreper.isCasting.bind(CastingPreper), label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
-			reaction:	{ prep: this.prepAction.bind(this), filter: MonsterBlock5e.isReaction, label: game.i18n.localize("MOBLOKS5E.Reactions"), items: [], dataset: {type: "feat"} },
+			reaction:	{ prep: ActionPreper, filter: MonsterBlock5e.isReaction, label: game.i18n.localize("MOBLOKS5E.Reactions"), items: [], dataset: {type: "feat"} },
 			attacks:	{ prep: AttackPreper, filter: item => item.type === "weapon", label: game.i18n.localize("DND5E.AttackPl"), items: [] , dataset: {type: "weapon"} },
-			actions:	{ prep: this.prepAction.bind(this), filter: item => Boolean(item.data?.activation?.type), label: game.i18n.localize("DND5E.ActionPl"), items: [] , dataset: {type: "feat"} },
+			actions:	{ prep: ActionPreper, filter: item => Boolean(item.data?.activation?.type), label: game.i18n.localize("DND5E.ActionPl"), items: [] , dataset: {type: "feat"} },
 			features:	{ prep: this.prepFeature.bind(this), filter: item => item.type === "feat", label: game.i18n.localize("DND5E.Features"), items: [], dataset: {type: "feat"} },
 			equipment:	{ prep: this.prepEquipment.bind(this), filter: () => true, label: game.i18n.localize("DND5E.Inventory"), items: [], dataset: {type: "loot"}}
 		};
@@ -118,7 +119,7 @@ export default class ItemPrep {
 	 * @memberof ItemPrep
 	 */
 	prepareItem(category, item, data) {
-		if (!(category.prep == AttackPreper || category.prep == CastingPreper)) {
+		if (!(category.prep == AttackPreper || category.prep == CastingPreper || category.prep == ActionPreper)) {
 			category.prep(item, data);
 			return;
 		}
@@ -132,22 +133,7 @@ export default class ItemPrep {
 
 		//this.prepResources(featureData, feature)
 	}
-	prepAction(actionData) {
-		let action = this.sheet.object.items.get(actionData._id);
-			
-		//this.prepResources(actionData, action);
-		
-		actionData.is = { 
-			multiAttaack: MonsterBlock5e.isMultiAttack(action.data),
-			legendary: MonsterBlock5e.isLegendaryAction(action.data),
-			lair: MonsterBlock5e.isLairAction(action.data),
-			legResist: MonsterBlock5e.isLegendaryResistance(action.data),
-			reaction: MonsterBlock5e.isReaction(action.data)
-		};
-		actionData.is.specialAction = Object.values(actionData.is).some(v => v == true);	// Used to ensure that actions that need seperated out aren't shown twice
-	}
 	
-
 	prepEquipment(equipData) {
 		let item = this.sheet.object.items.get(equipData._id);
 
