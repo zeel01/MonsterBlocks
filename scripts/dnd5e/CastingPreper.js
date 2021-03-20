@@ -102,10 +102,10 @@ export default class CastingPreper extends ItemPreper {
 	 * Retuns the formatted spellbook data for the associated casting feature
 	 *
 	 * @return {Object} The spellbook object
-	 * @memberof MonsterBlock5e
+	 * @memberof CastingPreper
 	 */
 	reformatSpellbook() {
-		if (this.ct == this.cts.innate) return this.filterInnateSpellbook();
+		if (this.ct == this.cts.innate) return this.formatInnateSpellbook();
 			
 		const book = this.filterSpellbook();
 		
@@ -118,7 +118,7 @@ export default class CastingPreper extends ItemPreper {
 	 * Filters and adds additional data for displaying the spellbook
 	 *
 	 * @return {Object} The spellbook object
-	 * @memberof MonsterBlock5e
+	 * @memberof CastingPreper
 	 */
 	filterSpellbook() {
 		return this.templateData.spellbook
@@ -240,19 +240,29 @@ export default class CastingPreper extends ItemPreper {
 	}
 
 	/**
-	 * Filters and adds additional data for displaying the spellbook
+	 * Formats and adds additional data for displaying the spellbook
 	 *
 	 * @return {Object} The spellbook object
-	 * @memberof MonsterBlock5e
+	 * @memberof CastingPreper
 	 */
-	filterInnateSpellbook() {
-		return this.templateData.innateSpellbook.filter(page => {
-			page.label = page.uses ? game.i18n.format("MOBLOCKS5E.SpellCost", {
-				cost: page.label
-			}) : page.label;
-			page.slotLabel = false;
-			return true;
-		});
+	formatInnateSpellbook() {
+		const book = this.templateData.innateSpellbook;
+		book.forEach(this.formatInnateSpellPage.bind(this));
+		return book;
+	}
+
+	/**
+	 * Formats a "page" of the innate spellbook
+	 *
+	 * @param {object} page - One "page" of the spellbook contains spells of one "level"
+	 * @return {void}
+	 * @memberof CastingPreper
+	 */
+	formatInnateSpellPage(page) {
+		page.label = page.uses ? game.i18n.format("MOBLOCKS5E.SpellCost", {
+			cost: page.label
+		}) : page.label;
+		page.slotLabel = false;
 	}
 
 	/**
@@ -261,7 +271,7 @@ export default class CastingPreper extends ItemPreper {
 	 *
 	 * @type {Object} An object containing translated and filled sections of the casting feature description
 	 * @readonly
-	 * @memberof MonsterBlock5e
+	 * @memberof CastingPreper
 	 */
 	get castingFeatureDescriptionData() {
 		return {
