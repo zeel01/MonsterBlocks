@@ -65,6 +65,17 @@ export default class CastingPreper extends ItemPreper {
 	}
 
 	/**
+	 * Whether or not this casting feature is pact magic
+	 *
+	 * @type {boolean}
+	 * @readonly
+	 * @memberof CastingPreper
+	 */
+	get pact() {
+		return this.ct == this.cts.pact;
+	}
+
+	/**
 	 * @override
 	 * @memberof CastingPreper
 	 */
@@ -76,7 +87,7 @@ export default class CastingPreper extends ItemPreper {
 		
 		/** @type {string} The type of casting feature */
 		this.ct = this.data.castingType;
-		this.data.spellbook = this.reformatSpellbook(this.templateData);
+		this.data.spellbook = this.reformatSpellbook();
 
 		[this.abilityTitle, this.castingAbility] = this.getCastingAbility();
 		this.tohit = this.getSpellAttackBonus();
@@ -94,9 +105,13 @@ export default class CastingPreper extends ItemPreper {
 	 * @memberof MonsterBlock5e
 	 */
 	reformatSpellbook() {
-		return this.ct == this.cts.innate ?
-			this.filterInnateSpellbook() :
-			this.filterSpellbook();
+		if (this.ct == this.cts.innate) return this.filterInnateSpellbook();
+			
+		const book = this.filterSpellbook();
+		
+		book.forEach(this.formatSpellBookPage.bind(this));
+
+		return book;
 	}
 
 	/**
@@ -106,41 +121,122 @@ export default class CastingPreper extends ItemPreper {
 	 * @memberof MonsterBlock5e
 	 */
 	filterSpellbook() {
-		return this.templateData.spellbook.filter(page => {
-			if (   (this.ct == this.cts.pact && !(page.order == 0.5 || page.order == 0))	// Pact magic is only "0.5" and cantrips
-				|| (page.order == -20)											// Don't bother with at-will.
-				|| (this.ct != this.cts.innate && page.order == -10)						// Only innate has -10
-			) return false;
+		return this.templateData.spellbook
+			.filter(this.spellBookFilter.bind(this));
+	}
 
-			page.maxSpellLevel = page.spells.reduce(
-				(max, spell) => spell.data.level > max ? spell.data.level : max,
-				1);
+	/**
+	 * Determin in a page in the book contains spells to include
+	 *
+	 * @param {object} page       - One "page" of the spellbook contains spells of one "level"
+	 * @param {number} page.order - The spell level of the page, or a special value for pact magic, innate, or at-will
+	 * @return {boolean}            Whether or not the page belongs in the spellbook 
+	 * @memberof CastingPreper
+	 */
+	spellBookFilter({ order }) {
+		const invalidPactMagic = (                                     // If this caster is even a pact magic user
+			this.pact && !(order == 0.5 || order == 0)                 // Pact magic is only "0.5" and cantrips
+		)
+		const atWill = order == -20;                                   // Don't bother with at-will.
+		const innate = this.ct != this.cts.innate && order == -10      // Only innate has -10
+		
+		return !(invalidPactMagic || atWill || innate)                 // If it's any of these, it should not be in the spellbook
+	}
 
-			if (page.order == 0) {
-				page.label = game.i18n.localize("MOBLOKS5E.Cantrips");
-				page.slotLabel = game.i18n.localize("MOBLOKS5E.AtWill");
-			}
-			else {
-				page.label = game.i18n.format("MOBLOCKS5E.SpellLevel", {
-					level: this.ct == this.cts.pact ?
-						`${Helpers.formatOrdinal(1)}-${Helpers.formatOrdinal(page.maxSpellLevel)}` :
-						Helpers.formatOrdinal(page.maxSpellLevel)
-				});
-				page.slotKey = `data.spells.${this.ct == this.cts.pact ? "pact" : `spell${page.maxSpellLevel}`}`
-				page.slotLabel = game.i18n.format(this.ct == this.cts.pact ?
-					"MOBLOCKS5E.SpellPactSlots" : "MOBLOCKS5E.SpellSlots", {
-					slots: `<span class="slot-count"
-								contenteditable="${this.editing}"
-								data-field-key="${page.slotKey}.override"
-								data-dtype="Number"
-								placeholder="0"
-							>${page.slots}</span>`,
-					level: Helpers.formatOrdinal(page.maxSpellLevel)
-				});
-				
-			}
-			return true;
+	/**
+	 * Formats special labels for this spellbook page.
+	 *
+	 * @param {object} page - One "page" of the spellbook contains spells of one "level"
+	 * @return {void} 
+	 * @memberof CastingPreper
+	 */
+	formatSpellBookPage(page) {
+		page.maxSpellLevel = this.getSpellPageLevel(page);
+
+		if (page.order == 0) return this.formatCantripPage(page);
+
+		page.label = this.getPageLabel(page);
+		page.slotKey = this.getPageSlotKey(page)
+		page.slotLabel = this.getPageSlotLabel(page);
+	}
+
+	/**
+	 * Gets the maximum spell level on this spellbook page
+	 *
+	 * @param {object} page - One "page" of the spellbook contains spells of one "level"
+	 * @return {number}       The highest level spell on this page
+	 * @memberof CastingPreper
+	 */
+	getSpellPageLevel(page) {
+		return page.spells.reduce(
+			(max, spell) => spell.data.level > max ? spell.data.level : max,
+		1);
+	}
+
+	/**
+	 * Constructs the label for this page of the spellbok
+	 *
+	 * @param {object} page - One "page" of the spellbook contains spells of one "level"
+	 * @return {string} 
+	 * @memberof CastingPreper
+	 */
+	getPageLabel(page) {
+		let level = "";
+
+		if (this.pact) level = `${Helpers.formatOrdinal(1)}-${Helpers.formatOrdinal(page.maxSpellLevel)}`;  // 1st-maxTh
+		else           level = Helpers.formatOrdinal(page.maxSpellLevel);
+
+		return game.i18n.format("MOBLOCKS5E.SpellLevel", { level });
+	}
+
+	/**
+	 * Get the editable key for the spell slots
+	 *
+	 * @param {object} page          - One "page" of the spellbook contains spells of one "level"
+	 * @param {number} page.maxSpellLevel - The highest number of spell slots on the page
+	 * @return {string} 
+	 * @memberof CastingPreper
+	 */
+	getPageSlotKey({ maxSpellLevel }) {
+		const suffix = this.pact ? "pact" : `spell${maxSpellLevel}`;
+		return `data.spells.${suffix}`;
+	}
+
+	/**
+	 * Formats the label for the spell slots on this page
+	 *
+	 * @param {object} page - One "page" of the spellbook contains spells of one "level"
+	 * @return {string} 
+	 * @memberof CastingPreper
+	 */
+	getPageSlotLabel(page) {
+		const string = this.pact          // Which translation key
+			? "MOBLOCKS5E.SpellPactSlots" // pact magic
+			: "MOBLOCKS5E.SpellSlots";    // or normal
+
+		return game.i18n.format(string, {
+			slots: Templates.editable({
+				key: `${page.slotKey}.override`,
+				className: "slot-count",
+				dtype: "Number",
+				placeholder: 0,
+				value: page.slots,
+				enabled: this.editing
+			}),
+			level: Helpers.formatOrdinal(page.maxSpellLevel)
 		});
+	}
+
+	/**
+	 * Simplified page formatting for cantrips
+	 *
+	 * @param {object} page - One "page" of the spellbook contains spells of one "level"
+	 * @return {void}
+	 * @memberof CastingPreper
+	 */
+	formatCantripPage(page) {
+		page.label = game.i18n.localize("MOBLOKS5E.Cantrips");
+		page.slotLabel = game.i18n.localize("MOBLOKS5E.AtWill");
 	}
 
 	/**
