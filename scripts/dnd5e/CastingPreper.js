@@ -518,25 +518,42 @@ export default class CastingPreper extends ItemPreper {
 		}));
 	}
 
+	/**
+	 * Calculates the spell attack bonus of this actor
+	 *
+	 * @return {number} 
+	 * @memberof CastingPreper
+	 */
 	getSpellAttackBonus() {
-		let data = this.sheet.actor.data.data;
-		let abilityBonus = data.abilities[this.castingAbility]?.mod;
-		let profBonus = data.attributes?.prof;
+		const data = this.sheet.actor.data.data;
+		const abilityBonus = data.abilities[this.castingAbility]?.mod;
+		const profBonus = data.attributes?.prof;
 		
 		return abilityBonus + profBonus;
 	}
+
+	/**
+	 * Determine which ability score is the the casting ability of this actor
+	 *
+	 * @return {[string, string]} The [label, id] of the casting ability
+	 * @memberof CastingPreper
+	 */
 	getCastingAbility() {
-		let main = this.sheet.actor.data.data?.attributes?.spellcasting || "int";
+		const main = this.sheet.actor.data
+			.data?.attributes?.spellcasting || "int";
+
 		let castingability = main;
 		
-		let types = {
-			"will": (l) => l.order == -20,
-			[this.cts.innate]: (l) => l.order == -10,
-			[this.cts.pact]: (l) => l.order == 0.5,
-			"cantrip": (l) => l.order == 0,
+		const types = {
+			"will":              (l) => l.order == -20,
+			[this.cts.innate]:   (l) => l.order == -10,
+			[this.cts.pact]:     (l) => l.order == 0.5,
+			"cantrip":           (l) => l.order == 0,
 			[this.cts.standard]: (l) => l.order > 0.5
 		}
-		let spelllevel = this.data.spellbook.find(types[this.ct])
+
+		const spelllevel = this.data.spellbook.find(types[this.ct]);
+
 		if (spelllevel !== undefined) {
 			let spell = spelllevel.spells.find((s) => 
 				s.data.ability && 
@@ -544,6 +561,11 @@ export default class CastingPreper extends ItemPreper {
 			);
 			castingability = spell?.data?.ability ?? main;
 		}
-		return [this.templateData.actor.data?.abilities[castingability]?.label ?? game.i18n.localize("DND5E.AbilityInt"), castingability];
+		
+		return [
+			this.templateData.actor.data?.abilities[castingability]?.label 
+				?? game.i18n.localize("DND5E.AbilityInt"), 
+			castingability
+		];
 	}
 }
