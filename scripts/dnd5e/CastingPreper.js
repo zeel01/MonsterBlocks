@@ -179,12 +179,10 @@ export default class CastingPreper extends ItemPreper {
 				atwill: this.data.hasAtWill ? game.i18n.format("MOBLOKS5E.CasterAtWill", {
 					spells: Templates.itemList({
 						className: "at-will-spells",
-						items: this.templateData.spellbook
-							.find(l => l.prop === "atwill")?.spells
-							?.map(s => ({
-								name: s.name,
-								id: s._id
-							})),
+						items: this.atWillSpells.map(s => ({
+							name: s.name,
+							id: s._id
+						})),
 						itemClass: "spell at-will-spell",
 						itemLabelClass: "spell-name",
 						deletable: this.sheet.flags["show-delete"] && this.sheet.flags["editing"]
@@ -237,6 +235,19 @@ export default class CastingPreper extends ItemPreper {
 			}))
 			.filter(opt => opt.value != this.castingAbility);
 	} 
+
+	/**
+	 * Gets a list of spell items that are at-will spells.
+	 * Or returns an empty array.
+	 *
+	 * @type {Array<import{"../../../../systems/dnd5e/module/item/sheet.js"}.Item5e>|Array}
+	 * @readonly
+	 * @memberof CastingPreper
+	 */
+	get atWillSpells() {
+		return this.templateData.spellbook
+			.find(l => l.prop === "atwill")?.spells || [];
+	}
 
 	getSpellAttackBonus() {
 		let data = this.sheet.actor.data.data;
