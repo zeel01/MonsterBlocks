@@ -68,6 +68,8 @@ export let editable = ({
  *//**
  * Creates a list of named items which may or may not be editable
  *
+ * This output is susceptible to whitespace errors.
+ *
  * @param {object}    args                - Arguments
  * @param {string}    args.className      - The name of the class for this list
  * @param {Item[]}    args.items          - A set of items in the list
