@@ -177,15 +177,18 @@ export default class CastingPreper extends ItemPreper {
 			}[this.ct], {
 				name: this.sheet.actor.name,
 				atwill: this.data.hasAtWill ? game.i18n.format("MOBLOKS5E.CasterAtWill", {
-					spells: this.templateData.spellbook.find(l => l.prop === "atwill")?.spells?.reduce((list, spell) => {
-						return `${list}
-							<li class="spell at-will-spell" data-item-id="${spell._id}">
-								${this.sheet.flags["show-delete"] && this.sheet.flags["editing"] ?
-								`<a class="delete-item" data-item-id="${spell._id}">
-									<i class="fa fa-trash"></i>
-								</a>` : ""}
-								<span class="spell-name">${spell.name}</span></li>`;
-					}, `<ul class="at-will-spells">`) + "</ul>"
+					spells: Templates.itemList({
+						className: "at-will-spells",
+						items: this.templateData.spellbook
+							.find(l => l.prop === "atwill")?.spells
+							?.map(s => ({
+								name: s.name,
+								id: s._id
+							})),
+						itemClass: "spell at-will-spell",
+						itemLabelClass: "spell-name",
+						deletable: this.sheet.flags["show-delete"] && this.sheet.flags["editing"]
+					}) 
 				}) : ""
 			})
 		};

@@ -29,7 +29,7 @@ export let selectField = ({
 		<label class="${enabled ? "select-label" : ""} ${labelClass}">${label}</label>
 	${ enabled ? 
 		`<ul class="select-list ${listClass}">
-		${ options.map((option) => `\
+		${ options.map(option => `\
 			<li data-selection-value="${option.value}">${option.label}</li>
 		`).reduce((a, v) => a + v)}
 		</ul>`
@@ -60,3 +60,34 @@ export let editable = ({
 	data-dtype="${dtype}"\
 	placeholder="${placeholder}">${value}</span>\
 `;
+
+/**
+ * @typedef Item
+ * @property {string} name           - The display name of the item
+ * @property {string} id             - The _id of the item
+ *//**
+ * Creates a list of named items which may or may not be editable
+ *
+ * @param {object}    args                - Arguments
+ * @param {string}    args.className      - The name of the class for this list
+ * @param {Item[]}    args.items          - A set of items in the list
+ * @param {string}    args.itemClass      - The class to put on each item li
+ * @param {string}    args.itemLabelClass - The class to put on each item label span
+ * @param {Boolean}   args.editing        - Whether or not the items can be deleted
+ * @returns {string}
+ */
+export let itemList = ({
+	className, items, itemClass, itemLabelClass, deletable
+}) => `\
+<ul class="${className}">
+${ items.map(item => 
+`<li class="${itemClass}" data-item-id="${item.id}">\
+${ deletable ?
+	`<a class="delete-item" data-item-id="${item.id}">\
+		<i class="fa fa-trash"></i>\
+	</a>`
+: ""}<span class="${itemLabelClass}">${item.name}</span>\
+</li>\
+`).reduce((a, v) => a + v)}	
+</ul>
+`
