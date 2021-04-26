@@ -98,7 +98,7 @@ export default class ItemPrep {
 					});
 				}
 				
-				spell.resource = new ResourcePreper(spell, this.sheet.object.items.get(spell._id)).getResource();
+				spell.resource = new ResourcePreper(spell, this.sheet.object.items.get(spell._id), this.sheet).getResource();
 				innateSpellbook.find(finder).spells.push(spell);	// We can use the same condition as above, this time to lacate the item that satisfies the condition. We then insert the current spell into that section.
 			}
 		}

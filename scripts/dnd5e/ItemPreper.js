@@ -32,7 +32,7 @@ export default class ItemPreper {
 		this.data.hasresource = ResourcePreper.hasResource(this.item);
 		if (!this.data.hasresource) return;
 
-		this.data.resource = new ResourcePreper(this.templateData, this.data).getResource();
+		this.data.resource = new ResourcePreper(this.templateData, this.data, this.sheet).getResource();
 	}
 
 	/** @abstract */
