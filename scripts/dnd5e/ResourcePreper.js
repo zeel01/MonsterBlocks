@@ -22,10 +22,13 @@ export default class ResourcePreper {
 	 * @memberof ResourcePreper
 	 */
 	static hasResource(item) {
-		return Boolean(item.data.data.consume?.target)
+		return Boolean(
+			// eslint-disable-next-line no-mixed-spaces-and-tabs
+			   item.data.data.consume?.target
 			|| item.type == "consumable"
 			|| item.type == "loot"
-			|| item.data.data.uses?.max;
+			|| item.data.data.uses?.max
+		);
 	}
 
 	/**
@@ -35,7 +38,6 @@ export default class ResourcePreper {
 	 * @memberof ResourcePreper
 	 */
 	getResource() {
-		this.templateData.hasresource = this.item.hasresource;
 		if (!this.templateData.hasresource) return null;
 
 		this.setType();
@@ -52,10 +54,10 @@ export default class ResourcePreper {
 	setType() {
 		if (this.item.type == "consumable" || this.item.type == "loot")
 			this.res.type = "consume";
-		else if (this.item.data.uses?.max) 
+		else if (this.item.data.data.uses?.max) 
 			this.res.type = "charges";
 		else 
-			this.res.type = this.item.data.consume.type;
+			this.res.type = this.item.data.data.consume.type;
 	}
 
 	/**
@@ -90,7 +92,7 @@ export default class ResourcePreper {
 	 * @memberof ResourcePreper
 	 */
 	prepAttribute() {
-		let t = this.item.data.consume.target;
+		let t = this.item.data.data.consume.target;
 		let r = t.match(/(.+)\.(.+)\.(.+)/);
 		let max = `data.${r[1]}.${r[2]}.max`;
 		
@@ -106,11 +108,11 @@ export default class ResourcePreper {
 	 */
 	prepCharges() {
 		this.res.target = "data.uses.value";
-		this.res.entity = this.item.data.consume.target || this.item.id;
-		this.res.current = this.item.data.uses.value;
-		this.res.limit = this.item.type == "spell" ? false : this.item.data.uses.max;
+		this.res.entity = this.item.data.data.consume.target || this.item.id;
+		this.res.current = this.item.data.data.uses.value;
+		this.res.limit = this.item.type == "spell" ? false : this.item.data.data.uses.max;
 		this.res.limTarget = "data.uses.max";
-		this.res.refresh = CONFIG.DND5E.limitedUsePeriods[this.item.data.uses.per];
+		this.res.refresh = CONFIG.DND5E.limitedUsePeriods[this.item.data.data.uses.per];
 	}
 	/**
 	 * Prepares items that consume material components/loot 
@@ -119,7 +121,7 @@ export default class ResourcePreper {
 	 * @memberof ResourcePreper
 	 */
 	prepMaterial() {
-		this.res.entity = this.item.data.consume.target;
+		this.res.entity = this.item.data.data.consume.target;
 		let ammo = this.sheet.actor.getEmbeddedEntity("OwnedItem", this.res.entity);
 		if (!ammo) return;
 		
@@ -136,7 +138,7 @@ export default class ResourcePreper {
 	prepConsume() {
 		this.res.entity = this.item._id;
 		this.res.limit = false;
-		this.res.current = this.item.data.quantity;
+		this.res.current = this.item.data.data.quantity;
 		this.res.target = "data.quantity";
 	}
 }
