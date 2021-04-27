@@ -1,5 +1,5 @@
 import MonsterBlock5e from "./scripts/dnd5e/MonsterBlock5e.js";
-import  { debugging } from "./scripts/utilities.js";
+import { debug } from "./scripts/utilities.js";
 import PopupHandler from "./scripts/PopupHandler.js"
 
 Hooks.once("init", () => {
@@ -15,8 +15,9 @@ Hooks.once("ready", () => {
 	MonsterBlock5e.getTokenizer();
 	MonsterBlock5e.getQuickInserts();
 	
-	/*if (!debugging())*/ MonsterBlock5e.preLoadTemplates();
+	MonsterBlock5e.preLoadTemplates();
 	
+	if (debug.INFO) console.debug("Monster Blocks | Registering Settings");
 	game.settings.register("monsterblock", "attack-descriptions", {
 		name: game.i18n.localize("MOBLOKS5E.attack-description-name"),
 		hint: game.i18n.localize("MOBLOKS5E.attack-description-hint"),
@@ -183,7 +184,9 @@ Hooks.once("ready", () => {
 // This is how the box sizing is corrected to fit the statblock
 // eslint-disable-next-line no-unused-vars
 Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the sheet is rendered
-	//console.debug(`Monster Block |`, monsterblock, html, data);
+	if (debug.INFO)  console.log("Monster Block | Rendering sheet");
+	if (debug.DEBUG) console.debug(`Monster Block |`, monsterblock, html, data);
+
 	if (html.parent().hasClass("grid-cell-content")) return;
 
 	let popup = new PopupHandler(
@@ -201,7 +204,7 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the she
 Hooks.on("renderActorSheet5eNPC", (sheet) => {
 	if (sheet.constructor.name != "ActorSheet5eNPC") return;
 
-	//console.debug("Adding Control...");
+	if (debug.INFO) console.log("Monster Block | Adding cog menu to standard sheet");
 	let nav = document.createElement("nav");
 	nav.innerHTML = `
 		<i class="fas fa-cog"></i>
@@ -228,16 +231,12 @@ Actors.registerSheet("dnd5e", MonsterBlock5e, {
 	label: "MOBLOKS5E.MonsterBlocks"
 });
 
-Hooks.on("renderActorSheet", (...args) => {	// This is just for debugging, it prevents this sheet's template from being cached.
-	if (!debugging()) return; 
-
-	//let template = "modules/monsterblock/templates/dnd5e/monsterblock5e.hbs";
-    //delete _templateCache[template];
+Hooks.on("renderActorSheet", () => {	// This is just for debugging, it prevents this sheet's template from being cached.
+	if (!debug.enabled) return; 
 	window._templateCache = [];
-    //console.debug(`Monster Block | removed "${template}" from _templateCache.`);
-	console.log(args);
 });
 
 Hooks.once("devModeReady", ({ registerPackageDebugFlag }) => {
-	registerPackageDebugFlag("monsterblock");
+	registerPackageDebugFlag("monsterblock", "level");
+	if (debug.INFO) console.log(`Monster Block | Debug level: ${debug.level}`);
 });

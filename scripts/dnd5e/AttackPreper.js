@@ -1,7 +1,7 @@
 import MonsterBlock5e from "./MonsterBlock5e.js";
 import { simplifyRollFormula } from "../../../../systems/dnd5e/module/dice.js";
 import Helpers from "./Helpers5e.js";
-import { debugging } from "../utilities.js";
+import { debug } from "../utilities.js";
 import ItemPreper from "./ItemPreper.js";
 
 /**
@@ -22,7 +22,7 @@ export default class AttackPreper extends ItemPreper {
 		this.data.continuousDescription = 
 			Helpers.isContinuousDescription(this.data.data.description.value);
 
-		if (debugging()) console.debug(this);
+		if (debug.enabled) console.debug(this);
 	}
 
 	/**

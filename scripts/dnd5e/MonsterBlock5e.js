@@ -1,7 +1,7 @@
 import ActorSheet5eNPC from "../../../../systems/dnd5e/module/actor/sheets/npc.js";
 import TraitSelector from "../../../../systems/dnd5e/module/apps/trait-selector.js";
 import { MenuItem, MenuTree } from "../MenuTree.js";
-import { debugging, ContentEditableAdapter } from "../utilities.js";
+import { debug, ContentEditableAdapter } from "../utilities.js";
 import ItemPrep from "./ItemPrep.js";
 
 /* global QuickInsert:readonly */
@@ -706,7 +706,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			let control = event.currentTarget.dataset.control;			// A data attribute is used on an element with the class .switch, and it contains the name of the switch to toggle.
 			
 			let state = !this.actor.getFlag("monsterblock", control);	
-			if (debugging()) console.debug(`Monster Block | %cSwitching: ${control} to: ${state}`, "color: orange")
+			if (debug.enabled) console.debug(`Monster Block | %cSwitching: ${control} to: ${state}`, "color: orange")
 			
 			this.actor.setFlag(											
 				"monsterblock", 

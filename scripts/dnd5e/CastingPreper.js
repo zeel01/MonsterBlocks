@@ -1,5 +1,5 @@
 import Helpers from "./Helpers5e.js";
-import { debugging } from "../utilities.js";
+import { debug } from "../utilities.js";
 import ItemPreper from "./ItemPreper.js";
 import * as Templates from "./templates.js";
 
@@ -131,7 +131,7 @@ export default class CastingPreper extends ItemPreper {
 
 		this.data.description =  this.castingFeatureDescriptionData;
 
-		if (debugging()) console.debug(this);
+		if (debug.enabled) console.debug(this);
 	}
 
 
