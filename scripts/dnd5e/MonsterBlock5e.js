@@ -3,6 +3,7 @@ import TraitSelector from "../../../../systems/dnd5e/module/apps/trait-selector.
 import { MenuItem, MenuTree } from "../MenuTree.js";
 import { debug, ContentEditableAdapter } from "../utilities.js";
 import ItemPrep from "./ItemPrep.js";
+import Flags from "./Flags5e.js";
 
 /* global QuickInsert:readonly */
 
@@ -19,10 +20,16 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		this.position.default = true;
 		
-		this.prepFlags().then((p) => {
+		this.flagManager = new Flags(this);
+		this.flags = this.flagManager.flags;
+		this.allFlags = this.flagManager.allFlags;
+
+		//this.flagManager.prep().then((p) => {
 			this.options.classes.push(this.themes[this.currentTheme].class);
-			if (p) this.setCurrentTheme(this.currentTheme);
-		});
+			//if (p) 
+			this.setCurrentTheme(this.currentTheme);
+		//});
+
 		this.prepMenus();
 	}
 
@@ -64,7 +71,13 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		this.prepSenses(data);
 		this.replaceNonMagPysicalText(data);
 
-		data.flags = duplicate(this.flags);	// Get the flags for this module, and make them available in the data
+		//data.flags = duplicate(this.flags);	// Get the flags for this module, and make them available in the data
+		data.flags = {};
+		data.allFlags = [];
+		for (let flag of this.allFlags) {
+			data.flags[flag.name] = flag.value;
+			data.allFlags.push(flag);
+		}
 
 		if (data.notOwner || !this.options.editable) data.flags.editing = false;
 		if (!data.flags.editing) data.flags["show-delete"] = false;
@@ -92,12 +105,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		this.templateData = data;
 		return data;
 	}
-	get flags() {
-		return this.preparingFlags 		// Preparing flags
-			|| this.actor.compendium    // Or compendium actor
-				?  this.defaultFlags    // Use default flags instead of legit flags.
-				:  this.actor.data.flags.monsterblock; // Otherwise normal flags
-	}
+
 	/**
 	 * Constructs a FormData object using data from the sheet,
 	 * this version gets data from `contenteditable` and other 
@@ -650,34 +658,6 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			"compact-layout": game.settings.get("monsterblock", "compact-layout"),
 			"font-size": game.settings.get("monsterblock", "font-size")
 		});
-	}
-	async prepFlags() {
-		if (this.actor.compendium) return;
-		
-		this.preparingFlags = false;
-
-		if (!this.actor.getFlag("monsterblock", "initialized")) {
-			this.preparingFlags = true;
-			await this.actor.update({
-				"flags": { "monsterblock": this.defaultFlags }
-			}, {});
-
-			this.preparingFlags = false;
-			return true;
-		}
-		
-		// Verify that there are no missing flags, which could cause an error.
-		let changes = false;
-		for (let flag in this.defaultFlags) {
-			if (this.actor.getFlag("monsterblock", flag) !== undefined) continue;
-			
-			changes = true;
-			this.preparingFlags = true;
-			await this.actor.setFlag("monsterblock", flag, this.defaultFlags[flag]);
-		}
-		
-		this.preparingFlags = false;
-		return changes;
 	}
 	static async getTokenizer() {
 		if (game.data.modules.find(m => m.id == "vtta-tokenizer")?.active) {

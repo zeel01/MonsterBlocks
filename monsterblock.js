@@ -1,6 +1,8 @@
 import MonsterBlock5e from "./scripts/dnd5e/MonsterBlock5e.js";
 import { debug } from "./scripts/utilities.js";
 import PopupHandler from "./scripts/PopupHandler.js"
+import Flags5e from "./scripts/dnd5e/Flags5e.js";
+import Flags from "./scripts/Flags.js";
 
 Hooks.once("init", () => {
 	Handlebars.registerHelper(MonsterBlock5e.handlebarsHelpers); // Register all the helpers needed for Handlebars
@@ -18,102 +20,21 @@ Hooks.once("ready", () => {
 	MonsterBlock5e.preLoadTemplates();
 	
 	if (debug.INFO) console.debug("Monster Blocks | Registering Settings");
-	game.settings.register("monsterblock", "attack-descriptions", {
-		name: game.i18n.localize("MOBLOKS5E.attack-description-name"),
-		hint: game.i18n.localize("MOBLOKS5E.attack-description-hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: true
-	});
-	game.settings.register("monsterblock", "casting-feature", {
-		name: game.i18n.localize("MOBLOKS5E.casting-feature-name"),
-		hint: game.i18n.localize("MOBLOKS5E.casting-feature-hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: true
-	});
-	game.settings.register("monsterblock", "inline-secrets", {
-		name: game.i18n.localize("MOBLOKS5E.inline-secrets-name"),
-		hint: game.i18n.localize("MOBLOKS5E.inline-secrets-hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: false
-	});
-	game.settings.register("monsterblock", "hidden-secrets", {
-		name: game.i18n.localize("MOBLOKS5E.hidden-secrets-name"),
-		hint: game.i18n.localize("MOBLOKS5E.hidden-secrets-hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: false
-	});
-	game.settings.register("monsterblock", "hide-profile-image", {
-		name: game.i18n.localize("MOBLOKS5E.hide-profile-image-name"),
-		hint: game.i18n.localize("MOBLOKS5E.hide-profile-image-hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: false
-	});
-	game.settings.register("monsterblock", "show-lair-actions", {
-		name: game.i18n.localize("MOBLOKS5E.show-lair-actions-name"),
-		hint: game.i18n.localize("MOBLOKS5E.show-lair-actions-hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: false
-	});
-	game.settings.register("monsterblock", "current-hit-points", {
-		name: game.i18n.localize("MOBLOKS5E.current-hit-points-name"),
-		hint: game.i18n.localize("MOBLOKS5E.current-hit-points-hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: true
-	});
-	game.settings.register("monsterblock", "maximum-hit-points", {
-		name: game.i18n.localize("MOBLOKS5E.maximum-hit-points-name"),
-		hint: game.i18n.localize("MOBLOKS5E.maximum-hit-points-hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: true
-	});
-	game.settings.register("monsterblock", "editing", {
-		name: game.i18n.localize("MOBLOKS5E.editing-name"),
-		hint: game.i18n.localize("MOBLOKS5E.editing-hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: true
-	});
-	game.settings.register("monsterblock", "show-not-prof", {
-		name: game.i18n.localize("MOBLOKS5E.show-not-prof-name"),
-		hint: game.i18n.localize("MOBLOKS5E.show-not-prof-hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: false
-	});
-	game.settings.register("monsterblock", "show-skill-save", {
-		name: game.i18n.localize("MOBLOKS5E.show-skill-save-name"),
-		hint: game.i18n.localize("MOBLOKS5E.show-skill-save-hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: true
-	});
-	game.settings.register("monsterblock", "show-resources", {
-		name: game.i18n.localize("MOBLOKS5E.show-resources-name"),
-		hint: game.i18n.localize("MOBLOKS5E.show-resources-hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: true
-	});
+
+	Object.entries(Flags5e.flagDetails)
+		.filter(([n, d]) => !d.hidden)
+		.forEach(([name, details]) =>
+			game.settings.register(Flags5e.scope, details.setting || name, {
+				name: game.i18n.localize(`MOBLOKS5E.${name}-name`),
+				hint: game.i18n.localize(`MOBLOKS5E.${name}-hint`),
+				scope: "world",
+				config: true,
+				type: details.type,
+				default: details.default
+			}
+		)
+	);
+
 	game.settings.register("monsterblock", "max-height-offset", {
 		name: game.i18n.localize("MOBLOKS5E.max-height-offset-name"),
 		hint: game.i18n.localize("MOBLOKS5E.max-height-offset-hint"),
@@ -129,7 +50,10 @@ Hooks.once("ready", () => {
 	});
 	
 	let themeChoices = {};
-	for (let theme in MonsterBlock5e.themes) themeChoices[theme] = game.i18n.localize(MonsterBlock5e.themes[theme].name);
+	for (let theme in MonsterBlock5e.themes) 
+		themeChoices[theme] = 
+			game.i18n.localize(MonsterBlock5e.themes[theme].name);
+			
 	game.settings.register("monsterblock", "default-theme", {
 		name: game.i18n.localize("MOBLOKS5E.default-theme-name"),
 		hint: game.i18n.localize("MOBLOKS5E.default-theme-hint"),
@@ -138,46 +62,6 @@ Hooks.once("ready", () => {
 		type: String,
 		choices: themeChoices,
 		default: "default"
-	});
-	game.settings.register("monsterblock", "custom-theme-class", {
-		name: game.i18n.localize("MOBLOKS5E.custom-theme-class-name"),
-		hint: game.i18n.localize("MOBLOKS5E.custom-theme-class-hint"),
-		scope: "world",
-		config: true,
-		type: String,
-		default: ""
-	});
-	game.settings.register("monsterblock", "compact-window", {
-		name: game.i18n.localize("MOBLOKS5E.compact-window.settings.name"),
-		hint: game.i18n.localize("MOBLOKS5E.compact-window.settings.hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: false
-	});
-	game.settings.register("monsterblock", "compact-layout", {
-		name: game.i18n.localize("MOBLOKS5E.compact-layout.settings.name"),
-		hint: game.i18n.localize("MOBLOKS5E.compact-layout.settings.hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: false
-	});
-	game.settings.register("monsterblock", "compact-feats", {
-		name: game.i18n.localize("MOBLOKS5E.compact-feats.settings.name"),
-		hint: game.i18n.localize("MOBLOKS5E.compact-feats.settings.hint"),
-		scope: "world",
-		config: true,
-		type: Boolean,
-		default: false
-	});
-	game.settings.register("monsterblock", "font-size", {
-		name: game.i18n.localize("MOBLOKS5E.font-size.settings.name"),
-		hint: game.i18n.localize("MOBLOKS5E.font-size.settings.hint"),
-		scope: "world",
-		config: true,
-		type: Number,
-		default: 14
 	});
 });
 
