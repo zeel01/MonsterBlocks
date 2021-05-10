@@ -21,7 +21,7 @@ Hooks.once("ready", () => {
 	
 	if (debug.INFO) console.debug("Monster Blocks | Registering Settings");
 
-	Object.entries(Flags5e.flagDetails)
+	Object.entries(Flags5e.flagDefaults)
 		.filter(([n, d]) => !d.hidden)
 		.forEach(([name, details]) =>
 			game.settings.register(Flags5e.scope, details.setting || name, {
@@ -53,7 +53,7 @@ Hooks.once("ready", () => {
 	for (let theme in MonsterBlock5e.themes) 
 		themeChoices[theme] = 
 			game.i18n.localize(MonsterBlock5e.themes[theme].name);
-			
+
 	game.settings.register("monsterblock", "default-theme", {
 		name: game.i18n.localize("MOBLOKS5E.default-theme-name"),
 		hint: game.i18n.localize("MOBLOKS5E.default-theme-hint"),

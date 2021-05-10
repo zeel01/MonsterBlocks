@@ -21,13 +21,11 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		this.position.default = true;
 		
 		this.flagManager = new Flags(this);
-		this.flags = this.flagManager.flags;
-		this.allFlags = this.flagManager.allFlags;
 
 		//this.flagManager.prep().then((p) => {
 			this.options.classes.push(this.themes[this.currentTheme].class);
 			//if (p) 
-			this.setCurrentTheme(this.currentTheme);
+			if (!this.actor.compendium) this.setCurrentTheme(this.currentTheme);
 		//});
 
 		this.prepMenus();
@@ -45,6 +43,13 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			dragDrop: [{dragSelector: ".item .item-name"}, {dragSelector: ".spell-list .spell"}],
 			resizable: false
 		});
+	}
+
+	get flags() {
+		return this.flagManager.flags;
+	}
+	get allFlags() {
+		return this.flagManager.allFlags();
 	}
 	
 	/**
@@ -74,10 +79,13 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		//data.flags = duplicate(this.flags);	// Get the flags for this module, and make them available in the data
 		data.flags = {};
 		data.allFlags = [];
+
 		for (let flag of this.allFlags) {
 			data.flags[flag.name] = flag.value;
 			data.allFlags.push(flag);
 		}
+
+		console.table(data.allFlags)
 
 		if (data.notOwner || !this.options.editable) data.flags.editing = false;
 		if (!data.flags.editing) data.flags["show-delete"] = false;

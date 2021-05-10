@@ -8,7 +8,7 @@ export default class Flags5e extends Flags {
 	 * @static
 	 * @memberof Flags5e
 	 */
-	static get flagDetails() {
+	static get flagDefaults() {
 		return mergeObject(super.flagDefaults, {
 			"attack-descriptions": { type: Boolean, default: true , hidden: false },
 			"casting-feature"    : { type: Boolean, default: true , hidden: false },

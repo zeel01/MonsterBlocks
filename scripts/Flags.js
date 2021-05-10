@@ -19,7 +19,6 @@ export default class Flags {
 	 */
 	static get flagDefaults() {
 		return {
-			"initialized"       : { type: Boolean, default: true     , hidden: true  },
 			"inline-secrets"    : { type: Boolean, default: false    , hidden: false },
 			"hidden-secrets"    : { type: Boolean, default: false    , hidden: false },
 			"hide-profile-image": { type: Boolean, default: false    , hidden: false },
@@ -100,14 +99,10 @@ export default class Flags {
 	 *
 	 * @memberof Flags
 	 */
-	*_allFlags() {
+	*allFlags() {
 		for (let [name, details] of Object.entries(this.constructor.flagDefaults)) {
 			yield { name, ...details, value: this.flags[name] }
 		}
-	}
-
-	get allFlags() {
-		return this._allFlags();
 	}
 
 /*	async prep() {
