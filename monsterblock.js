@@ -2,7 +2,6 @@ import MonsterBlock5e from "./scripts/dnd5e/MonsterBlock5e.js";
 import { debug } from "./scripts/utilities.js";
 import PopupHandler from "./scripts/PopupHandler.js"
 import Flags5e from "./scripts/dnd5e/Flags5e.js";
-import Flags from "./scripts/Flags.js";
 
 Hooks.once("init", () => {
 	Handlebars.registerHelper(MonsterBlock5e.handlebarsHelpers); // Register all the helpers needed for Handlebars
