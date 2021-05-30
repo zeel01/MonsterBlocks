@@ -132,7 +132,7 @@ export default class AttackPreper extends ItemPreper {
 	 */
 	getVersatileData(atkd) {
 		if (!atkd.damage.versatile) return false;
-		return this.getDamageData(this.item, "v", atkd.damage.parts[0]);
+		return this.getDamageData(atkd.damage.parts[0], "v");
 	}
 
 	/**
