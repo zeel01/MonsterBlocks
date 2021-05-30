@@ -742,6 +742,14 @@ li:nth-last-of-type(2):after {
 .monsterblock .select-field:hover .select-list {
 	visibility: visible;
 }
+
+.monsterblock .config-button {
+	display: none;
+}
+.monsterblock *:hover > .config-button {
+	display: inline;
+}
+
 .monsterblock .editor {
 	height: 100%;
 }

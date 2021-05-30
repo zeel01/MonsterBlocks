@@ -12,8 +12,11 @@
 			</ul>
 		{{~/if~}}
 	</div>{{~" "~}}
-	<span class="optional-space" contenteditable="{{flags.editing}}" data-field-key="data.details.type" placeholder="{{ localize 'DND5E.Type' }}">
-		{{~data.details.type~}}
+	<span class="optional-space">
+		{{~labels.type~}}
+		<a class="config-button" data-action="type" title="Configure Creature Type">
+			<i class="fas fa-cog"></i>{{~" "~}}
+		</a>{{~" "~}}
 	</span>{{~" "~}}
 	<span class="optional-comma" contenteditable="{{flags.editing}}" placeholder="{{ localize 'DND5E.Alignment' }}" data-field-key="data.details.alignment">
 		{{~data.details.alignment~}}
