@@ -11,7 +11,7 @@
 			"discord": "zeel#4200"
 		}
 	],
-	"version": "100.2.5.1",
+	"version": "100.2.5.2",
 	"minimumCoreVersion": "0.7.6",
 	"compatibleCoreVersion": "0.7.10",
 	"systems": ["dnd5e"],
