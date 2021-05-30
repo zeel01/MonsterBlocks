@@ -85,8 +85,6 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			data.allFlags.push(flag);
 		}
 
-		console.table(data.allFlags)
-
 		if (data.notOwner || !this.options.editable) data.flags.editing = false;
 		if (!data.flags.editing) data.flags["show-delete"] = false;
 		if (this.actor.limited) data.flags["show-bio"] = true;
