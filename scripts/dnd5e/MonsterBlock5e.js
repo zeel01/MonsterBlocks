@@ -892,6 +892,9 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 
 		html.find(".item").click(this.toggleExpanded.bind(this));
+
+		// Configure Special Flags
+		html.find(".config-button").click(this._onConfigMenu.bind(this));
 	}
 	
 	toggleExpanded(event) {
