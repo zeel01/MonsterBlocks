@@ -13,11 +13,11 @@
 		{{#if @root.flags.attack-descriptions}}
 		<span class="generated-text">			
 			<span class="attack-bonus" 
-				data-roll-flavor="{{localize 'DND5E.Attack'}}: {{item.name}}" 
+				data-roll-flavor="{{ localize "DND5E.Attack" }}: {{item.name}}" 
 				data-roll-formula="1d20 + {{item.tohit}}">
 				<span class="attack-type">
 					{{~item.description.attackType~}}
-					{{localize "MOBLOKS5E.Colon"}}
+					{{ localize "MOBLOKS5E.Colon" }}
 				</span>
 				{{item.description.tohit~}}
 			</span>{{ localize "MOBLOKS5E.Comma" }}
