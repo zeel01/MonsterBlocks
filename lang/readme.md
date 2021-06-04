@@ -111,7 +111,7 @@ The abbreviations are for Honor, Sanity, and Bloodline
 ## Version: <= 2.3.0
 ### Added 3 strings:
 ```json
-"MOBLOCKS5E.physicalDamage": "bludgeoning, piercing, and slashing from nonmagical attacks",
+"MOBLOKS5E.physicalDamage": "bludgeoning, piercing, and slashing from nonmagical attacks",
 "MOBLOKS5E.SpeedUnitAbbrEnd": ".",
 "MOBLOKS5E.FoundryThemeName": "Foundry",
 ```

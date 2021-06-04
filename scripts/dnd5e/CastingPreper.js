@@ -223,7 +223,7 @@ export default class CastingPreper extends ItemPreper {
 		if (this.pact) level = `${Helpers.formatOrdinal(1)}-${Helpers.formatOrdinal(page.maxSpellLevel)}`;  // 1st-maxTh
 		else           level = Helpers.formatOrdinal(page.maxSpellLevel);
 
-		return game.i18n.format("MOBLOCKS5E.SpellLevel", { level });
+		return game.i18n.format("MOBLOKS5E.SpellLevel", { level });
 	}
 
 	/**
@@ -248,8 +248,8 @@ export default class CastingPreper extends ItemPreper {
 	 */
 	getPageSlotLabel(page) {
 		const string = this.pact          // Which translation key
-			? "MOBLOCKS5E.SpellPactSlots" // pact magic
-			: "MOBLOCKS5E.SpellSlots";    // or normal
+			? "MOBLOKS5E.SpellPactSlots" // pact magic
+			: "MOBLOKS5E.SpellSlots";    // or normal
 
 		return game.i18n.format(string, {
 			slots: Templates.editable({
@@ -296,7 +296,7 @@ export default class CastingPreper extends ItemPreper {
 	 * @memberof CastingPreper
 	 */
 	formatInnateSpellPage(page) {
-		page.label = page.uses ? game.i18n.format("MOBLOCKS5E.SpellCost", {
+		page.label = page.uses ? game.i18n.format("MOBLOKS5E.SpellCost", {
 			cost: page.label
 		}) : page.label;
 		page.slotLabel = false;
