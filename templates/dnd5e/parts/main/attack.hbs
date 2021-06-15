@@ -48,11 +48,11 @@
 					{{~/if~}}
 				{{~/each~}}			
 			{{~/if~}}
+			{{~#unless item.continuousDescription~}}
+				{{ localize "MOBLOKS5E.FullStop" }}
+			{{/unless~}}
 		</span>
 		{{~/if~}}
-		{{~#unless item.continuousDescription~}}
-			{{ localize "MOBLOKS5E.FullStop" }}
-		{{/unless~}}
 		<span class="description">{{{moblok-enrichhtml item.data.description.value @root.owner @root.flags}}}</span>
 	</div>
 </section>
