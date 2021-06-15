@@ -725,7 +725,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			}).render(true);
 		});
 		
-		html.find("[data-roll-formula]").click((event) => {			// Universal way to add an element that provides a roll, just add the data attribute "data-roll-formula" with a formula in it, and this applies.
+		html.find("[data-roll-formula]").click(async (event) => {			// Universal way to add an element that provides a roll, just add the data attribute "data-roll-formula" with a formula in it, and this applies.
 			event.preventDefault();									// This handler makes "quick rolls" possible, it just takes some data stored on the HTML element, and rolls dice directly.
 			event.stopPropagation();
 			
@@ -737,11 +737,15 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			let flavor = event.currentTarget.dataset.rollFlavor;	// Optionally, you can include data-roll-flavor to add text to the message.
 			
 			let roll;
-			try { roll = new Roll(formula).roll(); }
+			try { 
+				roll = new Roll(formula);
+				await roll.roll({ async: true }); 
+			}
 			catch (e) {
 				console.error(e);
 				ui.notifications.error(e);
-				roll = new Roll("0").roll();
+				roll = new Roll("0");
+				await roll.roll({ async: true });
 			}
 			
 			if (target) {
