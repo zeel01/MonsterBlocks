@@ -18,7 +18,7 @@ export default class Flags5e extends Flags {
 			"show-not-prof"      : { type: Boolean, default: false, hidden: false },
 			"show-resources"     : { type: Boolean, default: true , hidden: false },
 			"show-skill-save"    : { type: Boolean, default: true , hidden: false },
-			"show-bio"           : { type: Boolean, default: false, hidden: false }
+			"show-bio"           : { type: Boolean, default: false, hidden: true  }
 		});
 	}	
 }

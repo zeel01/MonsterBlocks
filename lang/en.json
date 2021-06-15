@@ -39,7 +39,97 @@
 		"resetDefaults": {
 			"label": "Reset to Defaults"
 		},
-	
+		"attack-descriptions": {
+			"settings": {
+				"name": "Generated Attack Descriptions",
+				"hint": "Show automatically generated attack descriptions by default."
+			}
+		},
+		"casting-feature": {
+			"settings": {
+				"name": "Generated Casting Features",
+				"hint": "Show automatically generated casting features by default."
+			}
+		},
+		"inline-secrets": {
+			"settings": {
+				"name": "Display Secrets Inline",
+				"hint": "By default, display blocks of secret text inline like all other text? Otherwise, display inline blocks as styled blocks of text."
+			}
+		},
+		"hidden-secrets": {
+			"settings": {
+				"name": "Hide Secrets",
+				"hint": "By default, hide secret blocks of text from the sheet."
+			}
+		},
+		"hide-profile-image": {
+			"settings": {
+				"name": "Hide Image",
+				"hint": "By default, don't show the creature's image on the sheet (more accurate)."
+			}
+		},
+		"show-lair-actions": {
+			"settings": {
+				"name": "Show Lair Actions",
+				"hint": "By default, show Lair Actions (not normally included in 5e monster stat-blocks)."
+			}
+		},
+		"current-hit-points": {
+			"settings": {
+				"name": "Show Current Hit Points",
+				"hint": "By default, display the current hit point in the hit points field. If neither maximum nor minimum Hit Points are shown, the average will be calculated and displayed."
+			}
+		},
+		"maximum-hit-points": {
+			"settings": {
+				"name": "Show Maximum Hit Points",
+				"hint": "By default, display the current hit point in the hit points field. If neither maximum nor minimum Hit Points are shown, the average will be calculated and displayed."
+			}
+		},
+		"max-height-offset": {
+			"settings": {
+				"name": "Maximum Height Offset",
+				"hint": "The maximum height of a Monster Blocks window is based on the height of the browser viewport, minus this offset. The default value of 72 is the height of the macro bar plus 10px of padding. If you prefer statblocks to be tall and narrow, reduce this value. If you prefer that stat blocks be wider (more columns) increase this value."
+			}
+		},
+		"default-theme": {
+			"settings": {
+				"name": "Default Theme",
+				"hint": "Choose which theme applies by default."
+			}
+		},
+		"custom-theme-class": {
+			"settings": {
+				"name": "Default Custom Theme Class",
+				"hint": "The class name used for your default custom theme."
+			}
+		},
+		"editing": {
+			"settings": {
+				"name": "Editing Enabled",
+				"hint": "Choose whether or not editing is enabled by default."
+			}
+		},
+		"show-not-prof": {
+			"settings": {
+				"name": "Show Non-Proficient Skills and Saves",
+				"hint": "Choose whether or not showing not-proficient skills and saves is enabled by default."
+			}
+		},
+		"show-resources": {
+			"settings": {
+				"name": "Show resource values",
+				"hint": "Choose whether or not showing resource values by default."
+			}
+		},
+		"show-skill-save": {
+			"settings": {
+				"name": "Always show skills & saves",
+				"hint": "Choose whether or not to show empty skill and save lists by default."
+			}
+		},
+			
 
 		"MonsterBlocks": "Monster Blocks",
 		
@@ -205,37 +295,6 @@
 		"LegendaryText": "The {name} can take {number} legendary actions, chooseing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {name} regains spent legendary actions at the start of its turn.",
 		
 		"LairActionsHeading": "Lair Actions",
-		"LairText": "On initiative count 20 (losing all initiative ties), the {name} takes a lair action to cause one of the following effects; the {name} can't use the same effect two rounds in a row:",
-
-		"attack-description-name": "Generated Attack Descriptions",
-		"attack-description-hint": "Show automatically generated attack descriptions by default.",
-		"casting-feature-name": "Generated Casting Features",
-		"casting-feature-hint": "Show automatically generated casting features by default.",
-		"inline-secrets-name": "Display Secrets Inline",
-		"inline-secrets-hint": "By default, display blocks of secret text inline like all other text? Otherwise, display inline blocks as styled blocks of text.",
-		"hidden-secrets-name": "Hide Secrets",
-		"hidden-secrets-hint": "By default, hide secret blocks of text from the sheet.",
-		"hide-profile-image-name": "Hide Image",
-		"hide-profile-image-hint": "By default, don't show the creature's image on the sheet (more accurate).",
-		"show-lair-actions-name": "Show Lair Actions",
-		"show-lair-actions-hint": "By default, show Lair Actions (not normally included in 5e monster stat-blocks).",
-		"current-hit-points-name": "Show Current Hit Points",
-		"current-hit-points-hint": "By default, display the current hit point in the hit points field. If neither maximum nor minimum Hit Points are shown, the average will be calculated and displayed.",
-		"maximum-hit-points-name": "Show Maximum Hit Points",
-		"maximum-hit-points-hint": "By default, display the current hit point in the hit points field. If neither maximum nor minimum Hit Points are shown, the average will be calculated and displayed.",
-		"max-height-offset-name": "Maximum Height Offset",
-		"max-height-offset-hint": "The maximum height of a Monster Blocks window is based on the height of the browser viewport, minus this offset. The default value of 72 is the height of the macro bar plus 10px of padding. If you prefer statblocks to be tall and narrow, reduce this value. If you prefer that stat blocks be wider (more columns) increase this value.",
-		"default-theme-name": "Default Theme",
-		"default-theme-hint": "Choose which theme applies by default.",
-		"custom-theme-class-name": "Default Custom Theme Class",
-		"custom-theme-class-hint": "The class name used for your default custom theme.",
-		"editing-name": "Editing Enabled",
-		"editing-hint": "Choose whether or not editing is enabled by default.",
-		"show-not-prof-name": "Show Non-Proficient Skills and Saves",
-		"show-not-prof-hint": "Choose whether or not showing not-proficient skills and saves is enabled by default.",
-		"show-resources-name": "Show resource values",
-		"show-resources-hint": "Choose whether or not showing resource values by default.",
-		"show-skill-save-name": "Always show skills & saves",
-		"show-skill-save-hint": "Choose whether or not to show empty skill and save lists by default."
+		"LairText": "On initiative count 20 (losing all initiative ties), the {name} takes a lair action to cause one of the following effects; the {name} can't use the same effect two rounds in a row:"
 	}
 }

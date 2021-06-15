@@ -24,8 +24,8 @@ Hooks.once("ready", () => {
 		.filter(([n, d]) => !d.hidden)
 		.forEach(([name, details]) =>
 			game.settings.register(Flags5e.scope, details.setting || name, {
-				name: game.i18n.localize(`MOBLOKS5E.${name}-name`),
-				hint: game.i18n.localize(`MOBLOKS5E.${name}-hint`),
+				name: game.i18n.localize(`MOBLOKS5E.${name}.settings.name`),
+				hint: game.i18n.localize(`MOBLOKS5E.${name}.settings.hint`),
 				scope: "world",
 				config: true,
 				type: details.type,
@@ -35,8 +35,8 @@ Hooks.once("ready", () => {
 	);
 
 	game.settings.register("monsterblock", "max-height-offset", {
-		name: game.i18n.localize("MOBLOKS5E.max-height-offset-name"),
-		hint: game.i18n.localize("MOBLOKS5E.max-height-offset-hint"),
+		name: game.i18n.localize("MOBLOKS5E.max-height-offset.settings.name"),
+		hint: game.i18n.localize("MOBLOKS5E.max-height-offset.settings.hint"),
 		scope: "world",
 		config: true,
 		type: Number,
@@ -54,8 +54,8 @@ Hooks.once("ready", () => {
 			game.i18n.localize(MonsterBlock5e.themes[theme].name);
 
 	game.settings.register("monsterblock", "default-theme", {
-		name: game.i18n.localize("MOBLOKS5E.default-theme-name"),
-		hint: game.i18n.localize("MOBLOKS5E.default-theme-hint"),
+		name: game.i18n.localize("MOBLOKS5E.default-theme.settings.name"),
+		hint: game.i18n.localize("MOBLOKS5E.default-theme.settings.hint"),
 		scope: "world",
 		config: true,
 		type: String,
