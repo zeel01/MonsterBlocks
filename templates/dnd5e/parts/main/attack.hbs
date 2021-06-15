@@ -1,4 +1,4 @@
-<section class="item monster-action{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{ localize 'MOBLOKS5E.EditHint' }}">
+<section class="item monster-action{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{#if @root.flags.editing}}{{ localize 'MOBLOKS5E.EditHint' }}{{/if}}">
 	<div class="attack-description inline-children">
 		{{#if @root.flags.show-delete}}
 			<a class="delete-item" data-item-id="{{item._id}}">

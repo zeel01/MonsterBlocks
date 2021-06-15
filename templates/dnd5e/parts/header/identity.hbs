@@ -25,6 +25,6 @@
 {{#unless flags.hide-profile-image}}
 	<figure class="profile-image">
 		<img src="{{actor.img}}" data-edit="img"
-			title="{{actor.name}} - {{ localize "MOBLOKS5E.EditHint" }}">
+			title="{{actor.name}}{{#if flags.editing}} - {{ localize "MOBLOKS5E.EditHint" }}{{/if}}">
 	</figure>
 {{/unless}}

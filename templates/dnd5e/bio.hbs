@@ -3,7 +3,7 @@
 		placeholder="{{ localize 'DND5E.Name' }}">{{actor.name}}</h1>
 	{{#unless flags.hide-profile-image}}
 		<figure class="profile-image">
-			<img src="{{actor.img}}" data-edit="img" title="{{actor.name}} - {{ localize " MOBLOKS5E.EditHint" }}">
+			<img src="{{actor.img}}" data-edit="img" title="{{actor.name}}{{#if flags.editing}} - {{ localize " MOBLOKS5E.EditHint" }}{{/if}}">
 		</figure>
 	{{/unless}}
 </header>
