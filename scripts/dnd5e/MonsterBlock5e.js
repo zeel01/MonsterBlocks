@@ -662,7 +662,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	static async getTokenizer() {
 		if (game.data.modules.find(m => m.id == "vtta-tokenizer")?.active) {
-			let Tokenizer = (await import("....//vtta-tokenizer/src/tokenizer/index.js")).default;
+			let Tokenizer = (await import("../../../vtta-tokenizer/src/tokenizer/index.js")).default;
 			Object.assign(this, { Tokenizer });
 		}
 		else {
