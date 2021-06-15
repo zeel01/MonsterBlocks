@@ -102,9 +102,7 @@ Hooks.on("renderActorSheet5eNPC", (sheet) => {
 	sheet.element.find(".window-content .editable").append(nav);
 	
 	nav.addEventListener("click", async () => {
-		await sheet.close();
-		await sheet.actor.setFlag("core", "sheetClass", "dnd5e.MonsterBlock5e");
-		return sheet.actor.sheet.render(true)
+		return await MonsterBlock5e.switchSheetTo("dnd5e.MonsterBlock5e", sheet);
 	});
 });
 

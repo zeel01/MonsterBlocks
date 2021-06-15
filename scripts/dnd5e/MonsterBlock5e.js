@@ -612,21 +612,8 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-	
-
 	async switchToDefault() {
-		const config = CONFIG[this.object.entity];
+		const config = CONFIG[this.object.documentName];
 		const type = this.object.data.type;
 		const classes = Object.values(config.sheetClasses[type]);
 		let defcls = classes.find(c => c.default).id;
@@ -634,11 +621,19 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		// When Monster Blocks *is* the default, use the system default instead.
 		if (defcls == "dnd5e.MonsterBlock5e") defcls = "dnd5e.ActorSheet5eNPC";
 		
-		await this.close();
-		await this.actor.setFlag("core", "sheetClass", defcls);
-		
-		return this.actor.sheet.render(true)
+		return await this.constructor.switchSheetTo(defcls, this);
 	}
+	static async switchSheetTo(sheetClass, that) {
+		const sheet = that.object.sheet;
+		await sheet.close();
+		that.object._sheet = null;
+		delete that.object.apps[sheet.appId];
+
+		await that.object.setFlag("core", "sheetClass", sheetClass);
+
+		return that.object.sheet.render(true)
+	}
+
 	get defaultFlags() {
 		return duplicate({
 			"initialized": true,
