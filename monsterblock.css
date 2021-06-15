@@ -22,7 +22,7 @@
 	--roll-hover-color: hsl(8 70% 14% / 1);
 	--divider-color: rgba(140, 42, 42, 1);
 	--divider-color-end: rgba(140, 42, 42, 0);
-	--background-image: url(/ui/parchment.jpg);
+	--background-image: url(../../ui/parchment.jpg);
 	--background-filter: hsl(39deg 100% 60% / 80%);
 	--background-blend: hard-light;
 	--menu-background: #f7e2ac;
@@ -82,7 +82,7 @@
 	--heading-color: #ff6400;
 	--roll-hover-color: #ff2000;
 	--divider-color: red;
-	--background-image: url(/ui/denim075.png);
+	--background-image: url(../../ui/denim075.png);
 	--background-filter: rgba(0,0,0,0);
 	--inline-link-color: #ff8000;
 	--shadow-color: #444;
@@ -127,7 +127,7 @@
 	color: #aaa;
 }
 .window-app.dnd5e .switches {
-	--background-image: url(/ui/parchment.jpg);
+	--background-image: url(../../ui/parchment.jpg);
 	--background-filter: rgba(0, 0, 0, 0);
 	--background-blend: none;
 	--heading-color: black;
