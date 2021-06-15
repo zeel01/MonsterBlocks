@@ -1,0 +1,300 @@
+{
+	"MOBLOKS5E": {
+		"mini-block": {
+			"label": "Mini Blocs"
+		},
+		"compact-window": {
+			"enable": "Activer fenêtre compacte",
+			"disable": "Désactiver fenêtre compacte",
+			"settings": {
+				"name": "Fenêtre compacte",
+				"hint": "Retire la barre de titre, rendant ainsi la fiche plus compact."
+			}
+		},
+		"compact-layout": {
+			"enable": "Activer disposition compacte",
+			"disable": "Désactiver disposition compacte",
+			"settings": {
+				"name": "Disposition compacte",
+				"hint": "Réduit l'espace occupé par les objets de la fiche."
+			}
+		},
+		"compact-feats": {
+			"enable": "Activer capacités compactes",
+			"disable": "Désactiver capacités compactes",
+			"settings": {
+				"name": "Capacités compactes",
+				"hint": "Réduit l'espace occupé par les capacités. Tant que ce paramètre est activé, chaque capacité ne prendra que deux lignes. Survoler une capacité avec votre pointeur révèlera sa description complète. Les capacités peuvent être étendues/réduites une par une en cliquant dessus."
+			}
+		},
+		"font-size": {
+			"label": "Taille de police",
+			"placeholder": "Taille de police (px)",
+			"NaN-error": "La taille de police doit être un nombre.",
+			"settings": {
+				"name": "Taille de police",
+				"hint": "Règle la taille de police, en pixels, pour les textes des fiches. Les autres éléments de la fiches se mettront à l'échelle. Réduire la taille de police rendra la fiche beaucoup plus petite, alors que l'augmenter améliorera la lisibilité."
+			}
+		},
+		"resetDefaults": {
+			"label": "Paramètres par défaut"
+		},
+		"attack-descriptions": {
+			"settings": {
+				"name": "Descriptifs d'attaque générés",
+				"hint": "Affiche les descriptifs d'attaque générés par défaut."
+			}
+		},
+		"casting-feature": {
+			"settings": {
+				"name": "Capacités d'incantation générées",
+				"hint": "Affiche les capacités d'incantation générées par défaut."
+			}
+		},
+		"inline-secrets": {
+			"settings": {
+				"name": "Afficher les textes secrets",
+				"hint": "Affiche les textes secrets comme les autres textes, par défaut. Ou les affiche en forme de bloc."
+			}
+		},
+		"hidden-secrets": {
+			"settings": {
+				"name": "Cacher les secrets",
+				"hint": "Cache les secrets de la fiche par défaut."
+			}
+		},
+		"hide-profile-image": {
+			"settings": {
+				"name": "Cacher l'image",
+				"hint": "Cache l'image de profil de la fiche par défaut"
+			}
+		},
+		"show-lair-actions": {
+			"settings": {
+				"name": "Afficher les actions d'antre",
+				"hint": "Affiche les actions d'antre par défaut (pas incluses dans les stat-blocks des monstres)."
+			}
+		},
+		"current-hit-points": {
+			"settings": {
+				"name": "Afficher les points de vie actuels",
+				"hint": "Affiche les points de vie actuels par défaut. Si le minimum et le maximum ne sont pas affichés, la moyenne sera calculée et affichée."
+			}
+		},
+		"maximum-hit-points": {
+			"settings": {
+				"name": "Afficher le maximum de points de vie",
+				"hint": "Affiche le maximum de points de vie par défaut."
+			}
+		},
+		"max-height-offset": {
+			"settings": {
+				"name": "Décalage de hauteur maximale",
+				"hint": "La hauteur maximum de la fenêtre de Monster Blocks est basée sur la hauteur du navigateur, moins ce décalage. La valeur par défaut de 72 est la hauteur de la barre de macro plus 10px de remplissage. Si vous préférez des statblocks grands et fins, réduisez cette valeur. Si vous préférez des statblocks plus larges (avec plus de colonnes), augmentez cette valeur."
+			}
+		},
+		"default-theme": {
+			"settings": {
+				"name": "Thème par défaut",
+				"hint": "Choisissez le thème à appliquer par défaut."
+			}
+		},
+		"custom-theme-class": {
+			"settings": {
+				"name": "Thème personnalisé par défaut",
+				"hint": "Le nom de classe utilisé pour votre thème personnalisé par défaut."
+			}
+		},
+		"editing": {
+			"settings": {
+				"name": "Activer édition",
+				"hint": "Choisissez si l'édition est activée ou non, par défaut."
+			}
+		},
+		"show-not-prof": {
+			"settings": {
+				"name": "Afficher les compétences non-maîtrisées",
+				"hint": "Choisissez si les compétences et sauvegarde non-maîtrisées sont afichées ou non, par défaut."
+			}
+		},
+		"show-resources": {
+			"settings": {
+				"name": "Afficher les valeurs de ressources",
+				"hint": "Choisissez si les valeurs de ressources sont affichées ou non, par défaut."
+			}
+		},
+		"show-skill-save": {
+			"settings": {
+				"name": "Toujours afficher les compétences et sauvegardes",
+				"hint": "Choisissez si les compétences vides et sauvegardes sont affichées ou non, par défaut."
+			}
+		},
+
+		"MonsterBlocks": "Monster Blocks",
+		
+		"SwitchToDefault": "Basculer vers la fiche par défaut",
+		"SwitchToMobloks": "Basculer vers Monster Blocks",
+		"AttackDescriptions": "Descriptif d'attaque",
+		
+		"EnableEdit": "Activer édition",
+		"DisableEdit": "Désactiver édition",
+		"EnableDelete": "Activer suppression",
+		"DisableDelete": "Désactiver suppression",
+		"ShowNotProf": "Afficher les compétences non-maîtrisées",
+		"HideNotProf": "Cacher les compétences non-maîtrisées",
+		"ShowSkillSave": "Toujours afficher les compétences et sauvegardes",
+		"HideSkillSave": "Cacher les compétences vides et sauvegardes",
+		"ShowBio": "Afficher la biographie",
+		"HideBio": "Cacher la biographie",
+		"ShowResources": "Afficher les valeurs de ressources",
+		"HideResources": "Cacher les valeurs de ressources",
+		"ShowGenerated": "Afficher les textes générés",
+		"HideGenerated": "Cacher les textes générés",
+		"DescriptionS": "Descriptions",
+		"EnableInlSecr": "Afficher les textes secrets",
+		"DisableInlSecr": "Cacher les textes secrets",
+		"ShowSecrets": "Afficher les secrets",
+		"HideSecrets": "Cacher les secrets",
+		"ShowMaxHP": "Afficher le maximum de points de vie",
+		"HideMaxHP": "Cacher le maximum de points de vie",
+		"ShowCurrentHP": "Afficher les points de vie actuels",
+		"HideCurrentHP": "Cacher les points de vie actuels",
+		"ShowProfileImage": "Afficher image de profil",
+		"HideProfileImage": "Cacher image de profil",
+		"ShowLair": "Afficher les actions d'antre",
+		"HideLair": "Cacher les actions d'antre",
+		"OpenTokenizer": "Ouvrir VTTA Tokenizer",
+		"QuickInsert": "Quick Insert",
+
+		"Theme": "Theme",
+		"CustomThemeName": "Custom",
+		"DefaultThemeName": "Monster Manual",
+		"SimpleThemeName": "5e SRD",
+		"DarkThemeName": "Darkness",
+		"CoolThemeName": "Icy Breeze",
+		"HotThemeName": "Smouldering Ember",
+		"FoundryThemeName": "Foundry",
+		
+		"Average": "Moyen",
+		"Current": "Actuel",
+		"Maximum": "Maximum",
+		
+		"Abbrstr": "for",
+		"Abbrdex": "dex",
+		"Abbrcon": "con",
+		"Abbrint": "int",
+		"Abbrwis": "sag",
+		"Abbrcha": "cha",
+		"Abbrhon": "hon",
+		"Abbrsan": "san",
+		"Abbrblo": "blo",
+
+		"Score": "Score",
+		"Modifier": "Modificateur",
+		"SavingThrowS": "Sauvegardes",
+		"PassivePerception": "Perception passive {pp}",
+		"PerceptionLocator": "perception",
+		"SkillS": "Compétence",
+		"XPLabel": "{xp} XP",
+		"physicalDamage": "contondant, perforant et tranchant d'attaques non magiques",
+		"Challenge": "Puissance",
+
+		"EditHint": "Clic-droit pour éditer",
+
+		"AddFeat": "Capacité",
+		"AddAttack": "Attaque",
+		"AddAct": "Action",
+		"AddSpell": "Sort",
+		"AddInventory": "Trésor",
+		"AddConsumable": "Consommable",
+		
+		"Recharge": "Recharge",
+		"NCharged": "Pas chargé",
+		"Costs": "Coûts",
+		"ResourceRefresh": "Jour",
+		
+		"zero": "zero",
+		"one": "un",
+		"two": "deux",
+		"three": "trois",
+		"four": "quatre",
+		"five": "cinq",
+		"six": "six",
+		"seven": "sept",
+		"eight": "huit",
+		"nine": "neuf",
+		
+		"FullStop": ".",
+		"NameDescriptionSep": ".",
+		"SpeedUnitAbbrEnd": ".",
+		"Comma": ",",
+		"Colon": ":",
+		
+		"Cantrips": "Tours de magie",
+		"AtWill": "à volonté",
+
+		"CasterNameLevel": "{name} est un lanceur de sorts de niveau {level}.",
+		"CastingAbility": "Sa caractéristique d'incantation est {ability}",
+		"InnateCastingAbility": "La caractéristique d'incantation innée du {name} est {ability}",
+		"CastingStats": "(jet sauvegarde contre ses sorts DD {savedc}, {bonus} au toucher pour les attaques avec un sort).",
+		"CasterAtWill": " peut lancer {spells} à volonté et",
+		"CasterSpellsPreped": "Le {name} a préparé les sorts suivants :",
+		"WarlockSpellsPreped": "Il a préparé les sorts de sorcier suivants:",
+		"InnateSpellsKnown": "Le {name} peut lancer les sorts suivants de manière innée, sans avoir besoin de composantes matérielles :",
+		"WarlockSlotRegain": "Il regagne tous ses emplacements de sorts dépensés lorsqu'il termine un repos court ou long",
+		"ListFinalConjunctionAnd": "et",
+		"MultiDamageAttackConjunctionPlus": "plus",
+
+		"SpellLevel": "Niveau {level}",
+		"SpellCost": "{cost} chacun",
+		"SpellSlots": "{slots} emplacements",
+		"SpellPactSlots": "Niveau {level} ({slots} emplacements)",
+		
+		"range": "portée",
+		"reach": "allonge",
+		"target": "cible",
+		"targetS": "cibles",
+		"AttackToHit": "{bonus} pour toucher",
+		"AttackRange": "{reachRange} {range}{sep}{max} {units}.",
+		"AttackTarget": "{quantity} {type}",
+		"AttackHitLabel": "Touché :",
+		"AttackDamageTemplate": "{average} ({formula}) {type}",
+		"AttackVersatile": "ou {damage} dégâts si utilisée à deux mains",
+		"damage": "dégâts",
+		
+		"Reactions": "Réactions",
+		"Multiattack": "Attaques multiples",
+		"LegendaryResistance": "Résistance légendaire",
+		
+		"OrdinalSuffixes": ["st", "nd", "rd", "th"],
+		
+		"MultiattackLocators": [
+			"Attaques multiples",
+			"multiattack",
+			"extraattack",
+			"extraattacks",
+			"multiattacks",
+			"multipleattacks",
+			"manyattacks"
+		],
+		"WarlockLocators": [
+			"Sorcier",
+			"Magie de pacte"
+		],
+		"SpellcastingLocators": [
+			"Incantation",
+			"Magie de pacte"
+		],
+		"InnateCastingLocators": [
+			"Incantation innée",
+			"Incantation innée (psionique)",
+			"Incantation innée psionique"
+		],
+		
+		"LegActionCost": "Coûte {number} Actions",
+		"LegendaryText": "Le {name} peut effectuer {number} actions légendaires, en choisissant parmi les options suivantes. Une seule action légendaire peut être utilisée à la fois, et seulement à la fin du tour d'une autre créature. Le {name} récupère les actions légendaires dépensées au début de son tour.",
+		
+		"LairActionsHeading": "Actions d'antre",
+		"LairText": "À 20 lors du décompte d'initiative (sachant qu'il perd en cas d'égalité), le {name} peut effectuer une de ses actions d'antre. Il ne peut pas le faire tant qu'il est neutralisé ou incapable d'agir d'une façon ou d'une autre. S'il est surpris lors d'un combat, il ne peut pas l'effectuer avant la fin de son premier tour de jeu."
+	}
+}

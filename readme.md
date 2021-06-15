@@ -53,6 +53,7 @@ A few **quick settings** can be toggled from the special **cog menu in the upper
 ### Languages
 - English
 - 日本語 (Thanks to @Brother Sharp)
+- Français (Thanks to @eolias78)
 
 ## FAQ
 
