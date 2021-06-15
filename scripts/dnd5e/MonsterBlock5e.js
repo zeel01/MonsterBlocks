@@ -784,7 +784,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			event.preventDefault();
 			event.stopPropagation();
 			let id = event.currentTarget.dataset.itemId;
-			const item = this.actor.getOwnedItem(id);
+			const item = this.actor.items.get(id);
 			if (window.BetterRolls) {
 				const preset = event.altKey ? 1 : 0;
 				window.BetterRolls.rollItem(item, { event, preset }).toMessage();
@@ -904,7 +904,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		const name = element.querySelector(".item-name");
 		const id = name.dataset.itemId;
 
-		const item = this.actor.getOwnedItem(id);
+		const item = this.actor.items.get(id);
 		const expanded = item.getFlag("monsterblock", "expanded");
 
 		item.setFlag("monsterblock", "expanded", !expanded);
@@ -949,7 +949,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		event.preventDefault();
 		event.stopPropagation();
 		let id = d ?? event.currentTarget.querySelector(".item-name").dataset.itemId;
-		const item = this.actor.getOwnedItem(id);
+		const item = this.actor.items.get(id);
 		item.sheet.render(true);
 	}
 
@@ -957,7 +957,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		event.preventDefault();
 		event.stopPropagation();
 		let id = d ?? event.currentTarget.dataset.itemId;
-		const item = this.actor.getOwnedItem(id);
+		const item = this.actor.items.get(id);
 		item.sheet.render(true);
 	}
 
