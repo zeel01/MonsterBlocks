@@ -61,7 +61,7 @@ export default class Flags {
 		if (!(flag in this.flagDefaults)) return undefined;
 
 		const setName = this.flagDefaults[flag]?.setting || flag;                    // The name of the setting containing this flag's default
-		const hidden  = this.flagDefaults[flag]?.hidden;                             // Hidden means there is no setting registered
+		const hidden  = this.flagDefaults[flag]?.hidden && setName == flag;          // Hidden means there is no setting registered unless there is an alternate setting name
 		const setting = hidden ? undefined : game.settings.get(this.scope, setName); // The value of the setting, undedfined if hidden
 		const def     = this.flagDefaults[flag]?.default;                            // The default or configured default value of this flag
 		const initial = setting ?? def;                                              // The starting value of this flag if not defined on the actor
