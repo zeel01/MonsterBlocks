@@ -446,11 +446,12 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	static themes = {
 		"default": { name: "MOBLOKS5E.DefaultThemeName", class: "default-theme" },
 		"foundry": { name: "MOBLOKS5E.FoundryThemeName", class: "foundry-theme" },
-		"srd": { name: "MOBLOKS5E.SimpleThemeName", class: "srd-theme" },
-		"dark": { name: "MOBLOKS5E.DarkThemeName", class: "dark-theme" },
-		"cool": { name: "MOBLOKS5E.CoolThemeName", class: "cool-theme" },
-		"hot": { name: "MOBLOKS5E.HotThemeName", class: "hot-theme" },
-		"custom": { name: "MOBLOKS5E.CustomThemeName", class: "" }
+		"srd":     { name: "MOBLOKS5E.SimpleThemeName", class: "srd-theme" },
+		"dark":    { name: "MOBLOKS5E.DarkThemeName", class: "dark-theme" },
+		"cool":    { name: "MOBLOKS5E.CoolThemeName", class: "cool-theme" },
+		"hot":     { name: "MOBLOKS5E.HotThemeName", class: "hot-theme" },
+		"system":  { name: "MOBLOKS5E.SystemThemeName", class: "system-theme" },
+		"custom":  { name: "MOBLOKS5E.CustomThemeName", class: "" }
 	}
 	get themes() {
 		if (this._themes) return this._themes;

@@ -56,6 +56,18 @@
 	--inline-link-color: #808080;
 	--shadow-color: var(--main-text-color);
 }
+.monsterblock.system-theme {
+	font-size: 14px;
+	--heading-color: rgb(0 0 0);
+	--roll-hover-color: #828282;
+	--divider-color: rgb(0 0 0);
+	--background-filter: none;
+	--background-blend: none;
+	--main-text-color: #000;
+	--inline-link-color: #ff6400;
+	--shadow-color: var(--main-text-color);
+	--roll-hover-color: rgb(153, 26, 26);
+}
 .monsterblock.cool-theme {
 	--heading-color: rgb(0 37 93);
 	--roll-hover-color: hsl(202deg 39% 38%);
