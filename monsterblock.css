@@ -156,7 +156,7 @@
 	box-shadow: -1px 1px 5px 0px var(--shadow-color);
 }
 .window-app .switches > ul {
-	margin-top: 8px;
+	margin-top: 6px;
 	margin-left: -8px;
 	top: unset;
 	left: unset;
