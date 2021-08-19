@@ -1,11 +1,19 @@
 
 export class debug {
+	
+	/**
+	 * The current debug level setting for this module.
+	 *
+	 * @readonly
+	 * @static
+	 * @memberof debug
+	 */
 	static get level() {
 		return game.modules.get("_dev-mode")?.api.getPackageDebugValue("monsterblock", "level");
 	}
 
 	/**
-	 * Returns whether or not the debug mode for Monster Blocks is enabled.
+	 * Whether or not the debug mode for Monster Blocks is enabled.
 	 *
 	 * @return {boolean} - True if debugging is enabled
 	 */
