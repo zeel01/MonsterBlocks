@@ -101,7 +101,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			hasLair: Boolean(data.features.lair.items.length),
 			hasReactions: Boolean(data.features.reaction.items.length),
 			hasLoot: Boolean(data.features.equipment.items.length),
-			vttatokenizer: Boolean(this.constructor.Tokenizer)
+			vttatokenizer: Boolean(window.Tokenizer)
 		}
 		data.menus = this.menuTrees;
 		Object.values(this.menuTrees).forEach(m => m.update(m, data));
@@ -434,8 +434,9 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 	}
 	async openTokenizer() {
-		if (this.constructor.Tokenizer) {
-			new this.constructor.Tokenizer({}, this.entity).render(true);
+		/* global Tokenizer */
+		if (window.Tokenizer) {
+			Tokenizer.tokenizeActor(this.object);
 		}
 	}
 	async resetDefaults() {
@@ -660,15 +661,6 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			"compact-layout": game.settings.get("monsterblock", "compact-layout"),
 			"font-size": game.settings.get("monsterblock", "font-size")
 		});
-	}
-	static async getTokenizer() {
-		if (game.data.modules.find(m => m.id == "vtta-tokenizer")?.active) {
-			let Tokenizer = (await import("../../../vtta-tokenizer/src/tokenizer/index.js")).default;
-			Object.assign(this, { Tokenizer });
-		}
-		else {
-			this.Tokenizer = false;
-		}
 	}
 	static async getQuickInserts() {
 		if (game.data.modules.find(m => m.id == "quick-insert")?.active) {

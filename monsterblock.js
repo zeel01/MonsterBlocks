@@ -13,7 +13,6 @@ Hooks.once("init", () => {
 });
 
 Hooks.once("ready", () => {
-	MonsterBlock5e.getTokenizer();
 	MonsterBlock5e.getQuickInserts();
 	
 	MonsterBlock5e.preLoadTemplates();
