@@ -101,7 +101,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			hasLair: Boolean(data.features.lair.items.length),
 			hasReactions: Boolean(data.features.reaction.items.length),
 			hasLoot: Boolean(data.features.equipment.items.length),
-			vttatokenizer: Boolean(Tokenizer)
+			vttatokenizer: Boolean(window.Tokenizer)
 		}
 		data.menus = this.menuTrees;
 		Object.values(this.menuTrees).forEach(m => m.update(m, data));
@@ -435,7 +435,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	async openTokenizer() {
 		/* global Tokenizer */
-		if (Tokenizer) {
+		if (window.Tokenizer) {
 			Tokenizer.tokenizeActor(this.object);
 		}
 	}
