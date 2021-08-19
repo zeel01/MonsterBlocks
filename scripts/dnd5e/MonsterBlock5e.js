@@ -272,7 +272,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			restrictTypes: ["Item"],
 			onSubmit: async (item) => {
 				const theItem = await fromUuid(item.uuid);
-				this.actor.createEmbeddedEntity("OwnedItem", theItem);
+				this.actor.createEmbeddedDocuments("Item", [theItem]);
 			}
 		});
 	}
@@ -857,7 +857,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			event.preventDefault();
 			event.stopPropagation();
 			const el = event.currentTarget;
-			this.actor.deleteOwnedItem(el.dataset.itemId);
+			this.actor.deleteEmbeddedDocuments("Item", [el.dataset.itemId]);
 		});
 
 		this._dragDrop.forEach(d => d.bind(html[0]));
@@ -1011,7 +1011,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		let value = input.innerText;								// .innerText will not include any HTML tags
 		
 		const entity = input.dataset.entity ? 
-			this.actor.getEmbeddedEntity("OwnedItem", input.dataset.entity) : 
+			this.actor.getEmbeddedDocument("Item", input.dataset.entity) : 
 			this.actor.data;
 		const key = input.dataset.fieldKey
 		const dtype = input.dataset.dtype;
@@ -1032,10 +1032,10 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 
 		if (input.dataset.entity) {		
-			this.actor.updateEmbeddedEntity("OwnedItem", {
+			this.actor.updateEmbeddedDocuments("Item", [{
 				_id: input.dataset.entity,
 				[key]: value
-			}).then(()=> { super._onChangeInput(event); });
+			}]).then(()=> { super._onChangeInput(event); });
 			return;
 		}
 
@@ -1125,10 +1125,10 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	 * @memberof MonsterBlock5e
 	 */
 	async setCharged(success, event) {
-		await this.sheet.actor.updateEmbeddedEntity("OwnedItem", {
+		await this.actor.updateEmbeddedDocuments("Item", [{
 			_id: event.currentTarget.dataset.itemId,
 			"data.recharge.charged": success
-		})
+		}])
 
 		super._onChangeInput(event);
 	}
