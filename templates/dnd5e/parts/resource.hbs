@@ -12,7 +12,7 @@
 		{{~#if resource.limit}}{{localize "MOBLOKS5E.Comma"}} {{/if}}
 	{{~/if~}}
 	{{~#if resource.limit~}}
-		{{#if (eq resource.type "charges")}}
+		{{#if (eq resource.type "charges")~}}
 			<span class="resource-value" 
 				placeholder="0"
 				contenteditable="{{@root.owner}}"
