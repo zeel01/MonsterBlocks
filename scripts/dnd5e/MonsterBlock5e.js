@@ -458,7 +458,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		if (this._themes) return this._themes;
 		
 		this._themes = MonsterBlock5e.themes;
-		this._themes.custom = { name: "MOBLOKS5E.CustomThemeName", class: this.actor.getFlag("monsterblock", "custom-theme-class") };
+		this._themes.custom = { name: "MOBLOKS5E.CustomThemeName", class: this.flagManager.flags["custom-theme-class"] };
 		return this._themes;
 	}
 	get currentTheme() {
@@ -478,7 +478,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		let classes = this.options.classes;
 		classes[classes.indexOf(oldTheme.class)] = newTheme.class;
 		
-		return await this.actor.setFlag("monsterblock", "theme-choice", theme);
+		return await Flags.setFlag(this.flagManager, "theme-choice", theme);
 	}
 		
 	async pickTheme(event) {
@@ -488,7 +488,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			await this.setCurrentTheme("default");
 			const className = event.currentTarget.nextElementSibling.value;
 			this.themes.custom.class = className;
-			await this.actor.setFlag("monsterblock", "custom-theme-class", className);
+			await Flags.setFlag(this.flagManager, "custom-theme-class", className);
 		}
 		
 		this.setCurrentTheme(value);
@@ -501,7 +501,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			throw new Error(game.i18n.localize("MOBLOK5E.font-size.NaN-error"));
 		}
 
-		await this.actor.setFlag("monsterblock", "font-size", value)
+		await Flags.setFlag(this.flagManager, "font-size", value)
 	}
 	
 	_prepareItems(data) {
@@ -679,14 +679,10 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			event.preventDefault();
 			let control = event.currentTarget.dataset.control;			// A data attribute is used on an element with the class .switch, and it contains the name of the switch to toggle.
 			
-			let state = !this.actor.getFlag("monsterblock", control);	
+			let state = !this.flagManager.flags[control];	            // Get the current setting of this flag, and reverse it.
 			if (debug.enabled) console.debug(`Monster Block | %cSwitching: ${control} to: ${state}`, "color: orange")
 			
-			this.actor.setFlag(											
-				"monsterblock", 
-				control, 
-				!this.actor.getFlag("monsterblock", control)			// Get the current setting of this flag, and reverse it.
-			);
+			this.flagManager.flags[control] = state;                    // Set the flag to the new state.
 		});
 		html.find(".trigger").click((event) => {							
 			event.preventDefault();

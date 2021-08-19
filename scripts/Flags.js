@@ -75,7 +75,7 @@ export default class Flags {
 		if (!(flag in flags.constructor.flagDefaults)) return;
 		if (flags.actor.compendium) return;
 		
-		return flags.actor.setFlag(flags.scope, flag, value);
+		return flags.actor.setFlag(this.scope, flag, value);
 	}
 
 	/**
