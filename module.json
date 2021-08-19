@@ -13,7 +13,7 @@
 	],
 	"version": "3.1.0",
 	"minimumCoreVersion": "0.8.5",
-	"compatibleCoreVersion": "0.8.6",
+	"compatibleCoreVersion": "0.8.9",
 	"systems": ["dnd5e"],
 	"minimumSystemVersion": "1.4.0",
 	"scripts": [
