@@ -1,0 +1,293 @@
+{
+	"MOBLOKS5E": {
+		"mini-block": {
+			"label": "Blocos Pequenos"
+		},
+		"compact-window": {
+			"enable": "Habilitar Janela Compacta",
+			"disable": "Desabilitar Janela Compacta",
+			"settings": {
+				"name": "Janela Compacta",
+				"hint": "Remove a barra de título da janela e faz com que a ficha fique com a aparência mais compacta."
+			}
+		},
+		"compact-layout": {
+			"enable": "Habilitar Layout Compacto",
+			"disable": "Desabilitar Layout Compacto",
+			"settings": {
+				"name": "Layout Compacto",
+				"hint": "Reduz o espaço entre os itens na ficha para economizar espaço."
+			}
+		},
+		"compact-feats": {
+			"enable": "Habilitar Características Compactas",
+			"disable": "Desabilitar Características Compactas",
+			"settings": {
+				"name": "Características Compactas",
+				"hint": "Reduz o espaço utilizado pelas características. Quando esta opção estiver habilitada, cada característica utilizará somente duas linhas. Ao passar o ponteiro por cima, a descrição completa das características serão reveladas. Características podem ser expandidas/compactadas individualmente ao clicar nelas."
+			}
+		},
+		"font-size": {
+			"label": "Tamanho da fonte",
+			"placeholder": "Tamanho da fonte (px)",
+			"NaN-error": "O tamanho da fonte precisa ser um número.",
+			"settings": {
+				"name": "Tamanho da Fonte",
+				"hint": "Define o tamanho da fonte, em pixels, para o texto na ficha. Outros aspectos da ficha irão se adaptar de acordo, reduzindo o tamanho da fonte irá fazer a ficha inteira menor menor enquanto aumentar a fonte irá melhor legibilidade."
+			}
+		},
+		"resetDefaults": {
+			"label": "Restaurar configuração padrão"
+		},
+		"attack-descriptions": {
+			"settings": {
+				"name": "Descrições de ataque geradas",
+				"hint": "Mostra descrições de ataque automaticamente geradas por padrão."
+			}
+		},
+		"casting-feature": {
+			"settings": {
+				"name": "Características de Conjuração geradas",
+				"hint": "Mostra características de conjuração automaticamente geradas por padrão."
+			}
+		},
+		"inline-secrets": {
+			"settings": {
+				"name": "Mostrar 'Secrets Inline'",
+				"hint": "Por padrão, mostrar blocos de segredos (inline) como todos os outros textos? Ou, mostrar blocos inline como blocos de textos estilizados."
+			}
+		},
+		"hidden-secrets": {
+			"settings": {
+				"name": "Esconder 'Secrets'",
+				"hint": "Por padrão, esconder blocos de segredos da ficha."
+			}
+		},
+		"hide-profile-image": {
+			"settings": {
+				"name": "Esconder Imagens",
+				"hint": "Por padrão, não mostrar a imagem da criatura na ficha (mais próximo da versão do livro)."
+			}
+		},
+		"show-lair-actions": {
+			"settings": {
+				"name": "Mostrar Ações de Covil",
+				"hint": "Por padrão, mostrar Ações de Covil (não incluídas nos blocos de criaturas do livro)."
+			}
+		},
+		"current-hit-points": {
+			"settings": {
+				"name": "Mostrar Pontos de Vida Atuais",
+				"hint": "Por padrão, mostrar os pontos de vida atuais na campo de Pontos de Vida. Se nem o máximo ou o mínimo de Pontos de Vida estivem aparecendo, a média será calculada e mostrada."
+			}
+		},
+		"maximum-hit-points": {
+			"settings": {
+				"name": "Mostrar Pontos de Vida máximos",
+				"hint": "Por padrão, mostrar o máximo de Pontos de Vida no campo Pontos de Vida."
+			}
+		},
+		"max-height-offset": {
+			"settings": {
+				"name": "Compensação da Altura Máxima",
+				"hint": "A altura máxima da janela do Monster Blocks é baseado na altura da janela de exibição (viewport) do navegador, menos essa compensação (offset). O padrão de 72 é a altura da barra de macros mais 10px de preenchimento (padding). Se você preferir que a ficha seja mais alta e fina, reduza esse valor. Se você preferir que a ficha seja mais larga (mais colunas) aumente esse valor."
+			}
+		},
+		"default-theme": {
+			"settings": {
+				"name": "Tema Padrão",
+				"hint": "Escolha qual tema é aplicado por padrão."
+			}
+		},
+		"custom-theme-class": {
+			"settings": {
+				"name": "Classe Padrão do Tema Personalizado",
+				"hint": "O nome da classe (class, css) usada no seu tema personalizado padrão."
+			}
+		},
+		"editing": {
+			"settings": {
+				"name": "Edição Habilitada",
+				"hint": "Escolha se a edição está ativada ou desativada por padrão."
+			}
+		},
+		"show-not-prof": {
+			"settings": {
+				"name": "Mostrar Perícias e Salvaguardas em que não é proficiente",
+				"hint": "Escolha mostrar ou não perícias e salvaguardas em que não é proficiente por padrão."
+			}
+		},
+		"show-resources": {
+			"settings": {
+				"name": "Mostrar valores dos recursos",
+				"hint": "Escolha mostrar ou não valores dos recursos por padrão."
+			}
+		},
+		"show-skill-save": {
+			"settings": {
+				"name": "Sempre mostrar perícias e salvaguardas",
+				"hint": "Escolha mostrar ou não a lista vazia de perícias e salvaguardas por padrão."
+			}
+		},
+		"MonsterBlocks": "Monster Blocks",
+		"SwitchToDefault": "Alterar para Ficha Padrão",
+		"SwitchToMobloks": "Alterar para Monster Blocks",
+		"AttackDescriptions": "Descrições de ataque",
+		"EnableEdit": "Habilitar edição",
+		"DisableEdit": "Desabilitar edição",
+		"EnableDelete": "Habilitar deletar",
+		"DisableDelete": "Desabilitar deletar",
+		"ShowNotProf": "Mostrar testes em que não é proficiente",
+		"HideNotProf": "Esconder testes em que não é proficiente",
+		"ShowSkillSave": "Sempre mostrar perícias e salvaguardas",
+		"HideSkillSave": "Esconder perícias e salvaguardas vazias",
+		"ShowBio": "Mostrar Biografia",
+		"HideBio": "Esconder Biografia",
+		"ShowResources": "Mostrar Valores dos Recursos",
+		"HideResources": "Esconder Valores dos Recursos",
+		"ShowGenerated": "Mostrar gerados",
+		"HideGenerated": "Esconder gerados",
+		"DescriptionS": "Descrições",
+		"EnableInlSecr": "Habilitar Segredos Inline",
+		"DisableInlSecr": "Desabilitar Segredos Inline",
+		"ShowSecrets": "Mostrar segredos",
+		"HideSecrets": "Esconder segredos",
+		"ShowMaxHP": "Mostrar Pontos de Vida máximos",
+		"HideMaxHP": "Esconder Pontos de Vida máximos",
+		"ShowCurrentHP": "Mostrar Pontos de Vida atuais",
+		"HideCurrentHP": "Esconder Pontos de Vida atuais",
+		"ShowProfileImage": "Mostrar Imagem do Perfil",
+		"HideProfileImage": "Esconder Imagem do Perfil",
+		"ShowLair": "Mostrar Ações do Covil",
+		"HideLair": "Esconder Ações do Covil",
+		"OpenTokenizer": "Abrir VTTA Tokenizer",
+		"QuickInsert": "Quick Insert",
+		"Theme": "Tema",
+		"CustomThemeName": "Personalizado",
+		"DefaultThemeName": "Livro dos Monstros",
+		"SimpleThemeName": "5e SRD",
+		"DarkThemeName": "Escuridão",
+		"CoolThemeName": "Friozinho Delícia",
+		"HotThemeName": "Calor do Inferno",
+		"FoundryThemeName": "Foundry",
+		"Average": "Média",
+		"Current": "Atual",
+		"Maximum": "Máximo",
+		"Abbrstr": "for",
+		"Abbrdex": "des",
+		"Abbrcon": "con",
+		"Abbrint": "int",
+		"Abbrwis": "sab",
+		"Abbrcha": "car",
+		"Abbrhon": "hon",
+		"Abbrsan": "san",
+		"Abbrblo": "blo",
+		"Score": "Atributo",
+		"Modifier": "Modificador",
+		"SavingThrowS": "Salvaguardas",
+		"PassivePerception": "Percepção passiva {pp}",
+		"PerceptionLocator": "percepção",
+		"SkillS": "Perícias",
+		"XPLabel": "{xp} XP",
+		"physicalDamage": "contundente, cortante e perfurante de ataques não mágicos",
+		"Challenge": "Nível de Desafio",
+		"EditHint": "Clique com o botão direito para editar",
+		"AddFeat": "Característica",
+		"AddAttack": "Ataque",
+		"AddAct": "Ação",
+		"AddSpell": "Magia",
+		"AddInventory": "Inventário",
+		"AddConsumable": "Consumível",
+		"Recharge": "Recarga",
+		"NCharged": "Não carregada",
+		"Costs": "Custa",
+		"ResourceRefresh": "Dia",
+		"zero": "zero",
+		"one": "um",
+		"two": "dois",
+		"three": "três",
+		"four": "quatro",
+		"five": "cinco",
+		"six": "seis",
+		"seven": "sete",
+		"eight": "oito",
+		"nine": "novo",
+		"FullStop": ".",
+		"NameDescriptionSep": ".",
+		"SpeedUnitAbbrEnd": ".",
+		"Comma": ",",
+		"Colon": ":",
+		"Cantrips": "Truques",
+		"AtWill": "à vontade",
+		"CasterNameLevel": "O(a) {name} é um(a) conjurador(a) de {level}º nível.",
+		"CastingAbility": "{ability} é o atributo de conjuração",
+		"InnateCastingAbility": "{ability} é o atributo de conjuração inata do(a) {name}",
+		"CastingStats": "(DC {savedc} para evitar magia, {bonus} para acertar com ataques mágicos).",
+		"CasterAtWill": " pode conjurar {spells} à vontade e",
+		"CasterSpellsPreped": "O(a) {name}{atwill} tem preparadas as seguintes magias:",
+		"WarlockSpellsPreped": "{atwill} tem preparadas as seguintes magias de bruxo:",
+		"InnateSpellsKnown": "Ele(a) {name} pode conjurar inatamente as seguintes magias, sem precisar de componentes materiais:",
+		"WarlockSlotRegain": "Ele(a) recupera seus espaços de magia da lista expandida de magias quando terminar um descanso curto ou longo.",
+		"ListFinalConjunctionAnd": "e",
+		"MultiDamageAttackConjunctionPlus": "mais",
+		"SpellLevel": "{level} círculo",
+		"SpellCost": "{cost} cada",
+		"SpellSlots": "{slots} espaço(s)",
+		"SpellPactSlots": "{slots} espaços de {level}º círculo",
+		"range": "alcance",
+		"reach": "alcance",
+		"target": "alvo",
+		"targetS": "alvos",
+		"AttackToHit": "{bonus} para acertar",
+		"AttackRange": "{reachRange} {range}{sep}{max} {units}.",
+		"AttackTarget": "{quantity} {type}",
+		"AttackHitLabel": "Dano:",
+		"AttackDamageTemplate": "{average} ({formula}) {type}",
+		"AttackVersatile": "ou {damage} se usada com duas mãos",
+		"damage": "dano",
+		"Reactions": "Reações",
+		"Multiattack": "Ataques Múltiplos",
+		"LegendaryResistance": "Resistência Lendária",
+		"OrdinalSuffixes": [
+			"º"
+		],
+		"MultiattackLocators": [
+			"multiattack",
+			"extraattack",
+			"extraattacks",
+			"multiattacks",
+			"multipleattacks",
+			"manyattacks",
+			"ataquesmúltiplos",
+			"ataqueextra",
+			"ataquesextras",
+			"ataquemúltiplo",
+			"muitosataques",
+			"ataquesmultiplos"
+		],
+		"WarlockLocators": [
+			"warlock",
+			"pactmagic",
+			"bruxo",
+			"magiadepacto"
+		],
+		"SpellcastingLocators": [
+			"spellcasting",
+			"pactmagic",
+			"conjuração",
+			"magiadepacto"
+		],
+		"InnateCastingLocators": [
+			"innatespellcasting",
+			"innatespellcasting(psionics)",
+			"innatespellcastingpsionics",
+			"conjuraçãoinata",
+			"conjuraçãoinata(psiônico)",
+			"conjuraçãoinatapsiônico"
+		],
+		"LegActionCost": "Custa {number} Ações",
+		"LegendaryText": "O(a) {name} pode executar {number} ações lendárias, escolhendo entre as opções abaixo. Apenas uma opção de ação lendária pode ser usada por vez, e apenas no final do turno de outro criatura. O(a) {name} recupera as ações lendárias gastas no começo do turno dele.",
+		"LairActionsHeading": "Ações de Covil",
+		"LairText": "Na contagem de iniciativa 20 (interrompendo a sequência de iniciativa), o(a) {name} executa uma ação de covil para causar um dos efeitos a seguir; o(a) {name} não pode usar o mesmo efeito em duas rodadas seguidas:"
+	}
+}
