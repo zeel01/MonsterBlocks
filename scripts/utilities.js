@@ -1,7 +1,7 @@
 
 export class debug {
 	static get level() {
-		return window.DEV?.getPackageDebugValue("monsterblock", "level");
+		return game.modules.get("_dev-mode")?.api.getPackageDebugValue("monsterblock", "level");
 	}
 
 	/**
@@ -10,7 +10,7 @@ export class debug {
 	 * @return {boolean} - True if debugging is enabled
 	 */
 	static get enabled() {
-		return window.DEV?.getPackageDebugValue("monsterblock");
+		return this.level > 0;
 	}
 
 	static get OFF()   { return this.level < 1; }
