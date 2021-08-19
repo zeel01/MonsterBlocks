@@ -269,7 +269,7 @@
 		"OrdinalSuffixes": ["st", "nd", "rd", "th"],
 		
 		"MultiattackLocators": [
-			"Attaques multiples",
+			"attaquesmultiples",
 			"multiattack",
 			"extraattack",
 			"extraattacks",
@@ -278,17 +278,24 @@
 			"manyattacks"
 		],
 		"WarlockLocators": [
-			"Sorcier",
-			"Magie de pacte"
+			"warlock",
+			"pactmagic",
+			"sorcier",
+			"magiedepacte"
 		],
 		"SpellcastingLocators": [
-			"Incantation",
-			"Magie de pacte"
+			"spellcasting",
+			"pactmagic",
+			"incantation",
+			"magiedepacte"
 		],
 		"InnateCastingLocators": [
-			"Incantation innée",
-			"Incantation innée (psionique)",
-			"Incantation innée psionique"
+			"innatespellcasting",
+			"innatespellcasting(psionics)",
+			"innatespellcastingpsionics",
+			"incantationinnée",
+			"incantationinnée(psionique)",
+			"incantationinnéepsionique"
 		],
 		
 		"LegActionCost": "Coûte {number} Actions",
