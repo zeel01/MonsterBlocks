@@ -3,12 +3,7 @@
 {{! Armor Class }}
 	<li class="attribute">
 		<span class="attribute-wrapper">
-			<h4 class="attribute-name box-title">{{ localize "DND5E.ArmorClass" }}</h4>
-			<span class="attr-value" 
-				data-field-key="data.attributes.ac.value"
-				data-dtype="Number"
-				placeholder="{{ localize 'DND5E.ArmorClass' }}"
-				contenteditable="{{flags.editing}}">{{data.attributes.ac.value}}</span>
+			{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/armorclass.hbs"}}
 		</span>
 	</li>
 
