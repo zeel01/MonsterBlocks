@@ -38,11 +38,13 @@
 	</span>
 {{/if}}
 
-(<span title="Average: {{data.attributes.hp.average}}"
+<span class="paren">(</span>{{~" "~}}
+<span title="Average: {{data.attributes.hp.average}}"
 	placeholder="1d6"
 	data-field-key="data.attributes.hp.formula"
 	data-dtype="Roll"
 	class="attr-value"
 	contenteditable="{{flags.editing}}">
 		{{~data.attributes.hp.formula~}}
-</span>)
+</span>{{~" "~}}
+<span class="paren">)</span>

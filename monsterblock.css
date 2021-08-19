@@ -523,6 +523,15 @@
 	height: calc(var(--column-width) * 0.7);
 	z-index: 75;
 }
+
+.monsterblock .ac-type {
+	text-transform: lowercase;
+}
+
+.monsterblock .paren {
+	font-size: .88em;
+}
+
 .monsterblock .attributes, .monsterblock .ability-scores {
 	list-style: none;
 	color: var(--heading-color);
@@ -760,6 +769,9 @@ li:nth-last-of-type(2):after {
 
 .monsterblock .config-button {
 	display: none;
+}
+.monsterblock .attribute .config-button {
+	padding-left: 2ch;
 }
 .monsterblock *:hover > .config-button {
 	display: inline;
