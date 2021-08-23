@@ -9,7 +9,7 @@ export class debug {
 	 * @memberof debug
 	 */
 	static get level() {
-		return game.modules.get("_dev-mode")?.api.getPackageDebugValue("monsterblock", "level");
+		return game.modules.get("_dev-mode")?.api?.getPackageDebugValue("monsterblock", "level") ?? 0;
 	}
 
 	/**
