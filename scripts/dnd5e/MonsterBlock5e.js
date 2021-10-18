@@ -1113,6 +1113,11 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		return super.close(...args);
 	}
 
+	async maximize() {
+		await super.maximize();
+		await this.render(true);
+	}
+
 	/**
 	 *
 	 *

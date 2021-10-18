@@ -71,6 +71,8 @@ Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the she
 
 	if (html.parent().hasClass("grid-cell-content")) return;
 
+	if (monsterblock._minimized) return;
+
 	let popup = new PopupHandler(
 		monsterblock, 	// The Application window
 		"form.flexcol",
