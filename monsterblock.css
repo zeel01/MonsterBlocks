@@ -857,10 +857,17 @@ li:nth-last-of-type(2):after {
 	padding-right: 1.5ch;
 	z-index: 2;
 }
+.monsterblock.compact-window.minimized .window-header {
+	height: 100%;
+	font-size: 1.25em;
+	padding-top: .55em;
+	color: white;
+}
 .monsterblock.compact-window .window-header * {
 	visibility: hidden;
 }
-.monsterblock.compact-window .window-header:hover * {
+.monsterblock.compact-window .window-header:hover *,
+.monsterblock.compact-window.minimized .window-header * {
 	visibility: visible;
 }
 .grid-cell .monsterblock .switches,
@@ -893,6 +900,11 @@ li:nth-last-of-type(2):after {
 	right: initial;
 	height: initial;
 }
+
+.monsterblock.compact-window.minimized .window-header .window-title {
+	visibility: visible;
+}
+
 .monsterblock.compact-window .window-content {
 	cursor: text;
 	/* padding-top: 0.5em; */
