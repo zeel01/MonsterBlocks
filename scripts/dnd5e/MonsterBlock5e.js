@@ -202,9 +202,9 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	async addFeature(event) {
 		let type = event.currentTarget.dataset.type == "spell" ? "spell" : "item";
-		let item = await this._onItemCreate(event);
+		let item = (await this._onItemCreate(event))[0];
 
-		let id = item._id;
+		let id = item.id;
 		if (type == "item") this.openItemEditor(event, id);
 		else this.openSpellEditor(event, id);
 	}
