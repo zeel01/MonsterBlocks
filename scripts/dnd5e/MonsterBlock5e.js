@@ -2,6 +2,7 @@ import ActorSheet5eNPC from "../../../../systems/dnd5e/module/actor/sheets/npc.j
 import TraitSelector from "../../../../systems/dnd5e/module/apps/trait-selector.js";
 import { MenuItem, MenuTree } from "../MenuTree.js";
 import { debug, ContentEditableAdapter } from "../utilities.js";
+import { inputExpression } from "../../input-expressions/handler.js";
 import ItemPrep from "./ItemPrep.js";
 import Flags from "./Flags5e.js";
 
@@ -1046,7 +1047,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	 * @param {JQuery} input - The input element
 	 * @param {Event} event - The triggering event
 	 * @memberof MonsterBlock5e
-	 *//* global inputExpression:readonly */
+	 */
 	handleNumberChange(entity, key, input, event) {
 		const current = getProperty(entity, key);
 

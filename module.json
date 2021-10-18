@@ -16,9 +16,6 @@
 	"compatibleCoreVersion": "0.8.9",
 	"system": ["dnd5e"],
 	"minimumSystemVersion": "1.4.0",
-	"scripts": [
-		"input-expressions/handler.js"
-	],
 	"esmodules": [
 		"monsterblock.js"
 	],
