@@ -246,7 +246,8 @@ export default class AttackPreper extends ItemPreper {
 	 * @memberof AttackPreper
 	 */
 	damageFormula(index=0) {	// Extract and re-format the damage formula
-		return simplifyRollFormula(this.getAttackFormula(index), this.item.getRollData());
+		const roll = new Roll(this.getAttackFormula(index), this.item.getRollData());
+		return simplifyRollFormula(roll.formula);
 	}
 
 	/**
