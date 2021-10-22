@@ -549,6 +549,13 @@
 	text-indent: -2ch;
 	position: relative;
 }
+.monsterblock .monster-attributes2 .attributes .attribute:last-of-type {
+	display: flex;
+	justify-content: space-between;
+}
+.monsterblock .attributes .attribute .prof-bonus {
+	margin-right: 2ch;
+}
 .monsterblock .attributes .attribute .select-field {
 	text-indent: initial;
 }
@@ -947,6 +954,10 @@ li:nth-last-of-type(2):after {
 	position: relative;
 }
 
+.monsterblock.compact-layout .monster-attributes2 .attributes .attribute:last-of-type {
+	display: block;
+}
+
 .monsterblock.compact-layout .attribute .attribute-wrapper {
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -955,6 +966,9 @@ li:nth-last-of-type(2):after {
 	height: 1.1em;
 	position: absolute;
 	padding-left: 2ch;
+}
+.monsterblock.compact-layout .attribute .attribute-wrapper.prof-bonus {
+	right: -18em;
 }
 .monsterblock.compact-layout .attribute:hover .attribute-wrapper {
 	white-space: normal;
