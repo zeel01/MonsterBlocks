@@ -489,7 +489,7 @@
 .monsterblock .chartype {
 	font-style: italic;
 	margin: 0;
-	text-transform: lowercase;
+	text-transform: capitalize;
 }
 .monsterblock .chartype .select-field {
 	text-transform: capitalize;
