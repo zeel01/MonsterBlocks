@@ -1018,7 +1018,9 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 				if (value != "") value = this.handleNumberChange(entity, key, input, event);
 				break;
 			case "Roll": {
-				try { new Roll(value).roll(); }
+				try { 
+					value ? new Roll(value).roll() : null;
+				}
 				catch (e) {
 					console.error(e);
 					ui.notifications.error(e);
