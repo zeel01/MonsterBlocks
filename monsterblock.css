@@ -541,8 +541,17 @@
 
 .monsterblock .ability-scores .ability {
 	text-align: center;
+	position: relative;
 }
-
+.monsterblock .ability-scores .ability .config-button {
+	position: absolute;
+	right: 0;
+	top: .25em;
+	font-size: .75em;
+}
+.monsterblock .ability-scores .ability .config-button:hover {
+	text-shadow: 0 0 1px var(--shadow-color);
+}
 .monsterblock .attributes .attribute {
 	margin: 0;
 	padding-left: 2ch;

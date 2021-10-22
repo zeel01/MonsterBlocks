@@ -1067,6 +1067,11 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 	}
 
+	_onConfigMenu(event) {
+		event.stopPropagation();
+		return super._onConfigMenu(event);
+	}
+
 	_onTraitSelector(event) {
 		event.preventDefault();
 		const a = event.currentTarget;
