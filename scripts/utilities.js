@@ -1,4 +1,4 @@
-
+import { InputAdapter } from "../input-expressions/handler.js"
 export class debug {
 	
 	/**
@@ -28,8 +28,6 @@ export class debug {
 	static get WARN()  { return this.level > 3; }
 	static get ALL()   { return this.level > 4; }
 }
-
-/* global InputAdapter:readonly */
 
 export class ContentEditableAdapter extends InputAdapter {
 	get value() {
