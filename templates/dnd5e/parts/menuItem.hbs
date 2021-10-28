@@ -20,11 +20,12 @@
 	{{#if (eq type "skill")}}
 		<li>
 			<labal title="{{skill.hover}}">
-				<a class="proficiency-toggle skill-proficiency" data-skill-id="{{id}}" data-skill-value="{{skill.value}}">
+				<span class="proficiency-toggle skill-proficiency" data-skill-id="{{id}}" data-skill="{{id}}" data-skill-value="{{skill.value}}">
 					<span class="menu-item-icon">{{{skill.icon}}}</span>{{~" "~}}
 					<span class="skill-label">{{skill.label}}</span>
 					<span class="skill-ability">{{skill.abilityAbbr}}</span>
-				</a>
+					<a class="config-button" data-action="skill" title="Configure Skill"><i class="fas fa-cog"></i></a>
+				</span>
 			</label>
 		</li>
 	{{/if}}

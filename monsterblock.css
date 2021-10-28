@@ -468,11 +468,27 @@
 }
 .monsterblock .skill-ability {
 	text-transform: capitalize;
-	float: right;
-	width: 5ch;
 	text-align: center;
-	color: var(--main-text-color)
+	color: var(--main-text-color);
+	justify-self: start;
+	flex: 3.5ch;
 }
+
+.monsterblock .proficiency-toggle {
+	display: flex;
+	flex-direction: row;
+	gap: .75ch;
+}
+
+.monsterblock .proficiency-toggle .config-button {
+	flex: 1em;
+}
+.monsterblock .proficiency-toggle .skill-label {
+	flex: 100%;
+	flex-grow: 1;
+	white-space: nowrap;
+}
+
 .monsterblock .menu-item-icon {
 	position: relative;
 	display: inline-block;
