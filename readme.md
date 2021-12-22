@@ -135,3 +135,5 @@ This is much more of a problem if you have *lots* of other modules installed. A 
 .window-app.monsterblock .window-header i { font-size: 14px; }
 ```
 This will show only icons, which should help as long as you remember what they all do.
+
+![Alt](https://repobeats.axiom.co/api/embed/2e3b62aabb8d72467d37b9c547b192bd3f0eee2c.svg "Repobeats analytics image")
