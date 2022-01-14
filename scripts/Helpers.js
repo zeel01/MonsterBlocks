@@ -1,3 +1,5 @@
+import { getTranslationArray } from "./utilities.js";
+
 export default class Helpers {
 	static get numbers() {
 		return [
@@ -10,7 +12,7 @@ export default class Helpers {
 	}
 
 	static getOrdinalSuffix(number) {
-		let suffixes = game.i18n.translations["MOBLOKS5E"]["OrdinalSuffixes"];
+		let suffixes = getTranslationArray("MOBLOCKS5E.OrdinalSuffixes");
 		if (number < 1 || suffixes.length < 1) return number.toString();
 		if (number <= suffixes.length) return suffixes[number - 1];
 		else return suffixes[suffixes.length - 1];

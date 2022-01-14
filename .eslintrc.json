@@ -101,6 +101,7 @@
         "SortingHelpers": "readonly",
         "math": "readonly",
         "game": "readonly",
-        "FormDataExtended": "readonly"
+        "FormDataExtended": "readonly",
+        "foundry": "readonly"
     }
 }

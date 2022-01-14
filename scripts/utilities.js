@@ -37,3 +37,13 @@ export class ContentEditableAdapter extends InputAdapter {
 		this.element.innerText = val;
 	}
 }
+
+export function getTranslationArray(stringId) {
+	let v = foundry.utils.getProperty(game.i18n.translations, stringId);
+	if (v) return typeof v == "string" ? [v] : v;
+
+	v = foundry.utils.getProperty(game.i18n._fallback, stringId);
+	if (v) return typeof v === "string" ? [v] : v;
+
+	return [stringId];
+}

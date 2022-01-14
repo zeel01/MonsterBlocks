@@ -1,7 +1,7 @@
 import ActorSheet5eNPC from "../../../../systems/dnd5e/module/actor/sheets/npc.js";
 import TraitSelector from "../../../../systems/dnd5e/module/apps/trait-selector.js";
 import { MenuItem, MenuTree } from "../MenuTree.js";
-import { debug, ContentEditableAdapter } from "../utilities.js";
+import { debug, ContentEditableAdapter, getTranslationArray } from "../utilities.js";
 import { inputExpression } from "../../input-expressions/handler.js";
 import ItemPrep from "./ItemPrep.js";
 import Flags from "./Flags5e.js";
@@ -1144,7 +1144,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
 		let name = item.name.toLowerCase().replace(/\s+/g, "");	// Convert the name of the item to all lower case, and remove whitespace.
-		return game.i18n.translations["MOBLOKS5E"]["MultiattackLocators"].some(loc => name.includes(loc));
+		return getTranslationArray("MOBLOCKS5E.MultiattackLocators").some(loc => name.includes(loc));
 	}
 	
 	static isLegendaryResistance(item) {
