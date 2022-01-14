@@ -31,7 +31,7 @@ export default class CastingPreper extends ItemPreper {
 	static isSpellcasting(item) {
 		const name = item.name.toLowerCase().replace(/\s+/g, "") ?? "";
 		return !this.isInnateSpellcasting(item) &&
-			getTranslationArray("MOBLOCKS5E.SpellcastingLocators").some(loc => name.includes(loc));
+			getTranslationArray("MOBLOKS5E.SpellcastingLocators").some(loc => name.includes(loc));
 	}
 	/**
 	 * Determine is the item is an innate casting feature
@@ -43,7 +43,7 @@ export default class CastingPreper extends ItemPreper {
 	 */
 	static isInnateSpellcasting(item) {
 		const name = item.name.toLowerCase().replace(/\s+/g, "") ?? "";
-		return getTranslationArray("MOBLOCKS5E.InnateCastingLocators").some(loc => name.includes(loc));
+		return getTranslationArray("MOBLOKS5E.InnateCastingLocators").some(loc => name.includes(loc));
 	}
 	/**
 	 * Determine if the item is a pact magic feature
@@ -55,7 +55,7 @@ export default class CastingPreper extends ItemPreper {
 	 */
 	static isPactMagic(item) {
 		const desc = item.data.data.description?.value?.toLowerCase().replace(/\s+/g, "") ?? "";
-		return getTranslationArray("MOBLOCKS5E.WarlockLocators").some(
+		return getTranslationArray("MOBLOKS5E.WarlockLocators").some(
 			s => desc.indexOf(s) > -1
 		);
 	}

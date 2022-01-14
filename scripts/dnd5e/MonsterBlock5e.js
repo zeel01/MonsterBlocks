@@ -1144,7 +1144,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
 		let name = item.name.toLowerCase().replace(/\s+/g, "");	// Convert the name of the item to all lower case, and remove whitespace.
-		return getTranslationArray("MOBLOCKS5E.MultiattackLocators").some(loc => name.includes(loc));
+		return getTranslationArray("MOBLOKS5E.MultiattackLocators").some(loc => name.includes(loc));
 	}
 	
 	static isLegendaryResistance(item) {

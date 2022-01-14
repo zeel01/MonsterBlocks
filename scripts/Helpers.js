@@ -12,7 +12,7 @@ export default class Helpers {
 	}
 
 	static getOrdinalSuffix(number) {
-		let suffixes = getTranslationArray("MOBLOCKS5E.OrdinalSuffixes");
+		let suffixes = getTranslationArray("MOBLOKS5E.OrdinalSuffixes");
 		if (number < 1 || suffixes.length < 1) return number.toString();
 		if (number <= suffixes.length) return suffixes[number - 1];
 		else return suffixes[suffixes.length - 1];
