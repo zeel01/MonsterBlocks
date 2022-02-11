@@ -31,6 +31,7 @@ export default class ActionPreper extends ItemPreper {
 			legendary:    MonsterBlock5e.isLegendaryAction(data),
 			lair:         MonsterBlock5e.isLairAction(data),
 			legResist:    MonsterBlock5e.isLegendaryResistance(data),
+			bonusAction:  MonsterBlock5e.isBonusAction(data),
 			reaction:     MonsterBlock5e.isReaction(data)
 		};
 		is.specialAction = this.isSpecialAction(is);

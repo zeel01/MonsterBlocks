@@ -100,6 +100,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			hasAtWillSpells: this.hasAtWillSpells(),
 			hasLegendaryActions: Boolean(data.features.legendary.items.length),
 			hasLair: Boolean(data.features.lair.items.length),
+			hasBonusActions: Boolean(data.features.bonusActions.items.length),
 			hasReactions: Boolean(data.features.reaction.items.length),
 			hasLoot: Boolean(data.features.equipment.items.length),
 			vttatokenizer: Boolean(window.Tokenizer)
@@ -417,6 +418,11 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	hasAtWillSpells() {	// Some normal casters also have a few spells that they can cast "At will"
 		return this.actor.data.items.some((item) => {
 			return item.data.preparation?.mode === "atwill";
+		});
+	}
+	hasBonusActions() {
+		return this.actor.data.items.some((item) => {
+			return this.constructor.isBonusAction(item);
 		});
 	}
 	hasReactions() {
@@ -1158,6 +1164,10 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	
 	static isLairAction(item) {
 		return item.data?.activation?.type === "lair";
+	}
+
+	static isBonusAction(item) {
+		return item.data?.activation?.type === "bonus";
 	}
 	
 	static isReaction(item) {
