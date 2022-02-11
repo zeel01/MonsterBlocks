@@ -122,7 +122,7 @@ export default class ResourcePreper {
 	 */
 	prepMaterial() {
 		this.res.entity = this.item.data.data.consume.target;
-		let ammo = this.sheet.actor.getEmbeddedEntity("OwnedItem", this.res.entity);
+		let ammo = this.sheet.actor.getEmbeddedDocument("Item", this.res.entity);
 		if (!ammo) return;
 		
 		this.res.limit = false;
