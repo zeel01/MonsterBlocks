@@ -273,7 +273,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			restrictTypes: ["Item"],
 			onSubmit: async (item) => {
 				const theItem = await fromUuid(item.uuid);
-				this.actor.createEmbeddedDocuments("Item", [theItem]);
+				this.actor.createEmbeddedDocuments("Item", [theItem.data]);
 			}
 		});
 	}
