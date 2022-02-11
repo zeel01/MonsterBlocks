@@ -437,7 +437,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	async openTokenizer() {
 		/* global Tokenizer */
 		if (window.Tokenizer) {
-			Tokenizer.tokenizeActor(this.object);
+			window.Tokenizer.tokenizeActor(this.object);
 		}
 	}
 	async resetDefaults() {
