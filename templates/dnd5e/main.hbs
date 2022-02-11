@@ -47,6 +47,16 @@
 			{{/unless}}
 		{{/each}}
 
+		{{! Bonus Actions }}
+		{{#if info.hasBonusActions}}
+			<h2 class="section-header">{{localize "MOBLOKS5E.BonusActions"}}</h2>
+			{{#each features.bonusActions.items as |item iid|}}
+				{{#if item.is.bonusAction}}
+					{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
+				{{/if}}
+			{{/each}}
+		{{/if}}		
+
 	{{! Reactions }}
 		{{#if info.hasReactions}}
 			<h2 class="section-header">{{localize "MOBLOKS5E.Reactions"}}</h2>

@@ -45,6 +45,7 @@ export default class ItemPrep {
 		multiattack:{ prep: ActionPreper,  filter: MonsterBlock5e.isMultiAttack,                 label: game.i18n.localize("MOBLOKS5E.Multiattack"),         items: [], dataset: {type: "feat"}   },
 		casting:	{ prep: CastingPreper, filter: CastingPreper.isCasting.bind(CastingPreper),  label: game.i18n.localize("DND5E.Features"),                items: [], dataset: {type: "feat"}   },
 		reaction:	{ prep: ActionPreper,  filter: MonsterBlock5e.isReaction,                    label: game.i18n.localize("MOBLOKS5E.Reactions"),           items: [], dataset: {type: "feat"}   },
+		bonusActions: {prep: ActionPreper, filter: MonsterBlock5e.isBonusAction,                 label: game.i18n.localize("MOBLOKS5E.BonusActions"),        items: [], dataset: {type: "feat"}   },
 		attacks:	{ prep: AttackPreper,  filter: item => item.type === "weapon",               label: game.i18n.localize("DND5E.AttackPl"),                items: [], dataset: {type: "weapon"} },
 		actions:	{ prep: ActionPreper,  filter: item => Boolean(item.data?.activation?.type), label: game.i18n.localize("DND5E.ActionPl"),                items: [], dataset: {type: "feat"}   },
 		features:	{ prep: ItemPreper,    filter: item => item.type === "feat",                 label: game.i18n.localize("DND5E.Features"),                items: [], dataset: {type: "feat"}   },
