@@ -50,7 +50,7 @@ or a browser extension like [Stylish](https://chrome.google.com/webstore/detail/
 to target `.monsterblock.your-class-name` and modify the appearance however you like.
 
 The following CSS variables define the most important values:
-`CSS
+```CSS
 -- heading-color: rgb(89 23 13);
 -- roll-hover-color: hsl(8 70% 14% / 1);
 -- divider-color: rgba(140, 42, 42, 1);
@@ -58,7 +58,7 @@ The following CSS variables define the most important values:
 -- background-blend: hard-light;
 -- main-text-color: black;
 -- inline-link-color: #ff6400;
-`
+```
 
 ## FAQ
 
@@ -138,9 +138,5 @@ This is much more of a problem if you have *lots* of other modules installed. A 
 .window-app.monsterblock .window-header i { font-size: 14px; }
 ```
 This will show only icons, which should help as long as you remember what they all do.
-
-##Contribute
-User feedback is welcomed and encouraged. No contribution is unwelcome! If you encounter any bugs or spelling errors, open up an issue and report the issue.
-
 
 ![Alt](https://repobeats.axiom.co/api/embed/2e3b62aabb8d72467d37b9c547b192bd3f0eee2c.svg "Repobeats analytics image")
