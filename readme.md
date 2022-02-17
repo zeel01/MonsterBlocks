@@ -4,43 +4,36 @@
 
 # Monster Blocks
 
-MonsterBlocks is an NPC sheet made for FoundryVTT designed to faithfully reproduce the appearance of D&D 5e monster statblocks.
+Monster Blocks is an NPC sheet for FoundryVTT designed to faithfully reproduce the appearance of D&D 5e monster statblocks.
 
-**Quick Settings** are accessed through the **cog menu in the upper left corner**. This menu serves as fast access for key functions such as enabling and disabling certain features, themes, and a special toggle designed for editing.
+**Quick Settings** are accessed through the **cog menu in the upper left corner**. This menu gives access to key functions such as toggling certain features, and themes.
 
 ![Ancient Red Dragon](examples/ancientRedDragon_5.png)
 
 ## Features
 - Generate attack descriptions including hit bonus, damage formula, and average damage
 - Generate spellcasting features for regular and innate casters based on their spellbook data
-- Promote display of the Multiattack, even if it isn't the first in the actor's list
+- Promote the Multiattack action to be displayed first, even if it isn't the first in the actor's list
 - Present a concise view of all relevant game statistics as shown in official 5e books
-- Display an image of a targeted creature for reference
-- Display "secret" blocks of feature descriptions inline rather than in boxes (intended for SRD monsters since they come with descriptions in secret boxes)
-- Automatically window sizing to fit the content of a statblock, meaning simple creatures automatically take up less space!
-- Show, hide, or add lair actions (Although lair actions are not typically included to standard statblocks, MonsterBlocks allows you to display them since you can add them to the actor)
+- Optionally display an image of the creature for reference
+- Optionally display "secret" blocks of feature descriptions inline rather than in boxes (useful for SRD monsters as they come with descriptions in secret boxes)
+- Automatically sizes the window to fit the content of the statblock, meaning simple creatures automatically take up less space!
+- Show or hide lair actions. Standard statblocks don't really include those, but since you can add them to the actor I made it possible to display them.
 - Settings cog to toggle key features in the upper left corner.
-- [X Close] button cannot be overflown off of the control bar (this effects all windows, not just this sheet)
-- Roll functionality for ability checks, saving throws, skills, features, actions, and spells
+- Rolls for ability checks, saving throws, skills, features, actions, and spells
 - Open and edit features, spells, and other items by right-clicking their description
 - Drag and drop items from the sheet to elsewhere
 - Set default options in settings, and per-actor settings from the settings cog
 - Support for Quick Insert
 - Support for [Better Rolls for 5e](https://github.com/RedReign/FoundryVTT-BetterRolls5e) if installed.
-- Themes selection for each monster to help differentiate.<br>
+- Per-monster theme selection to help differentiate them.<br>
 	<img src="examples/ancientRedDragon_5.png" width="200">
 	<img src="examples/ancientRedDragon_5-dark.png" width="200">
-	<img src="examples/ancientRedDragon_5-simple.png" width="200">
 - Custom theme support (see **Theme Customization**)
 - Image pop-ups for creature artwork which can be shown to players
 - Manage various features and items
 - Edit skill and save proficiencies
 - Manage or hide rolls for skills and saves that are not proficient
-
-### Languages
-- English
-- 日本語 (Thanks to @Brother Sharp)
-- Français (Thanks to @eolias78)
 
 ### Theme Customization
 
@@ -51,26 +44,26 @@ to target `.monsterblock.your-class-name` and modify the appearance however you 
 
 The following CSS variables define the most important values:
 ```CSS
--- heading-color: rgb(89 23 13);
--- roll-hover-color: hsl(8 70% 14% / 1);
--- divider-color: rgba(140, 42, 42, 1);
--- background-filter: hsl(39deg 100% 60% / 80%);
--- background-blend: hard-light;
--- main-text-color: black;
--- inline-link-color: #ff6400;
+--heading-color: rgb(89 23 13);
+--roll-hover-color: hsl(8 70% 14% / 1);
+--divider-color: rgba(140, 42, 42, 1);
+--background-filter: hsl(39deg 100% 60% / 80%);
+--background-blend: hard-light;
+--main-text-color: black;
+--inline-link-color: #ff6400;
+--background-blend: hard-light;
+--main-text-color: black;
 ```
-
 ## FAQ
 
-### Q: How do I change the settings for monsters?
-**A**: You can adjust the default settings in the Foundry macro settings menu. The settings cog located in the upper left corner of the sheet next to the creature's name adjusts settings for each individual monster.
-These options toggle various features on and off.
-
-### Q. How do I edit spells and features?
-**A**: Right click on any feature, item, or spell to edit it.
+### Q: How do I change the settings for specific monsters?
+**A**: You can adjust the default settings in the Foundry module settings menu. The settings cog located in the upper left corner of the sheet next to the creature's name adjusts settings for each individual monster.
 
 ### Q. How do I edit avatar/character art?
 **A**: Right click on the image.
+
+### Q. How do I edit spells and features?
+**A**: Right click on any feature, item, or spell to edit it.
 
 ### Q: Why can't I resize the window?
 **A**: The window automatically calculates its own size. Any time the data in the sheet changes, the window size might need to change - even a few extra words in a description might mean it needs more space.
@@ -93,10 +86,9 @@ As an example, this SRD entry for a Silver Dragon looks like this by default:
 The text in the offset blocks is "secret" text. The text above it is generated by Monster Blocks, and the text below is part of the description that is *not* a secret.
 Displayed *inline* we get this:
 
-![Block Secrets](examples/inline-secrets.png)
+![Inline Secrets](examples/inline-secrets.png)
 
-We lose the clear indication of what is or isn't a secret, but it looks more like a statblock.
-Of course, in this case, that text is repetitive. We can either hide the generated text that we don't need:
+We lose the clear indication of what is or isn't a secret, but it looks more like a statblock. Of course, in this case, that text is repetitive. We can either hide the generated text that we don't need:
 
 ![Block Secrets](examples/inline-secrets-only.png)
 
