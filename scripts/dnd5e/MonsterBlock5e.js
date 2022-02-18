@@ -1166,6 +1166,10 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		return item.data?.activation?.type === "lair";
 	}
 
+	static isAction(item) {
+		return item.data?.activation?.type && item.data?.activation.type != "none";
+	}
+
 	static isBonusAction(item) {
 		return item.data?.activation?.type === "bonus";
 	}
