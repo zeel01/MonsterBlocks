@@ -689,6 +689,9 @@ li:nth-last-of-type(2):after {
 	padding-left: 2ch;
 	text-indent: -2ch;
 }
+.monsterblock .legendary-actions .feature-description .fas {
+	text-indent: 0ch;
+}
 .monsterblock .legendary-actions .item-name,
 .monsterblock .legendary-actions .name-extension {
 	font-weight: bold;
