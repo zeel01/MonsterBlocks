@@ -203,6 +203,7 @@
 		"ProfBonus": "Proficiency Bonus",
 
 		"EditHint": "Right-click to edit",
+		"EditButtonHint": "Click the + button above to add features",
 
 		"AddFeat": "Feature",
 		"AddAttack": "Attack",

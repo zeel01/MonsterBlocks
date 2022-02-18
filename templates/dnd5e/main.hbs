@@ -2,6 +2,9 @@
 	{{! Features Menu }}
 		{{#if flags.editing}}
 			{{> "modules/monsterblock/templates/dnd5e/parts/menuItem.hbs" item=menus.features}}
+			{{#unless (or features.features.items.length info.hasActions info.hasBonusActions info.hasLair info.hasLegendaryActions info.hasReactions)}}
+			<p class="menu-hint">{{ localize "MOBLOKS5E.EditButtonHint"}}</p>
+			{{/unless}}
 		{{/if}}
 
 	{{! Spellcasting Features }}

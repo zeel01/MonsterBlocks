@@ -427,6 +427,11 @@
 	visibility: visible;
 }
 
+.monsterblock .menu-hint {
+	text-align: right;
+	font-style: italic;
+}
+
 .monsterblock .delete-item {
 	/* display: none; */
 	visibility: hidden;
