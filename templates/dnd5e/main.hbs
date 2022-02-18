@@ -2,6 +2,9 @@
 	{{! Features Menu }}
 		{{#if flags.editing}}
 			{{> "modules/monsterblock/templates/dnd5e/parts/menuItem.hbs" item=menus.features}}
+			{{#unless (or features.features.items.length info.hasActions info.hasBonusActions info.hasLair info.hasLegendaryActions info.hasReactions)}}
+			<p class="menu-hint">{{ localize "MOBLOKS5E.EditButtonHint"}}</p>
+			{{/unless}}
 		{{/if}}
 
 	{{! Spellcasting Features }}
@@ -26,7 +29,9 @@
 		{{/if}}
 
 	{{! Actions }}
-		<h2 class="section-header" >{{localize "DND5E.ActionPl"}}</h2>
+		{{#if info.hasActions}}
+			<h2 class="section-header" >{{localize "DND5E.ActionPl"}}</h2>
+		{{/if}}
 
 		{{! Multiattack }}
 		{{#if features.multiattack.items}}
@@ -47,7 +52,7 @@
 			{{/unless}}
 		{{/each}}
 
-		{{! Bonus Actions }}
+	{{! Bonus Actions }}
 		{{#if info.hasBonusActions}}
 			<h2 class="section-header">{{localize "MOBLOKS5E.BonusActions"}}</h2>
 			{{#each features.bonusActions.items as |item iid|}}
