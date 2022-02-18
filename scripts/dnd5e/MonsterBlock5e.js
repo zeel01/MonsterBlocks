@@ -100,6 +100,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			hasAtWillSpells: this.hasAtWillSpells(),
 			hasLegendaryActions: Boolean(data.features.legendary.items.length),
 			hasLair: Boolean(data.features.lair.items.length),
+			hasActions: Boolean(data.features.attacks.items.length || data.features.actions.items.length),
 			hasBonusActions: Boolean(data.features.bonusActions.items.length),
 			hasReactions: Boolean(data.features.reaction.items.length),
 			hasLoot: Boolean(data.features.equipment.items.length),
