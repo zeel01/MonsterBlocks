@@ -1,0 +1,16 @@
+<h2 class="section-header">{{ localize "MOBLOKS5E.VariantHeading" }}</h2>
+<section>
+{{#each features.variant.items as |item iid|}}
+    <section class="item{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{#if  @root.flags.editing}}{{ localize 'MOBLOKS5E.EditHint' }}{{/if}}">
+        {{#if @root.flags.show-delete}}
+            <a class="delete-item" data-item-id="{{item._id}}">
+                <i class="fa fa-trash"></i>
+            </a>
+        {{/if}}
+        <div class="whitebox">
+            <p class="item-name" style="font-style: normal" data-item-id="{{item._id}}">{{~item.name~}}<span class="headerspan">{{item.data.source}}</span></p>
+            <span class="description">{{{moblok-enrichhtml item.data.description.value @root.owner @root.flags}}}</span>
+        </div>
+    </section>
+{{/each}}
+</section> 

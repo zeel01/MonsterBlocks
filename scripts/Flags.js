@@ -20,7 +20,7 @@ export default class Flags {
 	static get flagDefaults() {
 		return {
 			"inline-secrets"    : { type: Boolean, default: false    , hidden: false },
-			"hidden-secrets"    : { type: Boolean, default: false    , hidden: false },
+			"hidden-secrets"    : { type: Boolean, default: true     , hidden: false },
 			"hide-profile-image": { type: Boolean, default: false    , hidden: false },
 			"theme-choice"      : { type: String , default: "default", hidden: true, setting: "default-theme" },
 			"custom-theme-class": { type: String , default: ""       , hidden: false },
@@ -28,7 +28,7 @@ export default class Flags {
 			"compact-window"    : { type: Boolean, default: false    , hidden: false },
 			"compact-feats"     : { type: Boolean, default: false    , hidden: false },
 			"compact-layout"    : { type: Boolean, default: false    , hidden: false },
-			"show-delete"       : { type: Boolean, default: false    , hidden: true  },
+			"show-delete"       : { type: Boolean, default: true     , hidden: false },
 			"font-size"         : { type: Number , default: 14       , hidden: false },
 			"scale"             : { type: Number , default: 1        , hidden: true  }
 		}

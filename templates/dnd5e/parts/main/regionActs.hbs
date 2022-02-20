@@ -1,0 +1,12 @@
+<h2 class="section-header">{{ localize "MOBLOKS5E.RegionHeading" }}</h2>
+<section>
+	{{#if features.regionStart.items}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/main/regionCap.hbs" item=features.regionStart.items.[0] actor=@root.actor flags=@root.flags}}
+	{{/if}}
+	{{#each features.region.items as |item iid|}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item specialaction=true actor=@root.actor flags=@root.flags}}
+	{{/each}}
+	{{#if features.regionEnd.items}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/main/regionCap.hbs" item=features.regionEnd.items.[0] actor=@root.actor flags=@root.flags}}
+	{{/if}}
+</section> 

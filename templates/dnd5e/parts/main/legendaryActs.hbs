@@ -20,13 +20,13 @@
 	{{/if}}
 </h2>
 <section>
-	<p class="legendary-description">
+	<p class="special-description">
 		{{ localize "MOBLOKS5E.LegendaryText" name=actor.name number=data.resources.legact.max}}
 	</p>
 	{{#each features.legendary.items as |item iid|}}
 		{{#if item.is.legendary }}
 		{{#unless item.is.legResist}}
-			{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor legendaryactions=true flags=@root.flags}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor specialaction=true flags=@root.flags}}
 		{{/unless}}
 		{{/if}}
 	{{/each}}

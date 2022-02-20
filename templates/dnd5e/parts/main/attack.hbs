@@ -12,14 +12,11 @@
 		{{ localize "MOBLOKS5E.NameDescriptionSep" }}
 		{{#if @root.flags.attack-descriptions}}
 		<span class="generated-text">			
-			<span class="attack-bonus" 
-				data-roll-flavor="{{ localize "DND5E.Attack" }}: {{item.name}}" 
-				data-roll-formula="1d20 + {{item.tohit}}">
 				<span class="attack-type">
 					{{~item.description.attackType~}}
 					{{ localize "MOBLOKS5E.Colon" }}
 				</span>
-				{{item.description.tohit~}}
+				<span class="item-attackRoll" data-item-id="{{item._id}}"><i class="fas fa-dice-d20"></i> {{item.description.tohit~}}</span>
 			</span>{{ localize "MOBLOKS5E.Comma" }}
 			<span>
 				{{ item.description.range }}{{ localize "MOBLOKS5E.Comma" }}
@@ -33,17 +30,15 @@
 					{{#unless @first}}
 						{{ localize "MOBLOKS5E.MultiDamageAttackConjunctionPlus" }}						
 					{{/unless}}
-					{{> "modules/monsterblock/templates/dnd5e/parts/damageRoll.hbs" text=part.text name=../item.name formula=part.formula}}
+					{{part.average}}
+					(<span class="item-damageRoll" data-item-id="{{../item._id}}"><i class="fas fa-dice-d20"></i> {{part.formula}}</span>)
+					{{moblok-toLowerCase type}}
 					{{ localize "MOBLOKS5E.damage" }}
 					{{~#if (and @first ../item.description.versatile)~}}
-						{{ localize "MOBLOKS5E.Comma" }}
-						{{> "modules/monsterblock/templates/dnd5e/parts/damageRoll.hbs" 
-							name=../item.name 
-							formula=../item.description.versatile.formula
-							text=(	localize "MOBLOKS5E.AttackVersatile"
-									damage=../item.description.versatile.text
-							)
-						}}
+						{{ localize "MOBLOKS5E.Comma" }} {{ localize "MOBLOKS5E.Or" }} {{../item.description.versatile.average}}
+						(<span class="item-damageRoll" data-item-id="{{../item._id}}" data-versatile="true"><i class="fas fa-dice-d20"></i> {{../item.description.versatile.formula}}</span>)
+						{{moblok-toLowerCase type}}
+						{{ localize "MOBLOKS5E.damageVersatile" }}
 						{{~#unless @last}}{{ localize "MOBLOKS5E.Comma" }} {{/unless~}}
 					{{~/if~}}
 				{{~/each~}}			
@@ -51,8 +46,7 @@
 			{{~#unless item.continuousDescription~}}
 				{{ localize "MOBLOKS5E.FullStop" }}
 			{{/unless~}}
-		</span>
+			<span class="description">{{{moblok-enrichhtml item.data.description.value @root.owner @root.flags}}}</span>
 		{{~/if~}}
-		<span class="description">{{{moblok-enrichhtml item.data.description.value @root.owner @root.flags}}}</span>
 	</div>
 </section>

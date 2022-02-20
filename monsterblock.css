@@ -239,6 +239,9 @@
 	height: 1em;
 	padding: 0;
 }
+.monsterblock .item-attackRoll:hover,
+.monsterblock .item-damageRoll:hover,
+.monsterblock .hpRoll:hover,
 .monsterblock .ability:hover, 
 .monsterblock .saving-throw:hover, 
 .monsterblock .skill:hover, 
@@ -538,12 +541,6 @@
 	border: none;
 	margin-right: 0;
 }
-.monsterblock.compact-layout .profile-image:hover,
-.monsterblock .profile-image:hover {
-	width: calc(var(--column-width) * 0.7);
-	height: calc(var(--column-width) * 0.7);
-	z-index: 75;
-}
 
 .monsterblock .ac-type {
 	text-transform: lowercase;
@@ -660,9 +657,6 @@ li:nth-last-of-type(2):after {
 .monsterblock .at-will-spells li:last-of-type:after {
 	content: '';
 }
-.monsterblock .spell-name {
-	font-style: italic;
-}
 .monsterblock .monster-saves .ability {
 	display: inline;
 }
@@ -682,6 +676,7 @@ li:nth-last-of-type(2):after {
 	margin-top: 1em;
 	/* display: inline-flex; */
 }
+.monsterblock .spell-name,
 .monsterblock .item-name,
 .monsterblock .name-extension {
 	font-weight: bold;
@@ -690,27 +685,24 @@ li:nth-last-of-type(2):after {
 .monsterblock .spell .name-extension {
 	font-weight: initial;
 }
-.monsterblock .legendary-actions .feature-description {
-	padding-left: 2ch;
-	text-indent: -2ch;
+.monsterblock .special-actions .feature-description {
+	padding-left: 1.5ch;
+	text-indent: -1.5ch;
 }
-.monsterblock .legendary-actions .feature-description .fas {
+.monsterblock .special-actions .feature-description .fas {
 	text-indent: 0ch;
 }
-.monsterblock .legendary-actions .item-name,
-.monsterblock .legendary-actions .name-extension {
+.monsterblock .item-attackRoll,
+.monsterblock .item-damageRoll,
+.monsterblock .special-actions .item-name,
+.monsterblock .special-actions .name-extension {
 	font-weight: bold;
 	font-style: normal;
 }
-.monsterblock .legendary-actions,
-.monsterblock .lair-actions {
+.monsterblock .special-actions {
 	margin: 0;
 }
-.monsterblock .legendary-description {
-	margin-top: 1em;
-	margin-bottom: 1em;
-}
-.monsterblock .lair-description {
+.monsterblock .special-description {
 	margin-top: 1em;
 }
 
@@ -820,7 +812,7 @@ li:nth-last-of-type(2):after {
 .monsterblock .editor {
 	height: 100%;
 }
-.monsterblock .bio-box h2 {
+.monsterblock .bio-box .section-header h2 {
 	margin-top: 2.5em;
 }
 .monsterblock .biography {
@@ -1108,3 +1100,6 @@ li:nth-last-of-type(2):after {
 .monsterblock .flavor-text > p {
 	padding: 0 1ch;
 }
+.monsterblock .warn {
+	color: darkred;
+} 

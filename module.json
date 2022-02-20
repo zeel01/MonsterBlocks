@@ -2,20 +2,12 @@
 	"name": "monsterblock",
 	"title": "Monster Blocks",
 	"description": "An NPC sheet designed to emulate standard 5e monster stat blocks as faithfully as possible.",
-	"author": "zeel",
-	"authors": [
-		{
-			"name": "zeel",
-			"email": "zeel02@gmail.com",
-			"url": "https://github.com/zeel01",
-			"discord": "zeel#4200"
-		}
-	],
-	"version": "3.2.4",
+	"author": "Zeel, Tielc",
+	"version": "3.2.5",
 	"minimumCoreVersion": "0.8.8",
 	"compatibleCoreVersion": "9",
 	"system": ["dnd5e"],
-	"minimumSystemVersion": "1.5.0",
+	"minimumSystemVersion": "1.5.7",
 	"esmodules": [
 		"monsterblock.js"
 	],
@@ -51,13 +43,10 @@
 			"manifest": "https://raw.githubusercontent.com/League-of-Foundry-Developers/mathjs-lib/master/module.json"
 		}
 	],
-	"manifest": "https://github.com/zeel01/MonsterBlocks/releases/latest/download/module.json",
-	"url": "https://github.com/zeel01/MonsterBlocks",
-	"download": "https://github.com/zeel01/MonsterBlocks/releases/latest/download/monsterblock.zip",
-	"readme": "https://github.com/zeel01/MonsterBlocks/blob/master/readme.md",
-	"bugs": "https://github.com/zeel01/MonsterBlocks/issues",
+	"url": "https://github.com/jeremyregnerus/MonsterBlocks",
+	"readme": "https://github.com/jeremyregnerus/MonsterBlocks/blob/master/readme.md",
+	"bugs": "https://github.com/jeremyregnerus/MonsterBlocks/issues",
 	"allowBugReporter": true,
-	"changelog": "https://github.com/zeel01/MonsterBlocks/releases",
 	"media": [
 		{
 			"type": "cover",

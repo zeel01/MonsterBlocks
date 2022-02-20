@@ -1,0 +1,11 @@
+<span class="item{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{#if  @root.flags.editing}}{{ localize 'MOBLOKS5E.EditHint' }}{{/if}}">
+	{{#if flags.show-delete}}
+		<a class="delete-item" data-item-id="{{item._id}}">
+			<i class="fa fa-trash"></i>
+		</a>
+	{{/if}}
+	<span class="item-name" data-item-id="{{item._id}}">
+		{{#if (moblok-greaterThan item.data.quantity 1) }}({{item.data.quantity}}) {{/if}}{{~item.name~}}
+	</span>
+	{{~#unless @last}}<span>, </span>{{~/unless~}}
+</span>

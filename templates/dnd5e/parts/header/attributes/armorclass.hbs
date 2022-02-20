@@ -2,17 +2,22 @@
 <span class="attr-value">
 	<span class="ac-value">{{data.attributes.ac.value}}</span>
 	{{#unless (eq data.attributes.ac.calc "flat")}}
-		<span class="paren">(</span>{{~" "~}}
-		<span class="ac-type">
-			{{~#if (eq data.attributes.ac.calc "custom")~}}
-			{{data.attributes.ac.formula}}
-			{{~else~}}
-			{{labels.armorType}}
-			{{~/if~}}
-		</span>{{~" "~}}
-		<span class="paren">)</span>
+		{{#unless (eq labels.armorType "Unarmored")}}
+			(<span class="ac-type">
+				{{~#if (eq data.attributes.ac.calc "custom")~}}
+				{{data.attributes.ac.formula}}
+				{{~else~}}
+				{{labels.armorType}}
+				{{~/if~}}
+			</span>)
+		{{/unless}}
 	{{/unless}}
 </span>
+<span class="attr-value"
+	data-field-key="data.attributes.ac.text"
+	data-dtype="String"
+	placeholder=""
+	contenteditable="{{flags.editing}}">{{data.attributes.ac.text}}</span>
 <a class="config-button" data-action="armor" title="{{ localize 'DND5E.ArmorConfig' }}">
 	<i class="fas fa-cog"></i>{{~" "~}}
 </a>{{~" "~}}
