@@ -558,7 +558,6 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			const speed = data.data.attributes.movement[move];
 			
 			let moveName = move;
-			if (moveName == "fly" && hover) moveName = "hover";
 			const moveNameCaps = moveName.replace(moveName[0], moveName[0].toUpperCase());
 
 			movement.push({
@@ -566,7 +565,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 				fly: move == "fly",
 				showLabel: move != "walk",
 				label: game.i18n.localize(`DND5E.Movement${moveNameCaps}`).toLowerCase(),
-				value: speed > 0 ? speed : "",
+				value: speed > 0 ? speed : move != "walk" ? "" : "0",
 				unit: data.data.attributes.movement.units + game.i18n.localize("MOBLOKS5E.SpeedUnitAbbrEnd"),
 				key: `data.attributes.movement.${move}`
 			});
