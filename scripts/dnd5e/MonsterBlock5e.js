@@ -405,24 +405,24 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	isSpellcaster () {	// Regular spellcaster with typical spell slots.
 		return this.actor.data.items.some((item) => {
 			return item.data.level > 0.5 && (
-				item.data.preparation?.mode === "prepared" || 
-				item.data.preparation?.mode === "always"
+				item.data.data.preparation?.mode === "prepared" || 
+				item.data.data.preparation?.mode === "always"
 			);
 		});
 	}
 	isInnateSpellcaster() {	// Innate casters have lists of spells that can be cast a certain number of times per day
 		return this.actor.data.items.some((item) => {
-			return item.data.preparation?.mode === "innate";
+			return item.data.data.preparation?.mode === "innate";
 		});
 	}
 	isWarlock() {
 		return this.actor.data.items.some((item) => {
-			return item.data.preparation?.mode === "pact";
+			return item.data.data.preparation?.mode === "pact";
 		});
 	}
 	hasAtWillSpells() {	// Some normal casters also have a few spells that they can cast "At will"
 		return this.actor.data.items.some((item) => {
-			return item.data.preparation?.mode === "atwill";
+			return item.data.data.preparation?.mode === "atwill";
 		});
 	}
 	hasBonusActions() {
