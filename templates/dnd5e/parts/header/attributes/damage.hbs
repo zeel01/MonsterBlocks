@@ -10,7 +10,12 @@
 				{{~/each~}}
 			</ul>
 			{{~#each damage as |v k|~}}
-				{{~#if (moblok-equals k "physical")~}}<span>{{~#unless (moblok-equals @index 0)~}}; {{/unless}}{{v}}</span>{{~/if~}}
+				{{~#if (moblok-equals k "physical")~}}
+					<span>
+						{{~#unless (moblok-equals @index 0)~}}; {{/unless}}
+						{{v}}
+					</span>
+				{{~/if~}}
 			{{~/each~}}
 		</span>
 	</li>
