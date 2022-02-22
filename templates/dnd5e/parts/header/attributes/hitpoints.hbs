@@ -43,8 +43,9 @@
 	placeholder="(1d6)"
 	data-field-key="data.attributes.hp.formula"
 	data-dtype="Roll"
-	class="attr-value"
-	contenteditable="{{flags.editing}}">
+	class="attr-value{{#unless flags.editing}} trigger hpRoll{{/unless}}"
+	contenteditable="{{flags.editing}}"
+	data-control="_onRollHPFormula">
 		{{~data.attributes.hp.formula~}}
 </span>{{~" "~}}
 {{#if data.attributes.hp.formula}}<span class="paren">)</span>{{~/if~}}

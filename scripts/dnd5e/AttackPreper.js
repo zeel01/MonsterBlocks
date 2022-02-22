@@ -79,34 +79,36 @@ export default class AttackPreper extends ItemPreper {
 	/**
 	 * Formats the range part of the description
 	 *
-	 * "{reachRange} {range}{sep}{max} {units}.",
-	 *
 	 * @param {object} atkd - Attack data
 	 * @return {string}
 	 * @memberof AttackPreper
 	 */
 	formatRange(atkd) {
-		/** @type {number|null} */
-		const longRange = atkd.range?.long;     // The long range increment, or null
-		const reachRange = game.i18n.localize(
-			this.isRangedAttack(this.item)      // If the attack is ranged
-				? "MOBLOKS5E.range"             // Localize range, otherwise reach
-				: "MOBLOKS5E.reach"
-		);
+		const reach = atkd.range?.reach; // reach value or null
+		const range = atkd.range?.value; // range value or null
+		const longRange = atkd.range?.long; // long range increment or null
+		const units = atkd.range?.units; // units or null
 
-		return game.i18n.format("MOBLOKS5E.AttackRange", {
-			reachRange,
-			range: atkd.range?.value,
-			sep: longRange ? "/" : "",
-			max: longRange ? longRange : "",
-			units: atkd.range?.units
-		})
+		let format = "";
+
+		if (reach) format = `${game.i18n.localize("MOBLOKS5E.reach")} ${reach} ${units}.`;
+
+		if (reach && range) format += ` ${game.i18n.localize("MOBLOKS5E.Or")} `;
+
+		if (range) {
+			format += `${game.i18n.localize("MOBLOKS5E.range")} ${range}`;
+
+			if (longRange) {
+				format += `/${longRange}`;
+			}
+			format += ` ${units}.`
+		}
+
+		return format;
 	}
 
 	/**
 	 * Formats the target(s) part of the description.
-	 *
-	 * "{reachRange} {range}{sep}{max} {units}."
 	 *
 	 * @param {object} atkd - Attack data
 	 * @return {string}
@@ -119,6 +121,8 @@ export default class AttackPreper extends ItemPreper {
 		if (!type) type = atkd.target.value > 1       // If the type wasn't defined, then 
 			? game.i18n.localize("MOBLOKS5E.targetS") // if the value is greater than one it's plural
 			: game.i18n.localize("MOBLOKS5E.target")  // Ortherwise singluar
+
+		if (atkd.activation.condition) return atkd.activation.condition; // if the user has specified a custom targeting condition, use that instead of 1 target / 1 creature
 
 		return game.i18n.format("MOBLOKS5E.AttackTarget", { quantity, type	});
 	}
@@ -162,7 +166,9 @@ export default class AttackPreper extends ItemPreper {
 	getDamageData(part, index) {
 		return {
 			text: this.formatAttackAndDamage(index, part),
-			formula: this.damageFormula(index)
+			formula: this.damageFormula(index),
+			average: this.averageDamage(index),
+			type: this.getDamageType(part)
 		}
 	}
 
@@ -177,17 +183,16 @@ export default class AttackPreper extends ItemPreper {
 	 * @memberof AttackPreper
 	 */
 	formatAttackAndDamage(i, part) {
-		const type = game.i18n.localize(                    // The damage type
-			"DND5E.Damage" +                                // The localization prefix for damage types
-				part[1].replace(/./, l => l.toUpperCase())  // Capitalize the string at part[1]
-		).toLowerCase()                                     // After localization, make all lower case
-
 		return game.i18n.format("MOBLOKS5E.AttackDamageTemplate", {
 			average: this.averageDamage(i),
 			formula: this.damageFormula(i),
-			type
+			type: this.getDamageType(part)
 		});
 	}
+
+	getDamageType(part) {
+		return part[1] ? game.i18n.localize("DND5E.Damage" + part[1].replace(/./, l => l.toUpperCase())).toLowerCase() : "";
+	}	
 
 	/**
 	 * Determin which type of attack this is.
@@ -196,7 +201,7 @@ export default class AttackPreper extends ItemPreper {
 	 * @memberof AttackPreper
 	 */
 	getAttackType() {
-		return CONFIG.DND5E.itemActionTypes[this.item?.data?.data?.actionType] || "";
+		return this.item.data?.data?.properties?.thr ? game.i18n.localize("MOBLOKS5E.ThrownLabel") : CONFIG.DND5E.itemActionTypes[this.item?.data?.data?.actionType] || "";
 	}
 
 	/**

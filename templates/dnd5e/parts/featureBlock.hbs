@@ -1,17 +1,17 @@
-<section class="item monster-feature{{#if legendaryactions}} legendary-actions{{/if}}{{#if lairactions}} lair-actions{{/if}}{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{#if  @root.flags.editing}}{{ localize 'MOBLOKS5E.EditHint' }}{{/if}}">
+<section class="item monster-feature{{#if specialaction}} special-actions{{/if}}{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{#if  @root.flags.editing}}{{ localize 'MOBLOKS5E.EditHint' }}{{/if}}">
 	<div class="feature-description inline-children">
 		{{#if flags.show-delete}}
 			<a class="delete-item" data-item-id="{{item._id}}">
 				<i class="fa fa-trash"></i>
 			</a>
 		{{/if}}
-		{{#unless lairactions}}
+		{{#unless (moblok-isUnderscore item.name)}}
 			<span class="item-name" data-item-id="{{item._id}}">
 				{{~item.name~}} 
 			</span>
 			
 			{{~#if item.data.recharge.value~}}
-				<span class="name-extension"
+				<span class="name-extension{{#unless item.data.recharge.charged}} warn{{/unless}}"
 					data-item-id="{{item._id}}"
 					data-roll-flavor="{{item.name}} ({{ localize 'MOBLOKS5E.Recharge' }} {{item.data.recharge.value}}-6): " 
 					data-roll-formula="1d6" 
@@ -19,22 +19,26 @@
 					data-roll-success="{{ localize 'DND5E.Charged' }}" 
 					data-roll-failure="{{ localize 'MOBLOKS5E.NCharged' }}"
 					data-roll-handler="setCharged">
-					({{ localize 'MOBLOKS5E.Recharge' }} {{item.data.recharge.value}}-6){{~" "~}}
+					({{#if item.data.recharge.charged }}{{ localize "MOBLOKS5E.Charged" }}{{else}}{{ localize "MOBLOKS5E.Recharge" }}{{/if}} {{item.data.recharge.value}}-6){{~" "~}}
 				</span>
 			{{~/if~}}
-			{{~#if (and item.is.legendary (gt item.data.activation.cost 1))~}}
-				<span class="name-extension">
-					({{ localize "MOBLOKS5E.LegActionCost" number=item.data.activation.cost}}){{~" "~}}
-				</span>
-			{{~/if~}}
-			{{~#unless legendaryactions~}}
+			{{~#if (or item.is.legendary item.is.mythic)~}}
+				{{~#if (gt item.data.activation.cost 1)~}}
+					<span class="name-extension">
+						({{ localize "MOBLOKS5E.LegActionCost" number=item.data.activation.cost}}){{~" "~}}
+					</span>
+				{{~/if~}}
+			{{~else~}}
 				{{~#if item.hasresource~}}
 					{{> "modules/monsterblock/templates/dnd5e/parts/resource.hbs" resource=item.resource}}
 				{{~/if~}}
-			{{~/unless~}}{{ localize "MOBLOKS5E.NameDescriptionSep" }}
+			{{~/if~}}
+			{{~#unless (moblok-isAsterisk item.name)~}}{{ localize "MOBLOKS5E.NameDescriptionSep" }}{{~/unless}}
 		{{~else~}}
 			<span class="item-name" data-item-id="{{item._id}}"></span>
 		{{~/unless}}
-		<span class="description">{{{moblok-enrichhtml item.data.description.value @root.owner @root.flags}}}</span>
+		{{~#unless (moblok-isEquipment item)}}
+			<span class="description">{{{moblok-enrichhtml item.data.description.value @root.owner @root.flags}}}</span>
+		{{~/unless}}
 	</div>
 </section>

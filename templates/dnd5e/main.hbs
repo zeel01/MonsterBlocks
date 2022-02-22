@@ -55,8 +55,8 @@
 	{{! Bonus Actions }}
 		{{#if info.hasBonusActions}}
 			<h2 class="section-header">{{localize "MOBLOKS5E.BonusActions"}}</h2>
-			{{#each features.bonusActions.items as |item iid|}}
-				{{#if item.is.bonusAction}}
+			{{#each features.bonus.items as |item iid|}}
+				{{#if item.is.bonus}}
 					{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
 				{{/if}}
 			{{/each}}
@@ -75,12 +75,13 @@
 		{{#if info.hasLegendaryActions}}
 			{{> "modules/monsterblock/templates/dnd5e/parts/main/legendaryActs.hbs"}}
 		{{/if}}
-	
-	{{! Loot Items }}
-		{{#if info.hasLoot}}
-			<h2 class="section-header">{{localize "DND5E.Inventory"}}</h2>
-			{{#each features.equipment.items as |item iid|}}
-				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
+
+	{{! Mythic Actions }}
+		{{#if info.hasMythicActions}}
+			<h2 class="section-header">{{localize "MOBLOKS5E.MythicActions"}}</h2>
+			<p class="special-description">{{ localize "MOBLOKS5E.MythicActionText" name=actor.name trait=features.mythicTrait.items.[0].name}}</p>
+			{{#each features.mythic.items as |item iid|}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags specialaction=true}}
 			{{/each}}
 		{{/if}}
 
@@ -89,5 +90,35 @@
 			{{#if flags.show-lair-actions}}
 				{{> "modules/monsterblock/templates/dnd5e/parts/main/lairActs.hbs"}}
 			{{/if}}
+		{{/if}}
+
+	{{! Regional Effects }}
+		{{#if (and flags.show-region-actions info.hasRegion)}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/main/regionActs.hbs"}}
+		{{/if}}
+
+	{{! Variant Features}}
+		{{#if (and flags.show-variant info.hasVariant)}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/main/variantInfo.hbs" actor=@root.actor flags=@root.flags}}
+		{{/if}}
+
+	{{! Loot Items }}
+		{{#if info.hasLoot}}
+			<h2 class="section-header">{{localize "DND5E.Inventory"}}</h2>
+			<section class="item monster-feature{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{#if  @root.flags.editing}}{{ localize 'MOBLOKS5E.EditHint' }}{{/if}}"></section>
+			{{#each features.equipment.items as |item iid|}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/itemList.hbs" item=item actor=@root.actor flags=@root.flags}}
+			{{/each}}
+			</section>
+		{{/if}}
+
+	{{! Armor Items }}
+		{{#if (and flags.editing info.hasArmor)}}
+			<h2 class="section-header">{{localize "DND5E.Armor"}}</h2>
+			<section class="item monster-feature{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{#if  @root.flags.editing}}{{ localize 'MOBLOKS5E.EditHint' }}{{/if}}"></section>
+			{{#each features.armor.items as |item iid|}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/itemList.hbs" item=item actor=@root.actor flags=@root.flags}}
+			{{/each}}
+			</section>
 		{{/if}}
 </main>

@@ -75,6 +75,18 @@
 				"hint": "By default, show Lair Actions (not normally included in 5e monster stat-blocks)."
 			}
 		},
+		"show-region-actions": {
+			"settings": {
+				"name": "Show Regional Effects",
+				"hint": "By default, show Regional Effects (not normally included in the 5e monster stat-blocks)."
+			}
+		},
+		"show-variant": {
+			"settings": {
+				"name": "Show Variant Information",
+				"hint": "BY default, show variant information (not normally included in the 5e monster stat-blocks)."
+			}
+		},
 		"current-hit-points": {
 			"settings": {
 				"name": "Show Current Hit Points",
@@ -109,6 +121,12 @@
 			"settings": {
 				"name": "Editing Enabled",
 				"hint": "Choose whether or not editing is enabled by default."
+			}
+		},
+		"show-delete": {
+			"settings": {
+				"name": "Show Delete",
+				"hint": "Choose whether or not delete is enabled by default."
 			}
 		},
 		"show-not-prof": {
@@ -164,6 +182,10 @@
 		"HideProfileImage": "Hide profile image",
 		"ShowLair": "Show lair actions",
 		"HideLair": "Hide lair actions",
+		"ShowRegion": "Show regional effects",
+		"HideRegion": "Hide regional effects",
+		"ShowVariant": "Show variant information",
+		"HideVariant": "Hide variant information",
 		"OpenTokenizer": "Open VTTA Tokenizer",
 		"QuickInsert": "Quick Insert",
 
@@ -213,6 +235,7 @@
 		"AddConsumable": "Consumable",
 		
 		"Recharge": "Recharge",
+		"Charged": "Charged",
 		"NCharged": "Not charged",
 		"Costs": "Costs",
 		"ResourceRefresh": "Day",
@@ -233,6 +256,7 @@
 		"SpeedUnitAbbrEnd": ".",
 		"Comma": ",",
 		"Colon": ":",
+		"Or": "or",
 		
 		"Cantrips": "Cantrips",
 		"AtWill": "at will",
@@ -261,10 +285,12 @@
 		"AttackToHit": "{bonus} to hit",
 		"AttackRange": "{reachRange} {range}{sep}{max} {units}.",
 		"AttackTarget": "{quantity} {type}",
+		"ThrownLabel": "Melee or Ranged Weapon Attack",
 		"AttackHitLabel": "Hit:",
 		"AttackDamageTemplate": "{average} ({formula}) {type}",
 		"AttackVersatile": "or {damage} damage if used with two hands",
 		"damage": "damage",
+		"damageVersatile": "damage if used with two hands",
 		
 		"Reactions": "Reactions",
 		"BonusActions": "Bonus Actions",
@@ -297,8 +323,14 @@
 		
 		"LegActionCost": "Costs {number} Actions",
 		"LegendaryText": "The {name} can take {number} legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {name} regains spent legendary actions at the start of its turn.",
+
+		"MythicActions": "Mythic Actions",
+		"MythicActionText": "If the {name}'s {trait} trait has activated in the last hour, it can use the options below as legendary actions.",
 		
 		"LairActionsHeading": "Lair Actions",
-		"LairText": "On initiative count 20 (losing all initiative ties), the {name} takes a lair action to cause one of the following effects; the {name} can't use the same effect two rounds in a row:"
+		"LairText": "On initiative count 20 (losing all initiative ties), the {name} takes a lair action to cause one of the following effects; the {name} can't use the same effect two rounds in a row:",
+
+		"RegionHeading" : "Regional Effects",
+		"VariantHeading": "Variant Features"
 	}
 }

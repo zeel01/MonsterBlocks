@@ -99,10 +99,14 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			isWarlock: this.isWarlock(),
 			hasAtWillSpells: this.hasAtWillSpells(),
 			hasLegendaryActions: Boolean(data.features.legendary.items.length),
+			hasMythicActions: Boolean(data.features.mythic.items.length || data.features.mythicTrait.items.length),
 			hasLair: Boolean(data.features.lair.items.length),
+			hasRegion: Boolean(data.features.region.items.length || data.features.regionStart.items.length || data.features.regionEnd.items.length),
+			hasVariant: Boolean(data.features.variant.items.length),
 			hasActions: Boolean(data.features.attacks.items.length || data.features.actions.items.length),
-			hasBonusActions: Boolean(data.features.bonusActions.items.length),
+			hasBonusActions: Boolean(data.features.bonus.items.length),
 			hasReactions: Boolean(data.features.reaction.items.length),
+			hasArmor: Boolean(data.features.armor.items.length),
 			hasLoot: Boolean(data.features.equipment.items.length),
 			vttatokenizer: Boolean(window.Tokenizer)
 		}
@@ -401,24 +405,24 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	isSpellcaster () {	// Regular spellcaster with typical spell slots.
 		return this.actor.data.items.some((item) => {
 			return item.data.level > 0.5 && (
-				item.data.preparation?.mode === "prepared" || 
-				item.data.preparation?.mode === "always"
+				item.data.data.preparation?.mode === "prepared" || 
+				item.data.data.preparation?.mode === "always"
 			);
 		});
 	}
 	isInnateSpellcaster() {	// Innate casters have lists of spells that can be cast a certain number of times per day
 		return this.actor.data.items.some((item) => {
-			return item.data.preparation?.mode === "innate";
+			return item.data.data.preparation?.mode === "innate";
 		});
 	}
 	isWarlock() {
 		return this.actor.data.items.some((item) => {
-			return item.data.preparation?.mode === "pact";
+			return item.data.data.preparation?.mode === "pact";
 		});
 	}
 	hasAtWillSpells() {	// Some normal casters also have a few spells that they can cast "At will"
 		return this.actor.data.items.some((item) => {
-			return item.data.preparation?.mode === "atwill";
+			return item.data.data.preparation?.mode === "atwill";
 		});
 	}
 	hasBonusActions() {
@@ -439,6 +443,21 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	hasLegendaryActions() {
 		return this.actor.data.items.some((item) => {
 			return this.constructor.isLegendaryAction(item)
+		});
+	}
+	hasMythicActions() {
+		return this.actor.items.some((item) => {
+			this.constructor.isMythicAction(item) || this.constructor.isMythicTrait(item);
+		});
+	}
+	hasRegion() {
+		return this.actor.data.items.some((item) => {
+			return this.constructor.isRegionEffect(item) || this.constructor.isRegionStart(item) || this.constructor.isRegionEnd(item);
+		});
+	}
+	hasVariant() {
+		return this.actor.data.items.some((item) => {
+			return this.constructor.isVariant(item);
 		});
 	}
 	async openTokenizer() {
@@ -558,7 +577,6 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			const speed = data.data.attributes.movement[move];
 			
 			let moveName = move;
-			if (moveName == "fly" && hover) moveName = "hover";
 			const moveNameCaps = moveName.replace(moveName[0], moveName[0].toUpperCase());
 
 			movement.push({
@@ -566,7 +584,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 				fly: move == "fly",
 				showLabel: move != "walk",
 				label: game.i18n.localize(`DND5E.Movement${moveNameCaps}`).toLowerCase(),
-				value: speed > 0 ? speed : "",
+				value: speed > 0 ? speed : move != "walk" ? "" : "0",
 				unit: data.data.attributes.movement.units + game.i18n.localize("MOBLOKS5E.SpeedUnitAbbrEnd"),
 				key: `data.attributes.movement.${move}`
 			});
@@ -655,13 +673,15 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			"maximum-hit-points": game.settings.get("monsterblock", "maximum-hit-points"),
 			"hide-profile-image": game.settings.get("monsterblock", "hide-profile-image"),
 			"show-lair-actions": game.settings.get("monsterblock", "show-lair-actions"),
+			"show-region-actions": game.settings.get("monsterblock", "show-region-actions"),
+			"show-variant": game.settings.get("monsterblock", "show-variant"),
 			"theme-choice": game.settings.get("monsterblock", "default-theme"),
 			"custom-theme-class": game.settings.get("monsterblock", "custom-theme-class"),
 			"editing": game.settings.get("monsterblock", "editing"),
+			"show-delete": game.settings.get("monsterblock", "show-delete"),
 			"show-not-prof": game.settings.get("monsterblock", "show-not-prof"),
 			"show-resources": game.settings.get("monsterblock", "show-resources"),
 			"show-skill-save": game.settings.get("monsterblock", "show-skill-save"),
-			"show-delete": false,
 			"show-bio": false,
 			"scale": 1.0,
 			"compact-window": game.settings.get("monsterblock", "compact-window"),
@@ -787,6 +807,25 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 			else return item.roll(); // Conveniently, items have all this logic built in already.
 		});
+
+		// uses the built in attack roll from the item
+		html.find(".item-attackRoll").click(async (event) => {
+			let id = event.currentTarget.dataset.itemId;
+			const item = this.actor.items.get(id);
+
+			item.rollAttack({event});
+		});
+
+		// uses the built in damage roll from the item
+		html.find(".item-damageRoll").click(async (event) => {
+			let id = event.currentTarget.dataset.itemId;
+			let versatile = event.currentTarget.dataset.versatile;
+			const item = this.actor.items.get(id);
+
+			console.log(`Versatile = ${versatile}`);
+
+			item.rollDamage({event, versatile});
+		})
 		
 		// Item editing handlers. Allows right clicking on the description of any item (features, action, etc.) to open its own sheet to edit.
 		html.find(".item").contextmenu(this.openItemEditor.bind(this));
@@ -1163,8 +1202,32 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		return item.data?.activation?.type === "legendary";
 	}
 	
+	static isMythicAction(item) {
+		return item.data?.activation?.type === "mythic";
+	}
+
+	static isMythicTrait(item) {
+		return item.data?.requirements?.toLowerCase() === "mythictrait";
+	}
+
 	static isLairAction(item) {
 		return item.data?.activation?.type === "lair";
+	}
+
+	static isRegionEffect(item) {
+		return item.data?.requirements?.toLowerCase() === "region";
+	}
+
+	static isRegionStart(item) {
+		return item.data?.requirements?.toLowerCase() === "regionstart";
+	}
+
+	static isRegionEnd(item) {
+		return item.data?.requirements?.toLowerCase() === "regionend";
+	}
+
+	static isVariant(item) {
+		return item.data?.requirements?.toLowerCase() === "variant";
 	}
 
 	static isAction(item) {
@@ -1179,6 +1242,10 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		return item.data?.activation?.type === "reaction";
 	}
 		
+	static isArmor(item) {
+		const type = item.data?.armor?.type;
+		return type === "light" || type === "medium" || type === "heavy" || type === "natural" || type === "shield";
+	}
 
 	static getItemAbility(item, actor, master) {
 		return master.object.items.get(item._id).abilityMod;
@@ -1212,6 +1279,27 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		},
 		"moblok-equals": (val, compare) => {
 			return val === compare;
+    },
+		"moblok-toLowerCase": (str) => { // Formats any text to lowercase.
+			return str ? str.toLowerCase() : "";
+		},
+		"moblok-isEquipment": (item) => {
+			return [`loot`, `equipment`, `consumable`, `backpack`].includes(item?.type);
+		},
+		"moblok-isArmor": (item) => {
+			return item.data.armor.type === "light" || item.data.armor.type === "medium" || item.data.armor.type === "heavy" || item.data.armor.type === "natural" || item.data.armor.type === "shield";
+		},
+		"moblok-isAsterisk": (str) => {
+			return str === "*" || str === "•" || str === "—";
+		},
+		"moblok-isUnderscore": (str) => {
+			return str.startsWith(`_`);
+		},
+		"moblok-moreThanOne": (item) => {
+			return item.data?.quantity > 1;
+		},
+		"moblok-greaterThan": (x, y) => {
+			return x > y;
 		}
 	};
 
@@ -1244,10 +1332,14 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			"modules/monsterblock/templates/dnd5e/parts/main/attack.hbs",
 			"modules/monsterblock/templates/dnd5e/parts/main/legendaryActs.hbs",
 			"modules/monsterblock/templates/dnd5e/parts/main/lairActs.hbs",
+			"modules/monsterblock/templates/dnd5e/parts/main/regionActs.hbs",
+			"modules/monsterblock/templates/dnd5e/parts/main/regionCap.hbs",
+			"modules/monsterblock/templates/dnd5e/parts/main/variantInfo.hbs",
 
 			"modules/monsterblock/templates/dnd5e/parts/menuItem.hbs",
 			"modules/monsterblock/templates/dnd5e/parts/resource.hbs",
 			"modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs",
+			"modules/monsterblock/templates/dnd5e/parts/itemList.hbs",
 			"modules/monsterblock/templates/dnd5e/parts/damageRoll.hbs"
 
 		]);

@@ -1,0 +1,8 @@
+<section class="item{{#unless item.flags.monsterblock.expanded}} compact{{/unless}}" title="{{#if  @root.flags.editing}}{{ localize 'MOBLOKS5E.EditHint' }}{{/if}}">
+    {{#if @root.flags.show-delete}}
+        <a class="delete-item" data-item-id="{{item._id}}">
+            <i class="fa fa-trash"></i>
+        </a>
+        <p class="special-description item-name" data-item-id="{{item._id}}">{{{moblok-enrichhtml item.data.description.value @root.owner @root.flags}}}</p>
+    {{/if}}
+</section> 
