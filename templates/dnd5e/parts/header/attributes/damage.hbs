@@ -3,10 +3,20 @@
 		<span class="attribute-wrapper">
 			<h4 class="attribute-name">{{localize label}}</h4>
 			<ul class="traits-list inline-list no-caps">
-				{{#each damage as |v k|}}
-					<li class="trait-value">{{v}}</li>
-				{{/each}}
+				{{~#each damage as |v k|~}}
+					{{~#unless (moblok-equals k "physical")~}}
+						<li class="trait-value">{{v}}</li>
+					{{~/unless~}}
+				{{~/each~}}
 			</ul>
+			{{~#each damage as |v k|~}}
+				{{~#if (moblok-equals k "physical")~}}
+					<span>
+						{{~#unless (moblok-equals @index 0)~}}; {{/unless}}
+						{{v}}
+					</span>
+				{{~/if~}}
+			{{~/each~}}
 		</span>
 	</li>
 {{/if}}
