@@ -239,6 +239,8 @@
 	height: 1em;
 	padding: 0;
 }
+.monsterblock .item-attackRoll:hover,
+.monsterblock .item-damageRoll:hover,
 .monsterblock .ability:hover, 
 .monsterblock .saving-throw:hover, 
 .monsterblock .skill:hover, 

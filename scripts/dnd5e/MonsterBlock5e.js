@@ -787,6 +787,29 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			}
 			else return item.roll(); // Conveniently, items have all this logic built in already.
 		});
+
+		// uses the built in attack roll from the item
+		// uses mousedown to prevent highlighting of text when using shift modifier
+		html.find(".item-attackRoll").mousedown(async (event) => {
+			event.preventDefault();
+
+			let id = event.currentTarget.dataset.itemId;
+			const item = this.actor.items.get(id);
+
+			item.rollAttack({event});
+		});
+
+		// uses the built in damage roll from the item
+		// uses mousedown to prevent highlighting of text when using shift modifier
+		html.find(".item-damageRoll").mousedown(async (event) => {
+			event.preventDefault();
+
+			let id = event.currentTarget.dataset.itemId;
+			let versatile = event.currentTarget.dataset.versatile;
+			const item = this.actor.items.get(id);
+
+			item.rollDamage({event, versatile});
+		})
 		
 		// Item editing handlers. Allows right clicking on the description of any item (features, action, etc.) to open its own sheet to edit.
 		html.find(".item").contextmenu(this.openItemEditor.bind(this));
