@@ -120,6 +120,8 @@ export default class AttackPreper extends ItemPreper {
 			? game.i18n.localize("MOBLOKS5E.targetS") // if the value is greater than one it's plural
 			: game.i18n.localize("MOBLOKS5E.target")  // Ortherwise singluar
 
+		if (atkd.activation.condition) return atkd.activation.condition; // if the user has specified a custom targeting condition, use that instead of 1 target / 1 creature
+
 		return game.i18n.format("MOBLOKS5E.AttackTarget", { quantity, type	});
 	}
 
