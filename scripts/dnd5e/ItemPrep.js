@@ -15,7 +15,6 @@ import InnateSpellbookPrep from "./InnateSpellbookPrep.js"
  * @typedef   Feature
  * @property {typeof ItemPreper} prep         - An item preparation class for this type of item
  * @property {Function}          filter       - A filtering function to locate items of this type
- * @property {string}            label        - The localized label for this type of item
  * @property {Array}             items        - An array of items of this type
  * @property {object}            dataset      - An object of additional data
  * @property {string}            dataset.type - The "type" of the item that dnd5e recognizes
@@ -39,17 +38,17 @@ export default class ItemPrep {
 	
 	/** @type {Object.<string, Feature>} A set of item classifications by type */
 	features = {
-		legResist:	  { prep: ItemPreper,    filter: MonsterBlock5e.isLegendaryResistance,         label: game.i18n.localize("MOBLOKS5E.LegendaryResistance"), items: [], dataset: {type: "feat"}   },
-		legendary:	  { prep: ActionPreper,  filter: MonsterBlock5e.isLegendaryAction,             label: game.i18n.localize("DND5E.LegAct"),                  items: [], dataset: {type: "feat"}   },
-		lair:		  { prep: ActionPreper,  filter: MonsterBlock5e.isLairAction,                  label: game.i18n.localize("MOBLOKS5E.LairActionsHeading"),  items: [], dataset: {type: "feat"}   },
-		multiattack:  { prep: ActionPreper,  filter: MonsterBlock5e.isMultiAttack,                 label: game.i18n.localize("MOBLOKS5E.Multiattack"),         items: [], dataset: {type: "feat"}   },
-		casting:	  { prep: CastingPreper, filter: CastingPreper.isCasting.bind(CastingPreper),  label: game.i18n.localize("DND5E.Features"),                items: [], dataset: {type: "feat"}   },
-		reaction:	  { prep: ActionPreper,  filter: MonsterBlock5e.isReaction,                    label: game.i18n.localize("MOBLOKS5E.Reactions"),           items: [], dataset: {type: "feat"}   },
-		bonusActions: { prep: ActionPreper,  filter: MonsterBlock5e.isBonusAction,                 label: game.i18n.localize("MOBLOKS5E.BonusActions"),        items: [], dataset: {type: "feat"}   },
-		attacks:	  { prep: AttackPreper,  filter: item => item.type === "weapon",               label: game.i18n.localize("DND5E.AttackPl"),                items: [], dataset: {type: "weapon"} },
-		actions:	  { prep: ActionPreper,  filter: MonsterBlock5e.isAction,                      label: game.i18n.localize("DND5E.ActionPl"),                items: [], dataset: {type: "feat"}   },
-		features:	  { prep: ItemPreper,    filter: item => item.type === "feat",                 label: game.i18n.localize("DND5E.Features"),                items: [], dataset: {type: "feat"}   },
-		equipment:	  { prep: ItemPreper,    filter: () => true,                                   label: game.i18n.localize("DND5E.Inventory"),               items: [], dataset: {type: "loot"}   }
+		legResist:	  { prep: ItemPreper,    filter: MonsterBlock5e.isLegendaryResistance,        items: [], dataset: {type: "feat"}   },
+		legendary:	  { prep: ActionPreper,  filter: MonsterBlock5e.isLegendaryAction,            items: [], dataset: {type: "feat"}   },
+		lair:		  { prep: ActionPreper,  filter: MonsterBlock5e.isLairAction,                 items: [], dataset: {type: "feat"}   },
+		multiattack:  { prep: ActionPreper,  filter: MonsterBlock5e.isMultiAttack,                items: [], dataset: {type: "feat"}   },
+		casting:	  { prep: CastingPreper, filter: CastingPreper.isCasting.bind(CastingPreper), items: [], dataset: {type: "feat"}   },
+		reaction:	  { prep: ActionPreper,  filter: MonsterBlock5e.isReaction,                   items: [], dataset: {type: "feat"}   },
+		bonusActions: { prep: ActionPreper,  filter: MonsterBlock5e.isBonusAction,                items: [], dataset: {type: "feat"}   },
+		attacks:	  { prep: AttackPreper,  filter: item => item.type === "weapon",              items: [], dataset: {type: "weapon"} },
+		actions:	  { prep: ActionPreper,  filter: MonsterBlock5e.isAction,                     items: [], dataset: {type: "feat"}   },
+		features:	  { prep: ItemPreper,    filter: item => item.type === "feat",                items: [], dataset: {type: "feat"}   },
+		equipment:	  { prep: ItemPreper,    filter: () => true,                                  items: [], dataset: {type: "loot"}   }
 	};
 	
 	/**
