@@ -12,7 +12,7 @@
 			{{~#each damage as |v k|~}}
 				{{~#if (moblok-equals k "physical")~}}
 					<span>
-						{{~#unless (moblok-equals @index 0)~}}; {{/unless}}
+						{{~#unless (moblok-equals @index 0)~}}{{ localize "MOBLOKS5E.SemiColon"}}{{/unless}}
 						{{v}}
 					</span>
 				{{~/if~}}
