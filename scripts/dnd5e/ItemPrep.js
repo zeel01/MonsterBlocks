@@ -15,7 +15,6 @@ import InnateSpellbookPrep from "./InnateSpellbookPrep.js"
  * @typedef   Feature
  * @property {typeof ItemPreper} prep         - An item preparation class for this type of item
  * @property {Function}          filter       - A filtering function to locate items of this type
- * @property {string}            label        - The localized label for this type of item
  * @property {Array}             items        - An array of items of this type
  * @property {object}            dataset      - An object of additional data
  * @property {string}            dataset.type - The "type" of the item that dnd5e recognizes
