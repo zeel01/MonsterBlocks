@@ -94,10 +94,6 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			hasSaveProfs: this.hasSaveProfs(),
 			hasSkills: this.hasSkills(),							
 			hasCastingFeature: Boolean(data.features.casting.items.length),
-			isSpellcaster: this.isSpellcaster(),
-			isInnateSpellcaster: this.isInnateSpellcaster(),
-			isWarlock: this.isWarlock(),
-			hasAtWillSpells: this.hasAtWillSpells(),
 			hasLegendaryActions: Boolean(data.features.legendary.items.length),
 			hasLair: Boolean(data.features.lair.items.length),
 			hasActions: Boolean(data.features.attacks.items.length || data.features.actions.items.length),
@@ -398,27 +394,9 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	hasSkills() {
 		return Object.values(this.actor.data?.data?.skills)?.some(skill => skill.value);
 	}
-	isSpellcaster () {	// Regular spellcaster with typical spell slots.
-		return this.actor.data.items.some((item) => {
-			return item.data.level > 0.5 && (
-				item.data.preparation?.mode === "prepared" || 
-				item.data.preparation?.mode === "always"
-			);
-		});
-	}
-	isInnateSpellcaster() {	// Innate casters have lists of spells that can be cast a certain number of times per day
-		return this.actor.data.items.some((item) => {
-			return item.data.preparation?.mode === "innate";
-		});
-	}
-	isWarlock() {
-		return this.actor.data.items.some((item) => {
-			return item.data.preparation?.mode === "pact";
-		});
-	}
 	hasAtWillSpells() {	// Some normal casters also have a few spells that they can cast "At will"
 		return this.actor.data.items.some((item) => {
-			return item.data.preparation?.mode === "atwill";
+			return item.data.data.preparation?.mode === "atwill";
 		});
 	}
 	hasBonusActions() {
