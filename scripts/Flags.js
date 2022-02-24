@@ -22,6 +22,7 @@ export default class Flags {
 			"inline-secrets"    : { type: Boolean, default: false    , hidden: false },
 			"hidden-secrets"    : { type: Boolean, default: false    , hidden: false },
 			"hide-profile-image": { type: Boolean, default: false    , hidden: false },
+			"use-token-image"   : { type: Boolean, default: false    , hidden: false },
 			"theme-choice"      : { type: String , default: "default", hidden: true, setting: "default-theme" },
 			"custom-theme-class": { type: String , default: ""       , hidden: false },
 			"editing"           : { type: Boolean, default: true     , hidden: false },

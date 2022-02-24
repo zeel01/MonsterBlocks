@@ -168,7 +168,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 
 		// Process editable images
-		const images = form.querySelectorAll("img[data-edit]")
+		const images = form.querySelectorAll("img[data-edit], token.img[edit-data]")
 		for (let img of images) {
 			if (img.getAttribute("disabled")) continue;
 			let basePath = window.location.origin + "/";
@@ -631,6 +631,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			"current-hit-points": game.settings.get("monsterblock", "current-hit-points"),
 			"maximum-hit-points": game.settings.get("monsterblock", "maximum-hit-points"),
 			"hide-profile-image": game.settings.get("monsterblock", "hide-profile-image"),
+			"use-token-image": false,
 			"show-lair-actions": game.settings.get("monsterblock", "show-lair-actions"),
 			"theme-choice": game.settings.get("monsterblock", "default-theme"),
 			"custom-theme-class": game.settings.get("monsterblock", "custom-theme-class"),
@@ -687,7 +688,9 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		html.find(".profile-image").click((event) => {
 			event.preventDefault();
 
-			new ImagePopout(this.actor.data.img, {
+			console.log(event);
+
+			new ImagePopout(event.target.currentSrc, {
 				title: this.actor.name,
 				shareable: true,
 				uuid: this.actor.uuid
@@ -870,6 +873,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			// Detect and activate TinyMCE rich text editors
 			html.find(".editor-content[data-edit]").each((i, div) => this._activateEditor(div));
 			html.find("img[data-edit]").contextmenu(ev => this._onEditImage(ev));
+			html.find("token.img[data-edit]").contextmenu(ev => this._onEditImage(ev));
 		}
 		
 		if (!this.lastSelection) this.lastSelection = {};

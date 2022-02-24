@@ -133,6 +133,16 @@
 					{{ localize "MOBLOKS5E.HideProfileImage" ~}}
 				{{~/if~}}
 			</a>
+			{{#unless flags.hide-profile-image}}
+			<ul>
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
+					flag=flags.use-token-image
+					control="use-token-image"
+					on="MOBLOKS5E.UseProfileImage"
+					off="MOBLOKS5E.UseTokenImage"
+				}}
+			</ul>
+			{{/unless}}
 		</li>
 		{{#if info.hasLair}}
 		<li>
