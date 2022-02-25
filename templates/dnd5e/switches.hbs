@@ -1,11 +1,10 @@
 <nav class="switches">
 	<i class="fas fa-cog"></i>
 	<ul>
-		<li>
-			<a class="trigger" data-control="switchToDefault">
-				{{ localize "MOBLOKS5E.SwitchToDefault" }}
-			</a>
-		</li>
+		{{> "modules/monsterblock/templates/dnd5e/parts/trigger.hbs"
+			control="switchToDefault"
+			title="MOBLOKS5E.SwitchToDefault"
+		}}
 		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 			flag=flags.editing 
 			control="editing" 
@@ -123,9 +122,10 @@
 				<a class="trigger" data-control="openTokenizer">{{ localize "MOBLOKS5E.OpenTokenizer" }}</a>
 			</li>
 		{{/if}}
-		<li>
-			<a class="trigger" data-control="resetDefaults">{{ localize "MOBLOKS5E.resetDefaults.label" }}</a>
-		</li>
+		{{> "modules/monsterblock/templates/dnd5e/parts/trigger.hbs"
+			control="resetDefaults"
+			title="MOBLOKS5E.resetDefaults.label"
+		}}
 		<li>
 			<a>{{localize "MOBLOKS5E.mini-block.label"}}</a>
 			<ul>
