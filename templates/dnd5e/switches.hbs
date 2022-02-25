@@ -38,10 +38,10 @@
 			on="MOBLOKS5E.HideNotProf" 
 			off="MOBLOKS5E.ShowNotProf"
 		}}
-		<li>
-			<a class="switch" data-control="attack-descriptions">
-				{{ localize "MOBLOKS5E.AttackDescriptions" }}
-			</a>
+		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
+			control="attack-descriptions" 
+			off="MOBLOKS5E.AttackDescriptions"
+		}}
 			<ul>
 				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 					flag=flags.attack-descriptions
@@ -50,10 +50,11 @@
 					off="MOBLOKS5E.ShowGenerated"
 				}}
 			</ul>
-		</li>
 		{{#if info.hasCastingFeature}}
-		<li>
-			<a class="switch" data-control="casting-feature">{{ localize "DND5E.Spellcasting" }}</a>
+			{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
+				control="casting-feature" 
+				off="DND5E.Spellcasting"
+			}}
 			<ul>
 				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 					flag=flags.casting-feature
@@ -62,7 +63,6 @@
 					off="MOBLOKS5E.ShowGenerated"
 				}}
 			</ul>
-		</li>
 		{{/if}}
 		<li>
 			<a>{{ localize "MOBLOKS5E.DescriptionS" }}</a>
