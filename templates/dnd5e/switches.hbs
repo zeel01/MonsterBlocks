@@ -118,9 +118,10 @@
 			off="MOBLOKS5E.ShowBio"
 		}}
 		{{#if info.vttatokenizer}}
-			<li>
-				<a class="trigger" data-control="openTokenizer">{{ localize "MOBLOKS5E.OpenTokenizer" }}</a>
-			</li>
+			{{> "modules/monsterblock/templates/dnd5e/parts/trigger.hbs"
+				control="openTokenizer"
+				title="MOBLOKS5E.OpenTokenizer"
+			}}
 		{{/if}}
 		{{> "modules/monsterblock/templates/dnd5e/parts/trigger.hbs"
 			control="resetDefaults"
@@ -162,13 +163,12 @@
 			<ul>
 			{{#each themes as |theme id|}}
 			{{#unless (eq id "custom")}}
-				<li>
-					<a	class="trigger{{#if (eq @root.flags.theme-choice id)}} selected{{/if}}"
-						data-control="pickTheme" 
-						data-value="{{id}}">
-						{{~ localize theme.name ~}}
-					</a>
-				</li>
+				{{> "modules/monsterblock/templates/dnd5e/parts/trigger.hbs"
+					control="pickTheme"
+					value=id
+					selected=(eq @root.flags.theme-choice id)
+					title=theme.name
+				}}
 			{{/unless}}
 			{{/each}}
 				<li>

@@ -1,5 +1,7 @@
 <li>
-    <a class="trigger" data-control="{{control}}">
+    <a class="trigger{{#if selected}} selected{{/if}}"
+        data-control="{{control}}"
+        data-value="{{value}}">
         {{~ localize title ~}}
     </a>
 </li>
