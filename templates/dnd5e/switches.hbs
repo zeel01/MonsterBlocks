@@ -37,35 +37,23 @@
 			on="MOBLOKS5E.HideNotProf" 
 			off="MOBLOKS5E.ShowNotProf"
 		}}
-		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-			control="attack-descriptions" 
-			off="MOBLOKS5E.AttackDescriptions"
-		}}
-			<ul>
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-					flag=flags.attack-descriptions
-					control="attack-descriptions" 
-					on="MOBLOKS5E.HideGenerated" 
-					off="MOBLOKS5E.ShowGenerated"
-				}}
-			</ul>
-		{{#if info.hasCastingFeature}}
-			{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-				control="casting-feature" 
-				off="DND5E.Spellcasting"
-			}}
-			<ul>
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-					flag=flags.casting-feature
-					control="casting-feature" 
-					on="MOBLOKS5E.HideGenerated" 
-					off="MOBLOKS5E.ShowGenerated"
-				}}
-			</ul>
-		{{/if}}
 		<li>
 			<a>{{ localize "MOBLOKS5E.DescriptionS" }}</a>
 			<ul>
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
+					flag=flags.attack-descriptions
+					control="attack-descriptions"
+					on="MOBLOKS5E.HideGeneratedAttack"
+					off="MOBLOKS5E.ShowGeneratedAttack"
+				}}
+				{{#if info.hasCastingFeature}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
+					flag=flags.casting-feature
+					control="casting-feature" 
+					on="MOBLOKS5E.HideGeneratedSpellcasting" 
+					off="MOBLOKS5E.ShowGeneratedSpellcasting"
+				}}
+				{{/if}}
 				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 					flag=flags.inline-secrets
 					control="inline-secrets" 
