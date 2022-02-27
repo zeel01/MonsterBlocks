@@ -168,7 +168,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		}
 
 		// Process editable images
-		const images = form.querySelectorAll("img[data-edit], token.img[edit-data]")
+		const images = form.querySelectorAll("img[data-edit], token.img[data-edit]")
 		for (let img of images) {
 			if (img.getAttribute("disabled")) continue;
 			let basePath = window.location.origin + "/";
@@ -687,8 +687,6 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		html.find(".profile-image").click((event) => {
 			event.preventDefault();
-
-			console.log(event);
 
 			new ImagePopout(event.target.currentSrc, {
 				title: this.actor.name,
