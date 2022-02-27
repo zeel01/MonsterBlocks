@@ -6,4 +6,7 @@
 			{{~ localize off ~}}
 		{{~/if~}}
 	</a>
+	{{#if @partial-block}}
+		{{> @partial-block }}
+	{{/if}}
 </li>
