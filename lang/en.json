@@ -135,7 +135,6 @@
 		
 		"SwitchToDefault": "Switch to Default Sheet",
 		"SwitchToMobloks": "Switch to Monster Blocks",
-		"AttackDescriptions": "Attack descriptions",
 		
 		"EnableEdit": "Enable editing",
 		"DisableEdit": "Disable editing",
@@ -149,8 +148,10 @@
 		"HideBio": "Hide Biography",
 		"ShowResources": "Show Resource Values",
 		"HideResources": "Hide Resource Values",
-		"ShowGenerated": "Show generated",
-		"HideGenerated": "Hide generated",
+		"HideGeneratedAttack": "Hide generated attack",
+		"ShowGeneratedAttack": "Show generated attack",
+		"HideGeneratedSpellcasting": "Hide generated spellcasting",
+		"ShowGeneratedSpellcasting": "Show generated spellcasting",
 		"DescriptionS": "Descriptions",
 		"EnableInlSecr": "Enable inline secrets",
 		"DisableInlSecr": "Disable inline secrets",
