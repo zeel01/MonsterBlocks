@@ -86,18 +86,33 @@
 			</ul>
 		</li>
 		
-		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
+		{{#> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
 			flag=flags.hide-profile-image
-			control="hide-profile-image" 
-			on="MOBLOKS5E.ShowProfileImage" 
-			off="MOBLOKS5E.HideProfileImage"
+			control="hide-profile-image"
+			on="MOBLOKS5E.ProfileImage"
+			off="MOBLOKS5E.ProfileImage"
 		}}
-		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
-			flag=flags.use-token-image
-			control="use-token-image"
-			on="MOBLOKS5E.UseProfileImage"
-			off="MOBLOKS5E.UseTokenImage"
-		}}
+			<ul>
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
+					flag=flags.hide-profile-image
+					control="hide-profile-image"
+					on="MOBLOKS5E.ShowProfileImage"
+					off="MOBLOKS5E.HideProfileImage"
+				}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
+					flag=flags.use-token-image
+					control="use-token-image"
+					on="MOBLOKS5E.UseProfileImage"
+					off="MOBLOKS5E.UseTokenImage"
+				}}
+				{{#if info.vttatokenizer}}
+					{{> "modules/monsterblock/templates/dnd5e/parts/trigger.hbs"
+						control="openTokenizer"
+						title="MOBLOKS5E.OpenTokenizer"
+					}}
+				{{/if}}
+			</ul>
+		{{/"modules/monsterblock/templates/dnd5e/parts/switch.hbs"}}
 		
 		{{#if info.hasLair}}
 			{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
@@ -113,12 +128,6 @@
 			on="MOBLOKS5E.HideBio" 
 			off="MOBLOKS5E.ShowBio"
 		}}
-		{{#if info.vttatokenizer}}
-			{{> "modules/monsterblock/templates/dnd5e/parts/trigger.hbs"
-				control="openTokenizer"
-				title="MOBLOKS5E.OpenTokenizer"
-			}}
-		{{/if}}
 		{{> "modules/monsterblock/templates/dnd5e/parts/trigger.hbs"
 			control="resetDefaults"
 			title="MOBLOKS5E.resetDefaults.label"
