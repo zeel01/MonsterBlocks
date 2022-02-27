@@ -24,7 +24,12 @@
 </div>
 {{#unless flags.hide-profile-image}}
 	<figure class="profile-image">
-		<img src="{{actor.img}}" data-edit="img"
-			title="{{actor.name}}{{#if flags.editing}} - {{ localize "MOBLOKS5E.EditHint" }}{{/if}}">
+			<img 
+				{{#if flags.use-token-image}}
+					src="{{actor.token.img}}" data-edit="token.img"
+				{{else}}
+					src="{{actor.img}}" data-edit="img"
+				{{/if}}
+				title="{{actor.name}}{{#if flags.editing}} - {{ localize "MOBLOKS5E.EditHint" }}{{/if}}">
 	</figure>
 {{/unless}}
