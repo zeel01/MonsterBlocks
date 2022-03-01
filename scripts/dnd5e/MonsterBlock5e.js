@@ -52,6 +52,9 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	get allFlags() {
 		return this.flagManager.allFlags();
 	}
+	get defaultFlags() {
+		return this.flagManager.constructor.defaultFlags;
+	}
 	
 	/**
 	 * Provides the data used in Handlebars for the sheet template.
@@ -427,6 +430,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	async resetDefaults() {
 		await this.setCurrentTheme(game.settings.get("monsterblock", "default-theme"));
+		console.log(this.defaultFlags);
 		this.actor.update({"flags.monsterblock": this.defaultFlags});
 	}
 	static prop = "A String";
@@ -621,33 +625,6 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		return that.object.sheet.render(true)
 	}
 
-	get defaultFlags() {
-		return duplicate({
-			"initialized": true,
-			"attack-descriptions": game.settings.get("monsterblock", "attack-descriptions"),
-			"casting-feature": game.settings.get("monsterblock", "casting-feature"),
-			"inline-secrets": game.settings.get("monsterblock", "inline-secrets"),
-			"hidden-secrets": game.settings.get("monsterblock", "hidden-secrets"),
-			"current-hit-points": game.settings.get("monsterblock", "current-hit-points"),
-			"maximum-hit-points": game.settings.get("monsterblock", "maximum-hit-points"),
-			"hide-profile-image": game.settings.get("monsterblock", "hide-profile-image"),
-			"use-token-image": false,
-			"show-lair-actions": game.settings.get("monsterblock", "show-lair-actions"),
-			"theme-choice": game.settings.get("monsterblock", "default-theme"),
-			"custom-theme-class": game.settings.get("monsterblock", "custom-theme-class"),
-			"editing": game.settings.get("monsterblock", "editing"),
-			"show-not-prof": game.settings.get("monsterblock", "show-not-prof"),
-			"show-resources": game.settings.get("monsterblock", "show-resources"),
-			"show-skill-save": game.settings.get("monsterblock", "show-skill-save"),
-			"show-delete": false,
-			"show-bio": false,
-			"scale": 1.0,
-			"compact-window": game.settings.get("monsterblock", "compact-window"),
-			"compact-feats": game.settings.get("monsterblock", "compact-feats"),
-			"compact-layout": game.settings.get("monsterblock", "compact-layout"),
-			"font-size": game.settings.get("monsterblock", "font-size")
-		});
-	}
 	static async getQuickInserts() {
 		if (game.data.modules.find(m => m.id == "quick-insert")?.active) {
 			let { CharacterSheetContext, dnd5eFilters } = await import("../../../quick-insert/quick-insert.js");

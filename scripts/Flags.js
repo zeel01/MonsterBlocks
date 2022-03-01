@@ -1,3 +1,5 @@
+import { getSetting } from "./utilities.js";
+
 /**
  * @typedef FlagDetails
  * @property {typeof Object} type     - The data type of the flag/setting
@@ -36,34 +38,26 @@ export default class Flags {
 	}
 
 	/**
-	 * The default values of all flags
+	 * Returns an object of all the flag keys with their settings as configured in the module
+	 * settings menu.
 	 *
-	 * @type {Object<string, any>}
-	 * @readonly
-	 * @static
 	 * @memberof Flags
-	 
+	 */
 	static get defaultFlags() {
-		if (!this._defaultFlags) this._defaultFlags = new Proxy(this, {
-			get: function(Flags, flag) {
-				const details = Flags.flagDetails[flag];
-				if (!details) return undefined;
-
-				return duplicate(
-					game.setting.get(Flags.scope, details.setting || flag)
-					?? details.default
-				);
-			}
-		});
-		return this._defaultFlags;
-	}*/
+		return Object.fromEntries(
+			Object.entries(this.flagDefaults).map(([name, details]) => [name, duplicate(
+				getSetting(this.scope, details.setting || name)
+				?? details.default
+			)])
+		);
+	}
 
 	static getFlag(flags, flag) {
 		if (!(flag in this.flagDefaults)) return undefined;
 
 		const setName = this.flagDefaults[flag]?.setting || flag;                    // The name of the setting containing this flag's default
 		const hidden  = this.flagDefaults[flag]?.hidden && setName == flag;          // Hidden means there is no setting registered unless there is an alternate setting name
-		const setting = hidden ? undefined : game.settings.get(this.scope, setName); // The value of the setting, undedfined if hidden
+		const setting = hidden ? undefined : getSetting(this.scope, setName);        // The value of the setting, undedfined if hidden
 		const def     = this.flagDefaults[flag]?.default;                            // The default or configured default value of this flag
 		const initial = setting ?? def;                                              // The starting value of this flag if not defined on the actor
 
@@ -105,35 +99,4 @@ export default class Flags {
 			yield { name, ...details, value: this.flags[name] }
 		}
 	}
-
-/*	async prep() {
-		if (this.actor.compendium) return;
-
-		this.preparingFlags = false;
-
-		if (!this.actor.getFlag(this.scope, "initialized")) {
-			this.preparingFlags = true;
-
-			await this.actor.update({
-				"flags": { "monsterblock": this.defaultFlags }
-			}, {});
-
-			this.preparingFlags = false;
-
-			return true;
-		}
-
-		// Verify that there are no missing flags, which could cause an error.
-		let changes = false;
-		for (let flag in this.defaultFlags) {
-			if (this.actor.getFlag(this.scope, flag) !== undefined) continue;
-
-			changes = true;
-			this.preparingFlags = true;
-			await this.actor.setFlag(this.scope, flag, this.defaultFlags[flag]);
-		}
-
-		this.preparingFlags = false;
-		return changes;
-	}*/
 }

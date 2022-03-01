@@ -47,3 +47,12 @@ export function getTranslationArray(stringId) {
 
 	return [stringId];
 }
+
+export function getSetting(scope, name) {
+	try {
+		return game.settings.get(scope, name);
+	}
+	catch (e) {
+		return null;
+	}
+}
