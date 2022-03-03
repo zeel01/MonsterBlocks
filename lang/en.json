@@ -69,6 +69,12 @@
 				"hint": "By default, don't show the creature's image on the sheet (more accurate)."
 			}
 		},
+		"use-token-image": {
+			"settings": {
+				"name": "Use Token Image",
+				"hint": "By default, use the token image on the main page, and the profile image on the bio page."
+			}
+		},
 		"show-lair-actions": {
 			"settings": {
 				"name": "Show Lair Actions",
