@@ -27,6 +27,14 @@
 				"hint": "Reduz o espaço utilizado pelas características. Quando esta opção estiver habilitada, cada característica utilizará somente duas linhas. Ao passar o ponteiro por cima, a descrição completa das características serão reveladas. Características podem ser expandidas/compactadas individualmente ao clicar nelas."
 			}
 		},
+		"show-collapsible": {
+			"enable": "Ativar seções recolhíveis",
+			"disable": "Desativar seções recolhíveis",
+			"settings": {
+				"name": "Ativar seções recolhíveis",
+				"hint": "Fornece uma alternância para recolher cada seção de recurso. Isso adiciona um cabeçalho de recursos à seção de recursos mais alta da planilha."
+			}
+		},
 		"font-size": {
 			"label": "Tamanho da fonte",
 			"placeholder": "Tamanho da fonte (px)",

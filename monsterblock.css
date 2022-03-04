@@ -680,6 +680,14 @@ li:nth-last-of-type(2):after {
 	font-variant: small-caps;
 	border-bottom: 1px solid var(--heading-color);
 }
+.monsterblock .collapsible {
+	float: right;
+	visibility: hidden;
+	margin-left: 0.5ch;
+}
+.monsterblock .section-header:hover > .collapsible {
+	visibility: visible;
+}
 .monsterblock .item {
 	margin-top: 1em;
 	/* display: inline-flex; */

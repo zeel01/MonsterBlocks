@@ -1,0 +1,31 @@
+<h2 class="section-header{{#unless flags.show-collapsible}}{{#if hide-title}} hidden{{/if}}{{/unless}}">
+    {{localize title}}
+{{#if flags.show-collapsible}}
+    <a class="collapsible" data-control={{control}}>
+        <i class="fas fa-caret-{{#if flag}}up{{else}}down{{/if}}"></i>
+    </a>
+{{/if}}
+    {{#if (and flags.show-resources resource-max)}}
+        <span class="header-resource">
+            <span class="resource-value"
+                placeholder="0"
+                contenteditable="{{@root.owner}}"
+                data-dtype="Number"
+                data-field-key={{resource-value-key}}>
+                {{~resource-value~}}
+            </span> /
+            <span class="resource-value"
+                placeholder="0"
+                contenteditable="{{@root.flags.editing}}"
+                data-dtype="Number"
+                data-field-key="{{resource-max-key}}">
+                {{~resource-max~}}
+            </span>
+        </span>
+    {{/if}}
+</h2>
+{{#if @partial-block }}
+    {{#if (or flag (eq flags.show-collapsible false))}}
+        {{> @partial-block}}
+    {{/if}}
+{{/if}}

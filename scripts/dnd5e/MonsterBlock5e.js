@@ -637,7 +637,17 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	async activateListeners(html) {	// We need listeners to provide interaction.
 		this.setWindowClasses(html);
 		this.applyFontSize(html);
-		
+
+		html.find(".collapsible").click((event) => {
+			event.preventDefault();
+
+			let control = event.currentTarget.dataset.control;
+			let collapsible = this.flagManager.flags.collapsible;
+
+			collapsible[control] = !collapsible[control];
+
+			this.flagManager.flags.collapsible = collapsible;
+		});
 		html.find(".switch").click((event) => {							// Switches are the primary way that settings are applied per-actor.
 			event.preventDefault();
 			let control = event.currentTarget.dataset.control;			// A data attribute is used on an element with the class .switch, and it contains the name of the switch to toggle.
@@ -1205,6 +1215,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			"modules/monsterblock/templates/dnd5e/bio.hbs",
 			"modules/monsterblock/templates/dnd5e/header.hbs",
 			"modules/monsterblock/templates/dnd5e/main.hbs",
+			"modules/monsterblock/templates/dnd5e/sectionHeader.hbs",
 			
 			// Actor Sheet Partials
 			"modules/monsterblock/templates/dnd5e/parts/header/identity.hbs",
