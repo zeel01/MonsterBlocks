@@ -37,57 +37,75 @@
 			}
 		},
 		"resetDefaults": {
-			"label": "Reset to Defaults"
+			"label": "Reset to defaults"
 		},
 		"attack-descriptions": {
+			"enable": "Show generated attack",
+			"disable": "Hide generated attack",
 			"settings": {
 				"name": "Generated Attack Descriptions",
 				"hint": "Show automatically generated attack descriptions by default."
 			}
 		},
 		"casting-feature": {
+			"enable": "Show generated spellcasting",
+			"disable": "Hide generated spellcasting",
 			"settings": {
 				"name": "Generated Casting Features",
 				"hint": "Show automatically generated casting features by default."
 			}
 		},
 		"inline-secrets": {
+			"enable": "Enable inline secrets",
+			"disable": "Disable inline secrets",
 			"settings": {
 				"name": "Display Secrets Inline",
 				"hint": "By default, display blocks of secret text inline like all other text? Otherwise, display inline blocks as styled blocks of text."
 			}
 		},
 		"hidden-secrets": {
+			"enable": "Show secrets",
+			"disable": "Hide secrets",
 			"settings": {
 				"name": "Hide Secrets",
 				"hint": "By default, hide secret blocks of text from the sheet."
 			}
 		},
 		"hide-profile-image": {
+			"enable": "Show profile image",
+			"disable": "Hide profile image",
 			"settings": {
 				"name": "Hide Image",
 				"hint": "By default, don't show the creature's image on the sheet (more accurate)."
 			}
 		},
 		"use-token-image": {
+			"enable": "Use token image",
+			"disable": "Use profile image",
 			"settings": {
 				"name": "Use Token Image",
 				"hint": "By default, use the token image on the main page, and the profile image on the bio page."
 			}
 		},
 		"show-lair-actions": {
+			"enable": "Show lair actions",
+			"disable": "Hide lair actions",
 			"settings": {
 				"name": "Show Lair Actions",
 				"hint": "By default, show Lair Actions (not normally included in 5e monster stat-blocks)."
 			}
 		},
 		"current-hit-points": {
+			"enable": "Show current hit points",
+			"disable": "Hide current hit points",
 			"settings": {
 				"name": "Show Current Hit Points",
 				"hint": "By default, display the current hit point in the hit points field. If neither maximum nor minimum Hit Points are shown, the average will be calculated and displayed."
 			}
 		},
 		"maximum-hit-points": {
+			"enable": "Show maximum hit points",
+			"disable": "Hide maximum hit points",
 			"settings": {
 				"name": "Show Maximum Hit Points",
 				"hint": "By default, display the current hit point in the hit points field. If neither maximum nor minimum Hit Points are shown, the average will be calculated and displayed."
@@ -112,68 +130,53 @@
 			}
 		},
 		"editing": {
+			"enable": "Enable editing",
+			"disable": "Disable editing",
 			"settings": {
 				"name": "Editing Enabled",
 				"hint": "Choose whether or not editing is enabled by default."
 			}
 		},
 		"show-not-prof": {
+			"enable": "Show not-proficient checks",
+			"disable": "Hide not-proficient checks",
 			"settings": {
 				"name": "Show Non-Proficient Skills and Saves",
 				"hint": "Choose whether or not showing not-proficient skills and saves is enabled by default."
 			}
 		},
 		"show-resources": {
+			"enable": "Show resource values",
+			"disable": "Hide resource values",
 			"settings": {
 				"name": "Show resource values",
 				"hint": "Choose whether or not showing resource values by default."
 			}
 		},
 		"show-skill-save": {
+			"enable": "Always show skills & saves",
+			"disable": "Hide empty skills & saves",
 			"settings": {
 				"name": "Always show skills & saves",
 				"hint": "Choose whether or not to show empty skill and save lists by default."
 			}
 		},
+		"show-delete": {
+			"enable": "Enable delete",
+			"disable": "Disable delete"
+		},
+		"show-bio": {
+			"enable": "Show biography",
+			"disable": "Hide biography"
+		},
 			
-
 		"MonsterBlocks": "Monster Blocks",
 		
 		"SwitchToDefault": "Switch to Default Sheet",
 		"SwitchToMobloks": "Switch to Monster Blocks",
-		
-		"EnableEdit": "Enable editing",
-		"DisableEdit": "Disable editing",
-		"EnableDelete": "Enable delete",
-		"DisableDelete": "Disable delete",
-		"ShowNotProf": "Show not-proficient checks",
-		"HideNotProf": "Hide not-proficient checks",
-		"ShowSkillSave": "Always show skills & saves",
-		"HideSkillSave": "Hide empty skills & saves",
-		"ShowBio": "Show Biography",
-		"HideBio": "Hide Biography",
-		"ShowResources": "Show Resource Values",
-		"HideResources": "Hide Resource Values",
-		"HideGeneratedAttack": "Hide generated attack",
-		"ShowGeneratedAttack": "Show generated attack",
-		"HideGeneratedSpellcasting": "Hide generated spellcasting",
-		"ShowGeneratedSpellcasting": "Show generated spellcasting",
+
 		"DescriptionS": "Descriptions",
-		"EnableInlSecr": "Enable inline secrets",
-		"DisableInlSecr": "Disable inline secrets",
-		"ShowSecrets": "Show secrets",
-		"HideSecrets": "Hide secrets",
-		"ShowMaxHP": "Show maximum hit points",
-		"HideMaxHP": "Hide maximum hit points",
-		"ShowCurrentHP": "Show current hit points",
-		"HideCurrentHP": "Hide current hit points",
 		"ProfileImage": "Profile Image",
-		"ShowProfileImage": "Show profile image",
-		"HideProfileImage": "Hide profile image",
-		"UseTokenImage": "Use token image",
-		"UseProfileImage": "Use profile image",
-		"ShowLair": "Show lair actions",
-		"HideLair": "Hide lair actions",
 		"OpenTokenizer": "Open VTTA Tokenizer",
 		"QuickInsert": "Quick Insert",
 

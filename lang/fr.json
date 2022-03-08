@@ -40,48 +40,72 @@
 			"label": "Paramètres par défaut"
 		},
 		"attack-descriptions": {
+			"enable": "Afficher l'attaque générée",
+			"disable": "Masquer l'attaque générée",
 			"settings": {
 				"name": "Descriptifs d'attaque générés",
 				"hint": "Affiche les descriptifs d'attaque générés par défaut."
 			}
 		},
 		"casting-feature": {
+			"enable": "Afficher les sorts générés",
+			"disable": "Masquer les sorts générés",
 			"settings": {
 				"name": "Capacités d'incantation générées",
 				"hint": "Affiche les capacités d'incantation générées par défaut."
 			}
 		},
 		"inline-secrets": {
+			"enable": "Afficher les textes secrets",
+			"disable": "Cacher les textes secrets",
 			"settings": {
 				"name": "Afficher les textes secrets",
 				"hint": "Affiche les textes secrets comme les autres textes, par défaut. Ou les affiche en forme de bloc."
 			}
 		},
 		"hidden-secrets": {
+			"enable": "Afficher les secrets",
+			"disable": "Cacher les secrets",
 			"settings": {
 				"name": "Cacher les secrets",
 				"hint": "Cache les secrets de la fiche par défaut."
 			}
 		},
 		"hide-profile-image": {
+			"enable": "Afficher image de profil",
+			"disable": "Cacher image de profil",
 			"settings": {
 				"name": "Cacher l'image",
 				"hint": "Cache l'image de profil de la fiche par défaut"
 			}
 		},
+		"use-token-image": {
+			"enable": "Utiliser l'image du jeton",
+			"disable": "Utiliser l'image de profil",
+			"settings": {
+				"name": "Utiliser l'image du jeton",
+				"hint": "Par défaut, utilisez l'image du jeton sur la page principale et l'image du profil sur la page bio."
+			}
+		},
 		"show-lair-actions": {
+			"enable": "Afficher les actions d'antre",
+			"disable": "Cacher les actions d'antre",
 			"settings": {
 				"name": "Afficher les actions d'antre",
 				"hint": "Affiche les actions d'antre par défaut (pas incluses dans les stat-blocks des monstres)."
 			}
 		},
 		"current-hit-points": {
+			"enable": "Afficher les points de vie actuels",
+			"disable": "Cacher les points de vie actuels",
 			"settings": {
 				"name": "Afficher les points de vie actuels",
 				"hint": "Affiche les points de vie actuels par défaut. Si le minimum et le maximum ne sont pas affichés, la moyenne sera calculée et affichée."
 			}
 		},
 		"maximum-hit-points": {
+			"enable": "Afficher le maximum de points de vie",
+			"disable": "Cacher le maximum de points de vie",
 			"settings": {
 				"name": "Afficher le maximum de points de vie",
 				"hint": "Affiche le maximum de points de vie par défaut."
@@ -106,63 +130,53 @@
 			}
 		},
 		"editing": {
+			"enable": "Activer édition",
+			"disable": "Désactiver édition",
 			"settings": {
 				"name": "Activer édition",
 				"hint": "Choisissez si l'édition est activée ou non, par défaut."
 			}
 		},
 		"show-not-prof": {
+			"enable": "Afficher les compétences non-maîtrisées",
+			"disable": "Cacher les compétences non-maîtrisées",
 			"settings": {
 				"name": "Afficher les compétences non-maîtrisées",
 				"hint": "Choisissez si les compétences et sauvegarde non-maîtrisées sont afichées ou non, par défaut."
 			}
 		},
 		"show-resources": {
+			"enable": "Afficher les valeurs de ressources",
+			"disable": "Cacher les valeurs de ressources",
 			"settings": {
 				"name": "Afficher les valeurs de ressources",
 				"hint": "Choisissez si les valeurs de ressources sont affichées ou non, par défaut."
 			}
 		},
 		"show-skill-save": {
+			"enable": "Toujours afficher les compétences et sauvegardes",
+			"disable": "Cacher les compétences vides et sauvegardes",
 			"settings": {
 				"name": "Toujours afficher les compétences et sauvegardes",
 				"hint": "Choisissez si les compétences vides et sauvegardes sont affichées ou non, par défaut."
 			}
+		},
+		"show-delete": {
+			"enable": "Activer suppression",
+			"disable": "Désactiver suppression"
+		},
+		"show-bio": {
+			"enable": "Afficher la biographie",
+			"disable": "Cacher la biographie"
 		},
 
 		"MonsterBlocks": "Monster Blocks",
 		
 		"SwitchToDefault": "Basculer vers la fiche par défaut",
 		"SwitchToMobloks": "Basculer vers Monster Blocks",
-		"AttackDescriptions": "Descriptif d'attaque",
 		
-		"EnableEdit": "Activer édition",
-		"DisableEdit": "Désactiver édition",
-		"EnableDelete": "Activer suppression",
-		"DisableDelete": "Désactiver suppression",
-		"ShowNotProf": "Afficher les compétences non-maîtrisées",
-		"HideNotProf": "Cacher les compétences non-maîtrisées",
-		"ShowSkillSave": "Toujours afficher les compétences et sauvegardes",
-		"HideSkillSave": "Cacher les compétences vides et sauvegardes",
-		"ShowBio": "Afficher la biographie",
-		"HideBio": "Cacher la biographie",
-		"ShowResources": "Afficher les valeurs de ressources",
-		"HideResources": "Cacher les valeurs de ressources",
-		"ShowGenerated": "Afficher les textes générés",
-		"HideGenerated": "Cacher les textes générés",
 		"DescriptionS": "Descriptions",
-		"EnableInlSecr": "Afficher les textes secrets",
-		"DisableInlSecr": "Cacher les textes secrets",
-		"ShowSecrets": "Afficher les secrets",
-		"HideSecrets": "Cacher les secrets",
-		"ShowMaxHP": "Afficher le maximum de points de vie",
-		"HideMaxHP": "Cacher le maximum de points de vie",
-		"ShowCurrentHP": "Afficher les points de vie actuels",
-		"HideCurrentHP": "Cacher les points de vie actuels",
-		"ShowProfileImage": "Afficher image de profil",
-		"HideProfileImage": "Cacher image de profil",
-		"ShowLair": "Afficher les actions d'antre",
-		"HideLair": "Cacher les actions d'antre",
+		"ProfileImage": "Image de profil",
 		"OpenTokenizer": "Ouvrir VTTA Tokenizer",
 		"QuickInsert": "Quick Insert",
 
@@ -174,6 +188,7 @@
 		"CoolThemeName": "Icy Breeze",
 		"HotThemeName": "Smouldering Ember",
 		"FoundryThemeName": "Foundry",
+		"SystemThemeName": "5e System",
 		
 		"Average": "Moyen",
 		"Current": "Actuel",
@@ -198,8 +213,10 @@
 		"XPLabel": "{xp} XP",
 		"physicalDamage": "contondant, perforant et tranchant d'attaques non magiques",
 		"Challenge": "Puissance",
+		"ProfBonus": "Bonus de compétence",
 
 		"EditHint": "Clic-droit pour éditer",
+		"EditButtonHint": "Cliquez sur le bouton + ci-dessus pour ajouter des fonctionnalités",
 
 		"AddFeat": "Capacité",
 		"AddAttack": "Attaque",
@@ -229,6 +246,7 @@
 		"SpeedUnitAbbrEnd": ".",
 		"Comma": ",",
 		"Colon": ":",
+		"SemiColon": ";",
 		
 		"Cantrips": "Tours de magie",
 		"AtWill": "à volonté",
@@ -263,6 +281,7 @@
 		"damage": "dégâts",
 		
 		"Reactions": "Réactions",
+		"BonusActions": "Actions bonus",
 		"Multiattack": "Attaques multiples",
 		"LegendaryResistance": "Résistance légendaire",
 		
