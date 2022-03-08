@@ -8,34 +8,34 @@
 		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 			flag=flags.editing 
 			control="editing" 
-			on="MOBLOKS5E.DisableEdit" 
-			off="MOBLOKS5E.EnableEdit"
+			on="MOBLOKS5E.editing.disable" 
+			off="MOBLOKS5E.editing.enable"
 		}}
 		{{#if flags.editing}}
 			{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 				flag=flags.show-delete
 				control="show-delete" 
-				on="MOBLOKS5E.DisableDelete" 
-				off="MOBLOKS5E.EnableDelete"
+				on="MOBLOKS5E.show-delete.disable" 
+				off="MOBLOKS5E.show-delete.enable"
 			}}
 		{{/if}}
 		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 			flag=flags.show-resources
 			control="show-resources" 
-			on="MOBLOKS5E.HideResources" 
-			off="MOBLOKS5E.ShowResources"
+			on="MOBLOKS5E.show-resources.disable" 
+			off="MOBLOKS5E.show-resources.enable"
 		}}
 		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 			flag=flags.show-skill-save
 			control="show-skill-save" 
-			on="MOBLOKS5E.HideSkillSave" 
-			off="MOBLOKS5E.ShowSkillSave"
+			on="MOBLOKS5E.show-skill-save.disable" 
+			off="MOBLOKS5E.show-skill-save.enable"
 		}}
 		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 			flag=flags.show-not-prof
 			control="show-not-prof" 
-			on="MOBLOKS5E.HideNotProf" 
-			off="MOBLOKS5E.ShowNotProf"
+			on="MOBLOKS5E.show-not-prof.disable" 
+			off="MOBLOKS5E.show-not-prof.enable"
 		}}
 		<li>
 			<a>{{ localize "MOBLOKS5E.DescriptionS" }}</a>
@@ -43,28 +43,28 @@
 				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
 					flag=flags.attack-descriptions
 					control="attack-descriptions"
-					on="MOBLOKS5E.HideGeneratedAttack"
-					off="MOBLOKS5E.ShowGeneratedAttack"
+					on="MOBLOKS5E.attack-descriptions.disable"
+					off="MOBLOKS5E.attack-descriptions.enable"
 				}}
 				{{#if info.hasCastingFeature}}
 				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 					flag=flags.casting-feature
 					control="casting-feature" 
-					on="MOBLOKS5E.HideGeneratedSpellcasting" 
-					off="MOBLOKS5E.ShowGeneratedSpellcasting"
+					on="MOBLOKS5E.casting-feature.disable" 
+					off="MOBLOKS5E.casting-feature.enable"
 				}}
 				{{/if}}
 				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 					flag=flags.inline-secrets
 					control="inline-secrets" 
-					on="MOBLOKS5E.DisableInlSecr" 
-					off="MOBLOKS5E.EnableInlSecr"
+					on="MOBLOKS5E.inline-secrets.disable" 
+					off="MOBLOKS5E.inline-secrets.enable"
 				}}
 				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 					flag=flags.hidden-secrets
 					control="hidden-secrets" 
-					on="MOBLOKS5E.ShowSecrets" 
-					off="MOBLOKS5E.HideSecrets"
+					on="MOBLOKS5E.hidden-secrets.disable" 
+					off="MOBLOKS5E.hidden-secrets.enable"
 				}}
 			</ul>
 		</li>
@@ -74,14 +74,14 @@
 				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 					flag=flags.current-hit-points
 					control="current-hit-points" 
-					on="MOBLOKS5E.HideCurrentHP" 
-					off="MOBLOKS5E.ShowCurrentHP"
+					on="MOBLOKS5E.current-hit-points.disable" 
+					off="MOBLOKS5E.current-hit-points.enable"
 				}}
 				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 					flag=flags.maximum-hit-points
 					control="maximum-hit-points" 
-					on="MOBLOKS5E.HideMaxHP" 
-					off="MOBLOKS5E.ShowMaxHP"
+					on="MOBLOKS5E.maximum-hit-points.disable" 
+					off="MOBLOKS5E.maximum-hit-points.enable"
 				}}
 			</ul>
 		</li>
@@ -96,14 +96,14 @@
 				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
 					flag=flags.hide-profile-image
 					control="hide-profile-image"
-					on="MOBLOKS5E.ShowProfileImage"
-					off="MOBLOKS5E.HideProfileImage"
+					on="MOBLOKS5E.hide-profile-image.disable"
+					off="MOBLOKS5E.hide-profile-image.enable"
 				}}
 				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
 					flag=flags.use-token-image
 					control="use-token-image"
-					on="MOBLOKS5E.UseProfileImage"
-					off="MOBLOKS5E.UseTokenImage"
+					on="MOBLOKS5E.use-token-image.disable"
+					off="MOBLOKS5E.use-token-image.enable"
 				}}
 				{{#if info.vttatokenizer}}
 					{{> "modules/monsterblock/templates/dnd5e/parts/trigger.hbs"
@@ -118,15 +118,15 @@
 			{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 				flag=flags.show-lair-actions
 				control="show-lair-actions" 
-				on="MOBLOKS5E.HideLair" 
-				off="MOBLOKS5E.ShowLair"
+				on="MOBLOKS5E.show-lair-actions.disable" 
+				off="MOBLOKS5E.show-lair-actions.enable"
 			}}
 		{{/if}}
 		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 			flag=flags.show-bio
 			control="show-bio" 
-			on="MOBLOKS5E.HideBio" 
-			off="MOBLOKS5E.ShowBio"
+			on="MOBLOKS5E.show-bio.disable" 
+			off="MOBLOKS5E.show-bio.enable"
 		}}
 		{{> "modules/monsterblock/templates/dnd5e/parts/trigger.hbs"
 			control="resetDefaults"
