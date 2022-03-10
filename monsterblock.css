@@ -110,9 +110,6 @@
 	break-inside: auto;
 	position: relative;
 }
-.monsterblock .hidden {
-	display: none;
-}
 .monsterblock a[href] {
 	color: var(--inline-link-color);
 }
@@ -679,14 +676,18 @@ li:nth-last-of-type(2):after {
 	color: var(--heading-color);
 	font-variant: small-caps;
 	border-bottom: 1px solid var(--heading-color);
+	display: flex;
 }
-.monsterblock .collapsible {
-	float: right;
+.monsterblock .collapse-switch {
 	visibility: hidden;
 	margin-left: 0.5ch;
+	font-size: 1.3em;
 }
-.monsterblock .section-header:hover > .collapsible {
+.monsterblock .section-header:hover > .header-resource .collapse-switch {
 	visibility: visible;
+}
+.monsterblock .hidden {
+	display: none;
 }
 .monsterblock .item {
 	margin-top: 1em;
@@ -858,7 +859,7 @@ li:nth-last-of-type(2):after {
 	cursor: pointer;
 }
 .monsterblock .header-resource {
-	float: right;
+	margin-left: auto;
 	font-size: .7em;
 }
 .monsterblock .hover-list,

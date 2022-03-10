@@ -99,12 +99,22 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			hasCastingFeature: Boolean(data.features.casting.items.length),
 			hasLegendaryActions: Boolean(data.features.legendary.items.length),
 			hasLair: Boolean(data.features.lair.items.length),
-			hasActions: Boolean(data.features.attacks.items.length || data.features.actions.items.length),
+			hasActions: Boolean(data.features.attacks.items.length || data.features.actions.items.length || data.features.multiattack.items.length),
 			hasBonusActions: Boolean(data.features.bonusActions.items.length),
 			hasReactions: Boolean(data.features.reaction.items.length),
+			hasFeatures: Boolean(data.features.features.items.length || data.features.casting.items.length || data.features.legResist.items.length),
 			hasLoot: Boolean(data.features.equipment.items.length),
 			vttatokenizer: Boolean(window.Tokenizer)
 		}
+		data.info["hasAbilities"] = Boolean(
+			data.info.hasFeatures ||
+			data.info.hasActions ||
+			data.info.hasBonusActions ||
+			data.info.hasReactions ||
+			data.info.hasLegendaryActions ||
+			data.info.hasLair ||
+			data.info.hasLoot);
+
 		data.menus = this.menuTrees;
 		Object.values(this.menuTrees).forEach(m => m.update(m, data));
 				
@@ -638,15 +648,15 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		this.setWindowClasses(html);
 		this.applyFontSize(html);
 
-		html.find(".collapsible").click((event) => {
+		html.find(".collapse-switch").click((event) => {
 			event.preventDefault();
 
-			let control = event.currentTarget.dataset.control;
-			let collapsible = this.flagManager.flags.collapsible;
+			const section = event.currentTarget.dataset.section;
+			const collapsed = this.flagManager.flags.collapsed;
 
-			collapsible[control] = !collapsible[control];
+			collapsed[section] = !collapsed[section];
 
-			this.flagManager.flags.collapsible = collapsible;
+			this.flags.collapsed = collapsed;
 		});
 		html.find(".switch").click((event) => {							// Switches are the primary way that settings are applied per-actor.
 			event.preventDefault();
@@ -1215,6 +1225,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			"modules/monsterblock/templates/dnd5e/bio.hbs",
 			"modules/monsterblock/templates/dnd5e/header.hbs",
 			"modules/monsterblock/templates/dnd5e/main.hbs",
+			"modules/monsterblock/templates/dnd5e/collapsibleSection.hbs",
 			"modules/monsterblock/templates/dnd5e/sectionHeader.hbs",
 			
 			// Actor Sheet Partials

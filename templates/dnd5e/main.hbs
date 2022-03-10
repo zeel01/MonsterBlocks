@@ -2,13 +2,14 @@
 {{! Features Menu }}
 	{{#if flags.editing}}
 		{{> "modules/monsterblock/templates/dnd5e/parts/menuItem.hbs" item=menus.features}}
-		{{#unless (or features.features.items.length info.hasActions info.hasBonusActions info.hasLair info.hasLegendaryActions info.hasReactions)}}
+		{{#unless info.hasAbilities}}
 			<p class="menu-hint">{{ localize "MOBLOKS5E.EditButtonHint"}}</p>
 		{{/unless}}
 	{{/if}}
 
-	{{#if (or features.casting.items.length features.features.items.length features.legResist.items.length)}}
-		{{#> "modules/monsterblock/templates/dnd5e/sectionHeader.hbs" title="DND5E.Features" hide-title=true control="feats" flag=flags.collapsible.feats }}
+{{! Features }}
+	{{#if info.hasFeatures}}
+		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="DND5E.Features" hide-title=true section="feats" flag=flags.collapsed.feats }}
 			{{! Spellcasting Features }}
 			{{#each features.casting.items as |casting id|}}
 				{{#if @root.flags.casting-feature}}
@@ -29,12 +30,12 @@
 			{{#if features.legResist.items}}
 				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=features.legResist.items.[0] actor=actor flags=flags}}
 			{{/if}}
-		{{/"modules/monsterblock/templates/dnd5e/sectionHeader.hbs"}}
+		{{/"modules/monsterblock/templates/dnd5e/collapsibleSection.hbs"}}
 	{{/if}}
 
 {{! Actions }}
 	{{#if info.hasActions}}
-		{{#> "modules/monsterblock/templates/dnd5e/sectionHeader.hbs" title="DND5E.ActionPl" control="actions" flag=flags.collapsible.actions }}
+		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="DND5E.ActionPl" section="actions" flag=flags.collapsed.actions }}
 			{{! Multiattack }}
 			{{#if features.multiattack.items}}
 				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=features.multiattack.items.[0] actor=actor flags=flags}}
@@ -53,12 +54,12 @@
 					{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
 				{{/unless}}
 			{{/each}}
-		{{/"modules/monsterblock/templates/dnd5e/sectionHeader.hbs"}}
+		{{/"modules/monsterblock/templates/dnd5e/collapsibleSection.hbs"}}
 	{{/if}}
 
 {{! Bonus Actions }}
 	{{#if info.hasBonusActions}}
-		{{#> "modules/monsterblock/templates/dnd5e/sectionHeader.hbs" title="MOBLOKS5E.BonusActions" control="bonus" flag=flags.collapsible.bonus }}
+		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="MOBLOKS5E.BonusActions" section="bonus" flag=flags.collapsed.bonus }}
 			<section>
 				{{#each features.bonusActions.items as |item iid|}}
 					{{#if item.is.bonusAction}}
@@ -66,12 +67,12 @@
 					{{/if}}
 				{{/each}}
 			</section>
-		{{/"modules/monsterblock/templates/dnd5e/sectionHeader.hbs"}}
+		{{/"modules/monsterblock/templates/dnd5e/collapsibleSection.hbs"}}
 	{{/if}}
 
 {{! Reactions }}
 	{{#if info.hasReactions}}
-		{{#> "modules/monsterblock/templates/dnd5e/sectionHeader.hbs" title="MOBLOKS5E.Reactions" control="reaction" flag=flags.collapsible.reaction }}
+		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="MOBLOKS5E.Reactions" section="reaction" flag=flags.collapsed.reaction }}
 			<section>
 				{{#each features.reaction.items as |item iid|}}
 					{{#if item.is.reaction}}
@@ -79,7 +80,7 @@
 					{{/if}}
 				{{/each}}
 			</section>
-		{{/"modules/monsterblock/templates/dnd5e/sectionHeader.hbs"}}
+		{{/"modules/monsterblock/templates/dnd5e/collapsibleSection.hbs"}}
 	{{/if}}
 {{! Legendary Actions }}
 	{{#if info.hasLegendaryActions}}
@@ -93,12 +94,12 @@
 
 {{! Loot Items }}
 	{{#if info.hasLoot}}
-		{{#> "modules/monsterblock/templates/dnd5e/sectionHeader.hbs" title="DND5E.Inventory" control="inventory" flag=flags.collapsible.inventory }}
+		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="DND5E.Inventory" section="inventory" flag=flags.collapsed.inventory }}
 			<section>
 				{{#each features.equipment.items as |item iid|}}
 					{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}
 				{{/each}}
 			</section>
-		{{/"modules/monsterblock/templates/dnd5e/sectionHeader.hbs"}}
+		{{/"modules/monsterblock/templates/dnd5e/collapsibleSection.hbs"}}
 	{{/if}}
 </main>

@@ -10,7 +10,6 @@ export default class Flags5e extends Flags {
 	 */
 	static get flagDefaults() {
 		return mergeObject(super.flagDefaults, {
-			"show-collapsible"   : { type: Boolean, default: false, hidden: false },
 			"attack-descriptions": { type: Boolean, default: true , hidden: false },
 			"casting-feature"    : { type: Boolean, default: true , hidden: false },
 			"current-hit-points" : { type: Boolean, default: true , hidden: false },
@@ -19,15 +18,7 @@ export default class Flags5e extends Flags {
 			"show-not-prof"      : { type: Boolean, default: false, hidden: false },
 			"show-resources"     : { type: Boolean, default: true , hidden: false },
 			"show-skill-save"    : { type: Boolean, default: true , hidden: false },
-			"show-bio"           : { type: Boolean, default: false, hidden: true  },
-			"collapsible"        : { type: Object,  default: {
-				                                    "feats": true,
-													"actions": true,
-													"bonus": true,
-													"reactions": true,
-													"legendary": true,
-													"lair": true,
-													"inventory": true }, hidden: true  }
+			"show-bio"           : { type: Boolean, default: false, hidden: true  }
 		});
 	}	
 }

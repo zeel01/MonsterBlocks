@@ -1,4 +1,4 @@
-{{#> "modules/monsterblock/templates/dnd5e/sectionHeader.hbs" title="MOBLOKS5E.LairActionsHeading" control="lair" flag=flags.collapsible.lair }}
+{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="MOBLOKS5E.LairActionsHeading" section="lair" flag=flags.collapsed.lair }}
 	<p class="lair-description">{{ localize "MOBLOKS5E.LairText" name=actor.name }}</p>
 	<ul>
 	{{#each features.lair.items as |item iid|}}
@@ -9,4 +9,4 @@
 		{{/if}}
 	{{/each}}
 	</ul>
-{{/"modules/monsterblock/templates/dnd5e/sectionHeader.hbs"}}
+{{/"modules/monsterblock/templates/dnd5e/collapsibleSection.hbs"}}

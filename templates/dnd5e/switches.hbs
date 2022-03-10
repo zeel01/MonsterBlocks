@@ -41,12 +41,6 @@
 			<a>{{ localize "MOBLOKS5E.DescriptionS" }}</a>
 			<ul>
 				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
-					flag=flags.show-collapsible
-					control="show-collapsible"
-					on="MOBLOKS5E.show-collaspsible.disable"
-					off="MOBLOKS5E.show-collaspsible.enable"
-				}}
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
 					flag=flags.attack-descriptions
 					control="attack-descriptions"
 					on="MOBLOKS5E.attack-descriptions.disable"
@@ -119,7 +113,6 @@
 				{{/if}}
 			</ul>
 		{{/"modules/monsterblock/templates/dnd5e/parts/switch.hbs"}}
-		
 		{{#if info.hasLair}}
 			{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 				flag=flags.show-lair-actions
@@ -141,6 +134,12 @@
 		<li>
 			<a>{{localize "MOBLOKS5E.mini-block.label"}}</a>
 			<ul>
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
+					flag=flags.show-collapsible
+					control="show-collapsible"
+					on="MOBLOKS5E.show-collapsible.disable"
+					off="MOBLOKS5E.show-collapsible.enable"
+				}}
 				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
 					flag=flags.compact-window
 					control="compact-window" 

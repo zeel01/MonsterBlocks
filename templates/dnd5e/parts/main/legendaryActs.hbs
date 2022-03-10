@@ -1,7 +1,7 @@
-{{#> "modules/monsterblock/templates/dnd5e/sectionHeader.hbs"
+{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs"
 	title="DND5E.LegAct"
-	control="legendary"
-	flag=flags.collapsible.legendary
+	section="legendary"
+	flag=flags.collapsed.legendary
 	resource-value-key="data.resources.legact.value"
 	resource-value=data.resources.legact.value
 	resource-max-key="data.resources.legact.max"
@@ -16,4 +16,4 @@
 		{{/unless}}
 		{{/if}}
 	{{/each}}
-{{/"modules/monsterblock/templates/dnd5e/sectionHeader.hbs" }}
+{{/"modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" }}
