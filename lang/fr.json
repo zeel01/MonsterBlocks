@@ -72,8 +72,8 @@
 			}
 		},
 		"hidden-secrets": {
-			"enable": "Afficher les secrets",
-			"disable": "Cacher les secrets",
+			"enable": "Cacher les secrets",
+			"disable": "Afficher les secrets",
 			"settings": {
 				"name": "Cacher les secrets",
 				"hint": "Cache les secrets de la fiche par défaut."

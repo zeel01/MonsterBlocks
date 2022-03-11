@@ -72,8 +72,8 @@
 			}
 		},
 		"hidden-secrets": {
-			"enable": "Show secrets",
-			"disable": "Hide secrets",
+			"enable": "Hide secrets",
+			"disable": "Show secrets",
 			"settings": {
 				"name": "Hide Secrets",
 				"hint": "By default, hide secret blocks of text from the sheet."

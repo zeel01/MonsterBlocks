@@ -72,8 +72,8 @@
 			}
 		},
 		"hidden-secrets": {
-			"enable": "Mostrar segredos",
-			"disable": "Esconder segredos",
+			"enable": "Esconder segredos",
+			"disable": "Mostrar segredos",
 			"settings": {
 				"name": "Esconder 'Secrets'",
 				"hint": "Por padrão, esconder blocos de segredos da ficha."
