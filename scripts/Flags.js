@@ -21,21 +21,21 @@ export default class Flags {
 	 */
 	static get flagDefaults() {
 		return {
-			"inline-secrets"    : { type: Boolean, default: false    , hidden: false },
-			"hidden-secrets"    : { type: Boolean, default: false    , hidden: false },
-			"hide-profile-image": { type: Boolean, default: false    , hidden: false },
-			"use-token-image"   : { type: Boolean, default: false    , hidden: false },
+			"inline-secrets"    : { type: Boolean, default: false },
+			"hidden-secrets"    : { type: Boolean, default: false },
+			"hide-profile-image": { type: Boolean, default: false },
+			"use-token-image"   : { type: Boolean, default: false },
 			"theme-choice"      : { type: String , default: "default", hidden: true, setting: "default-theme" },
-			"custom-theme-class": { type: String , default: ""       , hidden: false },
-			"editing"           : { type: Boolean, default: true     , hidden: false },
-			"compact-window"    : { type: Boolean, default: false    , hidden: false },
-			"compact-feats"     : { type: Boolean, default: false    , hidden: false },
-			"compact-layout"    : { type: Boolean, default: false    , hidden: false },
-			"show-collapsible"  : { type: Boolean, default: false    , hidden: false },
-			"show-delete"       : { type: Boolean, default: false    , hidden: true  },
-			"font-size"         : { type: Number , default: 14       , hidden: false },
-			"scale"             : { type: Number , default: 1        , hidden: true  },
-			"collapsed"         : { type: Object,  default: {}       , hidden: true  }
+			"custom-theme-class": { type: String , default: ""    },
+			"editing"           : { type: Boolean, default: true  },
+			"compact-window"    : { type: Boolean, default: false },
+			"compact-feats"     : { type: Boolean, default: false },
+			"compact-layout"    : { type: Boolean, default: false },
+			"show-collapsible"  : { type: Boolean, default: false },
+			"show-delete"       : { type: Boolean, default: false  , hidden: true  },
+			"font-size"         : { type: Number , default: 14    },
+			"scale"             : { type: Number , default: 1      , hidden: true  },
+			"collapsed"         : { type: Object,  default: {}     , hidden: true  }
 		}
 	}
 
