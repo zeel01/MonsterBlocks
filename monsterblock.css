@@ -677,13 +677,18 @@ li:nth-last-of-type(2):after {
 	font-variant: small-caps;
 	border-bottom: 1px solid var(--heading-color);
 	display: flex;
+	gap: 1ch;
+}
+.monsterblock .section-header .title {
+	flex-grow: 1;
+}
+.monsterblock .header-resource {
+	font-size: .7em;
 }
 .monsterblock .collapse-switch {
 	visibility: hidden;
-	margin-left: 0.5ch;
-	font-size: 1.3em;
 }
-.monsterblock .section-header:hover > .header-resource .collapse-switch {
+.monsterblock .section-header:hover > .collapse-switch {
 	visibility: visible;
 }
 .monsterblock .hidden {
@@ -858,10 +863,7 @@ li:nth-last-of-type(2):after {
 .monsterblock .biography .editor-content img {
 	cursor: pointer;
 }
-.monsterblock .header-resource {
-	margin-left: auto;
-	font-size: .7em;
-}
+
 .monsterblock .hover-list,
 .monsterblock .simple-menu ul {
 	text-indent: 0;
