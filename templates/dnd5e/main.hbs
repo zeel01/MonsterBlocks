@@ -9,7 +9,7 @@
 
 {{! Features }}
 	{{#if info.hasFeatures}}
-		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="DND5E.Features" hide-title=true section="feats" flag=flags.collapsed.feats }}
+		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="DND5E.Features" hide-title=true section="feats" }}
 			{{! Spellcasting Features }}
 			{{#each features.casting.items as |casting id|}}
 				{{#if @root.flags.casting-feature}}
@@ -35,7 +35,7 @@
 
 {{! Actions }}
 	{{#if info.hasActions}}
-		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="DND5E.ActionPl" section="actions" flag=flags.collapsed.actions }}
+		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="DND5E.ActionPl" section="actions" }}
 			{{! Multiattack }}
 			{{#if features.multiattack.items}}
 				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=features.multiattack.items.[0] actor=actor flags=flags}}
@@ -59,7 +59,7 @@
 
 {{! Bonus Actions }}
 	{{#if info.hasBonusActions}}
-		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="MOBLOKS5E.BonusActions" section="bonus" flag=flags.collapsed.bonus }}
+		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="MOBLOKS5E.BonusActions" section="bonus" }}
 			<section>
 				{{#each features.bonusActions.items as |item iid|}}
 					{{#if item.is.bonusAction}}
@@ -72,7 +72,7 @@
 
 {{! Reactions }}
 	{{#if info.hasReactions}}
-		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="MOBLOKS5E.Reactions" section="reaction" flag=flags.collapsed.reaction }}
+		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="MOBLOKS5E.Reactions" section="reaction" }}
 			<section>
 				{{#each features.reaction.items as |item iid|}}
 					{{#if item.is.reaction}}
@@ -94,7 +94,7 @@
 
 {{! Loot Items }}
 	{{#if info.hasLoot}}
-		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="DND5E.Inventory" section="inventory" flag=flags.collapsed.inventory }}
+		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="DND5E.Inventory" section="inventory" }}
 			<section>
 				{{#each features.equipment.items as |item iid|}}
 					{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor flags=@root.flags}}

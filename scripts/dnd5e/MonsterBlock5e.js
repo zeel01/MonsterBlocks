@@ -113,7 +113,8 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			data.info.hasReactions ||
 			data.info.hasLegendaryActions ||
 			data.info.hasLair ||
-			data.info.hasLoot);
+			data.info.hasLoot
+		);
 
 		data.menus = this.menuTrees;
 		Object.values(this.menuTrees).forEach(m => m.update(m, data));

@@ -1,4 +1,4 @@
 {{> "modules/monsterblock/templates/dnd5e/sectionHeader.hbs" }}
-{{#unless (and flag flags.show-collapsible)}}
+{{#unless (and flags.show-collapsible (lookup flags.collapsed section))}}
     {{> @partial-block}}
 {{/unless}}
