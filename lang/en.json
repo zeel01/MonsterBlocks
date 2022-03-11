@@ -16,7 +16,7 @@
 			"disable": "Disable Compact Layout",
 			"settings": {
 				"name": "Compact Layout",
-				"hint": "Reducs the spacing between items on the sheet to save space."
+				"hint": "Reduces the spacing between items on the sheet to save space."
 			}
 		},
 		"compact-feats": {
@@ -25,6 +25,14 @@
 			"settings": {
 				"name": "Compact Features",
 				"hint": "Reduces the space taken up by features. When this setting is enabled, each feature will take up only two lines of space. Hovering your mouse over a fature will reveal the full description. Features can be expanded/compacted individually by clicking on them."
+			}
+		},
+		"show-collapsible": {
+			"enable": "Enable collapsible sections",
+			"disable": "Disable collapsible sections",
+			"settings": {
+				"name": "Enable Collapsible Sections",
+				"hint": "Provides a toggle to collapse each feature section. This adds a Features header the top-most features section of the sheet."
 			}
 		},
 		"font-size": {

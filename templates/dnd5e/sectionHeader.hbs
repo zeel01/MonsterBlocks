@@ -1,0 +1,26 @@
+<h2 class="section-header{{#unless flags.show-collapsible}}{{#if hide-title}} hidden{{/if}}{{/unless}}">
+    {{localize title}}
+<span class="header-resource">
+{{#if (and flags.show-resources resource.max)}}
+    <span class="resource-value"
+        placeholder="0"
+        contenteditable="{{@root.owner}}"
+        data-dtype="Number"
+        data-field-key="{{resource-key}}.value">
+        {{~resource.value~}}
+    </span> /
+    <span class="resource-value"
+        placeholder="0"
+        contenteditable="{{@root.flags.editing}}"
+        data-dtype="Number"
+        data-field-key="{{resource-key}}.max">
+        {{~resource.max~}}
+    </span>
+{{/if}}
+{{#if flags.show-collapsible}}
+    <a class="collapse-switch" data-section={{section}}>
+        <i class="fas fa-caret-{{#if (lookup flags.collapsed section)}}down{{else}}up{{/if}}"></i>
+    </a>
+{{/if}}
+</span>
+</h2>

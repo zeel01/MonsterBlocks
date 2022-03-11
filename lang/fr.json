@@ -27,6 +27,14 @@
 				"hint": "Réduit l'espace occupé par les capacités. Tant que ce paramètre est activé, chaque capacité ne prendra que deux lignes. Survoler une capacité avec votre pointeur révèlera sa description complète. Les capacités peuvent être étendues/réduites une par une en cliquant dessus."
 			}
 		},
+		"show-collapsible": {
+			"enable": "Activer les sections réductibles",
+			"disable": "Désactiver les sections réductibles",
+			"settings": {
+				"name": "Activer les sections réductibles",
+				"hint": "Fournit une bascule pour réduire chaque section de fonctionnalité. Cela ajoute un en-tête Fonctionnalités à la section de fonctionnalités la plus élevée de la feuille."
+			}
+		},
 		"font-size": {
 			"label": "Taille de police",
 			"placeholder": "Taille de police (px)",
