@@ -4,24 +4,24 @@
 			"label": "Mini Blocks"
 		},
 		"compact-window": {
-			"enable": "Enable Compact Window",
-			"disable": "Disable Compact Window",
+			"enable": "Enable compact window",
+			"disable": "Disable compact window",
 			"settings": {
 				"name": "Compact Window",
 				"hint": "Removes the window title bar, and makes the sheet appear more compact."
 			}
 		},
 		"compact-layout": {
-			"enable": "Enable Compact Layout",
-			"disable": "Disable Compact Layout",
+			"enable": "Enable compact layout",
+			"disable": "Disable compact layout",
 			"settings": {
 				"name": "Compact Layout",
 				"hint": "Reduces the spacing between items on the sheet to save space."
 			}
 		},
 		"compact-feats": {
-			"enable": "Enable Compact Features",
-			"disable": "Disable Compact Features",
+			"enable": "Enable compact features",
+			"disable": "Disable compact features",
 			"settings": {
 				"name": "Compact Features",
 				"hint": "Reduces the space taken up by features. When this setting is enabled, each feature will take up only two lines of space. Hovering your mouse over a fature will reveal the full description. Features can be expanded/compacted individually by clicking on them."
@@ -36,8 +36,8 @@
 			}
 		},
 		"font-size": {
-			"label": "Font Size",
-			"placeholder": "Font Size (px)",
+			"label": "Font size",
+			"placeholder": "Font size (px)",
 			"NaN-error": "Font size must be a number.",
 			"settings": {
 				"name": "Font Size",
@@ -133,7 +133,7 @@
 		},
 		"custom-theme-class": {
 			"settings": {
-				"name": "Default Custom Theme Class",
+				"name": "Default custom theme class",
 				"hint": "The class name used for your default custom theme."
 			}
 		},
@@ -180,11 +180,11 @@
 			
 		"MonsterBlocks": "Monster Blocks",
 		
-		"SwitchToDefault": "Switch to Default Sheet",
+		"SwitchToDefault": "Switch to default sheet",
 		"SwitchToMobloks": "Switch to Monster Blocks",
 
 		"DescriptionS": "Descriptions",
-		"ProfileImage": "Profile Image",
+		"ProfileImage": "Profile image",
 		"OpenTokenizer": "Open VTTA Tokenizer",
 		"QuickInsert": "Quick Insert",
 
