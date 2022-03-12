@@ -443,7 +443,6 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	async resetDefaults() {
 		await this.setCurrentTheme(game.settings.get("monsterblock", "default-theme"));
-		console.log(this.defaultFlags);
 		this.actor.update({"flags.monsterblock": this.defaultFlags});
 	}
 	static prop = "A String";
