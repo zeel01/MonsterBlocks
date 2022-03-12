@@ -1210,26 +1210,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		"moblok-enrichhtml": (str, owner, flags) => { // Formats any text to include proper inline rolls and links.
 			return TextEditor.enrichHTML(str || "", { secrets: (owner && !flags["hidden-secrets"]) });
 		},
-		"moblok-concat": (...args) => {
-			args = [...args].slice(0, -1);
-			return [...args].join('');
-		},
-		"moblok-lookupval": (obj, str) => {
-			if (!obj || !str) return;
-
-			str = str.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-			str = str.replace(/^\./, '');           // strip a leading dot
-			var props = str.split('.');
-			for (var i = 0, n = props.length; i < n; ++i) {
-				var p = props[i];
-				if (p in obj) {
-					obj = obj[p];
-				} else {
-					return;
-				}
-			}
-			return obj;
-		}
+		"moblok-concat": (...args) => args.slice(0, -1).join("")
 	};
 
 	static async preLoadTemplates() {

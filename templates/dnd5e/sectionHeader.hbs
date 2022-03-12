@@ -1,20 +1,20 @@
 <h2 class="section-header{{#unless flags.show-collapsible}}{{#if hide-title}} hidden{{/if}}{{/unless}}">
     <span class="title">{{localize title}}</span>
-    {{#if (and flags.show-resources (moblok-lookupval @root (moblok-concat resource-key ".max")))}}
+    {{#if (and flags.show-resources resource-key)}}
         <span class="header-resource">
             <span class="resource-value"
                 placeholder="0"
                 contenteditable="{{@root.owner}}"
                 data-dtype="Number"
                 data-field-key="{{resource-key}}.value">
-                {{~moblok-lookupval @root (moblok-concat resource-key ".value")~}}
+                {{~getProperty @root (moblok-concat resource-key ".value")~}}
             </span> /
             <span class="resource-value"
                 placeholder="0"
                 contenteditable="{{@root.flags.editing}}"
                 data-dtype="Number"
                 data-field-key="{{resource-key}}.max">
-                {{~moblok-lookupval @root (moblok-concat resource-key ".max")~}}
+                {{~getProperty @root (moblok-concat resource-key ".max")~}}
             </span>
         </span>
     {{/if}}
