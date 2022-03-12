@@ -1,9 +1,9 @@
 <li>
 	<a class="switch" data-control="{{control}}">
 		{{~#if (lookup flags control)}}
-			{{~ localize (moblok-concat "MOBLOKS5E." control ".disable") ~}}
+			{{~ lookup (lookup switches control) "disable" ~}}
 		{{~else}}
-			{{~ localize (moblok-concat "MOBLOKS5E." control ".enable") ~}}
+			{{~ lookup (lookup switches control) "enable" ~}}
 		{{~/if~}}
 	</a>
 	{{#if @partial-block}}

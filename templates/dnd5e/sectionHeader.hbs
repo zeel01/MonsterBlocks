@@ -7,14 +7,14 @@
                 contenteditable="{{@root.owner}}"
                 data-dtype="Number"
                 data-field-key="{{resource-key}}.value">
-                {{~getProperty @root (moblok-concat resource-key ".value")~}}
+                {{~lookup (getProperty @root resource-key) "value"~}}
             </span> /
             <span class="resource-value"
                 placeholder="0"
                 contenteditable="{{@root.flags.editing}}"
                 data-dtype="Number"
                 data-field-key="{{resource-key}}.max">
-                {{~getProperty @root (moblok-concat resource-key ".max")~}}
+                {{~lookup (getProperty @root resource-key) "max"~}}
             </span>
         </span>
     {{/if}}

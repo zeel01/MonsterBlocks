@@ -89,6 +89,8 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			data.allFlags.push(flag);
 		}
 
+		data.switches = this.getSwitches(data);
+
 		if (data.notOwner || !this.options.editable) data.flags.editing = false;
 		if (!data.flags.editing) data.flags["show-delete"] = false;
 		if (this.actor.limited) data.flags["show-bio"] = true;
@@ -634,6 +636,28 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		await that.object.setFlag("core", "sheetClass", sheetClass);
 
 		return that.object.sheet.render(true)
+	}
+
+	getSwitches(data) {
+		const switches = {};
+
+		for (let flag of data.allFlags) {
+			let s = {
+				enable: `MOBLOKS5E.${flag.name}.enable`,
+				disable: `MOBLOKS5E.${flag.name}.disable`
+			}
+
+			let enable = game.i18n.localize(s.enable);
+			let disable = game.i18n.localize(s.disable);
+
+			if (s.enable != enable || s.disable != disable) {
+				s.enable = enable;
+				s.disable = disable;
+				switches[flag.name] = s;
+			}
+		}
+
+		return switches;
 	}
 
 	static async getQuickInserts() {
@@ -1209,8 +1233,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		},
 		"moblok-enrichhtml": (str, owner, flags) => { // Formats any text to include proper inline rolls and links.
 			return TextEditor.enrichHTML(str || "", { secrets: (owner && !flags["hidden-secrets"]) });
-		},
-		"moblok-concat": (...args) => args.slice(0, -1).join("")
+		}
 	};
 
 	static async preLoadTemplates() {
