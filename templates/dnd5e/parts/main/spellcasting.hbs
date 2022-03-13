@@ -1,4 +1,4 @@
-<section class="item monster-feature spellcasting-trait{{#unless casting.flags.monsterblock.expanded}} compact{{/unless}}" title="{{#if @root.flags.editing}}{{ localize 'MOBLOKS5E.EditHint' }}{{/if}}">
+<section class="item monster-feature spellcasting-trait{{#unless casting.flags.monsterblock.expanded}} compact{{/unless}}" title="{{#if @root.flags.editing}}{{localize "MOBLOKS5E.EditHint"}}{{/if}}">
 	<div class="feature-description inline-children">
 		{{#if @root.flags.show-delete}}
 			<a class="delete-item" data-item-id="{{casting._id}}">
@@ -10,37 +10,36 @@
 			{{> "modules/monsterblock/templates/dnd5e/parts/resource.hbs" resource=item.resource}}
 		{{~/if~}}
 		<span class="description">
-			{{{ casting.description.level }}}
-			{{{ casting.description.ability }}}
-			{{{ casting.description.stats }}}
-			{{{ casting.description.warlockRecharge }}}
-			{{{ casting.description.spellintro }}}
+			{{{casting.description.level}}}
+			{{{casting.description.ability}}}
+			{{{casting.description.stats}}}
+			{{{casting.description.warlockRecharge}}}
+			{{{casting.description.spellintro}}}
 		</span>
 		<ul class="spell-list">
 		{{#each casting.spellbook as |page id|}}
-		{{#if page.spells}}
-			<li>
-				<span class="spell-level-name">
-					{{page.label~}}
-				</span>
-				{{~#if page.slotLabel}}
-					<span class="spell-slots">
-						({{~#if (and @root.flags.show-resources page.dataset.level)~}}
-							<span class="resource-value" 
-								placeholder="0"
-								contenteditable="{{@root.owner}}"
-								data-dtype="Number"
-								data-field-key="{{page.slotKey}}.value">
-								{{~page.uses~}}
-							</span>/
-						{{~/if~}}
-						{{{page.slotLabel}}}){{~" "~}}
+			{{#if page.spells}}
+				<li>
+					<span class="spell-level-name">
+						{{page.label~}}
 					</span>
-				{{~/if~}}
-				{{~ localize "MOBLOKS5E.Colon" }}
-				<ul class="inline-list spells-level-{{page.dataset.level}}">
-				
-				{{#each page.spells as |spell id|}}
+					{{~#if page.slotLabel}}
+						<span class="spell-slots">
+							({{~#if (and @root.flags.show-resources page.dataset.level)~}}
+								<span class="resource-value" 
+									placeholder="0"
+									contenteditable="{{@root.owner}}"
+									data-dtype="Number"
+									data-field-key="{{page.slotKey}}.value">
+									{{~page.uses~}}
+								</span>/
+							{{~/if~}}
+							{{{page.slotLabel}}}){{~" "~}}
+						</span>
+					{{~/if~}}
+					{{~localize "MOBLOKS5E.Colon"}}
+					<ul class="inline-list spells-level-{{page.dataset.level}}">
+					{{#each page.spells as |spell id|}}
 						<li class="spell" data-item-id="{{spell._id}}">
 							{{#if @root.flags.show-delete}}
 								<a class="delete-item" data-item-id="{{spell._id}}">
@@ -52,11 +51,10 @@
 								{{> "modules/monsterblock/templates/dnd5e/parts/resource.hbs" resource=spell.resource}}
 							{{~/if~}}
 						</li>
-				{{/each}}
-				
-				</ul>
-			</li>
-		{{/if}}
+					{{/each}}
+					</ul>
+				</li>
+			{{/if}}
 		{{/each}}
 		</ul>
 	</div>

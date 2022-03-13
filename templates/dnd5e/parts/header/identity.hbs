@@ -1,35 +1,35 @@
-<h1 class="charname" contenteditable="{{flags.editing}}" data-field-key="name" placeholder="{{ localize 'DND5E.Name' }}">{{actor.name}}</h1>
+<h1 class="charname" contenteditable="{{flags.editing}}" data-field-key="name" placeholder="{{localize "DND5E.Name"}}">{{actor.name}}</h1>
 <div class="chartype">
 	<div class="select-field" data-select-key="data.traits.size" data-selected-value="{{data.traits.size}}">
-		<label class="{{#if flags.editing}}select-label{{/if}}">{{ lookup config.actorSizes data.traits.size}}</label>{{~" "~}}
+		<label class="{{#if flags.editing}}select-label{{/if}}">{{lookup config.actorSizes data.traits.size}}</label>{{~" "~}}
 		{{#if flags.editing~}}
 			<ul class="actor-size select-list">
-				{{#each config.actorSizes as |label size|}}
+			{{#each config.actorSizes as |label size|}}
 				{{#unless (eq size ../data.traits.size)}}
 					<li data-selection-value="{{size}}">{{label}}</li>
 				{{/unless}}
-				{{~/each~}}
+			{{~/each~}}
 			</ul>
 		{{~/if~}}
 	</div>{{~" "~}}
 	<span class="optional-space">
 		{{~labels.type~}}
-		<a class="config-button" data-action="type" title="{{ localize 'DND5E.CreatureTypeConfig' }}">
+		<a class="config-button" data-action="type" title="{{localize "DND5E.CreatureTypeConfig"}}">
 			<i class="fas fa-cog"></i>{{~" "~}}
 		</a>{{~" "~}}
 	</span>{{~" "~}}
-	<span class="optional-comma" contenteditable="{{flags.editing}}" placeholder="{{ localize 'DND5E.Alignment' }}" data-field-key="data.details.alignment">
+	<span class="optional-comma" contenteditable="{{flags.editing}}" placeholder="{{localize "DND5E.Alignment"}}" data-field-key="data.details.alignment">
 		{{~data.details.alignment~}}
 	</span>
 </div>
 {{#unless flags.hide-profile-image}}
 	<figure class="profile-image">
-			<img 
-				{{#if flags.use-token-image}}
-					src="{{actor.token.img}}" data-edit="token.img"
-				{{else}}
-					src="{{actor.img}}" data-edit="img"
-				{{/if}}
-				title="{{actor.name}}{{#if flags.editing}} - {{ localize "MOBLOKS5E.EditHint" }}{{/if}}">
+		<img 
+			{{#if flags.use-token-image}}
+				src="{{actor.token.img}}" data-edit="token.img"
+			{{else}}
+				src="{{actor.img}}" data-edit="img"
+			{{/if}}
+			title="{{actor.name}}{{#if flags.editing}} - {{localize "MOBLOKS5E.EditHint"}}{{/if}}">
 	</figure>
 {{/unless}}

@@ -10,9 +10,9 @@
 			<label class="menu-toggle" data-menu-id="{{id}}">{{{label}}}</label>
 			{{~#if (eq type "root-menu")}}<div class="overflow-fix">{{/if}}
 				<ul>
-					{{~#each children~}}
-						{{> "modules/monsterblock/templates/dnd5e/parts/menuItem.hbs" item=this}}
-					{{~/each~}}
+				{{~#each children~}}
+					{{> "modules/monsterblock/templates/dnd5e/parts/menuItem.hbs" item=this}}
+				{{~/each~}}
 				</ul>
 			{{~#if (eq type "root-menu")}}</div>{{/if}}
 		</{{#if (eq type "root-menu")}}figure{{else}}li{{/if}}>

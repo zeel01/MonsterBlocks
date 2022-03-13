@@ -28,17 +28,14 @@
 		damage=data.traits.dv.selected
 		label="DND5E.DamVuln" 
 	}}
-
 	{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/damage.hbs"
 		damage=data.traits.dr.selected
 		label="DND5E.DamRes" 
 	}}
-
 	{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/damage.hbs"
 		damage=data.traits.di.selected
 		label="DND5E.DamImm" 
 	}}
-
 	{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/damage.hbs"
 		damage=data.traits.ci.selected
 		label="DND5E.ConImm" 
@@ -76,7 +73,7 @@
 				contenteditable="{{flags.editing}}"
 				data-dtype="Number"
 				data-field-key="data.details.cr"
-				>{{labels.cr}}</span> <span>({{ localize "MOBLOKS5E.XPLabel" xp=data.details.xp.label }})</span>
+				>{{labels.cr}}</span> <span>({{localize "MOBLOKS5E.XPLabel" xp=data.details.xp.label}})</span>
 		</span>
 		<span class="attribute-wrapper prof-bonus">
 			<h4 class="attribute-name">{{localize "MOBLOKS5E.ProfBonus"}}</h4>

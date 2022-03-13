@@ -1,6 +1,6 @@
 <form	class="{{cssClass}} flexcol{{#if flags.inline-secrets}} inline-secrets{{/if}}{{#if flags.hidden-secrets}} hidden-secrets{{/if}}{{#if flags.editing}} editing{{/if}}" 
 		autocomplete="off"
-		style="--list-seperator: '{{ localize 'MOBLOKS5E.Comma' }}'; --list-conjuntion: '{{ localize 'MOBLOKS5E.ListFinalConjunctionAnd' }}'; "
+		style="--list-seperator: '{{localize "MOBLOKS5E.Comma"}}'; --list-conjuntion: '{{localize "MOBLOKS5E.ListFinalConjunctionAnd"}}'; "
 	>
 	{{#if owner}}
 		{{> "modules/monsterblock/templates/dnd5e/switches.hbs"}}
