@@ -775,24 +775,22 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 
 		// uses the built in attack roll from the item
-		// uses mousedown to prevent highlighting of text when using shift modifier
-		html.find(".item-attackRoll").mousedown(async (event) => {
+		html.find(".item-attackRoll").click(async (event) => {
 			event.preventDefault();
+			document.getSelection().removeAllRanges();
 
-			let id = event.currentTarget.dataset.itemId;
-			const item = this.actor.items.get(id);
+			const item = this.actor.items.get(event.currentTarget.dataset.itemId);
 
 			item.rollAttack({event});
 		});
 
 		// uses the built in damage roll from the item
-		// uses mousedown to prevent highlighting of text when using shift modifier
-		html.find(".item-damageRoll").mousedown(async (event) => {
+		html.find(".item-damageRoll").click(async (event) => {
 			event.preventDefault();
+			document.getSelection().removeAllRanges();
 
-			let id = event.currentTarget.dataset.itemId;
-			let versatile = event.currentTarget.dataset.versatile;
-			const item = this.actor.items.get(id);
+			const versatile = event.currentTarget.dataset.versatile;
+			const item = this.actor.items.get(event.currentTarget.dataset.itemId);
 
 			item.rollDamage({event, versatile});
 		})
