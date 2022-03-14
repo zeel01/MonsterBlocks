@@ -69,11 +69,7 @@ export default class ItemPrep {
 	 * @memberof ItemPrep
 	 */
 	classify() {
-		let [spells, other] = this.data.items.reduce((arr, item) => {
-			if (item.type === "spell") arr[0].push(item);
-			else arr[1].push(item);
-			return arr;
-		}, [[], []]);
+		let [other, spells] = this.data.items.partition(item => item.type === "spell");
 
 		// Apply item filters
 		spells = this.sheet._filterItems(spells, this.sheet._filters.spellbook);
