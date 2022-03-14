@@ -638,25 +638,12 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 
 	getSwitches(data) {
-		const switches = {};
-
-		for (let flag of data.allFlags) {
-			let s = {
-				enable: `MOBLOKS5E.${flag.name}.enable`,
-				disable: `MOBLOKS5E.${flag.name}.disable`
-			}
-
-			let enable = game.i18n.localize(s.enable);
-			let disable = game.i18n.localize(s.disable);
-
-			if (s.enable != enable || s.disable != disable) {
-				s.enable = enable;
-				s.disable = disable;
-				switches[flag.name] = s;
-			}
-		}
-
-		return switches;
+		return Object.fromEntries(
+			Object.entries(data.allFlags).map(([k,f]) => [f.name, {
+					enable: game.i18n.localize(`MOBLOKS5E.${f.name}.enable`),
+					disable: game.i18n.localize(`MOBLOKS5E.${f.name}.disable`)
+			}])
+		);
 	}
 
 	static async getQuickInserts() {
