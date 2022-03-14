@@ -80,8 +80,8 @@
 			}
 		},
 		"hide-profile-image": {
-			"enable": "画像を表示",
-			"disable": "画像を非表示",
+			"enable": "画像を非表示",
+			"disable": "画像を表示",
 			"settings": {
 				"name": "画像を非表示",
 				"hint": "デフォルトとしてデータブロックにそのモンスターの画像を表示しなくします。"

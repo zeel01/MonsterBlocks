@@ -80,8 +80,8 @@
 			}
 		},
 		"hide-profile-image": {
-			"enable": "Mostrar Imagem do Perfil",
-			"disable": "Esconder Imagem do Perfil",
+			"enable": "Esconder Imagem do Perfil",
+			"disable": "Mostrar Imagem do Perfil",
 			"settings": {
 				"name": "Esconder Imagens",
 				"hint": "Por padrão, não mostrar a imagem da criatura na ficha (mais próximo da versão do livro)."

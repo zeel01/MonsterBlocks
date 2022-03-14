@@ -89,6 +89,8 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			data.allFlags.push(flag);
 		}
 
+		data.switches = this.getSwitches(data);
+
 		if (data.notOwner || !this.options.editable) data.flags.editing = false;
 		if (!data.flags.editing) data.flags["show-delete"] = false;
 		if (this.actor.limited) data.flags["show-bio"] = true;
@@ -441,7 +443,6 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	}
 	async resetDefaults() {
 		await this.setCurrentTheme(game.settings.get("monsterblock", "default-theme"));
-		console.log(this.defaultFlags);
 		this.actor.update({"flags.monsterblock": this.defaultFlags});
 	}
 	static prop = "A String";
@@ -634,6 +635,15 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		await that.object.setFlag("core", "sheetClass", sheetClass);
 
 		return that.object.sheet.render(true)
+	}
+
+	getSwitches(data) {
+		return Object.fromEntries(
+			Object.entries(data.allFlags).map(([k,f]) => [f.name, {
+					enable: game.i18n.localize(`MOBLOKS5E.${f.name}.enable`),
+					disable: game.i18n.localize(`MOBLOKS5E.${f.name}.disable`)
+			}])
+		);
 	}
 
 	static async getQuickInserts() {

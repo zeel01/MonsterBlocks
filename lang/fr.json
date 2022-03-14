@@ -80,8 +80,8 @@
 			}
 		},
 		"hide-profile-image": {
-			"enable": "Afficher image de profil",
-			"disable": "Cacher image de profil",
+			"enable": "Cacher image de profil",
+			"disable": "Afficher image de profil",
 			"settings": {
 				"name": "Cacher l'image",
 				"hint": "Cache l'image de profil de la fiche par défaut"

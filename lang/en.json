@@ -80,8 +80,8 @@
 			}
 		},
 		"hide-profile-image": {
-			"enable": "Show profile image",
-			"disable": "Hide profile image",
+			"enable": "Hide profile image",
+			"disable": "Show profile image",
 			"settings": {
 				"name": "Hide Image",
 				"hint": "By default, don't show the creature's image on the sheet (more accurate)."

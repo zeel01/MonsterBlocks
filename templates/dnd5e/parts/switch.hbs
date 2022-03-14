@@ -1,9 +1,9 @@
 <li>
 	<a class="switch" data-control="{{control}}">
-		{{~#if flag}}
-			{{~ localize on ~}}
+		{{~#if (lookup flags control)}}
+			{{~ lookup (lookup switches control) "disable" ~}}
 		{{~else}}
-			{{~ localize off ~}}
+			{{~ lookup (lookup switches control) "enable" ~}}
 		{{~/if~}}
 	</a>
 	{{#if @partial-block}}

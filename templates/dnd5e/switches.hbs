@@ -5,106 +5,36 @@
 			control="switchToDefault"
 			title="MOBLOKS5E.SwitchToDefault"
 		}}
-		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-			flag=flags.editing 
-			control="editing" 
-			on="MOBLOKS5E.editing.disable" 
-			off="MOBLOKS5E.editing.enable"
-		}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="editing" }}
 		{{#if flags.editing}}
-			{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-				flag=flags.show-delete
-				control="show-delete" 
-				on="MOBLOKS5E.show-delete.disable" 
-				off="MOBLOKS5E.show-delete.enable"
-			}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="show-delete" }}
 		{{/if}}
-		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-			flag=flags.show-resources
-			control="show-resources" 
-			on="MOBLOKS5E.show-resources.disable" 
-			off="MOBLOKS5E.show-resources.enable"
-		}}
-		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-			flag=flags.show-skill-save
-			control="show-skill-save" 
-			on="MOBLOKS5E.show-skill-save.disable" 
-			off="MOBLOKS5E.show-skill-save.enable"
-		}}
-		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-			flag=flags.show-not-prof
-			control="show-not-prof" 
-			on="MOBLOKS5E.show-not-prof.disable" 
-			off="MOBLOKS5E.show-not-prof.enable"
-		}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="show-resources" }}
+		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="show-skill-save" }}
+		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="show-not-prof" }}
 		<li>
 			<a>{{ localize "MOBLOKS5E.DescriptionS" }}</a>
 			<ul>
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
-					flag=flags.attack-descriptions
-					control="attack-descriptions"
-					on="MOBLOKS5E.attack-descriptions.disable"
-					off="MOBLOKS5E.attack-descriptions.enable"
-				}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="attack-descriptions" }}
 				{{#if info.hasCastingFeature}}
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-					flag=flags.casting-feature
-					control="casting-feature" 
-					on="MOBLOKS5E.casting-feature.disable" 
-					off="MOBLOKS5E.casting-feature.enable"
-				}}
+					{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="casting-feature" }}
 				{{/if}}
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-					flag=flags.inline-secrets
-					control="inline-secrets" 
-					on="MOBLOKS5E.inline-secrets.disable" 
-					off="MOBLOKS5E.inline-secrets.enable"
-				}}
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-					flag=flags.hidden-secrets
-					control="hidden-secrets" 
-					on="MOBLOKS5E.hidden-secrets.disable" 
-					off="MOBLOKS5E.hidden-secrets.enable"
-				}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="inline-secrets" }}
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="hidden-secrets" }}
 			</ul>
 		</li>
 		<li>
 			<a>{{ localize "DND5E.HitPoints" }}</a>
 			<ul>
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-					flag=flags.current-hit-points
-					control="current-hit-points" 
-					on="MOBLOKS5E.current-hit-points.disable" 
-					off="MOBLOKS5E.current-hit-points.enable"
-				}}
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-					flag=flags.maximum-hit-points
-					control="maximum-hit-points" 
-					on="MOBLOKS5E.maximum-hit-points.disable" 
-					off="MOBLOKS5E.maximum-hit-points.enable"
-				}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="current-hit-points" }}
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="maximum-hit-points" }}
 			</ul>
 		</li>
 		
-		{{#> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
-			flag=flags.hide-profile-image
-			control="hide-profile-image"
-			on="MOBLOKS5E.ProfileImage"
-			off="MOBLOKS5E.ProfileImage"
-		}}
+		{{#> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="hide-profile-image" }}
 			<ul>
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
-					flag=flags.hide-profile-image
-					control="hide-profile-image"
-					on="MOBLOKS5E.hide-profile-image.disable"
-					off="MOBLOKS5E.hide-profile-image.enable"
-				}}
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
-					flag=flags.use-token-image
-					control="use-token-image"
-					on="MOBLOKS5E.use-token-image.disable"
-					off="MOBLOKS5E.use-token-image.enable"
-				}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="hide-profile-image" }}
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="use-token-image" }}
 				{{#if info.vttatokenizer}}
 					{{> "modules/monsterblock/templates/dnd5e/parts/trigger.hbs"
 						control="openTokenizer"
@@ -114,19 +44,9 @@
 			</ul>
 		{{/"modules/monsterblock/templates/dnd5e/parts/switch.hbs"}}
 		{{#if info.hasLair}}
-			{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-				flag=flags.show-lair-actions
-				control="show-lair-actions" 
-				on="MOBLOKS5E.show-lair-actions.disable" 
-				off="MOBLOKS5E.show-lair-actions.enable"
-			}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="show-lair-actions" }}
 		{{/if}}
-		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-			flag=flags.show-bio
-			control="show-bio" 
-			on="MOBLOKS5E.show-bio.disable" 
-			off="MOBLOKS5E.show-bio.enable"
-		}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="show-bio" }}
 		{{> "modules/monsterblock/templates/dnd5e/parts/trigger.hbs"
 			control="resetDefaults"
 			title="MOBLOKS5E.resetDefaults.label"
@@ -134,30 +54,10 @@
 		<li>
 			<a>{{localize "MOBLOKS5E.mini-block.label"}}</a>
 			<ul>
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs"
-					flag=flags.show-collapsible
-					control="show-collapsible"
-					on="MOBLOKS5E.show-collapsible.disable"
-					off="MOBLOKS5E.show-collapsible.enable"
-				}}
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-					flag=flags.compact-window
-					control="compact-window" 
-					on="MOBLOKS5E.compact-window.disable" 
-					off="MOBLOKS5E.compact-window.enable"
-				}}
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-					flag=flags.compact-layout
-					control="compact-layout" 
-					on="MOBLOKS5E.compact-layout.disable" 
-					off="MOBLOKS5E.compact-layout.enable"
-				}}
-				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" 
-					flag=flags.compact-feats
-					control="compact-feats" 
-					on="MOBLOKS5E.compact-feats.disable" 
-					off="MOBLOKS5E.compact-feats.enable"
-				}}
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="show-collapsible" }}
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="compact-window" }}
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="compact-layout" }}
+				{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="compact-feats" }}
 				<li>
 					<label>
 						<a class="trigger nochild" data-control="setFontSize">
