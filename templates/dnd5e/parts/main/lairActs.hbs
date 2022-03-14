@@ -1,12 +1,10 @@
-{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="MOBLOKS5E.LairActionsHeading" section="lair" }}
-	<p class="lair-description">{{ localize "MOBLOKS5E.LairText" name=actor.name }}</p>
+{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="MOBLOKS5E.LairActionsHeading" section="lair"}}
+	<p class="lair-description">{{localize "MOBLOKS5E.LairText" name=actor.name}}</p>
 	<ul>
 	{{#each features.lair.items as |item iid|}}
-		{{#if item.is.lair}}
 		<li>
-			{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item actor=@root.actor lairactions=true flags=@root.flags}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=item lairactions=true}}
 		</li>
-		{{/if}}
 	{{/each}}
 	</ul>
 {{/"modules/monsterblock/templates/dnd5e/collapsibleSection.hbs"}}

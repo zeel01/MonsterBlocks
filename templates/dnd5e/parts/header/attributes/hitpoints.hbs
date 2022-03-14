@@ -1,13 +1,13 @@
 <h4 class="attribute-name box-title">
 	<a class="trigger" data-control="_onRollHPFormula">
-		{{~localize "DND5E.HitPoints" }} 
+		{{~localize "DND5E.HitPoints"}}
 	</a>
 </h4>
 {{~#unless (or flags.current-hit-points flags.maximum-hit-points)~}}
-	<span title="{{ localize 'MOBLOKS5E.Average' }}" class="attr-value">{{data.attributes.hp.average}}</span>
+	<span title="{{localize "MOBLOKS5E.Average"}}" class="attr-value">{{data.attributes.hp.average}}</span>
 {{~/unless~}}
 {{#if flags.current-hit-points}}
-	<span title="{{ localize 'MOBLOKS5E.Current' }}" 
+	<span title="{{localize "MOBLOKS5E.Current"}}" 
 		placeholder="0" 
 		data-field-key="data.attributes.hp.value" 
 		data-dtype="Number" 
@@ -24,7 +24,7 @@
 	<span class="sep"> / </span>
 {{~/if~}}
 {{~#if flags.maximum-hit-points~}}
-	<span title="{{ localize 'MOBLOKS5E.Maximum' }}" 
+	<span title="{{localize "MOBLOKS5E.Maximum"}}" 
 		placeholder="0" 
 		data-field-key="data.attributes.hp.max" 
 		data-dtype="Number"
