@@ -57,25 +57,9 @@ export default class ItemPrep {
 	 * @memberof ItemPrep
 	 */
 	prepareItems() {
-		const [spells, other] = this.classify();
+		const [other, spells] = this.data.items.partition(item => item.type === "spell");
 		this.organizeSpellbooks(spells);
 		this.organizeFeatures(other);
-	}
-
-	/**
-	 * Sorts the items into spells and non-spells, then sorts those into categories.
-	 *
-	 * @return {[array, array]} [spells, other]
-	 * @memberof ItemPrep
-	 */
-	classify() {
-		let [other, spells] = this.data.items.partition(item => item.type === "spell");
-
-		// Apply item filters
-		spells = this.sheet._filterItems(spells, this.sheet._filters.spellbook);
-		other = this.sheet._filterItems(other, this.sheet._filters.features);
-
-		return [spells, other];
 	}
 
 	/**
