@@ -36,7 +36,7 @@ export default class ActionPreper extends ItemPreper {
 			reaction:     MonsterBlock5e.isReaction(data)
 		};
 		is.specialAction = this.isSpecialAction(is);
-		is.noNameItem = is.region || is.lair;
+		is.noName = is.region || is.lair;
 		
 		return is;
 	}
