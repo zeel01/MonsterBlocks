@@ -45,6 +45,9 @@
 		{{#if info.hasLair}}
 			{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="show-lair-actions"}}
 		{{/if}}
+		{{#if info.hasRegion}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="show-region-actions"}}
+		{{/if}}
 		{{> "modules/monsterblock/templates/dnd5e/parts/switch.hbs" control="show-bio"}}
 		{{> "modules/monsterblock/templates/dnd5e/parts/trigger.hbs"
 			control="resetDefaults"

@@ -103,6 +103,14 @@
 				"hint": "By default, show Lair Actions (not normally included in 5e monster stat-blocks)."
 			}
 		},
+		"show-region-actions": {
+			"enable": "Show regional effects",
+			"disable": "Hide regional effects",
+			"settings": {
+				"name": "Show Regional Effects",
+				"hint": "By default, show Regional Effects (not normally included in the 5e monster stat-blocks)."
+			}
+		},
 		"current-hit-points": {
 			"enable": "Show current hit points",
 			"disable": "Hide current hit points",
@@ -316,11 +324,17 @@
 			"innatespellcasting(psionics)",
 			"innatespellcastingpsionics"
 		],
+		"RegionalEffectsLocators": [
+			"regionaleffect",
+			"regioneffect"
+		],
 		
 		"LegActionCost": "Costs {number} Actions",
 		"LegendaryText": "The {name} can take {number} legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The {name} regains spent legendary actions at the start of its turn.",
 		
 		"LairActionsHeading": "Lair Actions",
-		"LairText": "On initiative count 20 (losing all initiative ties), the {name} takes a lair action to cause one of the following effects; the {name} can't use the same effect two rounds in a row:"
+		"LairText": "On initiative count 20 (losing all initiative ties), the {name} takes a lair action to cause one of the following effects; the {name} can't use the same effect two rounds in a row:",
+
+		"RegionHeading" : "Regional Effects"
 	}
 }
