@@ -101,6 +101,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			hasCastingFeature: Boolean(data.features.casting.items.length),
 			hasLegendaryActions: Boolean(data.features.legendary.items.length),
 			hasLair: Boolean(data.features.lair.items.length),
+			hasRegion: Boolean(data.features.region.items.length),
 			hasActions: Boolean(data.features.attacks.items.length || data.features.actions.items.length || data.features.multiattack.items.length),
 			hasBonusActions: Boolean(data.features.bonusActions.items.length),
 			hasReactions: Boolean(data.features.reaction.items.length),
@@ -428,6 +429,11 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	hasLair() {
 		return this.actor.data.items.some((item) => {
 			return this.constructor.isLairAction(item)
+		});
+	}
+	hasRegion() {
+		return this.actor.data.items.some((item) => {
+			return this.constructor.isRegionEffect(item);
 		});
 	}
 	hasLegendaryActions() {
@@ -1175,6 +1181,11 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		return item.data?.activation?.type === "lair";
 	}
 
+	static isRegionEffect(item) {
+		let name = item.name.toLowerCase().replace(/\s+/g, "");
+		return getTranslationArray("MOBLOKS5E.RegionalEffectsLocators").some(loc => name.includes(loc));
+	}
+
 	static isAction(item) {
 		return item.data?.activation?.type && item.data?.activation.type != "none";
 	}
@@ -1186,7 +1197,6 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	static isReaction(item) {
 		return item.data?.activation?.type === "reaction";
 	}
-		
 
 	static getItemAbility(item, actor, master) {
 		return master.object.items.get(item._id).abilityMod;

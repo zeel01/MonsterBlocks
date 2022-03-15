@@ -103,6 +103,14 @@
 				"hint": "Por padrão, mostrar Ações de Covil (não incluídas nos blocos de criaturas do livro)."
 			}
 		},
+		"show-region-actions": {
+			"enable": "Mostrar efeitos de região",
+			"disable": "Ocultar efeitos de região",
+			"settings": {
+				"name": "Mostrar efeitos de região",
+				"hint": "Por padrão, mostre os efeitos da região (não incluídas nos blocos de criaturas do livro)."
+			}
+		},
 		"current-hit-points": {
 			"enable": "Mostrar Pontos de Vida atuais",
 			"disable": "Esconder Pontos de Vida atuais",
@@ -330,11 +338,17 @@
 			"conjuraçãoinata(psiônico)",
 			"conjuraçãoinatapsiônico"
 		],
+		"RegionalEffectsLocators": [
+			"efeito regional",
+			"efeito de região"
+		],
 
 		"LegActionCost": "Custa {number} Ações",
 		"LegendaryText": "O(a) {name} pode executar {number} ações lendárias, escolhendo entre as opções abaixo. Apenas uma opção de ação lendária pode ser usada por vez, e apenas no final do turno de outro criatura. O(a) {name} recupera as ações lendárias gastas no começo do turno dele.",
 
 		"LairActionsHeading": "Ações de Covil",
-		"LairText": "Na contagem de iniciativa 20 (interrompendo a sequência de iniciativa), o(a) {name} executa uma ação de covil para causar um dos efeitos a seguir; o(a) {name} não pode usar o mesmo efeito em duas rodadas seguidas:"
+		"LairText": "Na contagem de iniciativa 20 (interrompendo a sequência de iniciativa), o(a) {name} executa uma ação de covil para causar um dos efeitos a seguir; o(a) {name} não pode usar o mesmo efeito em duas rodadas seguidas:",
+
+		"RegionHeading" : "Efeitos da região"
 	}
 }

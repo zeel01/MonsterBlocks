@@ -92,6 +92,13 @@
 		{{> "modules/monsterblock/templates/dnd5e/parts/main/lairActs.hbs"}}
 	{{/if}}
 
+{{! Regional Effects }}
+	{{#if (and flags.show-region-actions info.hasRegion)}}
+		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="MOBLOKS5E.RegionHeading" section="region"}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=features.region.items.[0]}}
+		{{/"modules/monsterblock/templates/dnd5e/collapsibleSection.hbs"}}
+	{{/if}}
+
 {{! Loot Items }}
 	{{#if info.hasLoot}}
 		{{#> "modules/monsterblock/templates/dnd5e/collapsibleSection.hbs" title="DND5E.Inventory" section="inventory"}}

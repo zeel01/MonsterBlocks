@@ -41,6 +41,7 @@ export default class ItemPrep {
 		legResist:	  { prep: ItemPreper,    filter: MonsterBlock5e.isLegendaryResistance,        items: [], dataset: {type: "feat"}   },
 		legendary:	  { prep: ActionPreper,  filter: MonsterBlock5e.isLegendaryAction,            items: [], dataset: {type: "feat"}   },
 		lair:		  { prep: ActionPreper,  filter: MonsterBlock5e.isLairAction,                 items: [], dataset: {type: "feat"}   },
+		region:       { prep: ActionPreper,  filter: MonsterBlock5e.isRegionEffect,               items: [], dataset: {type: "feat"}   },
 		multiattack:  { prep: ActionPreper,  filter: MonsterBlock5e.isMultiAttack,                items: [], dataset: {type: "feat"}   },
 		casting:	  { prep: CastingPreper, filter: CastingPreper.isCasting.bind(CastingPreper), items: [], dataset: {type: "feat"}   },
 		reaction:	  { prep: ActionPreper,  filter: MonsterBlock5e.isReaction,                   items: [], dataset: {type: "feat"}   },

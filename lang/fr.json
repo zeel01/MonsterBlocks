@@ -103,6 +103,14 @@
 				"hint": "Affiche les actions d'antre par défaut (pas incluses dans les stat-blocks des monstres)."
 			}
 		},
+		"show-region-actions": {
+			"enable": "Afficher les effets de région",
+			"disable": "Masquer les effets de région",
+			"settings": {
+				"name": "Afficher les effets de région",
+				"hint": "Par défaut, affiche les effets de région (qui ne sont normalement pas inclus dans les blocs de statistiques du 5e monstre)."
+			}
+		},
 		"current-hit-points": {
 			"enable": "Afficher les points de vie actuels",
 			"disable": "Cacher les points de vie actuels",
@@ -324,11 +332,17 @@
 			"incantationinnée(psionique)",
 			"incantationinnéepsionique"
 		],
+		"RegionalEffectsLocators": [
+			"effetrégional",
+			"effetderégion"
+		],
 		
 		"LegActionCost": "Coûte {number} Actions",
 		"LegendaryText": "Le {name} peut effectuer {number} actions légendaires, en choisissant parmi les options suivantes. Une seule action légendaire peut être utilisée à la fois, et seulement à la fin du tour d'une autre créature. Le {name} récupère les actions légendaires dépensées au début de son tour.",
 		
 		"LairActionsHeading": "Actions d'antre",
-		"LairText": "À 20 lors du décompte d'initiative (sachant qu'il perd en cas d'égalité), le {name} peut effectuer une de ses actions d'antre. Il ne peut pas le faire tant qu'il est neutralisé ou incapable d'agir d'une façon ou d'une autre. S'il est surpris lors d'un combat, il ne peut pas l'effectuer avant la fin de son premier tour de jeu."
+		"LairText": "À 20 lors du décompte d'initiative (sachant qu'il perd en cas d'égalité), le {name} peut effectuer une de ses actions d'antre. Il ne peut pas le faire tant qu'il est neutralisé ou incapable d'agir d'une façon ou d'une autre. S'il est surpris lors d'un combat, il ne peut pas l'effectuer avant la fin de son premier tour de jeu.",
+
+		"RegionHeading" : "Effets de région"
 	}
 }

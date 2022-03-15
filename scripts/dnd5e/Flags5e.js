@@ -15,6 +15,7 @@ export default class Flags5e extends Flags {
 			"current-hit-points" : { type: Boolean, default: true  },
 			"maximum-hit-points" : { type: Boolean, default: true  },
 			"show-lair-actions"  : { type: Boolean, default: false },
+			"show-region-actions": { type: Boolean, default: false },
 			"show-not-prof"      : { type: Boolean, default: false },
 			"show-resources"     : { type: Boolean, default: true  },
 			"show-skill-save"    : { type: Boolean, default: true  },
