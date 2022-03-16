@@ -5,6 +5,8 @@ import ActionPreper from "./ActionPreper.js";
 import ItemPreper from "./ItemPreper.js";
 import InnateSpellbookPrep from "./InnateSpellbookPrep.js"
 
+import SpellBook from "./SpellBook.js";
+
 /**
  * @typedef {import{"../../../../systems/dnd5e/module/item/sheet.js"}.Item5e} Item5e
  */
@@ -71,6 +73,12 @@ export default class ItemPrep {
 	organizeSpellbooks(spells) {
 		this.data.spellbook = this.sheet._prepareSpellbook(this.data, spells);
 		this.data.innateSpellbook = new InnateSpellbookPrep(this.data.spellbook, this.sheet).prepare();
+
+		const spellbook = new SpellBook(this.sheet, spells);
+		console.log("SPELLBOOK:", spellbook);
+		console.log("PREPARED:", spellbook.getPrepared());
+		console.log("INNATE", spellbook.getInnate());
+		console.log("PACT", spellbook.getPact());
 	}
 
 	/**
