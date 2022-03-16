@@ -706,6 +706,9 @@ li:nth-last-of-type(2):after {
 .monsterblock .spell .name-extension {
 	font-weight: initial;
 }
+.monsterblock .item-recharge {
+	color: var(--heading-color);
+}
 .monsterblock .legendary-actions .feature-description {
 	padding-left: 2ch;
 	text-indent: -2ch;
@@ -1120,7 +1123,4 @@ li:nth-last-of-type(2):after {
 }
 .monsterblock .flavor-text > p {
 	padding: 0 1ch;
-}
-.monsterblock .warn {
-	color: darkred;
 }

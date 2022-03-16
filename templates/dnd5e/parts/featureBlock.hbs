@@ -10,8 +10,8 @@
 				{{~item.name~}} 
 			</span>
 			{{~#if item.data.recharge.value~}}
-				<span class="name-extension{{#unless item.data.recharge.charged}} item-recharge warn{{/unless}}" data-item-id="{{item._id}}">
-					({{#if item.data.recharge.charged}}{{localize "DND5E.Charged"}}{{else}}{{localize "DND5E.Recharge"}}{{/if}} {{item.data.recharge.value}}-6){{~" "~}}
+				<span class="name-extension{{#unless item.data.recharge.charged}} item-recharge{{/unless}}" data-item-id="{{item._id}}">
+					({{localize "DND5E.Recharge"}} {{item.data.recharge.value}}-6){{~" "~}}
 				</span>
 			{{~/if~}}
 			{{~#if (and item.is.legendary (gt item.data.activation.cost 1))~}}
