@@ -238,13 +238,13 @@
 }
 .monsterblock .item-attackRoll:hover,
 .monsterblock .item-damageRoll:hover,
+.monsterblock .item-recharge:hover,
 .monsterblock .ability:hover, 
 .monsterblock .saving-throw:hover, 
 .monsterblock .skill:hover, 
 .monsterblock .item-name:hover, 
 .monsterblock .spell:hover, 
 .monsterblock a.inline-roll:hover, 
-.monsterblock [data-roll-formula]:hover, 
 .monsterblock .window-content a:hover, 
 .monsterblock .tweak-menu ul label:hover,
 .monsterblock .menu .menu-toggle:hover {
@@ -1120,4 +1120,7 @@ li:nth-last-of-type(2):after {
 }
 .monsterblock .flavor-text > p {
 	padding: 0 1ch;
+}
+.monsterblock .warn {
+	color: darkred;
 }
