@@ -7,7 +7,7 @@
 	<span title="{{localize "MOBLOKS5E.Average"}}" class="attr-value">{{data.attributes.hp.average}}</span>
 {{~/unless~}}
 {{#if flags.current-hit-points}}
-	<span title="{{localize "MOBLOKS5E.Current"}}" 
+	<span title="{{localize "DND5E.HitPointsCurrent"}}" 
 		placeholder="0" 
 		data-field-key="data.attributes.hp.value" 
 		data-dtype="Number" 
@@ -20,11 +20,27 @@
 		{{~/if~}}
 	</span>
 {{~/if~}}
+{{#if flags.temp-hit-points}}
+	<span class="paren">(</span>{{~" "~}}
+	<span title="{{~localize "DND5E.HitPointsTemp"~}}" 
+		placeholder="0" 
+		data-field-key="data.attributes.hp.temp" 
+		data-dtype="Number" 
+		class="attr-value" 
+		contenteditable="{{owner}}">
+		{{~#if data.attributes.hp.temp~}}
+			{{~data.attributes.hp.temp~}}
+		{{~else~}}
+			0
+		{{~/if~}}
+	</span>{{~" "~}}
+	<span class="paren">)</span>
+{{/if}}
 {{~#if (and flags.current-hit-points flags.maximum-hit-points)~}}
 	<span class="sep"> / </span>
 {{~/if~}}
 {{~#if flags.maximum-hit-points~}}
-	<span title="{{localize "MOBLOKS5E.Maximum"}}" 
+	<span title="{{localize "DND5E.HitPointsMax"}}" 
 		placeholder="0" 
 		data-field-key="data.attributes.hp.max" 
 		data-dtype="Number"
@@ -36,6 +52,10 @@
 			0
 		{{~/if~}}
 	</span>
+{{/if}}
+
+{{#if flags.temp-hit-points}}
+
 {{/if}}
 
 {{#if data.attributes.hp.formula}}<span class="paren">(</span>{{~/if~}}
