@@ -45,7 +45,7 @@
 		data-field-key="data.attributes.hp.max" 
 		data-dtype="Number"
 		class="attr-value" 
-		contenteditable="{{owner}}">
+		contenteditable="{{flags.editing}}">
 		{{~#if data.attributes.hp.max~}}
 			{{data.attributes.hp.max~}}
 		{{~else~}}
@@ -53,11 +53,6 @@
 		{{~/if~}}
 	</span>
 {{/if}}
-
-{{#if flags.temp-hit-points}}
-
-{{/if}}
-
 {{#if data.attributes.hp.formula}}<span class="paren">(</span>{{~/if~}}
 <span title="Average: {{data.attributes.hp.average}}"
 	placeholder="(1d6)"

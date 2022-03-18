@@ -124,7 +124,7 @@
 			"disable": "Hide temporary hit points",
 			"settings": {
 				"name": "Show Temporary Hit Points",
-				"hint": "By default, display the temporary hit point values underneith the current it point values."
+				"hint": "By default, display the temporary hit point values after the current it point values."
 			}
 		},
 		"max-height-offset": {
@@ -206,7 +206,7 @@
 		"FoundryThemeName": "Foundry",
 		"SystemThemeName": "5e System",
 		
-		"Average": "Average",
+		"Average": "Average Hit Points",
 		
 		"Abbrstr": "str",
 		"Abbrdex": "dex",

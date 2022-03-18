@@ -119,6 +119,14 @@
 				"hint": "最大ヒットポイントを計算して表示します。最大と最低HPが表示されていない場合は平均を使用します。"
 			}
 		},
+		"temp-hit-points": {
+			"enable": "一時的なヒットポイントを表示する",
+			"disable": "一時的なヒットポイントを非表示にする",
+			"settings": {
+				"name": "一時的なヒットポイントを表示する",
+				"hint": "デフォルトでは、現在のitポイント値の後に一時的なヒットポイント値を表示します。"
+			}
+		},
 		"max-height-offset": {
 			"settings": {
 				"name": "ウィンドウの最大の長さオフセット",
@@ -198,9 +206,7 @@
 		"FoundryThemeName": "Foundry",
 		"SystemThemeName": "5e System",
 
-		"Average": "平均",
-		"Current": "現在",
-		"Maximum": "最大",
+		"Average": "平均ヒットポイント",
 
 		"Abbrstr": "【筋】",
 		"Abbrdex": "【敏】",

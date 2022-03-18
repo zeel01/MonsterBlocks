@@ -119,6 +119,14 @@
 				"hint": "Affiche le maximum de points de vie par défaut."
 			}
 		},
+		"temp-hit-points": {
+			"enable": "Afficher les points de vie temporaires",
+			"disable": "Masquer les points de vie temporaires",
+			"settings": {
+				"name": "Afficher les points de vie temporaires",
+				"hint": "Par défaut, affichez les valeurs des points de vie temporaires après les valeurs actuelles des points it."
+			}
+		},
 		"max-height-offset": {
 			"settings": {
 				"name": "Décalage de hauteur maximale",
@@ -198,9 +206,7 @@
 		"FoundryThemeName": "Foundry",
 		"SystemThemeName": "5e System",
 		
-		"Average": "Moyen",
-		"Current": "Actuel",
-		"Maximum": "Maximum",
+		"Average": "Points de vie moyens",
 		
 		"Abbrstr": "for",
 		"Abbrdex": "dex",
