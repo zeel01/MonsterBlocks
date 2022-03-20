@@ -696,11 +696,15 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		html.find(".profile-image").click((event) => {
 			event.preventDefault();
 
-			new ImagePopout(event.target.currentSrc, {
-				title: this.actor.name,
-				shareable: true,
-				uuid: this.actor.uuid
-			}).render(true);
+			if (event.altKey || event.ctrlKey || event.shiftKey) {
+				this.flagManager.flags["use-token-image"] = !this.flagManager.flags["use-token-image"];
+			} else {
+				new ImagePopout(event.target.currentSrc, {
+					title: this.actor.name,
+					shareable: true,
+					uuid: this.actor.uuid
+				}).render(true);
+			}
 		});
 		
 		html.find("[data-roll-formula]").click(async (event) => {			// Universal way to add an element that provides a roll, just add the data attribute "data-roll-formula" with a formula in it, and this applies.
