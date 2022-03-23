@@ -671,20 +671,15 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		});
 		html.find(".switch").click((event) => {							// Switches are the primary way that settings are applied per-actor.
 			event.preventDefault();
-			let control = event.currentTarget.dataset.control;			// A data attribute is used on an element with the class .switch, and it contains the name of the switch to toggle.
-			
-			let state = !this.flagManager.flags[control];	            // Get the current setting of this flag, and reverse it.
-			if (debug.enabled) console.debug(`Monster Block | %cSwitching: ${control} to: ${state}`, "color: orange")
-			
-			this.flagManager.flags[control] = state;                    // Set the flag to the new state.
+			this.flagManager.toggle(event.currentTarget.dataset.control);
 		});
-		html.find(".trigger").click((event) => {							
+		html.find(".trigger").click((event) => {
 			event.preventDefault();
 			let control = event.currentTarget.dataset.control;
-			
+
 			this[control](event);
 		});
-		html.find(".switch-input").keydown((event) => {							
+		html.find(".switch-input").keydown((event) => {
 			if (event.key !== "Enter") return;
 			event.preventDefault();
 			let target = event.currentTarget;
@@ -696,15 +691,26 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		html.find(".profile-image").click((event) => {
 			event.preventDefault();
 
-			if (event.altKey || event.ctrlKey || event.shiftKey) {
-				this.flagManager.flags["use-token-image"] = !this.flagManager.flags["use-token-image"];
-			} else {
-				new ImagePopout(event.target.currentSrc, {
-					title: this.actor.name,
-					shareable: true,
-					uuid: this.actor.uuid
-				}).render(true);
+			// toggle the profile image - alt for alternate
+			if (event.altKey) {
+				this.flagManager.toggle("use-token-image");
+				return;
 			}
+
+			let image = event.target.currentSrc;
+
+			if (event.ctrlKey) image = event.target.dataset.edit.startsWith("token.") ? this.actor.data.img : this.actor.data.token.img;
+
+			console.log(image);
+
+			// open the profile image
+			const popout = new ImagePopout(image, {
+				title: this.actor.name,
+				shareable: true,
+				uuid: this.actor.uuid
+			}).render(true);
+
+			if (event.ctrlKey || event.shiftKey) popout.shareImage();
 		});
 		
 		html.find("[data-roll-formula]").click(async (event) => {			// Universal way to add an element that provides a roll, just add the data attribute "data-roll-formula" with a formula in it, and this applies.

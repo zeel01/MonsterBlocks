@@ -101,4 +101,8 @@ export default class Flags {
 			yield { name, ...details, value: this.flags[name] }
 		}
 	}
+	
+	toggle(name) {
+		this.flags[name] = !this.flags[name];
+	}
 }

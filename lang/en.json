@@ -185,6 +185,7 @@
 
 		"DescriptionS": "Descriptions",
 		"ProfileImage": "Profile image",
+		"ProfileImageHint": "\n- Alt Key to switch image\n- Shift Key to show current image to players\n- Ctrl Key to show alternate image to players",
 		"OpenTokenizer": "Open VTTA Tokenizer",
 		"QuickInsert": "Quick Insert",
 
