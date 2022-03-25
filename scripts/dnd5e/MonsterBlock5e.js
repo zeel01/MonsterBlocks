@@ -1112,22 +1112,6 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		await this.render(true);
 	}
 
-	/**
-	 *
-	 *
-	 * @param {boolean} success - Whether or not the roll was a success.
-	 * @param {Event} event - The event object associated with this roll.
-	 * @memberof MonsterBlock5e
-	 */
-	async setCharged(success, event) {
-		await this.actor.updateEmbeddedDocuments("Item", [{
-			_id: event.currentTarget.dataset.itemId,
-			"data.recharge.charged": success
-		}])
-
-		super._onChangeInput(event);
-	}
-
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
 		let name = item.name.toLowerCase().replace(/\s+/g, "");	// Convert the name of the item to all lower case, and remove whitespace.
 		return getTranslationArray("MOBLOKS5E.MultiattackLocators").some(loc => name.includes(loc));
