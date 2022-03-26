@@ -1,10 +1,11 @@
 import ActorSheet5eNPC from "../../../../systems/dnd5e/module/actor/sheets/npc.js";
 import TraitSelector from "../../../../systems/dnd5e/module/apps/trait-selector.js";
 import { MenuItem, MenuTree } from "../MenuTree.js";
-import { debug, ContentEditableAdapter, getTranslationArray } from "../utilities.js";
+import { debug, ContentEditableAdapter } from "../utilities.js";
 import { inputExpression } from "../../input-expressions/handler.js";
 import ItemPrep from "./ItemPrep.js";
 import Flags from "./Flags5e.js";
+import ItemPreper from "./ItemPreper.js";
 
 /* global QuickInsert:readonly */
 
@@ -97,14 +98,14 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		data.info = {		// A collection of extra information used mainly for conditionals
 			hasSaveProfs: this.hasSaveProfs(),
-			hasSkills: this.hasSkills(),							
+			hasSkills: this.hasSkills(),
 			hasCastingFeature: Boolean(data.features.casting.items.length),
+			hasActions: Boolean(data.features.attacks.items.length || data.features.actions.items.length || data.features.multiattack.items.length),
+			hasBonusActions: Boolean(data.features.bonusActions.items.length) || data.features.attacks.items.some((item) => item.is.bonusAction),
+			hasReactions: Boolean(data.features.reactions.items.length) || data.features.attacks.items.some((item) => item.is.reaction),
+			hasFeatures: Boolean(data.features.features.items.length || data.features.casting.items.length || data.features.legResist.items.length),
 			hasLegendaryActions: Boolean(data.features.legendary.items.length),
 			hasLair: Boolean(data.features.lair.items.length),
-			hasActions: Boolean(data.features.attacks.items.length || data.features.actions.items.length || data.features.multiattack.items.length),
-			hasBonusActions: Boolean(data.features.bonusActions.items.length),
-			hasReactions: Boolean(data.features.reaction.items.length),
-			hasFeatures: Boolean(data.features.features.items.length || data.features.casting.items.length || data.features.legResist.items.length),
 			hasLoot: Boolean(data.features.equipment.items.length),
 			vttatokenizer: Boolean(window.Tokenizer)
 		}
@@ -125,6 +126,18 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		
 		this.templateData = data;
 		return data;
+	}
+
+	hasSaveProfs() {
+		return Object.values(this.actor.data?.data?.abilities)?.some(ability => ability.proficient);
+	}
+	hasSkills() {
+		return Object.values(this.actor.data?.data?.skills)?.some(skill => skill.value);
+	}
+	hasAtWillSpells() {	// Some normal casters also have a few spells that they can cast "At will"
+		return this.actor.data.items.some((item) => {
+			return item.data.data.preparation?.mode === "atwill";
+		});
 	}
 
 	/**
@@ -404,37 +417,6 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		}));
 	}
 
-	hasSaveProfs() {
-		return Object.values(this.actor.data?.data?.abilities)?.some(ability => ability.proficient);
-	}
-	hasSkills() {
-		return Object.values(this.actor.data?.data?.skills)?.some(skill => skill.value);
-	}
-	hasAtWillSpells() {	// Some normal casters also have a few spells that they can cast "At will"
-		return this.actor.data.items.some((item) => {
-			return item.data.data.preparation?.mode === "atwill";
-		});
-	}
-	hasBonusActions() {
-		return this.actor.data.items.some((item) => {
-			return this.constructor.isBonusAction(item);
-		});
-	}
-	hasReactions() {
-		return this.actor.data.items.some((item) => {
-			return this.constructor.isReaction(item)
-		});
-	}
-	hasLair() {
-		return this.actor.data.items.some((item) => {
-			return this.constructor.isLairAction(item)
-		});
-	}
-	hasLegendaryActions() {
-		return this.actor.data.items.some((item) => {
-			return this.constructor.isLegendaryAction(item)
-		});
-	}
 	async openTokenizer() {
 		/* global Tokenizer */
 		if (window.Tokenizer) {
@@ -1155,41 +1137,6 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		}])
 
 		super._onChangeInput(event);
-	}
-
-	static isMultiAttack(item) {	// Checks if the item is the multiattack action.
-		let name = item.name.toLowerCase().replace(/\s+/g, "");	// Convert the name of the item to all lower case, and remove whitespace.
-		return getTranslationArray("MOBLOKS5E.MultiattackLocators").some(loc => name.includes(loc));
-	}
-	
-	static isLegendaryResistance(item) {
-		return item.data?.consume?.target === "resources.legres.value";
-	}
-	
-	// Item purpose checks
-	static isLegendaryAction(item) {
-		return item.data?.activation?.type === "legendary";
-	}
-	
-	static isLairAction(item) {
-		return item.data?.activation?.type === "lair";
-	}
-
-	static isAction(item) {
-		return item.data?.activation?.type && item.data?.activation.type != "none";
-	}
-
-	static isBonusAction(item) {
-		return item.data?.activation?.type === "bonus";
-	}
-	
-	static isReaction(item) {
-		return item.data?.activation?.type === "reaction";
-	}
-		
-
-	static getItemAbility(item, actor, master) {
-		return master.object.items.get(item._id).abilityMod;
 	}
 
 	static formatNumberCommas(number) {
