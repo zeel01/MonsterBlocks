@@ -224,6 +224,9 @@
 		"ProfBonus": "Bônus de proficiência",
 
 		"EditHint": "Clique com o botão direito para editar",
+		"ProfileImageHintAlt": "Tecla Alt para alternar a imagem",
+		"ProfileImageHintShift": "Tecla Shift para mostrar a imagem atual aos jogadores",
+		"ProfileImageHintCtrl": "Tecla de controle para mostrar imagem alternativa aos jogadores",
 		"EditButtonHint": "Clique no botão + acima para adicionar recursos",
 
 		"AddFeat": "Característica",
