@@ -116,7 +116,7 @@ export default class CastingPreper extends ItemPreper {
 	 * @override
 	 * @memberof CastingPreper
 	 */
-	prepare() {		
+	prepare() {
 		this.data.castingType = this.constructor.isSpellcasting(this.item) ?
 			(this.constructor.isPactMagic(this.item) ? this.cts.pact : this.cts.standard) : this.cts.innate;
 
