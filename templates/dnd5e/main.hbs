@@ -41,6 +41,9 @@
 				{{> "modules/monsterblock/templates/dnd5e/parts/featureBlock.hbs" item=features.multiattack.items.[0]}}
 			{{/if}}
 
+			{{! Spellcasting Action }}
+			{{> "modules/monsterblock/templates/dnd5e/parts/spellcasting/spellcasting-redux.hbs" spellbook=spellbook}}
+
 			{{! Attacks }}
 			{{#each features.attacks.items as |item iid|}}
 				{{#unless item.is.specialAction}}

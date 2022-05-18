@@ -1,0 +1,15 @@
+<ul class="inline-list spells-level-{{level}}">
+{{#each spells as |spell id|}}
+	<li class="spell" data-item-id="{{spell._id}}">
+		{{#if @root.flags.show-delete}}
+			<a class="delete-item" data-item-id="{{spell._id}}">
+				<i class="fa fa-trash"></i>
+			</a>
+		{{/if}}
+		<span class="spell-name">{{spell.name}}</span>
+		{{~#if spell.hasresource~}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/resource.hbs" resource=spell.resource}}
+		{{~/if~}}
+	</li>
+{{/each}}
+</ul>
