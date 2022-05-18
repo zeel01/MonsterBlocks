@@ -177,6 +177,12 @@
 			"enable": "Show biography",
 			"disable": "Hide biography"
 		},
+
+		"Spellcasting": {
+			"Cantrip": "Cantrip",
+			"CantripPl": "Cantrips",
+			"AtWill": "at will"
+		},
 			
 		"MonsterBlocks": "Monster Blocks",
 		
