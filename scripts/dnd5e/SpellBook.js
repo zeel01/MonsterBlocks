@@ -155,6 +155,22 @@ export class SpellPage {
 		throw("The specified spell page is not valid");
 	}
 
+	/**
+	 * @static
+	 * @param {PageIdentity} pageIdent
+	 * @return {string} 
+	 * @memberof SpellPage
+	 */
+	static getPageLabel({ mode, level, uses }) {
+		if (this.isPact(mode) && this.isCantrip(level)) return "MOBLOKS5E.Spellcasting.CantripPl";
+		if (this.isPrepared(mode)) return `${level}th level`;
+		if (this.isInnate(mode)) return `${uses}/day`;
+		if (this.isPact(mode)) return `levels 1-${level}`;
+		if (this.isAtWill(mode, uses)) return "MOBLOKS5E.Spellcasting.AtWill";
+
+		throw("The specified spell page is not valid");
+	}
+
 	static isPrepared(mode) {
 		return mode === "prepared" || mode === "always"
 	}
@@ -207,6 +223,9 @@ export class SpellPage {
 
 	get name() {
 		return this.constructor.getPageName(this);
+	}
+	get label() {
+		return game.i18n.localize(this.constructor.getPageLabel(this));
 	}
 
 	get isInnate() {
