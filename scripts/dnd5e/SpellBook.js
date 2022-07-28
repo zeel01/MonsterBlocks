@@ -4,7 +4,10 @@ import ItemPreper from "./ItemPreper.js";
 import * as Templates from "./templates.js";
 
 /**
- * @typedef {import{"../../../../systems/dnd5e/module/item/sheet.js"}.Item5e} Item5e
+ * @typedef {import("../../../../systems/dnd5e/module/item/sheet.js").Item5e} Item5e
+ */
+/** 
+ * @typedef {import("./MonsterBlock5e.js").MonsterBlock5e} MonsterBlock5e
  */
 /**
  * @typedef {("always"|"atwill"|"innate"|"pact"|"prepared")} PrepMode
@@ -60,12 +63,15 @@ export default class SpellBook {
 
 	/**
 	 * Creates an instance of SpellBook.
-	 * @param {import("./MonsterBlock5e.js").MonsterBlock5e} sheet - The sheet instance
+	 * @param {MonsterBlock5e} sheet - The sheet instance
 	 * @param {Item5e[]} items - All the items in the spellbook
 	 * @param {Object<string, SpellPage>} pages - Pages from another spellbook
 	 * @memberof SpellBook
 	 */
-	constructor(sheet, items, pages) {
+	constructor(sheet, items, pages, type) {
+		/** 
+		 * @type {MonsterBlock5e} The sheet this spellbook is for. 
+		 */
 		this.sheet = sheet;
 		this.items = items;
 
