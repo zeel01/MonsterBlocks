@@ -5,6 +5,7 @@ import { debug, ContentEditableAdapter, getTranslationArray } from "../utilities
 import { inputExpression } from "../../input-expressions/handler.js";
 import ItemPrep from "./ItemPrep.js";
 import Flags from "./Flags5e.js";
+import StatGetter from "./StatGetter.js";
 
 /* global QuickInsert:readonly */
 
@@ -22,6 +23,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 		this.position.default = true;
 		
 		this.flagManager = new Flags(this);
+		this.statGetter = new StatGetter(this, this.actor);
 
 		//this.flagManager.prep().then((p) => {
 			this.options.classes.push(this.themes[this.currentTheme].class);
