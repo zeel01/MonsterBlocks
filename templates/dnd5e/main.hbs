@@ -19,6 +19,12 @@
 				{{/if}}
 			{{/each}}
 
+			{{#each spellbooks as |spellbook|}}
+				{{#if spellbook.show}}
+					{{> "modules/monsterblock/templates/dnd5e/parts/spellcasting/spellcasting-redux.hbs" spellbook=spellbook}}
+				{{/if}}
+			{{/each}}
+
 			{{! Non-action Features }}
 			{{#each features.features.items as |item iid|}}
 				{{#unless item.is.specialAction}}
@@ -42,7 +48,7 @@
 			{{/if}}
 
 			{{! Spellcasting Action }}
-			{{> "modules/monsterblock/templates/dnd5e/parts/spellcasting/spellcasting-redux.hbs" spellbook=spellbook}}
+			{{> "modules/monsterblock/templates/dnd5e/parts/spellcasting/spellcasting-redux.hbs" spellbook=spellbooks.full}}
 
 			{{! Attacks }}
 			{{#each features.attacks.items as |item iid|}}
