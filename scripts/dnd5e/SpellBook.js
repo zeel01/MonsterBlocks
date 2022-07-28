@@ -29,8 +29,8 @@ export default class SpellBook {
 	 * @return {*} 
 	 * @memberof SpellBook
 	 */
-	static fromPages(book, pages) {
-		return new SpellBook(book.sheet, [].concat(...Object.values(pages).map(page => page.spells)), pages);
+	static fromPages(book, pages, type) {
+		return new SpellBook(book.sheet, [].concat(...Object.values(pages).map(page => page.spells)), pages, type);
 	}
 
 	static getPrepared(book) {
@@ -42,12 +42,12 @@ export default class SpellBook {
 			if (will) pages.push(will);
 		}
 
-		return this.fromPages(book, Object.fromEntries(pages));
+		return this.fromPages(book, Object.fromEntries(pages), "prepared");
 	}
 	static getInnate(book) {
 		const entries = book.pageEntries;
 		const pages = entries.filter(([name, page]) => page.isInnate || page.isAtWill);
-		return this.fromPages(book, Object.fromEntries(pages));
+		return this.fromPages(book, Object.fromEntries(pages), "innate");
 	}
 	static getPact(book) {
 		const entries = book.pageEntries;
@@ -58,7 +58,7 @@ export default class SpellBook {
 			if (cantrips) pages.push(cantrips);
 		}
 
-		return this.fromPages(book, Object.fromEntries(pages));
+		return this.fromPages(book, Object.fromEntries(pages), "pact");
 	}
 
 	/**
