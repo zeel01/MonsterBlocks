@@ -74,6 +74,12 @@ export default class SpellBook {
 		 */
 		this.sheet = sheet;
 		this.items = items;
+		this.type  = type;
+
+		this.stats = this.sheet.statGetter;
+		this.editing = this.sheet.flags.editing;
+
+		this.show = true;
 
 		if (!pages) this.fillPages();
 		else this.pages = pages;
@@ -99,6 +105,9 @@ export default class SpellBook {
 	}
 	get pageValues() {
 		return Object.values(this.pages);
+	}
+	get title() {
+		return game.i18n.localize(`MOBLOKS5E.Spellcasting.${this.type}Spellcasting`);
 	}
 
 	fillPages() {
@@ -131,6 +140,45 @@ export default class SpellBook {
 	}
 	get hasPactSpells() {
 		return this.pageValues.some(page => page.isPact);
+	}
+	get hasPages() {
+		return Boolean(Object.keys(this.pages).length)
+	}
+
+	get introText() {
+		const stats = this.stats;
+		const template = game.i18n.localize(`MOBLOKS5E.Spellcasting.${this.type}CasterText`);
+		const builder  = Handlebars.compile(template);
+		console.log(stats.castingAbility, stats.castingAbilityLabel)
+		return builder({
+			name: this.sheet.actor.name,
+			level: stats.spellLevel,
+			nth: Templates.editable({
+				key: "data.details.spellLevel",
+				value: stats.spellLevel,
+				className: "caster-level",
+				dtype: "Number",
+				placeholder: "0",
+				enabled: this.editing
+			}) + Helpers.getOrdinalSuffix(stats.spellLevel),
+			ability: Templates.selectField({
+				key: "data.attributes.spellcasting",
+				value: stats.castingAbility,
+				label: stats.castingAbilityLabel,
+				listClass: "actor-size",
+				options: Object.entries(CONFIG.DND5E.abilities)
+					.map(([key, value]) => ({
+						value: key,
+						label: value
+					}))
+					.filter(opt => opt.value != stats.castingAbility),
+				enabled: this.editing
+			}),
+			tohit: `${stats.spellAttackBonus > -1 ? "+" : ""}${stats.spellAttackBonus}`,
+			dc: stats.spellDc,
+			hasAtWill: this.hasAtWillSpells,
+			spells: ""
+		});
 	}
 
 	getPrepared() {

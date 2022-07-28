@@ -1,6 +1,9 @@
 <section class="item monster-feature spellcasting-trait{{#unless casting.flags.monsterblock.expanded}} compact{{/unless}}" title="{{#if @root.flags.editing}}{{localize "MOBLOKS5E.EditHint"}}{{/if}}">
-<span class="item-name" data-item-id="">Spellcasting</span>.
 	<div class="feature-description inline-children">
-		{{> "modules/monsterblock/templates/dnd5e/parts/spellcasting/spellbook.hbs" spellbook=spellbook}}
+		<span class="item-name" data-item-id="">{{spellbook.title}}</span>.
+		<span class="description">{{{spellbook.introText}}}</span>
+		<span class="description">
+			{{> "modules/monsterblock/templates/dnd5e/parts/spellcasting/spellbook.hbs" spellbook=spellbook}}
+		</span>
 	</div>
 </section>
