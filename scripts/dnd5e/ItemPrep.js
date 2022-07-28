@@ -63,7 +63,9 @@ export default class ItemPrep {
 	 */
 	prepareItems() {
 		this.organizeFeatures(this.data.items);
-		this.organizeSpellbooks(this.data.features.spells.items);
+		
+		if (this.data.features.spells.items.length) 
+			this.organizeSpellbooks(this.data.features.spells.items);
 	}
 
 	/**
@@ -73,19 +75,29 @@ export default class ItemPrep {
 	 * @memberof ItemPrep
 	 */
 	organizeSpellbooks(spells) {
-		const spellbook = new SpellBook(this.sheet, spells);
-		this.data.spellbook = spellbook;
+		const spellbook = new SpellBook(this.sheet, spells, null, "full");
 
-		//this.data.spellbook = this.sheet._prepareSpellbook(this.data, spells);
-		//this.data.innateSpellbook = new InnateSpellbookPrep(this.data.spellbook, this.sheet).prepare();
+		const spellbooks = {
+			"full": spellbook,
+			"prepared": spellbook.getPrepared(),
+			"innate": spellbook.getInnate(),
+			"pact": spellbook.getPact(),
+		}
+
+		Object.values(spellbooks).forEach(book => {
+			if (!book.hasPages) book.show = false;
+		});
+		spellbooks.full.show = false;
+
+		this.data.spellbooks = spellbooks;
 
 		if (debug.DEBUG) {	
 			const label = "Monster Blocks | Spellbook";
 			console.group(label);
-			console.log("Full:    ", spellbook);
-			console.log("Prepared:", spellbook.getPrepared());
-			console.log("Innate   ", spellbook.getInnate());
-			console.log("Pact     ", spellbook.getPact());
+			console.log("Full:    ", this.data.spellbooks.full);
+			console.log("Prepared:", this.data.spellbooks.prepared);
+			console.log("Innate   ", this.data.spellbooks.innate);
+			console.log("Pact     ", this.data.spellbooks.pact);
 			console.groupEnd(label);
 		}
 	}
