@@ -169,6 +169,7 @@ export class SpellPage {
 	 */
 	static getPageLabel({ mode, level, uses }) {
 		if (this.isPact(mode) && this.isCantrip(level)) return "MOBLOKS5E.Spellcasting.CantripPl";
+		if (this.isPrepared(mode) && this.isCantrip(level)) return "MOBLOKS5E.Spellcasting.CantripPl";
 		if (this.isPrepared(mode)) return `${level}th level`;
 		if (this.isInnate(mode)) return `${uses}/day`;
 		if (this.isPact(mode)) return `levels 1-${level}`;
@@ -180,7 +181,7 @@ export class SpellPage {
 	static isPrepared(mode) {
 		return mode === "prepared" || mode === "always"
 	}
-	static isPact(mode) {
+	static isPact(mode) {			
 		return mode === "pact";
 	}
 	static isInnate(mode) {
