@@ -1,5 +1,3 @@
-import ActorSheet5eNPC from "../../../../systems/dnd5e/module/actor/sheets/npc.js";
-import TraitSelector from "../../../../systems/dnd5e/module/apps/trait-selector.js";
 import { MenuItem, MenuTree } from "../MenuTree.js";
 import { debug, ContentEditableAdapter, getTranslationArray } from "../utilities.js";
 import { inputExpression } from "../../input-expressions/handler.js";
@@ -15,7 +13,8 @@ import Flags from "./Flags5e.js";
  * @class MonsterBlock5e
  * @extends {ActorSheet5eNPC}
  */
-export default class MonsterBlock5e extends ActorSheet5eNPC {
+ export default class MonsterBlock5e extends dnd5e.applications.actor
+ .ActorSheet5eNPC {
 	constructor(...args) {
 		super(...args);
 		
@@ -63,8 +62,8 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	 * @memberof MonsterBlock5e
 	 * @override
 	 */
-	getData() {	// Override and add to the getData() function
-		const data = super.getData();
+	async getData() {	// Override and add to the getData() function
+		const data = await super.getData();
 		
 		//console.debug(data);
 
@@ -73,7 +72,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 
 		// Tweak a few properties to get a proper output
 		data.data.details.xp.label = this.constructor.formatNumberCommas(data.data.details.xp.value);
-		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula, this.actor.getRollData());
+		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula, data.rollData);
 	
 		this.prepAbilities(data);
 		this.prepMovement(data);

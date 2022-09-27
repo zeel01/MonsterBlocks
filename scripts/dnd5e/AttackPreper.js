@@ -1,5 +1,4 @@
 import MonsterBlock5e from "./MonsterBlock5e.js";
-import { simplifyRollFormula } from "../../../../systems/dnd5e/module/dice.js";
 import Helpers from "./Helpers5e.js";
 import { debug } from "../utilities.js";
 import ItemPreper from "./ItemPreper.js";
@@ -249,6 +248,8 @@ export default class AttackPreper extends ItemPreper {
 	 */
 	damageFormula(index=0) {	// Extract and re-format the damage formula
 		const roll = new Roll(this.getAttackFormula(index), this.item.getRollData());
+		var dice = game[game.system.id].dice;
+		var simplifyRollFormula = dice?.simplifyRollFormula;
 		return simplifyRollFormula(roll.formula);
 	}
 
