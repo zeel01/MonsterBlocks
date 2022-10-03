@@ -1,5 +1,4 @@
-import ActorSheet5eNPC from "../../../../systems/dnd5e/module/actor/sheets/npc.js";
-import TraitSelector from "../../../../systems/dnd5e/module/apps/trait-selector.js";
+import { default as dnd5e } from "./v9shim.js";
 import { MenuItem, MenuTree } from "../MenuTree.js";
 import { debug, ContentEditableAdapter, getTranslationArray } from "../utilities.js";
 import { inputExpression } from "../../input-expressions/handler.js";
@@ -15,7 +14,7 @@ import Flags from "./Flags5e.js";
  * @class MonsterBlock5e
  * @extends {ActorSheet5eNPC}
  */
-export default class MonsterBlock5e extends ActorSheet5eNPC {
+export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5eNPC {
 	constructor(...args) {
 		super(...args);
 		
@@ -63,8 +62,8 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 	 * @memberof MonsterBlock5e
 	 * @override
 	 */
-	getData() {	// Override and add to the getData() function
-		const data = super.getData();
+	async getData() {	// Override and add to the getData() function
+		const data = await super.getData();
 		
 		//console.debug(data);
 
@@ -1096,7 +1095,7 @@ export default class MonsterBlock5e extends ActorSheet5eNPC {
 			title: label.innerText,
 			choices: CONFIG.DND5E[a.dataset.options]
 		};
-		new TraitSelector(this.actor, options).render(true)
+		new dnd5e.applications.TraitSelector(this.actor, options).render(true)
 	}
 	_onCycleSkillProficiency(event) {
 		event.preventDefault();
