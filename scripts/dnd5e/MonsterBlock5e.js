@@ -72,7 +72,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 
 		// Tweak a few properties to get a proper output
 		data.data.details.xp.label = this.constructor.formatNumberCommas(data.data.details.xp.value);
-		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula, data.rollData);
+		data.data.attributes.hp.average = this.constructor.averageRoll(data.data.attributes.hp.formula, this.actor.getRollData());
 	
 		this.prepAbilities(data);
 		this.prepMovement(data);
