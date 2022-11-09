@@ -1,7 +1,6 @@
 import MonsterBlock5e from "./MonsterBlock5e.js";
 import AttackPreper from "./AttackPreper.js";
 import CastingPreper from "./CastingPreper.js";
-import ActionPreper from "./ActionPreper.js";
 import ItemPreper from "./ItemPreper.js";
 import InnateSpellbookPrep from "./InnateSpellbookPrep.js"
 
@@ -38,15 +37,15 @@ export default class ItemPrep {
 	
 	/** @type {Object.<string, Feature>} A set of item classifications by type */
 	features = {
-		legResist:	  { prep: ItemPreper,    filter: MonsterBlock5e.isLegendaryResistance,        items: [], dataset: {type: "feat"}   },
-		legendary:	  { prep: ActionPreper,  filter: MonsterBlock5e.isLegendaryAction,            items: [], dataset: {type: "feat"}   },
-		lair:		  { prep: ActionPreper,  filter: MonsterBlock5e.isLairAction,                 items: [], dataset: {type: "feat"}   },
-		multiattack:  { prep: ActionPreper,  filter: MonsterBlock5e.isMultiAttack,                items: [], dataset: {type: "feat"}   },
+		legResist:	  { prep: ItemPreper,    filter: ItemPreper.isLegendaryResistance,            items: [], dataset: {type: "feat"}   },
+		legendary:	  { prep: ItemPreper,    filter: ItemPreper.isLegendaryAction,                items: [], dataset: {type: "feat"}   },
+		lair:		  { prep: ItemPreper,    filter: ItemPreper.isLairAction,                     items: [], dataset: {type: "feat"}   },
+		multiattack:  { prep: ItemPreper,    filter: ItemPreper.isMultiAttack,                    items: [], dataset: {type: "feat"}   },
 		casting:	  { prep: CastingPreper, filter: CastingPreper.isCasting.bind(CastingPreper), items: [], dataset: {type: "feat"}   },
-		reaction:	  { prep: ActionPreper,  filter: MonsterBlock5e.isReaction,                   items: [], dataset: {type: "feat"}   },
-		bonusActions: { prep: ActionPreper,  filter: MonsterBlock5e.isBonusAction,                items: [], dataset: {type: "feat"}   },
-		attacks:	  { prep: AttackPreper,  filter: item => item.type === "weapon",              items: [], dataset: {type: "weapon"} },
-		actions:	  { prep: ActionPreper,  filter: MonsterBlock5e.isAction,                     items: [], dataset: {type: "feat"}   },
+		attacks:	  { prep: AttackPreper,  filter: ItemPreper.isAttack,                         items: [], dataset: {type: "weapon"} },
+		reactions:	  { prep: ItemPreper,    filter: ItemPreper.isReaction,                       items: [], dataset: {type: "feat"}   },
+		bonusActions: { prep: ItemPreper,    filter: ItemPreper.isBonusAction,                    items: [], dataset: {type: "feat"}   },
+		actions:	  { prep: ItemPreper,    filter: ItemPreper.isAction,                         items: [], dataset: {type: "feat"}   },
 		features:	  { prep: ItemPreper,    filter: item => item.type === "feat",                items: [], dataset: {type: "feat"}   },
 		equipment:	  { prep: ItemPreper,    filter: () => true,                                  items: [], dataset: {type: "loot"}   }
 	};

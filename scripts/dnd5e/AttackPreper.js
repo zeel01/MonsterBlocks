@@ -16,6 +16,8 @@ export default class AttackPreper extends ItemPreper {
 	 * @memberof AttackPreper
 	 */
 	prepare() {
+		super.prepare();
+
 		this.data.tohit = this.item.labels.toHit;
 		this.data.description = this.getDescription();
 		this.data.continuousDescription = 
