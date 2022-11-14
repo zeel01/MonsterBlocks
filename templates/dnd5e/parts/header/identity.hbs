@@ -30,6 +30,10 @@
 			{{else}}
 				src="{{actor.img}}" data-edit="img"
 			{{/if}}
-			title="{{actor.name}}{{#if flags.editing}} - {{localize "MOBLOKS5E.EditHint"}}{{/if}}">
+			title="{{actor.name~}}
+			{{#if flags.editing}}&#013;- {{localize "MOBLOKS5E.EditHint"}}{{/if~}}
+			&#013;- {{localize "MOBLOKS5E.ProfileImageHintAlt"~}}
+			&#013;- {{localize "MOBLOKS5E.ProfileImageHintShift"~}}
+			&#013;- {{localize "MOBLOKS5E.ProfileImageHintCtrl"}}">
 	</figure>
 {{/unless}}

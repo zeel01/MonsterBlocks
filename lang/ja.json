@@ -224,6 +224,9 @@
 		"ProfBonus": "習熟度ボーナス",
 
 		"EditHint": "右クリックして編集",
+		"ProfileImageHintAlt": "画像を切り替えるAltキー",
+		"ProfileImageHintShift": "Shiftキーを押して、現在の画像をプレーヤーに表示します",
+		"ProfileImageHintCtrl": "プレーヤーに代替画像を表示するためのコントロールキー",
 		"EditButtonHint": "機能を追加するには、上の[+]ボタンをクリックしてください",
 
 		"AddFeat": "特徴",

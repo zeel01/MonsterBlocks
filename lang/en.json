@@ -224,6 +224,9 @@
 		"ProfBonus": "Proficiency Bonus",
 
 		"EditHint": "Right-click to edit",
+		"ProfileImageHintAlt": "Alt key to switch image",
+		"ProfileImageHintShift": "Shift key to show current image to players",
+		"ProfileImageHintCtrl": "Control key to show alternate image to players",
 		"EditButtonHint": "Click the + button above to add features",
 
 		"AddFeat": "Feature",
