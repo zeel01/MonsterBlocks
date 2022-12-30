@@ -14,6 +14,7 @@ export default class Flags5e extends Flags {
 			"casting-feature"    : { type: Boolean, default: true  },
 			"current-hit-points" : { type: Boolean, default: true  },
 			"maximum-hit-points" : { type: Boolean, default: true  },
+			"temp-hit-points"    : { type: Boolean, default: false },
 			"show-lair-actions"  : { type: Boolean, default: false },
 			"show-not-prof"      : { type: Boolean, default: false },
 			"show-resources"     : { type: Boolean, default: true  },

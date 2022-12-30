@@ -119,6 +119,14 @@
 				"hint": "By default, display the current hit point in the hit points field. If neither maximum nor minimum Hit Points are shown, the average will be calculated and displayed."
 			}
 		},
+		"temp-hit-points": {
+			"enable": "Show temporary hit points",
+			"disable": "Hide temporary hit points",
+			"settings": {
+				"name": "Show Temporary Hit Points",
+				"hint": "By default, display the temporary hit point values after the current it point values."
+			}
+		},
 		"max-height-offset": {
 			"settings": {
 				"name": "Maximum Height Offset",
@@ -198,9 +206,7 @@
 		"FoundryThemeName": "Foundry",
 		"SystemThemeName": "5e System",
 		
-		"Average": "Average",
-		"Current": "Current",
-		"Maximum": "Maximum",
+		"Average": "Average Hit Points",
 		
 		"Abbrstr": "str",
 		"Abbrdex": "dex",
