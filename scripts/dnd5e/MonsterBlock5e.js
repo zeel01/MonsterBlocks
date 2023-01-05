@@ -702,42 +702,6 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			}).render(true);
 		});
 		
-		html.find("[data-roll-formula]").click(async (event) => {			// Universal way to add an element that provides a roll, just add the data attribute "data-roll-formula" with a formula in it, and this applies.
-			event.preventDefault();									// This handler makes "quick rolls" possible, it just takes some data stored on the HTML element, and rolls dice directly.
-			event.stopPropagation();
-			
-			const formula = event.currentTarget.dataset.rollFormula;
-			const target = event.currentTarget.dataset.rollTarget;
-			const success = event.currentTarget.dataset.rollSuccess;
-			const failure = event.currentTarget.dataset.rollFailure;
-			const handler = event.currentTarget.dataset.rollHandler;
-			let flavor = event.currentTarget.dataset.rollFlavor;	// Optionally, you can include data-roll-flavor to add text to the message.
-			
-			let roll;
-			try { 
-				roll = new Roll(formula);
-				await roll.roll({ async: true }); 
-			}
-			catch (e) {
-				console.error(e);
-				ui.notifications.error(e);
-				roll = new Roll("0");
-				await roll.roll({ async: true });
-			}
-			
-			if (target) {
-				let s = roll.total >= parseInt(target, 10);
-				if (handler) this[handler](s, event); 
-				
-				flavor += `<span style="font-weight: bold; color: ${s ? "green" : "red"};">${s ? success : failure}</span>`;
-			}
-			
-			roll.toMessage({					// Creates a new Roll, rolls it, and sends the result as a message
-				flavor: flavor,										// Including the text as defined
-				speaker: ChatMessage.getSpeaker({actor: this.actor})// And setting the speaker to the actor this sheet represents
-			});
-		});
-		
 		// Special Roll Handlers
 		html.find(".ability").click(async (event) => {
 			event.preventDefault();
@@ -771,6 +735,13 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 				window.BetterRolls.rollItem(item, { event, preset }).toMessage();
 			}
 			else return item.roll(); // Conveniently, items have all this logic built in already.
+		});
+
+		html.find(".item-recharge").click(async (event) => {
+			event.preventDefault();
+
+			const item = this.actor.items.get(event.currentTarget.dataset.itemId);
+			item.rollRecharge();
 		});
 
 		// uses the built in attack roll from the item
@@ -1138,22 +1109,6 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	async maximize() {
 		await super.maximize();
 		await this.render(true);
-	}
-
-	/**
-	 *
-	 *
-	 * @param {boolean} success - Whether or not the roll was a success.
-	 * @param {Event} event - The event object associated with this roll.
-	 * @memberof MonsterBlock5e
-	 */
-	async setCharged(success, event) {
-		await this.actor.updateEmbeddedDocuments("Item", [{
-			_id: event.currentTarget.dataset.itemId,
-			"data.recharge.charged": success
-		}])
-
-		super._onChangeInput(event);
 	}
 
 	static isMultiAttack(item) {	// Checks if the item is the multiattack action.

@@ -233,8 +233,6 @@
 		"AddInventory": "Loot",
 		"AddConsumable": "Consumable",
 		
-		"Recharge": "Recharge",
-		"NCharged": "Not charged",
 		"Costs": "Costs",
 		"ResourceRefresh": "Day",
 		
