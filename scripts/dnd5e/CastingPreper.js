@@ -539,8 +539,10 @@ export default class CastingPreper extends ItemPreper {
 	 * @memberof CastingPreper
 	 */
 	getCastingAbility() {
-		const main = this.sheet.actor.data
-			.data?.attributes?.spellcasting || "int";
+		const main = this.sheet.actor
+			.system?.attributes?.spellcasting || "int";
+
+		console.log(main, this);
 
 		let castingability = main;
 		
@@ -563,7 +565,7 @@ export default class CastingPreper extends ItemPreper {
 		}
 		
 		return [
-			this.templateData.actor.data?.abilities[castingability]?.label 
+			this.templateData?.abilities[castingability]?.label 
 				?? game.i18n.localize("DND5E.AbilityInt"), 
 			castingability
 		];

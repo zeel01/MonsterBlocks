@@ -69,7 +69,7 @@ export default class InnateSpellbookPrep {
 	 */
 	sortSpell(spell) {
 		// Max uses is what we are going to end up sorting the spellbook by.
-		this.getPage(spell.data.uses.max).spells.push(spell);
+		this.getPage(spell.system.uses.max).spells.push(spell);
 	}
 
 	/**
