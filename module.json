@@ -11,7 +11,7 @@
 			"discord": "zeel#4200"
 		}
 	],
-	"version": "3.3.3",
+	"version": "3.3.4",
 	"minimumCoreVersion": "10",
 	"compatibleCoreVersion": "10",
 	"system": ["dnd5e"],
