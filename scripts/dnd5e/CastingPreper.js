@@ -54,7 +54,7 @@ export default class CastingPreper extends ItemPreper {
 	 * @memberof CastingPreper
 	 */
 	static isPactMagic(item) {
-		const desc = item.data.data.description?.value?.toLowerCase().replace(/\s+/g, "") ?? "";
+		const desc = item.system.description?.value?.toLowerCase().replace(/\s+/g, "") ?? "";
 		return getTranslationArray("MOBLOKS5E.WarlockLocators").some(
 			s => desc.indexOf(s) > -1
 		);
@@ -206,7 +206,7 @@ export default class CastingPreper extends ItemPreper {
 	 */
 	getSpellPageLevel(page) {
 		return page.spells.reduce(
-			(max, spell) => spell.data.level > max ? spell.data.level : max,
+			(max, spell) => spell.system.level > max ? spell.system.level : max,
 		1);
 	}
 
@@ -219,6 +219,8 @@ export default class CastingPreper extends ItemPreper {
 	 */
 	getPageLabel(page) {
 		let level = "";
+
+		console.debug(page);
 
 		if (this.pact) level = `${Helpers.formatOrdinal(1)}-${Helpers.formatOrdinal(page.maxSpellLevel)}`;  // 1st-maxTh
 		else           level = Helpers.formatOrdinal(page.maxSpellLevel);
@@ -247,7 +249,7 @@ export default class CastingPreper extends ItemPreper {
 	 * @memberof CastingPreper
 	 */
 	getPageSlotLabel(page) {
-		const string = this.pact          // Which translation key
+		const string = this.pact         // Which translation key
 			? "MOBLOKS5E.SpellPactSlots" // pact magic
 			: "MOBLOKS5E.SpellSlots";    // or normal
 
@@ -451,7 +453,7 @@ export default class CastingPreper extends ItemPreper {
 	 */
 	get casterStatsText() {
 		return game.i18n.format("MOBLOKS5E.CastingStats", {
-			savedc: this.sheet.actor.data.data?.attributes?.spelldc,
+			savedc: this.sheet.actor.system?.attributes?.spelldc,
 			bonus: `${this.tohit > -1 ? "+" : ""}${this.tohit}`
 		})
 	}
@@ -525,7 +527,7 @@ export default class CastingPreper extends ItemPreper {
 	 * @memberof CastingPreper
 	 */
 	getSpellAttackBonus() {
-		const data = this.sheet.actor.data.data;
+		const data = this.sheet.actor.system;
 		const abilityBonus = data.abilities[this.castingAbility]?.mod;
 		const profBonus = data.attributes?.prof;
 		
@@ -541,8 +543,6 @@ export default class CastingPreper extends ItemPreper {
 	getCastingAbility() {
 		const main = this.sheet.actor
 			.system?.attributes?.spellcasting || "int";
-
-		console.log(main, this);
 
 		let castingability = main;
 		

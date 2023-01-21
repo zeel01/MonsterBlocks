@@ -24,7 +24,7 @@ export default class ActionPreper extends ItemPreper {
 	 * @memberof ActionPreper
 	 */
 	get is() {
-		const data = this.item.data;
+		const data = this.item;
 		/** @type {Is} */
 		const is = { 
 			multiAttack:  MonsterBlock5e.isMultiAttack(data),

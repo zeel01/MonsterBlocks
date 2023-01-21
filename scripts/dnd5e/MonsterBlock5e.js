@@ -1,4 +1,3 @@
-import { default as dnd5e } from "./v9shim.js";
 import { MenuItem, MenuTree } from "../MenuTree.js";
 import { debug, ContentEditableAdapter, getTranslationArray } from "../utilities.js";
 import { inputExpression } from "../../input-expressions/handler.js";
@@ -6,6 +5,7 @@ import ItemPrep from "./ItemPrep.js";
 import Flags from "./Flags5e.js";
 
 /* global QuickInsert:readonly */
+/* global dnd5e:readonly */
 
 /**
  * Main class for the Monster Blocks module
@@ -286,7 +286,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			restrictTypes: ["Item"],
 			onSubmit: async (item) => {
 				const theItem = await fromUuid(item.uuid);
-				this.actor.createEmbeddedDocuments("Item", [theItem.data]);
+				this.actor.createEmbeddedDocuments("Item", [theItem]);
 			}
 		});
 	}
@@ -311,7 +311,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	prepareSavingThrowsMenu(attrMenu) {
 		let menu = this.addMenu("saves", game.i18n.localize("MOBLOKS5E.SavingThrowS"), attrMenu);
 
-		Object.entries(this.actor.data.data.abilities).forEach(([ab, ability]) => {
+		Object.entries(this.actor.system.abilities).forEach(([ab, ability]) => {
 			let flag = Boolean(ability.proficient);
 			menu.add(new MenuItem("save-toggle", {
 				name: CONFIG.DND5E.abilities[ab], 
@@ -319,7 +319,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 				target: `data.abilities.${ab}.proficient`,
 				icon: flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
 			}, (m) => {
-				m.flag = Boolean(this.actor.data.data.abilities[ab]?.proficient);
+				m.flag = Boolean(this.actor.system.abilities[ab]?.proficient);
 				m.icon = m.flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>';
 			}));
 		});
@@ -329,7 +329,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	prepSkillsMenu(attrMenu) {
 		let menu = this.addMenu("skills", game.i18n.localize("MOBLOKS5E.SkillS"), attrMenu);
 
-		Object.entries(this.actor.data.data.skills).forEach(([id, skill]) => {
+		Object.entries(this.actor.system.skills).forEach(([id, skill]) => {
 			skill.abilityAbbr = game.i18n.localize(`MOBLOKS5E.Abbr${skill.ability}`);
 			skill.icon = this._getProficiencyIcon(skill.value);
 			skill.hover = CONFIG.DND5E.proficiencyLevels[skill.value];
@@ -383,13 +383,13 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	 */
 	getTraitChecklist(id, menu, target, itemType, traitList) {
 		Object.entries(traitList).forEach(([d, name]) => {
-			let flag = this.actor.data.data.traits[id].value.has(d);
+			let flag = this.actor.system.traits[id].value.has(d);
 			menu.add(new MenuItem(itemType, {
 				d, name, flag,
 				target: target,
 				icon: flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
 			}, (m) => {
-				m.flag = this.actor.data.data.traits[id].value.has(d);
+				m.flag = this.actor.system.traits[id].value.has(d);
 				m.icon = m.flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>';
 			}));
 		});
@@ -398,9 +398,9 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			name: game.i18n.localize("DND5E.TraitSelectorSpecial"),
 			target: target + ".custom",
 			icon: "",
-			value: this.actor.data.data.traits[id].custom
+			value: this.actor.system.traits[id].custom
 		}, (m) => {
-				m.value = this.actor.data.data.traits[id].custom;
+				m.value = this.actor.system.traits[id].custom;
 		}));
 	}
 
@@ -412,7 +412,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	}
 	hasAtWillSpells() {	// Some normal casters also have a few spells that they can cast "At will"
 		return this.actor.data.items.some((item) => {
-			return item.data.data.preparation?.mode === "atwill";
+			return item.system.preparation?.mode === "atwill";
 		});
 	}
 	hasBonusActions() {
@@ -514,7 +514,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	}
 	getPassivePerception() {
 		return game.i18n.format("MOBLOKS5E.PassivePerception", {
-			pp: this.actor.data.data.skills.prc.passive
+			pp: this.actor.system.skills.prc.passive
 		});
 	}
 	prepAbilities(data) {
@@ -1163,28 +1163,28 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	}
 	
 	static isLegendaryResistance(item) {
-		return item.data?.consume?.target === "resources.legres.value";
+		return item.system?.consume?.target === "resources.legres.value";
 	}
 	
 	// Item purpose checks
 	static isLegendaryAction(item) {
-		return item.data?.activation?.type === "legendary";
+		return item.system?.activation?.type === "legendary";
 	}
 	
 	static isLairAction(item) {
-		return item.data?.activation?.type === "lair";
+		return item.system?.activation?.type === "lair";
 	}
 
 	static isAction(item) {
-		return item.data?.activation?.type && item.data?.activation.type != "none";
+		return item.system?.activation?.type && item.system?.activation.type != "none";
 	}
 
 	static isBonusAction(item) {
-		return item.data?.activation?.type === "bonus";
+		return item.system?.activation?.type === "bonus";
 	}
 	
 	static isReaction(item) {
-		return item.data?.activation?.type === "reaction";
+		return item.system?.activation?.type === "reaction";
 	}
 		
 

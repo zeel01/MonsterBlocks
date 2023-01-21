@@ -24,10 +24,10 @@ export default class ResourcePreper {
 	static hasResource(item) {
 		return Boolean(
 			// eslint-disable-next-line no-mixed-spaces-and-tabs
-			   item.data.data.consume?.target
+			   item.system.consume?.target
 			|| item.type == "consumable"
 			|| item.type == "loot"
-			|| item.data.data.uses?.max
+			|| item.system.uses?.max
 		);
 	}
 
@@ -54,10 +54,10 @@ export default class ResourcePreper {
 	setType() {
 		if (this.item.type == "consumable" || this.item.type == "loot")
 			this.res.type = "consume";
-		else if (this.item.data.data.uses?.max) 
+		else if (this.item.system.uses?.max) 
 			this.res.type = "charges";
 		else 
-			this.res.type = this.item.data.data.consume.type;
+			this.res.type = this.item.system.consume.type;
 	}
 
 	/**
@@ -92,11 +92,11 @@ export default class ResourcePreper {
 	 * @memberof ResourcePreper
 	 */
 	prepAttribute() {
-		let t = this.item.data.data.consume.target;
+		let t = this.item.system.consume.target;
 		let r = t.match(/(.+)\.(.+)\.(.+)/);
-		let max = `data.${r[1]}.${r[2]}.max`;
+		let max = `system.${r[1]}.${r[2]}.max`;
 		
-		this.res.target = "data." + t;
+		this.res.target = "system." + t;
 		this.res.current = getProperty(this.sheet.actor.data, this.res.target);
 		this.res.limit = getProperty(this.sheet.actor.data, max);
 		this.res.refresh = game.i18n.localize("MOBLOKS5E.ResourceRefresh"); // It just says "Day" becaause thats typically the deal, and I don't see any other option.
@@ -107,12 +107,12 @@ export default class ResourcePreper {
 	 * @memberof ResourcePreper
 	 */
 	prepCharges() {
-		this.res.target = "data.uses.value";
-		this.res.entity = this.item.data.data.consume.target || this.item.id;
-		this.res.current = this.item.data.data.uses.value;
-		this.res.limit = this.item.type == "spell" ? false : this.item.data.data.uses.max;
-		this.res.limTarget = "data.uses.max";
-		this.res.refresh = CONFIG.DND5E.limitedUsePeriods[this.item.data.data.uses.per];
+		this.res.target = "system.uses.value";
+		this.res.entity = this.item.system.consume.target || this.item.id;
+		this.res.current = this.item.system.uses.value;
+		this.res.limit = this.item.type == "spell" ? false : this.item.system.uses.max;
+		this.res.limTarget = "system.uses.max";
+		this.res.refresh = CONFIG.DND5E.limitedUsePeriods[this.item.system.uses.per];
 	}
 	/**
 	 * Prepares items that consume material components/loot 
@@ -121,13 +121,13 @@ export default class ResourcePreper {
 	 * @memberof ResourcePreper
 	 */
 	prepMaterial() {
-		this.res.entity = this.item.data.data.consume.target;
+		this.res.entity = this.item.system.consume.target;
 		let ammo = this.sheet.actor.getEmbeddedDocument("Item", this.res.entity);
 		if (!ammo) return;
 		
 		this.res.limit = false;
-		this.res.current = ammo.data.quantity;
-		this.res.target = "data.quantity";
+		this.res.current = ammo.system.quantity;
+		this.res.target = "system.quantity";
 		this.res.name = ammo.name;
 	}
 	/**
@@ -136,9 +136,9 @@ export default class ResourcePreper {
 	 * @memberof ResourcePreper
 	 */
 	prepConsume() {
-		this.res.entity = this.item._id;
+		this.res.entity = this.item.id;
 		this.res.limit = false;
-		this.res.current = this.item.data.data.quantity;
-		this.res.target = "data.quantity";
+		this.res.current = this.item.system.quantity;
+		this.res.target = "system.quantity";
 	}
 }
