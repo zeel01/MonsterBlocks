@@ -1,5 +1,5 @@
 import { MenuItem, MenuTree } from "../MenuTree.js";
-import { debug, ContentEditableAdapter, getTranslationArray } from "../utilities.js";
+import { debug, ContentEditableAdapter, getTranslationArray, castType } from "../utilities.js";
 import { inputExpression } from "../../input-expressions/handler.js";
 import ItemPrep from "./ItemPrep.js";
 import Flags from "./Flags5e.js";
@@ -138,11 +138,11 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	 */
 	_getSubmitData(updateData={}) {	
 		if (!this.form) throw new Error(`The FormApplication subclass has no registered form element`);
+
+		if (!updateData) updateData = {};
 		
 		const form = this.form;
 		const formData = new FormDataExtended(this.form, { editors: this.editors });
-				
-		const dtypes = {};
 		
 		const fields = form.querySelectorAll("[data-field-key]");
 		for (let field of fields) {
@@ -152,8 +152,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			
 			value = this.handleSpecial(key, value);
 
-			formData.append(key, value);
-			dtypes[key] = type;
+			updateData[key] = castType(value, type);
 		}
 
 		const selects = form.querySelectorAll("[data-select-key]");
@@ -161,7 +160,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			let key = select.dataset.selectKey;
 			let value = select.dataset.selectedValue;
 
-			formData.append(key, value);
+			updateData[key] = value;
 		}
 
 		const skillCycles = form.querySelectorAll("[data-skill-id]");
@@ -169,8 +168,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			let key = `data.skills.${skill.dataset.skillId}.value`;
 			let value = skill.dataset.skillValue;
 
-			formData.append(key, value);
-			dtypes[key] = "Number";
+			updateData[key] = castType(value, "Number");
 		}
 
 		const toggles = form.querySelectorAll("[data-toggle-key]");
@@ -178,8 +176,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			let key = toggle.dataset.toggleKey;
 			let value = toggle.dataset.toggleValue == "true";
 
-			formData.append(key, value);
-			dtypes[key] = "Boolean";
+			updateData[key] = castType(value, "Boolean");
 		}
 
 		// Process editable images
@@ -188,14 +185,13 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			if (img.getAttribute("disabled")) continue;
 			let basePath = window.location.origin + "/";
 			if (ROUTE_PREFIX) basePath += ROUTE_PREFIX + "/";
-			formData.append(img.dataset.edit, img.src.replace(basePath, ""));
+
+			updateData[img.dataset.edit] = img.src.replace(basePath, "");
 		}
-		
-		formData.dtypes = dtypes;
 
 		return flattenObject(
 			mergeObject(
-				formData.toObject(), 
+				formData.object, 
 				updateData
 			)
 		);
