@@ -1,6 +1,6 @@
 <h1 class="charname" contenteditable="{{flags.editing}}" data-field-key="name" placeholder="{{localize "DND5E.Name"}}">{{actor.name}}</h1>
 <div class="chartype">
-	<div class="select-field" data-select-key="data.traits.size" data-selected-value="{{data.traits.size}}">
+	<div class="select-field" data-select-key="system.traits.size" data-selected-value="{{data.traits.size}}">
 		<label class="{{#if flags.editing}}select-label{{/if}}">{{lookup config.actorSizes data.traits.size}}</label>{{~" "~}}
 		{{#if flags.editing~}}
 			<ul class="actor-size select-list">
@@ -18,7 +18,7 @@
 			<i class="fas fa-cog"></i>{{~" "~}}
 		</a>{{~" "~}}
 	</span>{{~" "~}}
-	<span class="optional-comma" contenteditable="{{flags.editing}}" placeholder="{{localize "DND5E.Alignment"}}" data-field-key="data.details.alignment">
+	<span class="optional-comma" contenteditable="{{flags.editing}}" placeholder="{{localize "DND5E.Alignment"}}" data-field-key="system.details.alignment">
 		{{~data.details.alignment~}}
 	</span>
 </div>

@@ -202,7 +202,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	}
 	handleSpecial(key, value) {
 		switch (key) {
-			case "data.details.cr": {
+			case "system.details.cr": {
 				if (value.indexOf("/") > -1) {
 					let cr = { "1/8": 0.125, "1/4": 0.25, "1/2": 0.5 }[value];
 					return cr != undefined ? cr : value;
@@ -345,17 +345,17 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	}
 	prepLanguageMenu(id, label, attrMenu) {
 		let menu = this.addMenu("languages", game.i18n.localize(label), attrMenu);
-		this.getTraitChecklist(id, menu, "data.traits.languages", "language-opt", CONFIG.DND5E.languages);
+		this.getTraitChecklist(id, menu, "system.traits.languages", "language-opt", CONFIG.DND5E.languages);
 		return menu;
 	}
 	prepDamageTypeMenu(id, label, attrMenu) {
 		let menu = this.addMenu(id, game.i18n.localize(label), attrMenu);
-		this.getTraitChecklist(id, menu, `data.traits.${id}`, "damage-type", CONFIG.DND5E.damageResistanceTypes);
+		this.getTraitChecklist(id, menu, `system.traits.${id}`, "damage-type", CONFIG.DND5E.damageResistanceTypes);
 		return menu;
 	}
 	prepConditionTypeMenu(id, label, attrMenu) {
 		let menu = this.addMenu(id, game.i18n.localize(label), attrMenu);
-		this.getTraitChecklist(id, menu, `data.traits.${id}`, "condition-type", CONFIG.DND5E.conditionTypes);
+		this.getTraitChecklist(id, menu, `system.traits.${id}`, "condition-type", CONFIG.DND5E.conditionTypes);
 		return menu;
 	}
 	/**
@@ -561,7 +561,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 				label: game.i18n.localize(`DND5E.Movement${moveNameCaps}`).toLowerCase(),
 				value: speed > 0 ? speed : move != "walk" ? "" : "0",
 				unit: data.data.attributes.movement.units + game.i18n.localize("MOBLOKS5E.SpeedUnitAbbrEnd"),
-				key: `data.attributes.movement.${move}`
+				key: `system.attributes.movement.${move}`
 			});
 		}
 
@@ -976,7 +976,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		let data = {};
 
 		["dv", "dr", "di"].forEach(dg => {
-			let damageTypes = html.find(`[data-damage-type="data.traits.${dg}"]`);
+			let damageTypes = html.find(`[data-damage-type="system.traits.${dg}"]`);
 			let key = `data.traits.${dg}.value`;
 			let value = [];
 			for (let dt of damageTypes) {
@@ -990,10 +990,10 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			if (n.dataset.flag == "true") acc.push(n.dataset.option);
 			return acc; 
 		}
-		data["data.traits.languages.value"] =
+		data["system.traits.languages.value"] =
 		[...html.find(`[data-language-opt]`)].reduce(traitReducer, []);
 
-		data["data.traits.ci.value"] =
+		data["system.traits.ci.value"] =
 		[...html.find(`[data-condition-type]`)].reduce(traitReducer, []);
 
 		return data;
@@ -1151,7 +1151,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	async setCharged(success, event) {
 		await this.actor.updateEmbeddedDocuments("Item", [{
 			_id: event.currentTarget.dataset.itemId,
-			"data.recharge.charged": success
+			"system.recharge.charged": success
 		}])
 
 		super._onChangeInput(event);

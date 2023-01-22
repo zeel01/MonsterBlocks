@@ -9,7 +9,7 @@
 {{#if flags.current-hit-points}}
 	<span title="{{localize "MOBLOKS5E.Current"}}" 
 		placeholder="0" 
-		data-field-key="data.attributes.hp.value" 
+		data-field-key="system.attributes.hp.value" 
 		data-dtype="Number" 
 		class="attr-value" 
 		contenteditable="{{owner}}">
@@ -26,7 +26,7 @@
 {{~#if flags.maximum-hit-points~}}
 	<span title="{{localize "MOBLOKS5E.Maximum"}}" 
 		placeholder="0" 
-		data-field-key="data.attributes.hp.max" 
+		data-field-key="system.attributes.hp.max" 
 		data-dtype="Number"
 		class="attr-value" 
 		contenteditable="{{owner}}">
@@ -41,7 +41,7 @@
 {{#if data.attributes.hp.formula}}<span class="paren">(</span>{{~/if~}}
 <span title="Average: {{data.attributes.hp.average}}"
 	placeholder="(1d6)"
-	data-field-key="data.attributes.hp.formula"
+	data-field-key="system.attributes.hp.formula"
 	data-dtype="Roll"
 	class="attr-value"
 	contenteditable="{{flags.editing}}">
