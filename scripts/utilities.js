@@ -56,3 +56,51 @@ export function getSetting(scope, name) {
 		return null;
 	}
 }
+
+/**
+ * Included From Foundry VTT FormDataExtended#castType
+ * Used under the Limited License Agreement for Module Development
+ * @see https://foundryvtt.com/article/license/
+ * No other license is granted for this code.
+ */
+
+/**
+ * Cast a processed value to a desired data type.
+ * @param {any} value         The raw field value
+ * @param {string} dataType   The desired data type
+ * @returns {any}             The resulting data type
+ * @private
+ */
+export function castType(value, dataType) {
+	if (value instanceof Array) return value.map(v => castType(v, dataType));
+	if ([undefined, null].includes(value) || (dataType === "String")) return value;
+
+	// Boolean
+	if (dataType === "Boolean") {
+		if (value === "false") return false;
+		return Boolean(value);
+	}
+
+	// Number
+	else if (dataType === "Number") {
+		if ((value === "") || (value === "null")) return null;
+		return Number(value);
+	}
+
+	// Serialized JSON
+	else if (dataType === "JSON") {
+		return JSON.parse(value);
+	}
+
+	// Other data types
+	if (window[dataType] instanceof Function) {
+		try {
+			return window[dataType](value);
+		} catch (err) {
+			console.warn(`The form field value "${value}" was not able to be cast to the requested data type ${dataType}`);
+		}
+	}
+	return value;
+}
+
+/** End of Foundry VTT Code */
