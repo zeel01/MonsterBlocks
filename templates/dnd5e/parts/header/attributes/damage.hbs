@@ -1,22 +1,18 @@
-{{#if (moblok-hascontents damage)}}
+{{#if trait.visible}}
 	<li class="attribute">
 		<span class="attribute-wrapper">
 			<h4 class="attribute-name">{{localize label}}</h4>
 			<ul class="traits-list inline-list no-caps">
-			{{~#each damage as |v k|~}}
-				{{~#unless (eq k "physical")~}}
-					<li class="trait-value">{{v}}</li>
-				{{~/unless~}}
+			{{~#each trait.selected as |v|~}}
+				<li class="trait-value">{{v}}</li>
 			{{~/each~}}
 			</ul>
-			{{~#each damage as |v k|~}}
-				{{~#if (eq k "physical")~}}
-					<span>
-						{{~#if @index~}}{{localize "MOBLOKS5E.SemiColon"}}{{/if}}
-						{{v}}
-					</span>
-				{{~/if~}}
-			{{~/each~}}
+			{{~#if trait.physical}}
+				<span>
+					{{~#if trait.selected.size~}}{{localize "MOBLOKS5E.SemiColon"}}{{/if}}
+					{{trait.physical}}
+				</span>
+			{{~/if~}}
 		</span>
 	</li>
 {{/if}}

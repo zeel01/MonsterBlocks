@@ -3,7 +3,8 @@
 	section="legendary"
 	resource-key="system.resources.legact"}}
 	<p class="legendary-description">
-		{{localize "MOBLOKS5E.LegendaryText" name=actor.name number=data.resources.legact.max}}
+		<!-- # TODO - Fix this because it shows up as "undefined" -->
+		{{localize "MOBLOKS5E.LegendaryText" name=actor.name number=system.resources.legact.max}}
 	</p>
 	{{#each features.legendary.items as |item iid|}}
 		{{#if (and item.is.legendary (not item.is.legResist))}}

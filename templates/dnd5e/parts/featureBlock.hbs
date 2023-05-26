@@ -7,17 +7,18 @@
 		{{/if}}
 		{{#unless lairactions}}
 			<span class="item-name" data-item-id="{{item._id}}">
-				{{~item.name~}} 
+				{{~item.name~}}
 			</span>
 			{{~#if item.system.recharge.value~}}
 				<span class="name-extension"
 					data-item-id="{{item._id}}"
-					data-roll-flavor="{{item.name}} ({{localize "MOBLOKS5E.Recharge"}} {{item.system.recharge.value}}-6): " 
-					data-roll-formula="1d6" 
-					data-roll-target="{{item.system.recharge.value}}" 
-					data-roll-success="{{localize "DND5E.Charged"}}" 
+					data-roll-flavor="{{item.name}} ({{localize "MOBLOKS5E.Recharge"}} {{item.system.recharge.value}}-6): "
+					data-roll-formula="1d6"
+					data-roll-target="{{item.system.recharge.value}}"
+					data-roll-success="{{localize "DND5E.Charged"}}"
 					data-roll-failure="{{localize "MOBLOKS5E.NCharged"}}"
 					data-roll-handler="setCharged">
+					<!-- TODO - fix this because it shows Recharge 6-6 -->
 					({{localize "MOBLOKS5E.Recharge"}} {{item.system.recharge.value}}-6){{~" "~}}
 				</span>
 			{{~/if~}}

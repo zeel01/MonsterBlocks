@@ -25,20 +25,20 @@
 
 {{! Damage & Condition Resistances & Immunities}}
 	{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/damage.hbs"
-		damage=data.traits.dv.selected
-		label="DND5E.DamVuln" 
+		trait=system.traits.dv
+		label="DND5E.DamVuln"
 	}}
 	{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/damage.hbs"
-		damage=data.traits.dr.selected
-		label="DND5E.DamRes" 
+		trait=system.traits.dr
+		label="DND5E.DamRes"
 	}}
 	{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/damage.hbs"
-		damage=data.traits.di.selected
-		label="DND5E.DamImm" 
+		trait=system.traits.di
+		label="DND5E.DamImm"
 	}}
 	{{> "modules/monsterblock/templates/dnd5e/parts/header/attributes/damage.hbs"
-		damage=data.traits.ci.selected
-		label="DND5E.ConImm" 
+		trait=system.traits.ci
+		label="DND5E.ConImm"
 	}}
 
 {{! Senses }}
@@ -53,8 +53,8 @@
 		<span class="attribute-wrapper">
 			<h4 class="attribute-name">{{localize "DND5E.Languages"}}</h4>
 			<ul class="traits-list inline-list">
-			{{#if (moblok-hascontents data.traits.languages.selected)}}
-				{{#each data.traits.languages.selected as |v k|}}
+			{{#if traits.traits.languages.selected }}
+				{{#each traits.traits.languages.selected as |v k|}}
 					<li class="trait-value">{{v}}</li>
 				{{/each}}
 			{{else}}
@@ -73,7 +73,7 @@
 				contenteditable="{{flags.editing}}"
 				data-dtype="Number"
 				data-field-key="system.details.cr"
-				>{{labels.cr}}</span> <span>({{localize "MOBLOKS5E.XPLabel" xp=data.details.xp.label}})</span>
+				>{{labels.cr}}</span> <span>({{localize "MOBLOKS5E.XPLabel" xp=system.details.xp.label}})</span>
 		</span>
 		<span class="attribute-wrapper prof-bonus">
 			<h4 class="attribute-name">{{localize "MOBLOKS5E.ProfBonus"}}</h4>

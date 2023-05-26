@@ -1,5 +1,5 @@
 {
-	"name": "monsterblock",
+	"id": "monsterblock",
 	"title": "Monster Blocks",
 	"description": "An NPC sheet designed to emulate standard 5e monster stat blocks as faithfully as possible.",
 	"author": "zeel",
@@ -11,18 +11,35 @@
 			"discord": "zeel#4200"
 		}
 	],
-	"version": "3.3.5",
-	"minimumCoreVersion": "10",
-	"compatibleCoreVersion": "10",
-	"system": ["dnd5e"],
-	"minimumSystemVersion": "2.1.0",
+	"version": "3.4.0",
+	"compatibility": {
+		"minimum": "11",
+		"verified": "11"
+	},
+	"relationships": {
+		"systems": [
+			{
+				"id": "dnd5e",
+				"compatibility": {
+					"verified": "2.3.0"
+				}
+			}
+		],
+		"requires": [
+			{
+				"id": "_mathjs",
+				"type": "module",
+				"manifest": "https://raw.githubusercontent.com/League-of-Foundry-Developers/mathjs-lib/master/module.json"
+			}
+		]
+	},
 	"esmodules": [
 		"monsterblock.js"
 	],
 	"styles": [
 		"monsterblock.css"
 	],
-	"languages": [ 
+	"languages": [
 		{
 			"lang": "en",
 			"name": "English",
@@ -42,13 +59,6 @@
 			"lang": "pt-BR",
 			"name": "Português (Brasil)",
 			"path": "lang/pt-BR.json"
-		}
-	],
-	"dependencies": [
-		{
-			"name": "_mathjs",
-			"type": "module",
-			"manifest": "https://raw.githubusercontent.com/League-of-Foundry-Developers/mathjs-lib/master/module.json"
 		}
 	],
 	"manifest": "https://github.com/zeel01/MonsterBlocks/releases/latest/download/module.json",

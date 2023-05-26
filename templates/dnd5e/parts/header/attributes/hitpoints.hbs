@@ -4,17 +4,17 @@
 	</a>
 </h4>
 {{~#unless (or flags.current-hit-points flags.maximum-hit-points)~}}
-	<span title="{{localize "MOBLOKS5E.Average"}}" class="attr-value">{{data.attributes.hp.average}}</span>
+	<span title="{{localize "MOBLOKS5E.Average"}}" class="attr-value">{{system.attributes.hp.average}}</span>
 {{~/unless~}}
 {{#if flags.current-hit-points}}
-	<span title="{{localize "MOBLOKS5E.Current"}}" 
-		placeholder="0" 
-		data-field-key="system.attributes.hp.value" 
-		data-dtype="Number" 
-		class="attr-value" 
+	<span title="{{localize "MOBLOKS5E.Current"}}"
+		placeholder="0"
+		data-field-key="system.attributes.hp.value"
+		data-dtype="Number"
+		class="attr-value"
 		contenteditable="{{owner}}">
-		{{~#if data.attributes.hp.value~}}
-			{{~data.attributes.hp.value~}}
+		{{~#if system.attributes.hp.value~}}
+			{{~system.attributes.hp.value~}}
 		{{~else~}}
 			0
 		{{~/if~}}
@@ -24,27 +24,27 @@
 	<span class="sep"> / </span>
 {{~/if~}}
 {{~#if flags.maximum-hit-points~}}
-	<span title="{{localize "MOBLOKS5E.Maximum"}}" 
-		placeholder="0" 
-		data-field-key="system.attributes.hp.max" 
+	<span title="{{localize "MOBLOKS5E.Maximum"}}"
+		placeholder="0"
+		data-field-key="system.attributes.hp.max"
 		data-dtype="Number"
-		class="attr-value" 
+		class="attr-value"
 		contenteditable="{{owner}}">
-		{{~#if data.attributes.hp.max~}}
-			{{data.attributes.hp.max~}}
+		{{~#if system.attributes.hp.max~}}
+			{{system.attributes.hp.max~}}
 		{{~else~}}
 			0
 		{{~/if~}}
 	</span>
 {{/if}}
 
-{{#if data.attributes.hp.formula}}<span class="paren">(</span>{{~/if~}}
-<span title="Average: {{data.attributes.hp.average}}"
+{{#if system.attributes.hp.formula}}<span class="paren">(</span>{{~/if~}}
+<span title="Average: {{system.attributes.hp.average}}"
 	placeholder="(1d6)"
 	data-field-key="system.attributes.hp.formula"
 	data-dtype="Roll"
 	class="attr-value"
 	contenteditable="{{flags.editing}}">
-		{{~data.attributes.hp.formula~}}
+		{{~system.attributes.hp.formula~}}
 </span>{{~" "~}}
-{{#if data.attributes.hp.formula}}<span class="paren">)</span>{{~/if~}}
+{{#if system.attributes.hp.formula}}<span class="paren">)</span>{{~/if~}}
