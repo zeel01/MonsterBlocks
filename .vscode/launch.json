@@ -10,7 +10,6 @@
             "name": "Launch Chrome against localhost",
             "url": "http://localhost:30000",
             "webRoot": "${workspaceFolder}/../../",
-            // "webRoot": "C:\\Users\\earash\\AppData\\Local\\FoundryVTT\\Data\\"
         }
     ]
 }

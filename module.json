@@ -13,7 +13,7 @@
 	],
 	"version": "3.4.0",
 	"compatibility": {
-		"minimum": "11",
+		"minimum": "10",
 		"verified": "11"
 	},
 	"relationships": {
