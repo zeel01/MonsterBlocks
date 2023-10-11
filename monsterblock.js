@@ -4,9 +4,10 @@ import { inputExprInitHandler } from "./input-expressions/handler.js";
 import PopupHandler from "./scripts/PopupHandler.js"
 import Flags5e from "./scripts/dnd5e/Flags5e.js";
 
+
 Hooks.once("init", () => {
 	Handlebars.registerHelper(MonsterBlock5e.handlebarsHelpers); // Register all the helpers needed for Handlebars
-	
+
 	inputExprInitHandler();
 
 	console.log(`Monster Block | %cInitialized.`, "color: orange");
@@ -14,9 +15,9 @@ Hooks.once("init", () => {
 
 Hooks.once("ready", () => {
 	MonsterBlock5e.getQuickInserts();
-	
+
 	MonsterBlock5e.preLoadTemplates();
-	
+
 	if (debug.INFO) console.debug("Monster Blocks | Registering Settings");
 
 	Object.entries(Flags5e.flagDefaults)
@@ -46,10 +47,10 @@ Hooks.once("ready", () => {
 		},
 		default: 72
 	});
-	
+
 	let themeChoices = {};
-	for (let theme in MonsterBlock5e.themes) 
-		themeChoices[theme] = 
+	for (let theme in MonsterBlock5e.themes)
+		themeChoices[theme] =
 			game.i18n.localize(MonsterBlock5e.themes[theme].name);
 
 	game.settings.register("monsterblock", "default-theme", {
@@ -101,7 +102,7 @@ Hooks.on("renderActorSheet5eNPC", (sheet) => {
 	nav.classList.add("switches");
 
 	sheet.element.find(".window-content .editable").append(nav);
-	
+
 	nav.addEventListener("click", async () => {
 		return await MonsterBlock5e.switchSheetTo("dnd5e.MonsterBlock5e", sheet);
 	});
@@ -114,7 +115,7 @@ Actors.registerSheet("dnd5e", MonsterBlock5e, {
 });
 
 Hooks.on("renderActorSheet", () => {	// This is just for debugging, it prevents this sheet's template from being cached.
-	if (!debug.enabled) return; 
+	if (!debug.enabled) return;
 	window._templateCache = [];
 });
 

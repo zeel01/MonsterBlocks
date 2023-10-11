@@ -18,7 +18,7 @@ export default class ResourcePreper {
 	 *
 	 * @static
 	 * @param {Item5e} item - The item to check
-	 * @return {boolean}      
+	 * @return {boolean}
 	 * @memberof ResourcePreper
 	 */
 	static hasResource(item) {
@@ -34,7 +34,7 @@ export default class ResourcePreper {
 	/**
 	 * Returns the prepared resource.
 	 *
-	 * @return {*} 
+	 * @return {*}
 	 * @memberof ResourcePreper
 	 */
 	getResource() {
@@ -54,9 +54,9 @@ export default class ResourcePreper {
 	setType() {
 		if (this.item.type == "consumable" || this.item.type == "loot")
 			this.res.type = "consume";
-		else if (this.item.system.uses?.max) 
+		else if (this.item.system.uses?.max)
 			this.res.type = "charges";
-		else 
+		else
 			this.res.type = this.item.system.consume.type;
 	}
 
@@ -95,10 +95,10 @@ export default class ResourcePreper {
 		let t = this.item.system.consume.target;
 		let r = t.match(/(.+)\.(.+)\.(.+)/);
 		let max = `system.${r[1]}.${r[2]}.max`;
-		
+
 		this.res.target = "system." + t;
-		this.res.current = getProperty(this.sheet.actor.data, this.res.target);
-		this.res.limit = getProperty(this.sheet.actor.data, max);
+		this.res.current = getProperty(this.sheet.actor, this.res.target);
+		this.res.limit = getProperty(this.sheet.actor, max);
 		this.res.refresh = game.i18n.localize("MOBLOKS5E.ResourceRefresh"); // It just says "Day" becaause thats typically the deal, and I don't see any other option.
 	}
 	/**
@@ -115,16 +115,16 @@ export default class ResourcePreper {
 		this.res.refresh = CONFIG.DND5E.limitedUsePeriods[this.item.system.uses.per];
 	}
 	/**
-	 * Prepares items that consume material components/loot 
+	 * Prepares items that consume material components/loot
 	 *
-	 * @return {*} 
+	 * @return {*}
 	 * @memberof ResourcePreper
 	 */
 	prepMaterial() {
 		this.res.entity = this.item.system.consume.target;
 		let ammo = this.sheet.actor.getEmbeddedDocument("Item", this.res.entity);
 		if (!ammo) return;
-		
+
 		this.res.limit = false;
 		this.res.current = ammo.system.quantity;
 		this.res.target = "system.quantity";

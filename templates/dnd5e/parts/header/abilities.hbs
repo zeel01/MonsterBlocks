@@ -1,5 +1,5 @@
 <ul class="ability-scores flexrow">
-{{#each data.abilities as |ability id|}}
+{{#each abilities as |ability id|}}
 	<li class="ability{{#if ability.proficient}} proficient{{/if}}" data-ability="{{id}}">
 		<h4 class="ability-title box-title" title="{{ability.label}}">{{ability.abbr}}</h4>
 		<a class="config-button" data-action="ability" title="Configure Ability Checks and Saving Throws"><i class="fas fa-cog"></i></a>

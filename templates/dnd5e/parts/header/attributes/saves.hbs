@@ -2,7 +2,7 @@
 	<h4 class="attribute-name menu-toggle" data-menu-id="save-roller">{{localize "MOBLOKS5E.SavingThrowS"}}</h4>
 	<div class="overflow-fix">
 		<ul>
-		{{#each data.abilities as |ability id|}}
+		{{#each abilities as |ability id|}}
 			<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}"
 				title="{{ability.label}}">
 				<span class="ability-title">{{ability.label}}</span>
@@ -13,7 +13,7 @@
 	</div>
 </figure>
 <ul class="inline-list">
-{{#each data.abilities as |ability id|}}
+{{#each abilities as |ability id|}}
 	{{#if (or ability.proficient @root.flags.show-not-prof)}}
 		<li class="saving-throw {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}" title="{{ability.label}}">
 			<span class="ability-title">{{ability.abbr}}</span>

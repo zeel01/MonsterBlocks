@@ -18,7 +18,7 @@ export default class AttackPreper extends ItemPreper {
 	prepare() {
 		this.data.tohit = this.item.labels.toHit;
 		this.data.description = this.getDescription();
-		this.data.continuousDescription = 
+		this.data.continuousDescription =
 			Helpers.isContinuousDescription(this.data.system.description.value);
 
 		if (debug.enabled) console.debug(this);
@@ -32,7 +32,7 @@ export default class AttackPreper extends ItemPreper {
 	 * @property {string} target            - What type of target, and how many
 	 * @property {DamageData} versatile     - The damage and formula for versatile damage
 	 * @property {Array<DamageData>} damage - All of the damage formulas for all types of additional damage
-	 * 
+	 *
 	 *//**
 	 * Constructs the data for this attack's description
 	 *
@@ -42,14 +42,14 @@ export default class AttackPreper extends ItemPreper {
 	getDescription() {
 		/** @type {WeaponData} */
 		let attackData = this.item.system;
-		
+
 		return {
 			attackType: this.getAttackType(this.item),
 			tohit: this.formatToHit(),
 			range: this.formatRange(attackData),
 			target: this.formatTarget(attackData),
 			versatile: this.getVersatileData(attackData),
-			damage: this.dealsDamage() 
+			damage: this.dealsDamage()
 				? this.getAllDamageData(attackData)
 				: []
 		}
@@ -60,13 +60,13 @@ export default class AttackPreper extends ItemPreper {
 	 *
 	 * "{+/-bonus} to hit"
 	 *
-	 * @return {string} 
+	 * @return {string}
 	 * @memberof AttackPreper
 	 */
 	formatToHit() {
 		const tohit = this.item.labels.toHit || "0";
 		let bonus = `+${tohit}`                        // If nothing else changes, then it's just +toHit
-		
+
 		if (["+", "-"].includes(tohit.charAt(0))) {    // If the value is already signed
 			bonus = tohit.charAt(1) == " "             //   If the second character is a space (after the sign)
 				? tohit.slice(0, 1) + tohit.slice(2)   //     Slice out the space
@@ -116,7 +116,7 @@ export default class AttackPreper extends ItemPreper {
 		const quantity = Helpers.getNumberString(atkd.target.value ? atkd.target.value : 1);
 		let type = atkd.target.type;                  // The target type
 
-		if (!type) type = atkd.target.value > 1       // If the type wasn't defined, then 
+		if (!type) type = atkd.target.value > 1       // If the type wasn't defined, then
 			? game.i18n.localize("MOBLOKS5E.targetS") // if the value is greater than one it's plural
 			: game.i18n.localize("MOBLOKS5E.target")  // Ortherwise singluar
 
@@ -129,7 +129,7 @@ export default class AttackPreper extends ItemPreper {
 	 * Returns data for formatting versatile damage
 	 *
 	 * @param {object} atkd - Attack data
-	 * @return {DamageData} 
+	 * @return {DamageData}
 	 * @memberof AttackPreper
 	 */
 	getVersatileData(atkd) {
@@ -141,7 +141,7 @@ export default class AttackPreper extends ItemPreper {
 	 * Retuirns data for formatting damage of all damage parts
 	 *
 	 * @param {object} atkd - Attack data
-	 * @return {Array<DamageData} 
+	 * @return {Array<DamageData}
 	 * @memberof AttackPreper
 	 */
 	getAllDamageData(atkd) {
@@ -153,12 +153,12 @@ export default class AttackPreper extends ItemPreper {
 	 * @property {string} text    - The textual description of the damage being dealt
 	 * @property {string} formula - The rollable formula for the damage
 	 *//**
-	 * 
+	 *
 	 * Returns the data for a damage roll
 	 *
 	 * @param {*} part
 	 * @param {number|string} index - The index of the damage in the attack array, or "v" for versatile
-	 * @return {DamageData} 
+	 * @return {DamageData}
 	 * @memberof AttackPreper
 	 */
 	getDamageData(part, index) {
@@ -175,7 +175,7 @@ export default class AttackPreper extends ItemPreper {
 	 *
 	 * @param {number} i - The index of the damage
 	 * @param {*} part
-	 * @return {*} 
+	 * @return {*}
 	 * @memberof AttackPreper
 	 */
 	formatAttackAndDamage(i, part) {
@@ -194,17 +194,17 @@ export default class AttackPreper extends ItemPreper {
 	/**
 	 * Determin which type of attack this is.
 	 *
-	 * @return {string} 
+	 * @return {string}
 	 * @memberof AttackPreper
 	 */
 	getAttackType() {
-		return CONFIG.DND5E.itemActionTypes[this.item?.data?.data?.actionType] || "";
+		return CONFIG.DND5E.itemActionTypes[this.item?.system?.actionType] || "";
 	}
 
 	/**
 	 * Determine if this attack is ranged or not
 	 *
-	 * @return {Boolean} 
+	 * @return {Boolean}
 	 * @memberof AttackPreper
 	 */
 	isRangedAttack() {
@@ -215,14 +215,14 @@ export default class AttackPreper extends ItemPreper {
 	 * Extract the specified roll formula from the item
 	 *
 	 * @param {number|string} [index=0] - The index of the rollable formula within the parts of the damage. If 'v', this referes to the versitile damage formula.
-	 * @return {string} A rollable formula 
+	 * @return {string} A rollable formula
 	 * @memberof MonsterBlock5e
 	 */
 	getAttackFormula(index=0) {
 		const atkd = this.item.system;
 
 		if (index == "v") return atkd?.damage?.versatile  // Versitile formula is index 'v'
-		
+
 		const parts = atkd?.damage?.parts;
 		if (parts?.length > 0) return parts[index][0];    // If there are any parts, return the one at index
 
@@ -244,7 +244,7 @@ export default class AttackPreper extends ItemPreper {
 	 * Gets the damage formula from an attack
 	 *
 	 * @param {number} [index=0] - The index of the damage formula in the damage parts
-	 * @return {*} 
+	 * @return {*}
 	 * @memberof AttackPreper
 	 */
 	damageFormula(index=0) {	// Extract and re-format the damage formula
@@ -257,7 +257,7 @@ export default class AttackPreper extends ItemPreper {
 	/**
 	 * Whether or not this attack deals any damage
 	 *
-	 * @return {Boolean} 
+	 * @return {Boolean}
 	 * @memberof AttackPreper
 	 */
 	dealsDamage() {

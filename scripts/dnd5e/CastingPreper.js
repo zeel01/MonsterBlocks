@@ -13,7 +13,7 @@ export default class CastingPreper extends ItemPreper {
 	 *
 	 * @static
 	 * @param {Item5e} item - An item that might be a spellcasting feature
-	 * @return {boolean} 
+	 * @return {boolean}
 	 * @memberof CastingPreper
 	 */
 	static isCasting(item) {
@@ -38,7 +38,7 @@ export default class CastingPreper extends ItemPreper {
 	 *
 	 * @static
 	 * @param {Item5e} item - An item that might be a spellcasting feature
-	 * @return {boolean} 
+	 * @return {boolean}
 	 * @memberof CastingPreper
 	 */
 	static isInnateSpellcasting(item) {
@@ -50,7 +50,7 @@ export default class CastingPreper extends ItemPreper {
 	 *
 	 * @static
 	 * @param {Item5e} item - An item that might be a spellcasting feature
-	 * @return {boolean} 
+	 * @return {boolean}
 	 * @memberof CastingPreper
 	 */
 	static isPactMagic(item) {
@@ -116,12 +116,12 @@ export default class CastingPreper extends ItemPreper {
 	 * @override
 	 * @memberof CastingPreper
 	 */
-	prepare() {		
+	prepare() {
 		this.data.castingType = this.constructor.isSpellcasting(this.item) ?
 			(this.constructor.isPactMagic(this.item) ? this.cts.pact : this.cts.standard) : this.cts.innate;
 
 		this.data.hasAtWill = this.sheet.hasAtWillSpells();
-		
+
 		/** @type {string} The type of casting feature */
 		this.ct = this.data.castingType;
 		this.data.spellbook = this.reformatSpellbook();
@@ -143,9 +143,9 @@ export default class CastingPreper extends ItemPreper {
 	 */
 	reformatSpellbook() {
 		if (this.ct == this.cts.innate) return this.formatInnateSpellbook();
-			
+
 		const book = this.filterSpellbook();
-		
+
 		book.forEach(this.formatSpellBookPage.bind(this));
 
 		return book;
@@ -167,7 +167,7 @@ export default class CastingPreper extends ItemPreper {
 	 *
 	 * @param {object} page       - One "page" of the spellbook contains spells of one "level"
 	 * @param {number} page.order - The spell level of the page, or a special value for pact magic, innate, or at-will
-	 * @return {boolean}            Whether or not the page belongs in the spellbook 
+	 * @return {boolean}            Whether or not the page belongs in the spellbook
 	 * @memberof CastingPreper
 	 */
 	spellBookFilter({ order }) {
@@ -176,7 +176,7 @@ export default class CastingPreper extends ItemPreper {
 		)
 		const atWill = order == -20;                                   // Don't bother with at-will.
 		const innate = this.ct != this.cts.innate && order == -10      // Only innate has -10
-		
+
 		return !(invalidPactMagic || atWill || innate)                 // If it's any of these, it should not be in the spellbook
 	}
 
@@ -184,7 +184,7 @@ export default class CastingPreper extends ItemPreper {
 	 * Formats special labels for this spellbook page.
 	 *
 	 * @param {object} page - One "page" of the spellbook contains spells of one "level"
-	 * @return {void} 
+	 * @return {void}
 	 * @memberof CastingPreper
 	 */
 	formatSpellBookPage(page) {
@@ -214,7 +214,7 @@ export default class CastingPreper extends ItemPreper {
 	 * Constructs the label for this page of the spellbok
 	 *
 	 * @param {object} page - One "page" of the spellbook contains spells of one "level"
-	 * @return {string} 
+	 * @return {string}
 	 * @memberof CastingPreper
 	 */
 	getPageLabel(page) {
@@ -233,7 +233,7 @@ export default class CastingPreper extends ItemPreper {
 	 *
 	 * @param {object} page          - One "page" of the spellbook contains spells of one "level"
 	 * @param {number} page.maxSpellLevel - The highest number of spell slots on the page
-	 * @return {string} 
+	 * @return {string}
 	 * @memberof CastingPreper
 	 */
 	getPageSlotKey({ maxSpellLevel }) {
@@ -245,7 +245,7 @@ export default class CastingPreper extends ItemPreper {
 	 * Formats the label for the spell slots on this page
 	 *
 	 * @param {object} page - One "page" of the spellbook contains spells of one "level"
-	 * @return {string} 
+	 * @return {string}
 	 * @memberof CastingPreper
 	 */
 	getPageSlotLabel(page) {
@@ -332,8 +332,7 @@ export default class CastingPreper extends ItemPreper {
 	 * @memberof CastingPreper
 	 */
 	get casterLevel() {
-		return this.sheet.actor.data
-			.data?.details?.spellLevel ?? 0;
+		return this.sheet.actor.system.details?.spellLevel ?? 0;
 	}
 
 	/**
@@ -359,12 +358,12 @@ export default class CastingPreper extends ItemPreper {
 	 */
 	get abilityOptions() {
 		return Object.entries(CONFIG.DND5E.abilities)
-			.map(([key, value]) => ({ 
-				value: key, 
-				label: value 
+			.map(([key, ability]) => ({
+				value: key,
+				label: ability.label
 			}))
 			.filter(opt => opt.value != this.castingAbility);
-	} 
+	}
 
 	/**
 	 * Gets a list of spell items that are at-will spells.
@@ -432,12 +431,12 @@ export default class CastingPreper extends ItemPreper {
 
 		return game.i18n.format(string, {
 			name: this.sheet.actor.name,           // Innate casters print thier name in this block
-			ability: Templates.selectField({ 
-				key: "system.attributes.spellcasting", 
-				value: this.castingAbility, 
-				label: this.abilityTitle, 
+			ability: Templates.selectField({
+				key: "system.attributes.spellcasting",
+				value: this.castingAbility,
+				label: this.abilityTitle,
 				listClass: "actor-size",
-				options: this.abilityOptions, 
+				options: this.abilityOptions,
 				enabled: this.editing
 			})
 		});
@@ -502,13 +501,13 @@ export default class CastingPreper extends ItemPreper {
 				itemClass: "spell at-will-spell",
 				itemLabelClass: "spell-name",
 				deletable: this.sheet.flags["show-delete"] && this.editing  // When deletion and editing are both enabled
-			}) 
+			})
 		});
 	}
 
 	/**
 	 * Re-form the list of at-will spells to be used by the itemList
-	 * 
+	 *
 	 * @type {Array<import("./templates.js").Item>}
 	 * @readonly
 	 * @memberof CastingPreper
@@ -523,14 +522,14 @@ export default class CastingPreper extends ItemPreper {
 	/**
 	 * Calculates the spell attack bonus of this actor
 	 *
-	 * @return {number} 
+	 * @return {number}
 	 * @memberof CastingPreper
 	 */
 	getSpellAttackBonus() {
 		const data = this.sheet.actor.system;
 		const abilityBonus = data.abilities[this.castingAbility]?.mod;
 		const profBonus = data.attributes?.prof;
-		
+
 		return abilityBonus + profBonus;
 	}
 
@@ -545,7 +544,7 @@ export default class CastingPreper extends ItemPreper {
 			.system?.attributes?.spellcasting || "int";
 
 		let castingability = main;
-		
+
 		const types = {
 			"will":              (l) => l.order == -20,
 			[this.cts.innate]:   (l) => l.order == -10,
@@ -557,16 +556,16 @@ export default class CastingPreper extends ItemPreper {
 		const spelllevel = this.data.spellbook.find(types[this.ct]);
 
 		if (spelllevel !== undefined) {
-			let spell = spelllevel.spells.find((s) => 
-				s.data.ability && 
-				s.data.ability != main
+			let spell = spelllevel.spells.find((s) =>
+				s.system.ability &&
+				s.system.ability != main
 			);
 			castingability = spell?.data?.ability ?? main;
 		}
-		
+
 		return [
-			this.templateData?.abilities[castingability]?.label 
-				?? game.i18n.localize("DND5E.AbilityInt"), 
+			this.templateData?.abilities[castingability]?.label
+				?? game.i18n.localize("DND5E.AbilityInt"),
 			castingability
 		];
 	}
