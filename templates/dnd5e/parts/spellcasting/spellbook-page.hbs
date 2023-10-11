@@ -1,0 +1,21 @@
+<li>
+	<span class="spell-level-name">
+		{{page.label~}}
+	</span>
+	{{~#if page.slotLabel}}
+		<span class="spell-slots">
+			({{~#if (and @root.flags.show-resources page.dataset.level)~}}
+				<span class="resource-value" 
+					placeholder="0"
+					contenteditable="{{@root.owner}}"
+					data-dtype="Number"
+					data-field-key="{{page.slotKey}}.value">
+					{{~page.uses~}}
+				</span>/
+			{{~/if~}}
+			{{{page.slotLabel}}}){{~" "~}}
+		</span>
+	{{~/if~}}
+	{{~localize "MOBLOKS5E.Colon"}}
+	{{> "modules/monsterblock/templates/dnd5e/parts/spellcasting/spell-list.hbs" spells=page.spells level=page.level}}
+</li>
