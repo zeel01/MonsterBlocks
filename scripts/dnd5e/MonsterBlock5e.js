@@ -344,7 +344,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	}
 	prepDamageTypeMenu(id, label, attrMenu) {
 		let menu = this.addMenu(id, game.i18n.localize(label), attrMenu);
-		this.getTraitChecklist(id, menu, `system.traits.${id}`, "damage-type", CONFIG.DND5E.damageResistanceTypes);
+		this.getTraitChecklist(id, menu, `system.traits.${id}`, "damage-type", CONFIG.DND5E.damageTypes);
 		return menu;
 	}
 	prepConditionTypeMenu(id, label, attrMenu) {
