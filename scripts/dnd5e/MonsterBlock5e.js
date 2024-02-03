@@ -391,10 +391,10 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	 * @memberof MonsterBlock5e
 	 */
 	getTraitChecklist(id, menu, target, itemType, traitList) {
-		Object.entries(traitList).forEach(([d, name]) => {
+		Object.entries(traitList).forEach(([d, traitData]) => {
 			let flag = this.actor.system.traits[id].value.has(d);
 			menu.add(new MenuItem(itemType, {
-				d, name, flag,
+				d, name: traitData.label, flag,
 				target: target,
 				icon: flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
 			}, (m) => {
