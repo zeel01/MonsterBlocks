@@ -1145,12 +1145,6 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		return super.close(...args);
 	}
 
-	async maximize() {
-		// this led to some sort of infinite resize loops
-		// await super.maximize();
-		await this.render(true);
-	}
-
 	/**
 	 *
 	 *
