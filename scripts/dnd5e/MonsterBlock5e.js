@@ -569,7 +569,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 				showLabel: move != "walk",
 				label: game.i18n.localize(`DND5E.Movement${moveNameCaps}`).toLowerCase(),
 				value: speed > 0 ? speed : move != "walk" ? "" : "0",
-				unit: data.system.attributes.movement.units + game.i18n.localize("MOBLOKS5E.SpeedUnitAbbrEnd"),
+				unit: (data.system.attributes.movement.units ?? Object.keys(CONFIG.DND5E.movementUnits)[0]) + game.i18n.localize("MOBLOKS5E.SpeedUnitAbbrEnd"),
 				key: `system.attributes.movement.${move}`
 			});
 		}
@@ -611,7 +611,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 				name: sense,
 				label: game.i18n.localize(`DND5E.Sense${senseNameCaps}`).toLowerCase(),
 				value: sense == "special" ? range : range > 0 ? range : "",
-				unit: data.system.attributes.senses.units + game.i18n.localize("MOBLOKS5E.SpeedUnitAbbrEnd"),
+				unit: (data.system.attributes.senses.units ?? Object.keys(CONFIG.DND5E.movementUnits)[0]) + game.i18n.localize("MOBLOKS5E.SpeedUnitAbbrEnd"),
 				key: `data.attributes.senses.${sense}`
 			});
 		}
