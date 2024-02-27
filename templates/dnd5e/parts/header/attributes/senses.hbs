@@ -1,38 +1,21 @@
 <h4 class="attribute-name">{{localize "DND5E.Senses"}}</h4>
 {{#each senses as |sense|~}}
-	<span class="editable-wrapper">
+	<span class="editable-wrapper{{#if @index}} optional-comma{{/if}}">
 		{{~#if sense.value}}{{sense.label}} {{/if~}}
-		<span class="attr-value" contenteditable="{{../flags.editing}}" placeholder="{{sense.label}}&nbsp;"
-			data-field-key="{{sense.key}}" data-dtype="Number">
-			{{~sense.value~}}
-		</span>
+		{{#if sense.value}}{{sense.value}}{{/if~}}
 		{{~#if sense.value}} {{sense.unit}}{{/if~}}
 	</span>
-	{{~#if sense.value}}{{localize "MOBLOKS5E.Comma"}} {{/if~}}
 {{~/each~}}
+{{~#if senses.length}}{{localize "MOBLOKS5E.Comma"}} {{/if~}}
+{{~#if specialSenses.special.value~}}
 <span class="editable-wrapper">{{~" "~}}
-	<span class="attr-value" contenteditable="{{flags.editing}}" placeholder="{{specialSenses.special.label}}&nbsp;"
-		data-field-key="{{specialSenses.special.key}}">
-		{{~specialSenses.special.value~}}
-	</span>{{~" "~}}
+	{{~specialSenses.special.value~}}
 </span>
-{{~#if specialSenses.special.value}}{{localize "MOBLOKS5E.Comma"}} {{/if~}}
+{{~localize "MOBLOKS5E.Comma"}}
+{{/if~}}
 <span>
 	{{~specialSenses.passivePerception~}}
 </span>
-{{#if flags.editing~}}
-	<div class="hover-only select-field" data-select-key="system.attributes.senses.units"
-		data-selected-value="{{data.attributes.senses.units}}">
-		<label
-			class="{{#if flags.editing}}select-label{{/if}}">{{lookup config.movementUnits data.attributes.senses.units}}</label>{{~" "~}}
-		{{#if flags.editing~}}
-			<ul class="actor-size select-list">
-			{{#each config.movementUnits as |label unit|}}
-				{{#unless (eq unit ../data.attributes.senses.units)}}
-					<li data-selection-value="{{unit}}">{{label}}</li>
-				{{/unless}}
-			{{~/each~}}
-			</ul>
-		{{~/if~}}
-	</div>
-{{~/if~}}
+<a class="config-button" data-action="senses" title="{{localize " DND5E.SensesConfig"}}">
+	<i class="fas fa-cog"></i>{{~" "~}}
+</a>
