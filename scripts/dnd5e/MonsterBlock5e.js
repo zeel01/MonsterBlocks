@@ -574,7 +574,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			});
 		}
 
-		data.movement = movement;
+		data.movement = movement.filter(m => m.value || m.name == "walk");
 	}
 
 	/**
@@ -617,7 +617,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		}
 
 		const special = senses.pop();
-		data.senses = senses;
+		data.senses = senses.filter(s => s.value);
 		data.specialSenses = {
 			passivePerception: this.getPassivePerception(),
 			special
