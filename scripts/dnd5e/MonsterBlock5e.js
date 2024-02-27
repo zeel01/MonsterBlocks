@@ -310,7 +310,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			menu.add(new MenuItem("save-toggle", {
 				name: CONFIG.DND5E.abilities[ab].label,
 				flag, d: ab,
-				target: `data.abilities.${ab}.proficient`,
+				target: `system.abilities.${ab}.proficient`,
 				icon: flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
 			}, (m) => {
 				m.flag = Boolean(this.actor.system.abilities[ab]?.proficient);
@@ -327,7 +327,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			skill.abilityAbbr = game.i18n.localize(`MOBLOKS5E.Abbr${skill.ability}`);
 			skill.icon = this._getProficiencyIcon(skill.value);
 			skill.hover = CONFIG.DND5E.proficiencyLevels[skill.value];
-			skill.label = CONFIG.DND5E.skills[id];
+			skill.label = CONFIG.DND5E.skills[id].label;
 			menu.add(new MenuItem("skill", { id, skill }, (m, data) => {
 				m.skill.icon = data.skills[m.id].icon,
 				m.skill.value = data.skills[m.id].value
@@ -986,7 +986,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 
 		["dv", "dr", "di"].forEach(dg => {
 			let damageTypes = html.find(`[data-damage-type="system.traits.${dg}"]`);
-			let key = `data.traits.${dg}.value`;
+			let key = `system.traits.${dg}.value`;
 			let value = [];
 			for (let dt of damageTypes) {
 				let state = (dt.dataset.flag == "true");
