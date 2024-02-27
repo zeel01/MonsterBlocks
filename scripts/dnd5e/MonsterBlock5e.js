@@ -612,7 +612,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 				label: game.i18n.localize(`DND5E.Sense${senseNameCaps}`).toLowerCase(),
 				value: sense == "special" ? range : range > 0 ? range : "",
 				unit: (data.system.attributes.senses.units ?? Object.keys(CONFIG.DND5E.movementUnits)[0]) + game.i18n.localize("MOBLOKS5E.SpeedUnitAbbrEnd"),
-				key: `data.attributes.senses.${sense}`
+				key: `system.attributes.senses.${sense}`
 			});
 		}
 
