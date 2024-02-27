@@ -4,7 +4,7 @@
 		{{~#if (and move.value move.showLabel)}}{{move.label}} {{/if~}}
 		{{#if move.value}}{{move.value}}{{/if~}}
 		{{~#if move.value}} {{move.unit}}{{/if~}}
-		{{~#if (and move.fly ../data.attributes.movement.hover)~}}
+		{{~#if (and move.fly ../system.attributes.movement.hover)~}}
 			<span class="no-break nocaps">
 				<span class="paren">(</span>
 					{{~localize "DND5E.MovementHover"~}}
