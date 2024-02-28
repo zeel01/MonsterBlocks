@@ -705,7 +705,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		html.find(".profile-image").click((event) => {
 			event.preventDefault();
 
-			new ImagePopout(event.target.currentSrc, {
+			new ImagePopout(this.actor.img, {
 				title: this.actor.name,
 				shareable: true,
 				uuid: this.actor.uuid
@@ -894,6 +894,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		const entity = this.lastSelection.entity ? `[data-entity="${this.lastSelection.entity}"]` : "";
 		if (key) this.selectElement(html.find(`${key}${entity}`)[0]);
 
+		html.find("img[data-edit]").unbind("click");
 		html.find(".editor-content img").click((event) => {
 			event.preventDefault();
 			let imgSource = event.target.src;
