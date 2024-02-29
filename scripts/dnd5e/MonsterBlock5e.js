@@ -76,6 +76,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		this.prepMovement(data);
 		this.prepSenses(data);
 		this.updateDamageImmunityResistanceVulnerabilityText(data);
+		this.setupConditionImmunityText(data);
 
 		data.flags = {};
 		data.allFlags = [];
@@ -380,6 +381,14 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			trait.visible = trait.physical || regularTypes.size > 0;
 		});
 	}
+	
+	setupConditionImmunityText(data)
+	{
+		const trait = data.system.traits["ci"];
+		trait.selected = trait.value;
+		trait.visible = trait.selected.size > 0;
+	}
+
 	/**
 	 * This method creates MenuItems and populates the target menu for trait lists.
 	 *
