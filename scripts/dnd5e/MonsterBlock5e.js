@@ -1258,8 +1258,8 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			const rollMin = new Roll(formula, mods);
 			const rollMax = rollMin.clone();
 			return Math.floor((		// The maximum roll plus the minimum roll, divided by two, rounded down.
-				rollMax.evaluateSync({ maximize: true }).total +
-				rollMin.evaluateSync({ minimize: true }).total
+				evaluateRoll(rollMax, { maximize: true }).total +
+				evaluateRoll(rollMin, { minimize: true }).total
 			) / 2);
 		}
 		catch (e) {
@@ -1374,4 +1374,12 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 
 		this.actor.update({[path]: newValue});
 	}
+}
+
+function evaluateRoll(roll, opts) {
+	if (roll.evaluateSync) {
+		return roll.evaluateSync(opts);
+	}
+
+	return roll.evaluate({...opts, async: false});
 }
