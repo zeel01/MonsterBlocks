@@ -1194,7 +1194,14 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	}
 
 	static isReaction(item) {
-		return item.system?.activation?.type === "reaction";
+		return [
+			// dnd5e
+			"reaction",
+			// midi-qol
+			"reactionpreattack",
+			"reactiondamage",
+			"reactionmanual",
+		].includes(item.system?.activation?.type);
 	}
 
 
