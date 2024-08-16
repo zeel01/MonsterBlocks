@@ -76,6 +76,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		this.prepMovement(data);
 		this.prepSenses(data);
 		this.updateDamageImmunityResistanceVulnerabilityText(data);
+		this.updateConditionInmunities(data);
 
 		data.flags = {};
 		data.allFlags = [];
@@ -358,6 +359,15 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		this.getTraitChecklist(id, menu, `system.traits.${id}`, "condition-type", CONFIG.DND5E.conditionTypes);
 		return menu;
 	}
+
+	updateConditionInmunities(data) {
+		const trait = data.system.traits.ci;
+		if (!trait) return;
+		const values = trait.value || new Set();
+		trait.selected = values;
+		trait.visible = values.size > 0;
+	}
+
 	/**
 	 * Re-localizes the text for damage resistances, immunities, and vulnerabilities
 	 * to match the working in the books.
