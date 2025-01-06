@@ -9,7 +9,7 @@ export default class Flags5e extends Flags {
 	 * @memberof Flags5e
 	 */
 	static get flagDefaults() {
-		return mergeObject(super.flagDefaults, {
+		return foundry.utils.mergeObject(super.flagDefaults, {
 			"attack-descriptions": { type: Boolean, default: true  },
 			"casting-feature"    : { type: Boolean, default: true  },
 			"current-hit-points" : { type: Boolean, default: true  },
@@ -20,5 +20,5 @@ export default class Flags5e extends Flags {
 			"show-skill-save"    : { type: Boolean, default: true  },
 			"show-bio"           : { type: Boolean, default: false, hidden: true  }
 		});
-	}	
+	}
 }

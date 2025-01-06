@@ -34,6 +34,6 @@
 		{{~else~}}
 			<span class="item-name" data-item-id="{{item._id}}"></span>
 		{{~/unless}}
-		<span class="description">{{{moblok-enrichhtml item.system.description.value @root.owner @root.flags}}}</span>
+		<span class="description">{{{item.enrichedValue}}}</span>
 	</div>
 </section>

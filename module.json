@@ -14,14 +14,14 @@
 	"version": "3.4.0",
 	"compatibility": {
 		"minimum": "10",
-		"verified": "11"
+		"verified": "12"
 	},
 	"relationships": {
 		"systems": [
 			{
 				"id": "dnd5e",
 				"compatibility": {
-					"verified": "2.3.0"
+					"verified": "3.2.1"
 				}
 			}
 		],
