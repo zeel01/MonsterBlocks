@@ -1113,7 +1113,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 				catch (e) {
 					console.error(e);
 					ui.notifications.error(e);
-					input.innerText = getProperty(entity, key);
+					input.innerText = foundry.utils.getProperty(entity, key);
 				}
 				break;
 			}
@@ -1140,7 +1140,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	 * @memberof MonsterBlock5e
 	 */
 	handleNumberChange(entity, key, input, event) {
-		const current = getProperty(entity, key);
+		const current = foundry.utils.getProperty(entity, key);
 
 		if (window.math?.roll)
 			return inputExpression(new ContentEditableAdapter(input), current, {
