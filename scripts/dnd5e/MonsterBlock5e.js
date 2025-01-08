@@ -76,7 +76,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		this.prepMovement(data);
 		this.prepSenses(data);
 		this.updateDamageImmunityResistanceVulnerabilityText(data);
-		this.updateConditionInmunities(data);
+		this.updateConditionImmunities(data);
 
 		data.flags = {};
 		data.allFlags = [];
@@ -362,7 +362,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		return menu;
 	}
 
-	updateConditionInmunities(data) {
+	updateConditionImmunities(data) {
 		const trait = data.system.traits.ci;
 		if (!trait) return;
 		const values = trait.value || new Set();

@@ -101,9 +101,9 @@ export default class ResourcePreper {
 		let max = `system.${r[1]}.${r[2]}.max`;
 
 		this.res.target = "system." + t;
-		this.res.refresh = game.i18n.localize("MOBLOKS5E.ResourceRefresh"); // It just says "Day" becaause thats typically the deal, and I don't see any other option.
 		this.res.current = foundry.utils.getProperty(this.sheet.actor, this.res.target);
 		this.res.limit = foundry.utils.getProperty(this.sheet.actor, max);
+		this.res.refresh = game.i18n.localize("MOBLOKS5E.ResourceRefresh"); // It just says "Day" because thats typically the deal, and I don't see any other option.
 	}
 	/**
 	 * Prepares items that have charges

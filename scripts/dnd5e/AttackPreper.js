@@ -157,7 +157,7 @@ export default class AttackPreper extends ItemPreper {
 	}
 
 	/**
-	 * Retuirns data for formatting damage of all damage parts
+	 * Returns data for formatting damage of all damage parts
 	 *
 	 * @return {Array<DamageData}
 	 * @memberof AttackPreper
@@ -210,7 +210,7 @@ export default class AttackPreper extends ItemPreper {
 	}
 
 	/**
-	 * Determin which type of attack this is.
+	 * Determine which type of attack this is.
 	 *
 	 * @return {string}
 	 * @memberof AttackPreper
@@ -232,7 +232,7 @@ export default class AttackPreper extends ItemPreper {
 	/**
 	 * Extract the specified roll formula from the item
 	 *
-	 * @param {number|string} [index=0] - The index of the rollable formula within the parts of the damage. If 'v', this referes to the versitile damage formula.
+	 * @param {number|string} [index=0] - The index of the rollable formula within the parts of the damage. If 'v', this referes to the versatile damage formula.
 	 * @return {string} A rollable formula
 	 * @memberof MonsterBlock5e
 	 */
