@@ -1,3 +1,5 @@
+import { isDndV4OrNewer } from "../utilities.js";
+
 export default class ResourcePreper {
 	/**
 	 * Creates an instance of ResourcePreper.
@@ -24,7 +26,7 @@ export default class ResourcePreper {
 	static hasResource(item) {
 		return Boolean(
 			// eslint-disable-next-line no-mixed-spaces-and-tabs
-			   item.system.consume?.target
+			   (!isDndV4OrNewer() ? item.system.consume?.target : item.system.activities?.some(a => a.consumption.targets.length))
 			|| item.type == "consumable"
 			|| item.type == "loot"
 			|| item.system.uses?.max
@@ -56,6 +58,8 @@ export default class ResourcePreper {
 			this.res.type = "consume";
 		else if (this.item.system.uses?.max)
 			this.res.type = "charges";
+		else if (isDndV4OrNewer())
+			this.res.type = this.item.system.activities?.find(a => a.consumption.targets.length)?.consumption.targets[0].type;
 		else
 			this.res.type = this.item.system.consume.type;
 	}
@@ -92,7 +96,7 @@ export default class ResourcePreper {
 	 * @memberof ResourcePreper
 	 */
 	prepAttribute() {
-		let t = this.item.system.consume.target;
+		let t = !isDndV4OrNewer() ? this.item.system.consume.target : this.item.system.activities.find(a => a.consumption.targets.length).consumption.targets[0].target;
 		let r = t.match(/(.+)\.(.+)\.(.+)/);
 		let max = `system.${r[1]}.${r[2]}.max`;
 
@@ -108,11 +112,11 @@ export default class ResourcePreper {
 	 */
 	prepCharges() {
 		this.res.target = "system.uses.value";
-		this.res.entity = this.item.system.consume.target || this.item.id;
+		this.res.entity = (!isDndV4OrNewer() ? this.item.system.consume.target : this.item.system.activities.find(a => a.consumption.targets.length).consumption.targets[0].target) || this.item.id;
 		this.res.current = this.item.system.uses.value;
 		this.res.limit = this.item.type == "spell" ? false : this.item.system.uses.max;
 		this.res.limTarget = "system.uses.max";
-		this.res.refresh = CONFIG.DND5E.limitedUsePeriods[this.item.system.uses.per];
+		this.res.refresh = CONFIG.DND5E.limitedUsePeriods[this.item.system.uses.per || "charges"].label;
 	}
 	/**
 	 * Prepares items that consume material components/loot
@@ -121,7 +125,7 @@ export default class ResourcePreper {
 	 * @memberof ResourcePreper
 	 */
 	prepMaterial() {
-		this.res.entity = this.item.system.consume.target;
+		this.res.entity = !isDndV4OrNewer() ? this.item.system.consume.target : this.item.system.activities.find(a => a.consumption.targets.length).consumption.targets[0].target;
 		let ammo = this.sheet.actor.getEmbeddedDocument("Item", this.res.entity);
 		if (!ammo) return;
 
