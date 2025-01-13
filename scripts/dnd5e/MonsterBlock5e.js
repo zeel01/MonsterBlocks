@@ -129,6 +129,8 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 
 		data.themes = this.themes;
 
+		data.sourceStringId = game.i18n.has("DND5E.Source") ? "DND5E.Source" : "DND5E.SOURCE.FIELDS.source.label";
+
 		this.templateData = data;
 		return data;
 	}
