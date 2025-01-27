@@ -57,6 +57,10 @@ export function getSetting(scope, name) {
 	}
 }
 
+export function isDndV4OrNewer() {
+	return foundry.utils.isNewerVersion(game.system.version, "3.9");
+}
+
 /**
  * Included From Foundry VTT FormDataExtended#castType
  * Used under the Limited License Agreement for Module Development

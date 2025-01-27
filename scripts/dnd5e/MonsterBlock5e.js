@@ -1,5 +1,5 @@
 import { MenuItem, MenuTree } from "../MenuTree.js";
-import { debug, ContentEditableAdapter, getTranslationArray, castType } from "../utilities.js";
+import { debug, ContentEditableAdapter, getTranslationArray, castType, isDndV4OrNewer } from "../utilities.js";
 import { inputExpression } from "../../input-expressions/handler.js";
 import ItemPrep from "./ItemPrep.js";
 import Flags from "./Flags5e.js";
@@ -76,7 +76,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		this.prepMovement(data);
 		this.prepSenses(data);
 		this.updateDamageImmunityResistanceVulnerabilityText(data);
-		this.updateConditionInmunities(data);
+		this.updateConditionImmunities(data);
 
 		data.flags = {};
 		data.allFlags = [];
@@ -96,6 +96,8 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			for (let item of data.features[fk].items) {
 				const value = await TextEditor.enrichHTML(item.system.description.value, { secrets: (data.owner && !data.flags["hidden-secrets"])});
 				item.enrichedValue = value;
+				item.rechargeValue = isDndV4OrNewer() ? item.system.uses.recovery.find(r => r.period === "recharge")?.formula : item.system.recharge?.value;
+				item.activationCost = isDndV4OrNewer() ? item.system.activities.find(a => a.activation.value)?.activation.value : item.system.activation?.cost;
 			}
 		}
 
@@ -126,6 +128,8 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		Object.values(this.menuTrees).forEach(m => m.update(m, data));
 
 		data.themes = this.themes;
+
+		data.sourceStringId = game.i18n.has("DND5E.Source") ? "DND5E.Source" : "DND5E.SOURCE.FIELDS.source.label";
 
 		this.templateData = data;
 		return data;
@@ -360,7 +364,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		return menu;
 	}
 
-	updateConditionInmunities(data) {
+	updateConditionImmunities(data) {
 		const trait = data.system.traits.ci;
 		if (!trait) return;
 		const values = trait.value || new Set();
@@ -852,7 +856,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 				const preset = event.altKey ? 1 : 0;
 				window.BetterRolls.rollItem(item, { event, preset }).toMessage();
 			}
-			else return item.use(); // Conveniently, items have all this logic built in already.
+			else return item.use({legacy: !isDndV4OrNewer()}); // Conveniently, items have all this logic built in already.
 		});
 
 		// uses the built in attack roll from the item
@@ -1112,7 +1116,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 				catch (e) {
 					console.error(e);
 					ui.notifications.error(e);
-					input.innerText = getProperty(entity, key);
+					input.innerText = foundry.utils.getProperty(entity, key);
 				}
 				break;
 			}
@@ -1139,7 +1143,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	 * @memberof MonsterBlock5e
 	 */
 	handleNumberChange(entity, key, input, event) {
-		const current = getProperty(entity, key);
+		const current = foundry.utils.getProperty(entity, key);
 
 		if (window.math?.roll)
 			return inputExpression(new ContentEditableAdapter(input), current, {
@@ -1231,27 +1235,45 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	}
 
 	static isLegendaryResistance(item) {
+		if (isDndV4OrNewer()) {
+			return item.system?.activities?.some(a => a.consumption?.targets.some(t => t === "resources.legres.value"));
+		}
 		return item.system?.consume?.target === "resources.legres.value";
 	}
 
 	// Item purpose checks
 	static isLegendaryAction(item) {
+		if (isDndV4OrNewer()) {
+			return item.system?.activities?.some(a => a.activation?.type === "legendary");
+		}
 		return item.system?.activation?.type === "legendary";
 	}
 
 	static isLairAction(item) {
+		if (isDndV4OrNewer()) {
+			return item.system?.activities?.some(a => a.activation?.type === "lair");
+		}
 		return item.system?.activation?.type === "lair";
 	}
 
 	static isAction(item) {
+		if (isDndV4OrNewer()) {
+			return item.system?.activities?.some(a => a.activation?.type && !["none", "special"].includes(a.activation.type));
+		}
 		return item.system?.activation?.type && item.system?.activation.type != "none";
 	}
 
 	static isBonusAction(item) {
+		if (isDndV4OrNewer()) {
+			return item.system?.activities?.some(a => a.activation?.type === "bonus");
+		}
 		return item.system?.activation?.type === "bonus";
 	}
 
 	static isReaction(item) {
+		if (isDndV4OrNewer()) {
+			return item.system?.activities?.some(a => a.activation?.type === "reaction");
+		}
 		return item.system?.activation?.type === "reaction";
 	}
 
