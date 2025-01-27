@@ -1,12 +1,12 @@
 <h1 class="charname" contenteditable="{{flags.editing}}" data-field-key="name" placeholder="{{localize "DND5E.Name"}}">{{actor.name}}</h1>
 <div class="chartype">
 	<div class="select-field" data-select-key="system.traits.size" data-selected-value="{{system.traits.size}}">
-		<label class="{{#if flags.editing}}select-label{{/if}}">{{lookup config.actorSizes system.traits.size}}</label>{{~" "~}}
+		<label class="{{#if flags.editing}}select-label{{/if}}">{{lookup (lookup config.actorSizes system.traits.size) "label"}}</label>{{~" "~}}
 		{{#if flags.editing~}}
 			<ul class="actor-size select-list">
-			{{#each config.actorSizes as |label size|}}
+			{{#each config.actorSizes as |sizeData size|}}
 				{{#unless (eq size ../system.traits.size)}}
-					<li data-selection-value="{{size}}">{{label}}</li>
+					<li data-selection-value="{{size}}">{{sizeData.label}}</li>
 				{{/unless}}
 			{{~/each~}}
 			</ul>
