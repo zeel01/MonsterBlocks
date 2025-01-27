@@ -22,7 +22,7 @@ export let selectField = ({
 	labelClass="", label,
 	listClass="", options, 
 	enabled=true
-}) => `\
+}) => /* html */`\
 <div class="select-field ${wrapperClass}"
 	data-select-key="${key}"
 	data-selected-value="${value}">
@@ -53,7 +53,7 @@ export let selectField = ({
  */
 export let editable = ({
 	key, className="", dtype="Text", placeholder="", value="", enabled=true
-}) => `\
+}) => /* html */`\
 <span class="${className}"\
 	contenteditable="${enabled}"\
 	data-field-key="${key}"\
@@ -80,16 +80,16 @@ export let editable = ({
  */
 export let itemList = ({
 	className, items, itemClass, itemLabelClass, deletable
-}) => `\
+}) => /* html */`\
 <ul class="${className}">
-${ items.map(item => 
-`<li class="${itemClass}" data-item-id="${item.id}">\
-${ deletable ?
-	`<a class="delete-item" data-item-id="${item.id}">\
+${ items.map(item => /* html */`\
+<li class="${itemClass}" data-item-id="${item.id}">\
+${ deletable ? /* html */`\
+	<a class="delete-item" data-item-id="${item.id}">\
 		<i class="fa fa-trash"></i>\
 	</a>`
 : ""}<span class="${itemLabelClass}">${item.name}</span>\
 </li>\
 `).reduce((a, v) => a + v)}	
 </ul>
-`
+`;

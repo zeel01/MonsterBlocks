@@ -5,6 +5,9 @@ import ActionPreper from "./ActionPreper.js";
 import ItemPreper from "./ItemPreper.js";
 import InnateSpellbookPrep from "./InnateSpellbookPrep.js"
 
+import SpellBook from "./SpellBook.js";
+import { debug } from "../utilities.js";
+
 /**
  * @typedef {import{"../../../../systems/dnd5e/module/item/sheet.js"}.Item5e} Item5e
  */
@@ -38,11 +41,13 @@ export default class ItemPrep {
 	
 	/** @type {Object.<string, Feature>} A set of item classifications by type */
 	features = {
+		spells:	      { prep: ItemPreper,    filter: item => item.type === "spell",               items: [], dataset: {type: "feat"}   },
 		legResist:	  { prep: ItemPreper,    filter: MonsterBlock5e.isLegendaryResistance,        items: [], dataset: {type: "feat"}   },
 		legendary:	  { prep: ActionPreper,  filter: MonsterBlock5e.isLegendaryAction,            items: [], dataset: {type: "feat"}   },
 		lair:		  { prep: ActionPreper,  filter: MonsterBlock5e.isLairAction,                 items: [], dataset: {type: "feat"}   },
 		multiattack:  { prep: ActionPreper,  filter: MonsterBlock5e.isMultiAttack,                items: [], dataset: {type: "feat"}   },
-		casting:	  { prep: CastingPreper, filter: CastingPreper.isCasting.bind(CastingPreper), items: [], dataset: {type: "feat"}   },
+		//casting:	  { prep: CastingPreper, filter: CastingPreper.isCasting.bind(CastingPreper), items: [], dataset: {type: "feat"}   },
+		casting:	  { prep: ItemPreper,    filter: CastingPreper.isCasting.bind(CastingPreper), items: [], dataset: {type: "feat"}   },
 		reaction:	  { prep: ActionPreper,  filter: MonsterBlock5e.isReaction,                   items: [], dataset: {type: "feat"}   },
 		bonusActions: { prep: ActionPreper,  filter: MonsterBlock5e.isBonusAction,                items: [], dataset: {type: "feat"}   },
 		attacks:	  { prep: AttackPreper,  filter: item => item.type === "weapon",              items: [], dataset: {type: "weapon"} },
@@ -57,20 +62,44 @@ export default class ItemPrep {
 	 * @memberof ItemPrep
 	 */
 	prepareItems() {
-		const [other, spells] = this.data.items.partition(item => item.type === "spell");
-		this.organizeSpellbooks(spells);
-		this.organizeFeatures(other);
+		this.organizeFeatures(this.data.items);
+		
+		if (this.data.features.spells.items.length) 
+			this.organizeSpellbooks(this.data.features.spells.items);
 	}
 
 	/**
-	 * Prepares and organizes the regular and innate spellbooks
+	 * Prepares and organizes the spellbooks
 	 *
 	 * @param {array} spells - All the spell items
 	 * @memberof ItemPrep
 	 */
 	organizeSpellbooks(spells) {
-		this.data.spellbook = this.sheet._prepareSpellbook(this.data, spells);
-		this.data.innateSpellbook = new InnateSpellbookPrep(this.data.spellbook, this.sheet).prepare();
+		const spellbook = new SpellBook(this.sheet, spells, null, "full");
+
+		const spellbooks = {
+			"full": spellbook,
+			"prepared": spellbook.getPrepared(),
+			"innate": spellbook.getInnate(),
+			"pact": spellbook.getPact(),
+		}
+
+		Object.values(spellbooks).forEach(book => {
+			if (!book.hasPages) book.show = false;
+		});
+		spellbooks.full.show = false;
+
+		this.data.spellbooks = spellbooks;
+
+		if (debug.DEBUG) {	
+			const label = "Monster Blocks | Spellbook";
+			console.group(label);
+			console.log("Full:    ", this.data.spellbooks.full);
+			console.log("Prepared:", this.data.spellbooks.prepared);
+			console.log("Innate   ", this.data.spellbooks.innate);
+			console.log("Pact     ", this.data.spellbooks.pact);
+			console.groupEnd(label);
+		}
 	}
 
 	/**

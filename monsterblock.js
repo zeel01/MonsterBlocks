@@ -67,8 +67,15 @@ Hooks.once("ready", () => {
 // This is how the box sizing is corrected to fit the statblock
 // eslint-disable-next-line no-unused-vars
 Hooks.on("renderMonsterBlock5e", (monsterblock, html, data) => {	// When the sheet is rendered
-	if (debug.INFO)  console.log("Monster Block | Rendering sheet");
-	if (debug.DEBUG) console.debug(`Monster Block |`, monsterblock, html, data);
+	const label = "Monster Block | Rendering sheet";
+	if (debug.DEBUG) {
+		console.group(label);
+		console.log("Sheet:        ", monsterblock);
+		console.log("HTML:         ", html);
+		console.log("Template Data:", data);
+		console.groupEnd(label);
+	}
+	else if (debug.INFO) console.log(label);
 
 	if (html.parent().hasClass("grid-cell-content")) return;
 

@@ -1,0 +1,7 @@
+<ul class="spell-list">
+{{#each spellbook.pages as |page id|}}
+	{{#if page.spells}}
+		{{> "modules/monsterblock/templates/dnd5e/parts/spellcasting/spellbook-page.hbs" page=page id=id}}
+	{{/if}}
+{{/each}}
+</ul>
