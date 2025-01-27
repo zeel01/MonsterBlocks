@@ -36,7 +36,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	}
 
 	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
+		return foundry.utils.mergeObject(super.defaultOptions, {
 			classes: ["monsterblock", "sheet", "actor"],
 			width: 406,	// 406 Column width of 390, plus 8px of padding on each side.
 			height: 400, // Arbitrary and basically meaningless.
@@ -76,6 +76,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		this.prepMovement(data);
 		this.prepSenses(data);
 		this.updateDamageImmunityResistanceVulnerabilityText(data);
+		this.updateConditionInmunities(data);
 
 		data.flags = {};
 		data.allFlags = [];
@@ -90,6 +91,13 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		if (data.notOwner || !this.options.editable) data.flags.editing = false;
 		if (!data.flags.editing) data.flags["show-delete"] = false;
 		if (this.actor.limited) data.flags["show-bio"] = true;
+
+		for (let fk of Object.keys(data.features)) {
+			for (let item of data.features[fk].items) {
+				const value = await TextEditor.enrichHTML(item.system.description.value, { secrets: (data.owner && !data.flags["hidden-secrets"])});
+				item.enrichedValue = value;
+			}
+		}
 
 		data.info = {		// A collection of extra information used mainly for conditionals
 			hasSaveProfs: this.hasSaveProfs(),
@@ -120,7 +128,6 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		data.themes = this.themes;
 
 		this.templateData = data;
-		console.log(data);
 		return data;
 	}
 
@@ -187,8 +194,8 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			updateData[img.dataset.edit] = img.src.replace(basePath, "");
 		}
 
-		return flattenObject(
-			mergeObject(
+		return foundry.utils.flattenObject(
+			foundry.utils.mergeObject(
 				formData.object,
 				updateData
 			)
@@ -327,7 +334,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			skill.abilityAbbr = game.i18n.localize(`MOBLOKS5E.Abbr${skill.ability}`);
 			skill.icon = this._getProficiencyIcon(skill.value);
 			skill.hover = CONFIG.DND5E.proficiencyLevels[skill.value];
-			skill.label = CONFIG.DND5E.skills[id];
+			skill.label = CONFIG.DND5E.skills[id].label;
 			menu.add(new MenuItem("skill", { id, skill }, (m, data) => {
 				m.skill.icon = data.skills[m.id].icon,
 				m.skill.value = data.skills[m.id].value
@@ -339,7 +346,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	}
 	prepLanguageMenu(id, label, attrMenu) {
 		let menu = this.addMenu("languages", game.i18n.localize(label), attrMenu);
-		this.getTraitChecklist(id, menu, "system.traits.languages", "language-opt", CONFIG.DND5E.languages);
+		this.getLanguageChecklist(id, menu, "system.traits.languages", "language-opt", CONFIG.DND5E.languages);
 		return menu;
 	}
 	prepDamageTypeMenu(id, label, attrMenu) {
@@ -352,6 +359,15 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		this.getTraitChecklist(id, menu, `system.traits.${id}`, "condition-type", CONFIG.DND5E.conditionTypes);
 		return menu;
 	}
+
+	updateConditionInmunities(data) {
+		const trait = data.system.traits.ci;
+		if (!trait) return;
+		const values = trait.value || new Set();
+		trait.selected = values;
+		trait.visible = values.size > 0;
+	}
+
 	/**
 	 * Re-localizes the text for damage resistances, immunities, and vulnerabilities
 	 * to match the working in the books.
@@ -392,16 +408,32 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	 */
 	getTraitChecklist(id, menu, target, itemType, traitList) {
 		Object.entries(traitList).forEach(([d, traitData]) => {
-			let flag = this.actor.system.traits[id].value.has(d);
-			menu.add(new MenuItem(itemType, {
-				d, name: traitData.label, flag,
-				target: target,
-				icon: flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
-			}, (m) => {
-				m.flag = this.actor.system.traits[id].value.has(d);
-				m.icon = m.flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>';
-			}));
+			// Languages has children for each subgroup of languages.
+			if (traitData.children) {
+				Object.entries(traitData.children).forEach(([key, label]) => {
+					let flag = this.actor.system.traits[id].value.has(d);
+					menu.add(new MenuItem(itemType, {
+						d: key, name: label, flag,
+						target: target,
+						icon: flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
+					}, (m) => {
+						m.flag = this.actor.system.traits[id].value.has(d);
+						m.icon = m.flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>';
+					}));
+				});
+			} else {
+				let flag = this.actor.system.traits[id].value.has(d);
+				menu.add(new MenuItem(itemType, {
+					d, name: traitData.label, flag,
+					target: target,
+					icon: flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
+				}, (m) => {
+					m.flag = this.actor.system.traits[id].value.has(d);
+					m.icon = m.flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>';
+				}));
+			}
 		});
+
 		menu.add(new MenuItem("custom-val", {
 			d: "custom",
 			name: game.i18n.localize("DND5E.TraitSelectorSpecial"),
@@ -411,6 +443,46 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		}, (m) => {
 				m.value = this.actor.system.traits[id].custom;
 		}));
+	}
+	/**
+	 * This method creates MenuItems and populates the target menu for trait lists.
+	 *
+	 * @param {String} id - The id of the data attribute
+	 * @param {MenuTree} menu - The parent menu
+	 * @param {String} target - The data attribute target
+	 * @param {String} itemType - The type of item
+	 * @param {Object} traitList - The CONFIG.System.List of trait options.
+	 * @memberof MonsterBlock5e
+	 */
+	getLanguageChecklist(id, menu, target, itemType, traitList, skipCustom = false) {
+		Object.entries(traitList).forEach(([d, traitData]) => {
+			// Languages has children for each subgroup of languages.
+			if (traitData.children) {
+				this.getLanguageChecklist(id, menu, target, itemType, traitData.children, true);
+			} else {
+				let flag = this.actor.system.traits[id].value.has(d);
+				menu.add(new MenuItem(itemType, {
+					d, name: traitData, flag,
+					target: target,
+					icon: flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>'
+				}, (m) => {
+					m.flag = this.actor.system.traits[id].value.has(d);
+					m.icon = m.flag ? '<i class="fas fa-check"></i>' : '<i class="far fa-circle"></i>';
+				}));
+			}
+		});
+
+		if (!skipCustom) {
+			menu.add(new MenuItem("custom-val", {
+				d: "custom",
+				name: game.i18n.localize("DND5E.TraitSelectorSpecial"),
+				target: target + ".custom",
+				icon: "",
+				value: this.actor.system.traits[id].custom
+			}, (m) => {
+					m.value = this.actor.system.traits[id].custom;
+			}));
+		}
 	}
 
 	hasSaveProfs() {
@@ -839,19 +911,6 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			el.dataset.toggleValue = el.dataset.toggleValue != "true";
 			this._onChangeInput(event);
 		})
-		html.find("[data-save-toggle], [data-damage-type], [data-condition-type], [data-language-opt]").click((event) => {
-			let el = event.currentTarget;
-			let state = (el.dataset.flag == "true");
-			el.dataset.flag = !state;
-			let updateData;
-
-			if (el.dataset.saveToggle) {
-				updateData = { [el.dataset.saveToggle]: !state ? 1 : 0 };
-			}
-			else updateData = this.getTogglesData(html);
-
-			this._onSubmit(event, { updateData });
-		});
 		html.find(".custom-trait input").blur(this.onCustomTraitChange.bind(this));
 		html.find(".custom-trait input").keydown((event) => {
 			if (event.key == "Enter") this.onCustomTraitChange(event);
@@ -863,8 +922,12 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		html.find("[contenteditable=true]").focusout(this._onUnfocusEditable.bind(this));
 		html.find(".trait-selector").contextmenu(this._onTraitSelector.bind(this));
 		html.find(".trait-selector-add").click(this._onTraitSelector.bind(this));
-		html.find("[data-skill-id]").contextmenu(this._onCycleSkillProficiency.bind(this));
-		html.find("[data-skill-id]").click(this._onCycleSkillProficiency.bind(this));
+		html.find("[data-skill-id]").contextmenu(this._onCycleProficiency.bind(this));
+		html.find("[data-skill-id]").click(this._onCycleProficiency.bind(this));
+		html.find("[data-damage-type]").click(this._onToggleDamage.bind(this));
+		html.find("[data-save-toggle]").click(this._onToggleSave.bind(this));
+		html.find("[data-language-opt]").click(this._onToggleLanguage.bind(this));
+		html.find("[data-condition-type]").click(this._onToggleCondition.bind(this));
 
 		this.menus.forEach(m => m.attachHandler());
 
@@ -1114,7 +1177,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 
 		// Get the current level and the array of levels
 		const level = parseFloat(value);
-		const levels = [0, 1, 0.5, 2];
+		const levels = Object.keys(CONFIG.DND5E.proficiencyLevels);
 		let idx = levels.indexOf(level);
 
 		// Toggle next level - forward on click, backwards on right
@@ -1205,8 +1268,8 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			const rollMin = new Roll(formula, mods);
 			const rollMax = rollMin.clone();
 			return Math.floor((		// The maximum roll plus the minimum roll, divided by two, rounded down.
-				rollMax.evaluate({ maximize: true }).total +
-				rollMin.evaluate({ minimize: true }).total
+				evaluateRoll(rollMax, { maximize: true }).total +
+				evaluateRoll(rollMin, { minimize: true }).total
 			) / 2);
 		}
 		catch (e) {
@@ -1218,12 +1281,6 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	static handlebarsHelpers = {
 		"moblok-hascontents": (obj) => { // Check if an array is empty.
 			return obj && Object.keys(obj).length > 0;
-		},
-		"moblok-enrichhtml": (str, owner, flags) => { // Formats any text to include proper inline rolls and links.
-			// Note: in v12 the async option will be deprecated
-			// enrichment should happen in getData() and not during rendering
-			// that would be a big refactor so I'm not going to try it now...
-			return TextEditor.enrichHTML(str || "", { secrets: (owner && !flags["hidden-secrets"]), async: false });
 		}
 	}
 	static async preLoadTemplates() {
@@ -1266,4 +1323,73 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 
 		]);
 	}
+
+	_onItemCreate(event) {
+		event.preventDefault();
+		const dataset = event.currentTarget.dataset;
+		const type = dataset.type;
+
+		const itemData = {
+		  name: game.i18n.format("DND5E.ItemNew", {type: game.i18n.localize(CONFIG.Item.typeLabels[type])}),
+		  type: type,
+		  system: foundry.utils.expandObject({ ...dataset })
+		};
+		delete itemData.system.type;
+		return this.actor.createEmbeddedDocuments("Item", [itemData]);
+	}
+
+	_onToggleTrait(event, key) {
+		const dataset = event.currentTarget.dataset;
+		const path = `${dataset[key]}.value`;
+		const typ = dataset.option;
+		const value = foundry.utils.getProperty(this.actor, path) || new Set();
+		if (value.has(typ)) {
+			value.delete(typ);
+		} else {
+			value.add(typ);
+		}
+
+		this.actor.update({[path]: value});
+	}
+
+	_onToggleDamage(event) {
+		this._onToggleTrait(event, 'damageType');
+	}
+
+	_onToggleCondition(event) {
+		this._onToggleTrait(event, 'conditionType');
+	}
+
+	_onToggleLanguage(event) {
+		this._onToggleTrait(event, 'languageOpt');
+	}
+
+	_onToggleSave(event) {
+		const dataset = event.currentTarget.dataset;
+		const path = `system.abilities.${dataset.option}.proficient`;
+		const value = foundry.utils.getProperty(this.actor, path);
+		this.actor.update({[path]: value === 1 ? 0 : 1});
+	}
+
+	_onCycleProficiency(event) {
+		const dataset = event.currentTarget.dataset;
+		const path = `system.skills.${dataset.skillId}.value`;
+		const value = foundry.utils.getProperty(this.actor, path);
+
+		// Cycle to the next or previous skill level.
+		const levels = [0, 1, .5, 2];
+		const idx = levels.indexOf(value);
+		const next = idx + (event.type === "contextmenu" ? 3 : 1);
+		const newValue = levels[next % levels.length];
+
+		this.actor.update({[path]: newValue});
+	}
+}
+
+function evaluateRoll(roll, opts) {
+	if (roll.evaluateSync) {
+		return roll.evaluateSync(opts);
+	}
+
+	return roll.evaluate({...opts, async: false});
 }
