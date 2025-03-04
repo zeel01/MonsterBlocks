@@ -43,6 +43,8 @@ export default class CastingPreper extends ItemPreper {
 	 */
 	static isInnateSpellcasting(item) {
 		const name = item.name.toLowerCase().replace(/\s+/g, "") ?? "";
+		if (getTranslationArray("MOBLOKS5E.SpellcastingLocators").some(loc => name.includes(loc)) && item.system.activities?.some(a => a.type === "cast")) return true;
+		
 		return getTranslationArray("MOBLOKS5E.InnateCastingLocators").some(loc => name.includes(loc));
 	}
 	/**
@@ -332,7 +334,7 @@ export default class CastingPreper extends ItemPreper {
 	 * @memberof CastingPreper
 	 */
 	get casterLevel() {
-		return this.sheet.actor.system.details?.spellLevel ?? 0;
+		return this.sheet.actor.system.attributes?.spell?.level ?? this.sheet.actor.system.details?.spellLevel ?? 0;
 	}
 
 	/**
@@ -452,7 +454,7 @@ export default class CastingPreper extends ItemPreper {
 	 */
 	get casterStatsText() {
 		return game.i18n.format("MOBLOKS5E.CastingStats", {
-			savedc: this.sheet.actor.system?.attributes?.spelldc,
+			savedc: this.sheet.actor.system?.attributes?.spell?.dc ?? this.sheet.actor.system?.attributes?.spelldc,
 			bonus: `${this.tohit > -1 ? "+" : ""}${this.tohit}`
 		})
 	}
@@ -557,10 +559,10 @@ export default class CastingPreper extends ItemPreper {
 
 		if (spelllevel !== undefined) {
 			let spell = spelllevel.spells.find((s) =>
-				s.system.ability &&
-				s.system.ability != main
+				s.system.abilityMod &&
+				s.system.abilityMod != main
 			);
-			castingability = spell?.data?.ability ?? main;
+			castingability = spell?.system?.ability ?? main;
 		}
 
 		return [
