@@ -94,10 +94,10 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 
 		for (let fk of Object.keys(data.features)) {
 			for (let item of data.features[fk].items) {
-				const value = await TextEditor.enrichHTML(item.system.description.value, { secrets: (data.owner && !data.flags["hidden-secrets"])});
+				const value = await TextEditor.enrichHTML(item.system.description.value, { relativeTo: item, secrets: (data.owner && !data.flags["hidden-secrets"])});
 				item.enrichedValue = value;
-				item.rechargeValue = isDndV4OrNewer() ? item.system.uses.recovery.find(r => r.period === "recharge")?.formula : item.system.recharge?.value;
-				item.activationCost = isDndV4OrNewer() ? item.system.activities.find(a => a.activation.value)?.activation.value : item.system.activation?.cost;
+				item.rechargeValue = isDndV4OrNewer() ? item.system.uses?.recovery.find(r => r.period === "recharge")?.formula : item.system.recharge?.value;
+				item.activationCost = isDndV4OrNewer() ? item.system.activities?.find(a => a.activation.value)?.activation.value : item.system.activation?.cost;
 			}
 		}
 
@@ -130,6 +130,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		data.themes = this.themes;
 
 		data.sourceStringId = game.i18n.has("DND5E.Source") ? "DND5E.Source" : "DND5E.SOURCE.FIELDS.source.label";
+		data.legActTitleId = game.i18n.has("DND5E.LegAct") ? "DND5E.LegAct" : "DND5E.NPC.SECTIONS.LegendaryActions";
 
 		this.templateData = data;
 		return data;
@@ -604,7 +605,10 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 	}
 	prepAbilities(data) {
 		Object.entries(data.abilities)?.forEach(
-			([id, ability]) => ability.abbr = game.i18n.localize("MOBLOKS5E.Abbr" + id)
+			([id, ability]) => {
+				ability.abbr = game.i18n.localize("MOBLOKS5E.Abbr" + id);
+				ability.saveValue = ability.save.value ?? ability.save;
+			}
 		)
 	}
 	/**
