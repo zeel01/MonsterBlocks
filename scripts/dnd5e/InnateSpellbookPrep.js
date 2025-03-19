@@ -20,9 +20,9 @@ export default class InnateSpellbookPrep {
 	 * @return {object} The completed innate spellbook 
 	 * @memberof InnateSpellbookPrep
 	 */
-	prepare() {                                              // We need to completely re-organize the spellbook for an innate spellcaster
-		for (let level of this.spellbook) {                  // Spellbook is seperated into sections based on level, though all the innate spells are lumped together, we still want to check all the sections.
-			if (level.prop !== "innate") continue;           // We don't care about sections that aren't marked as innate though
+	prepare() {                                              					// We need to completely re-organize the spellbook for an innate spellcaster
+		for (let level of this.spellbook) {                  					// Spellbook is seperated into sections based on level, though all the innate spells are lumped together, we still want to check all the sections.
+			if (!["innate", "atwill"].includes(level.prop) && !level.spells.some(s => s.getFlag("dnd5e", "cachedFor"))) continue;           // We don't care about sections that aren't marked as innate though
 			this.prepareSpellLevel(level);
 		}
 
@@ -69,7 +69,11 @@ export default class InnateSpellbookPrep {
 	 */
 	sortSpell(spell) {
 		// Max uses is what we are going to end up sorting the spellbook by.
-		this.getPage(spell.system.uses.max).spells.push(spell);
+		let uses = spell.system.uses.max;
+		if (spell.getFlag("dnd5e", "cachedFor")) {
+			uses = fromUuidSync(spell.getFlag("dnd5e", "cachedFor"), {relative: this.sheet.object}).uses.max;
+		}
+		this.getPage(uses).spells.push(spell);
 	}
 
 	/**
