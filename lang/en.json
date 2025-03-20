@@ -177,6 +177,26 @@
 			"enable": "Show biography",
 			"disable": "Hide biography"
 		},
+
+		"Spellcasting": {
+			"preparedSpellcasting": "Spellcasting",
+			"pactSpellcasting": "Spellcasting",
+			"innateSpellcasting": "Innate Spellcasting",
+			"psionicSpellcasting": "Spellcasting (Psionics)",
+			"Cantrip": "Cantrip",
+			"CantripPl": "Cantrips",
+			"AtWill": "at will",
+			"preparedCasterText":
+				"The {{name}} is {{#if (or (eq level 8) (eq level 18))}}an{{else}}a{{/if}} {{{nth}}}-level spellcaster. Its spellcasting ability is {{{ability}}} (spell save DC {{dc}}, {{tohit}} to hit with spell attacks). The {{name}} {{#if hasAtWill}}can cast {{{spells}}} at will and {{/if}}has the following spells prepared:",
+			"pactCasterText": 
+				"The {{name}} is {{#if (or (eq level 8) (eq level 18))}}an{{else}}a{{/if}} {{{nth}}}-level spellcaster. Its spellcasting ability is {{{ability}}} (spell save DC {{dc}}, {{tohit}} to hit with spell attacks). It regains its expended spell slots when it finishes a short or long rest. It knows the following warlock spells:",
+			"innateCasterText":
+				"The {{name}} spellcasting ability is {{{ability}}} (spell save DC {{dc}}). It can innately cast the following spells, requiring no material components:",
+			"fullCasterText":
+				"The {{name}} is {{#if (or (eq level 8) (eq level 18))}}an{{else}}a{{/if}} {{{nth}}}-level spellcaster. Its spellcasting ability is {{{ability}}} (spell save DC {{dc}}, {{tohit}} to hit with spell attacks). The {{name}} {{#if hasAtWill}}can cast {{{spells}}} at will and {{/if}}has the following spells prepared:",
+			"spellcastingActionText":
+				"The {{name}} casts one of the following spells, using {{{ability}}} as the spellcasting ability (spell save DC {{dc}}):"
+		},
 			
 		"MonsterBlocks": "Monster Blocks",
 		

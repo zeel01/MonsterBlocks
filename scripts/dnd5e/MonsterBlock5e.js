@@ -3,6 +3,7 @@ import { debug, ContentEditableAdapter, getTranslationArray, castType, isDndV4Or
 import { inputExpression } from "../../input-expressions/handler.js";
 import ItemPrep from "./ItemPrep.js";
 import Flags from "./Flags5e.js";
+import StatGetter from "./StatGetter.js";
 
 /* global QuickInsert:readonly */
 /* global dnd5e:readonly */
@@ -21,6 +22,7 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 		this.position.default = true;
 
 		this.flagManager = new Flags(this);
+		this.statGetter = new StatGetter(this, this.actor);
 
 		//this.flagManager.prep().then((p) => {
 			this.options.classes.push(this.themes[this.currentTheme].class);
@@ -1338,6 +1340,11 @@ export default class MonsterBlock5e extends dnd5e.applications.actor.ActorSheet5
 			"modules/monsterblock/templates/dnd5e/parts/main/attack.hbs",
 			"modules/monsterblock/templates/dnd5e/parts/main/legendaryActs.hbs",
 			"modules/monsterblock/templates/dnd5e/parts/main/lairActs.hbs",
+
+			"modules/monsterblock/templates/dnd5e/parts/spellcasting/spellcasting-redux.hbs",
+			"modules/monsterblock/templates/dnd5e/parts/spellcasting/spellbook.hbs",
+			"modules/monsterblock/templates/dnd5e/parts/spellcasting/spellbook-page.hbs",
+			"modules/monsterblock/templates/dnd5e/parts/spellcasting/spell-list.hbs",
 
 			"modules/monsterblock/templates/dnd5e/parts/menuItem.hbs",
 			"modules/monsterblock/templates/dnd5e/parts/resource.hbs",
